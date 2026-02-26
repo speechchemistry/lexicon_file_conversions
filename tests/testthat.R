@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(lift2csv)
+library(lexicon_file_conversions)
 
-test_check("lift2csv")
+test_check("lexicon_file_conversions")
