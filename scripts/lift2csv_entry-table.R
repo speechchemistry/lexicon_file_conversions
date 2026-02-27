@@ -25,6 +25,8 @@ extract_multitext_element <- function(entries, xpath, value_col = "text") {
     !!value_col := character()
   )
 
+  if(length(entries) == 0) return(empty_result)
+
   entries |>
     map_df(~{
       entry_id <- xml_attr(.x, "guid")
@@ -48,6 +50,8 @@ extract_multitext_with_attribute <- function(entries, parent_xpath, attr_name,
     !!value_col := character()
   )
 
+  if(length(entries) == 0) return(empty_result)
+
   entries |>
     map_df(~{
       entry_id <- xml_attr(.x, "guid")
@@ -67,21 +71,22 @@ extract_multitext_with_attribute <- function(entries, parent_xpath, attr_name,
     })
 }
 
-lex_long <- extract_multitext_element(entries, "./lexical-unit/form") |>
-  mutate(
-    dateCreated = map_chr(entries, ~xml_attr(.x, "dateCreated"), .progress = FALSE)[
-      match(entry_id, map_chr(entries, ~xml_attr(.x, "guid"), .progress = FALSE))
-    ],
-    dateModified = map_chr(entries, ~xml_attr(.x, "dateModified"), .progress = FALSE)[
-      match(entry_id, map_chr(entries, ~xml_attr(.x, "guid"), .progress = FALSE))
-    ]
-  )
+# extract lexical-unit forms for each writing system and also get the entry's 
+# dateCreated and dateModified attributes
+# first stage: extract entry-level metadata only
+entry_meta <- tibble(
+  entry_id = map_chr(entries, ~xml_attr(.x, "guid"), .progress = FALSE),
+  dateCreated = map_chr(entries, ~xml_attr(.x, "dateCreated"), .progress = FALSE),
+  dateModified = map_chr(entries, ~xml_attr(.x, "dateModified"), .progress = FALSE)
+)
+# second stage: extract lexical-unit forms
+lex_long <- extract_multitext_element(entries, "./lexical-unit/form")
 
 # since the table is in a long form with a row for each writing system, we 
 # need to pivot wider
 lex_wide <- lex_long |>
   pivot_wider(
-    id_cols = c(entry_id, dateCreated, dateModified),
+    id_cols = entry_id,
     names_from = lang,
     values_from = text
   )
@@ -112,13 +117,12 @@ citations_wide <- citations_long |>
   )
 
 # join with these extra fields our existing lexeme table
-combined <- lex_wide |> 
+combined <- entry_meta |>
+  left_join(lex_wide, by = "entry_id") |>
   left_join(fields_wide, by = "entry_id") |>
   left_join(citations_wide, by = "entry_id")
 
 # write CSV entry_table to stdout
-cat(format_csv(combined,na=""))
-
-
-
+output <- if(nrow(combined) == 0) "" else format_csv(combined, na = "")
+cat(output)
 

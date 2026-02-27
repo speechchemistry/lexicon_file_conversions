@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- See https://github.com/sillsdev/lift-standard for more information on the format used here. -->
+<lift producer="SIL.FLEx 9.3.6.2230" version="0.13">
+<header>
+<ranges>
+<range id="dialect" href="file://C:/Users/timke/Documents/lela-teli-empty-lexicon/lela-teli-empty-lexicon.lift-ranges"/>
+<range id="etymology" href="file://C:/Users/timke/Documents/lela-teli-empty-lexicon/lela-teli-empty-lexicon.lift-ranges"/>
+<range id="grammatical-info" href="file://C:/Users/timke/Documents/lela-teli-empty-lexicon/lela-teli-empty-lexicon.lift-ranges"/>
+<range id="lexical-relation" href="file://C:/Users/timke/Documents/lela-teli-empty-lexicon/lela-teli-empty-lexicon.lift-ranges"/>
+<range id="note-type" href="file://C:/Users/timke/Documents/lela-teli-empty-lexicon/lela-teli-empty-lexicon.lift-ranges"/>
+<range id="paradigm" href="file://C:/Users/timke/Documents/lela-teli-empty-lexicon/lela-teli-empty-lexicon.lift-ranges"/>
+<range id="reversal-type" href="file://C:/Users/timke/Documents/lela-teli-empty-lexicon/lela-teli-empty-lexicon.lift-ranges"/>
+<range id="semantic-domain-ddp4" href="file://C:/Users/timke/Documents/lela-teli-empty-lexicon/lela-teli-empty-lexicon.lift-ranges"/>
+<range id="status" href="file://C:/Users/timke/Documents/lela-teli-empty-lexicon/lela-teli-empty-lexicon.lift-ranges"/>
+<range id="users" href="file://C:/Users/timke/Documents/lela-teli-empty-lexicon/lela-teli-empty-lexicon.lift-ranges"/>
+<range id="location" href="file://C:/Users/timke/Documents/lela-teli-empty-lexicon/lela-teli-empty-lexicon.lift-ranges"/>
+<!-- The following ranges are produced by FieldWorks Language Explorer, and are not part of the LIFT standard. -->
+<range id="anthro-code" href="file://C:/Users/timke/Documents/lela-teli-empty-lexicon/lela-teli-empty-lexicon.lift-ranges"/>
+<range id="translation-type" href="file://C:/Users/timke/Documents/lela-teli-empty-lexicon/lela-teli-empty-lexicon.lift-ranges"/>
+<!-- The parts of speech are duplicated in another range because derivational affixes require a "From" PartOfSpeech as well as a "To" PartOfSpeech. -->
+<range id="from-part-of-speech" href="file://C:/Users/timke/Documents/lela-teli-empty-lexicon/lela-teli-empty-lexicon.lift-ranges"/>
+<range id="morph-type" href="file://C:/Users/timke/Documents/lela-teli-empty-lexicon/lela-teli-empty-lexicon.lift-ranges"/>
+<range id="exception-feature" href="file://C:/Users/timke/Documents/lela-teli-empty-lexicon/lela-teli-empty-lexicon.lift-ranges"/>
+<range id="inflection-feature" href="file://C:/Users/timke/Documents/lela-teli-empty-lexicon/lela-teli-empty-lexicon.lift-ranges"/>
+<range id="inflection-feature-type" href="file://C:/Users/timke/Documents/lela-teli-empty-lexicon/lela-teli-empty-lexicon.lift-ranges"/>
+</ranges>
+<fields>
+<field tag="cv-pattern">
+<form lang="en"><text>This records the syllable pattern for a LexPronunciation in FieldWorks.</text></form>
+</field>
+<field tag="tone">
+<form lang="en"><text>This records the tone information for a LexPronunciation in FieldWorks.</text></form>
+</field>
+<field tag="comment">
+<form lang="en"><text>This records a comment (note) in a LexEtymology in FieldWorks.</text></form>
+</field>
+<field tag="import-residue">
+<form lang="en"><text>This records residue left over from importing a standard format file into FieldWorks (or LinguaLinks).</text></form>
+</field>
+<field tag="literal-meaning">
+<form lang="en"><text>This field is used to store a literal meaning of the entry.  Typically, this field is necessary only for a compound or an idiom where the meaning of the whole is different from the sum of its parts.</text></form>
+</field>
+<field tag="summary-definition">
+<form lang="en"><text>A summary definition (located at the entry level in the Entry pane) is a general definition summarizing all the senses of a primary entry. It has no theoretical value; its use is solely pragmatic.</text></form>
+</field>
+<field tag="exemplar">
+<form lang="en"><text>This field stores the exemplar form for the current sense.</text></form>
+</field>
+<field tag="scientific-name">
+<form lang="en"><text>This field stores the scientific name pertinent to the current sense.</text></form>
+</field>
+</fields>
+</header>
+</lift>
