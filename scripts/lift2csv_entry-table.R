@@ -5,7 +5,8 @@ library(argparser)
 
 script_path <- normalizePath(sub("^--file=", "", commandArgs(FALSE)[grep("^--file=", commandArgs(FALSE))]))
 script_dir <- dirname(script_path)
-source(file.path(script_dir, "..", "R", "lift2csv_entry_table.R"))
+project_dir <- normalizePath(file.path(script_dir, ".."))
+devtools::load_all(project_dir, quiet = TRUE)
 
 p <- arg_parser("This script takes the LIFT file and produces a CSV of the entry table")
 p <- add_argument(p, "LIFT_file", 
