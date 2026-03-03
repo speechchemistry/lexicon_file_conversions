@@ -125,4 +125,3 @@ combined <- entry_meta |>
 # write CSV entry_table to stdout
 output <- if(nrow(combined) == 0) "" else format_csv(combined, na = "")
 cat(output)
-
