@@ -1,42 +1,14 @@
 # lift2csv_sense-table.R
 # Extracts <sense> rows from a LIFT file and writes CSV to stdout
 
-library(xml2)
-library(purrr)
-suppressMessages(library(dplyr))
-library(readr)
 library(argparser)
+
+script_path <- normalizePath(sub("^--file=", "", commandArgs(FALSE)[grep("^--file=", commandArgs(FALSE))]))
+script_dir <- dirname(script_path)
+source(file.path(script_dir, "..", "R", "lift2csv_sense_table.R"))
 
 p <- arg_parser("This script takes the LIFT file and produces a CSV of the sense table")
 p <- add_argument(p, "LIFT_file",
                   help = "SIL Flex lexicon LIFT file")
 argv <- parse_args(p)
-
-doc <- read_xml(argv$LIFT_file)
-
-# find entry nodes
-entries <- xml_find_all(doc, ".//entry")
-
-# extract senses into a separate table
-sense_table <- entries |>
-  map_df(~{
-    entry_id <- xml_attr(.x, "guid")
-    senses <- xml_find_all(.x, "./sense")
-    if(length(senses) == 0) return(tibble())
-    map_df(senses, ~{
-      sense_guid <- xml_attr(.x, "id")
-      grammatical_info <- xml_attr(xml_find_first(.x, "./grammatical-info"), "value")
-      gloss_en <- xml_text(xml_find_first(.x, "./gloss[@lang='en']"))
-      #source <- xml_text(xml_find_first(.x, "./note[@type='source']/form"))
-      tibble(
-        sense_guid = sense_guid,
-        entry_id = entry_id,
-        grammatical_info = grammatical_info,
-        gloss_en = gloss_en#,
-        #source = source
-      )
-    })
-  })
-
-# write CSV to stdout
-cat(format_csv(sense_table, na = ""))
+cat(lift2csv_sense_table(argv$LIFT_file))
