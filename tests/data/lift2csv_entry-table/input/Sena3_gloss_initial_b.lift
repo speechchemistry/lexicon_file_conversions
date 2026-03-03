@@ -1,0 +1,1384 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- See https://github.com/sillsdev/lift-standard for more information on the format used here. -->
+<lift producer="SIL.FLEx 9.3.6.2230" version="0.13">
+<header>
+<ranges>
+<range id="dialect" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="etymology" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="grammatical-info" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="lexical-relation" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="note-type" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="paradigm" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="reversal-type" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="semantic-domain-ddp4" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="status" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="users" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="location" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<!-- The following ranges are produced by FieldWorks Language Explorer, and are not part of the LIFT standard. -->
+<range id="anthro-code" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="translation-type" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<!-- The parts of speech are duplicated in another range because derivational affixes require a "From" PartOfSpeech as well as a "To" PartOfSpeech. -->
+<range id="from-part-of-speech" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="morph-type" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="exception-feature" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="inflection-feature" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="inflection-feature-type" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="genro-feature-value" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="Num-feature-value" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="Nome-slot" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="Preposição-slot" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="Possessivo-slot" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="Determiner-slot" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="Verbo-slot" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+<range id="do-not-publish-in" href="file://C:/Users/timke/Downloads/Sena3_gloss_initial_b/Sena3_gloss_initial_b.lift-ranges"/>
+</ranges>
+<fields>
+<field tag="cv-pattern">
+<form lang="en"><text>This records the syllable pattern for a LexPronunciation in FieldWorks.</text></form>
+</field>
+<field tag="tone">
+<form lang="en"><text>This records the tone information for a LexPronunciation in FieldWorks.</text></form>
+</field>
+<field tag="comment">
+<form lang="en"><text>This records a comment (note) in a LexEtymology in FieldWorks.</text></form>
+</field>
+<field tag="import-residue">
+<form lang="en"><text>This records residue left over from importing a standard format file into FieldWorks (or LinguaLinks).</text></form>
+</field>
+<field tag="literal-meaning">
+<form lang="en"><text>This field is used to store a literal meaning of the entry.  Typically, this field is necessary only for a compound or an idiom where the meaning of the whole is different from the sum of its parts.</text></form>
+</field>
+<field tag="summary-definition">
+<form lang="en"><text>A summary definition (located at the entry level in the Entry pane) is a general definition summarizing all the senses of a primary entry. It has no theoretical value; its use is solely pragmatic.</text></form>
+</field>
+<field tag="exemplar">
+<form lang="en"><text>This field stores the exemplar form for the current sense.</text></form>
+</field>
+<field tag="scientific-name">
+<form lang="en"><text>This field stores the scientific name pertinent to the current sense.</text></form>
+</field>
+<field tag="Plural">
+<form lang="en"><text></text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=String; WsSelector=kwsVern</text></form>
+</field>
+<field tag="Singular">
+<form lang="en"><text>There are a number of words which have no singular or the singular is rare.</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=String; WsSelector=kwsAnal</text></form>
+</field>
+<field tag="Parsing Note">
+<form lang="en"><text></text></form>
+<form lang="qaa-x-spec"><text>Class=LexSense; Type=String; WsSelector=kwsAnal</text></form>
+</field>
+</fields>
+</header>
+<entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-09-05T17:58:33Z" id="adidi_a15b8ae6-207c-4999-b1e0-f95a348d1bdc" guid="a15b8ae6-207c-4999-b1e0-f95a348d1bdc">
+<lexical-unit>
+<form lang="seh"><text>adidi</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<sense id="892fa71e-e2cb-4e2f-9ca9-d37d77c5acda" order="0">
+<grammatical-info value="Adjectivo">
+</grammatical-info>
+<gloss lang="en"><text>good</text></gloss>
+<gloss lang="pt"><text>bom</text></gloss>
+<example>
+<form lang="seh"><text>akazi adidi</text></form>
+<translation type="Free translation">
+<form lang="pt"><text>boas mulheres</text></form>
+</translation>
+</example>
+<note type="grammar">
+<form lang="en"><text>Question: m'phyadidi = ndi + pyadidi Note that N made it become aspirated.; Question: There are a lot of ndi + fusions eg: nduwo=ndi+uwo, m'khufa ndi+kufa</text></form>
+</note>
+<field type="Parsing Note">
+<form lang="en"><text>Is the root adidi or didi?; adj0 put in to handle "adidi" form</text></form>
+</field>
+</sense>
+<sense id="13e26eb7-5809-40d3-a08d-78c704ba8a30" order="1">
+<grammatical-info value="Nome">
+</grammatical-info>
+<gloss lang="en"><text>right side</text></gloss>
+<gloss lang="pt"><text>direita</text></gloss>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-09-06T16:11:57Z" id="bambaya_03d6652b-0af8-40a3-b2ee-574c53dcfb2c" guid="03d6652b-0af8-40a3-b2ee-574c53dcfb2c">
+<lexical-unit>
+<form lang="seh"><text>bambaya</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<field type="Plural">
+<form lang="seh"><text>mabambaya</text></form>
+</field>
+<sense id="d59756d9-3fe2-4cd6-9e2e-372ae603152a">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:14/6]]"/>
+</grammatical-info>
+<gloss lang="en"><text>sweet potato</text></gloss>
+<gloss lang="pt"><text>batata doce</text></gloss>
+<example source="Nyazeze">
+<form lang="seh"><text>mabambaya mikulu</text></form>
+<translation type="Free translation">
+<form lang="pt"><text>batata doce grande</text></form>
+</translation>
+<note type="reference">
+<form lang="en"><text>Nyazeze</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>Question: Why is this class 6 using mi- for it's concord? Could it be the plant?; bambaya wa cizungu = batata reino (white potato)</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-09-06T16:12:41Z" id="banku_adcc7584-28dc-4e3a-969c-7cfc8914126a" guid="adcc7584-28dc-4e3a-969c-7cfc8914126a">
+<lexical-unit>
+<form lang="seh"><text>banku</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<etymology type="borrowed" source="">
+<form lang="pt"><text>banco</text></form>
+<field type="languagenotes">
+<form lang="pt"><text>Portuguese</text></form>
+</field>
+</etymology>
+<field type="Plural">
+<form lang="seh"><text>mabanku</text></form>
+</field>
+<sense id="6f5ba1c7-2628-4669-899e-7615d7862b3d">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+</grammatical-info>
+<gloss lang="en"><text>stool</text></gloss>
+<gloss lang="pt"><text>banco</text></gloss>
+<definition>
+<form lang="en"><text>stool</text></form>
+<form lang="pt"><text>banco</text></form>
+</definition>
+<example source="Wordlist">
+<note type="reference">
+<form lang="en"><text>Wordlist</text></form>
+</note>
+</example>
+<trait name ="semantic-domain-ddp4" value="5.1.1.2 Chair"/>
+<note>
+<form lang="en"><text>some refuse to accept this as Sena, use mpando</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-09-06T16:13:13Z" id="bárigi_c2d5080f-e67a-45ce-8a2a-cbddc75a3657" guid="c2d5080f-e67a-45ce-8a2a-cbddc75a3657">
+<lexical-unit>
+<form lang="seh"><text>bárigi</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<variant>
+<form lang="seh"><text>barigi</text></form>
+<trait  name="morph-type" value="stem"/>
+</variant>
+<etymology type="borrowed" source="">
+<form lang="en"><text>barge</text></form>
+<field type="languagenotes">
+<form lang="pt"><text>English</text></form>
+</field>
+</etymology>
+<field type="Plural">
+<form lang="seh"><text>mabárigi</text></form>
+</field>
+<sense id="ef626122-aeda-4bd1-951b-63ba29d6e74a">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+</grammatical-info>
+<gloss lang="en"><text>barge</text></gloss>
+<gloss lang="pt"><text>barco (tipo)</text></gloss>
+<example source="Nyazeze">
+<note type="reference">
+<form lang="en"><text>Nyazeze</text></form>
+</note>
+</example>
+<note type="phonology">
+<form lang="en"><text>variant: <span lang="seh">bargi by older people, note progression from English to assimulated Sena</span></text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-09-06T16:14:02Z" id="bemberuwa_41989bc6-8c43-426f-8465-6e78018dc115" guid="41989bc6-8c43-426f-8465-6e78018dc115">
+<lexical-unit>
+<form lang="seh"><text>bemberuwa</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<field type="Plural">
+<form lang="seh"><text>mabemberuwa</text></form>
+</field>
+<sense id="58d47fd5-21e6-4a19-8ca9-768b77eb0c8e">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+</grammatical-info>
+<gloss lang="en"><text>butterfly</text></gloss>
+<gloss lang="pt"><text>borboleta</text></gloss>
+<example source="Nyazeze; Rogeiro">
+<note type="reference">
+<form lang="en"><text>Nyazeze; Rogeiro</text></form>
+</note>
+</example>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-09-06T16:14:09Z" id="benga_164ebd28-78ff-424d-9fb0-038ef844b184" guid="164ebd28-78ff-424d-9fb0-038ef844b184">
+<lexical-unit>
+<form lang="seh"><text>benga</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<field type="Plural">
+<form lang="seh"><text>mabenga</text></form>
+</field>
+<sense id="cc7b9218-27a9-4ba7-9b69-79a469019855">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+</grammatical-info>
+<gloss lang="en"><text>hole</text></gloss>
+<gloss lang="pt"><text>buraco</text></gloss>
+<example>
+</example>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-08-16T20:24:19Z" id="bondia_97d765f4-286b-48e8-a76c-b66a61428cb2" guid="97d765f4-286b-48e8-a76c-b66a61428cb2">
+<lexical-unit>
+<form lang="seh"><text>bondia</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="stem"/>
+<etymology type="borrowed" source="">
+<form lang="pt"><text>bom dia</text></form>
+<field type="languagenotes">
+<form lang="pt"><text>Portuguese</text></form>
+</field>
+</etymology>
+<sense id="229fdf0b-c330-423a-8eb2-6a0fc8c76d2b">
+<gloss lang="en"><text>good morning</text></gloss>
+<gloss lang="pt"><text>bom dia</text></gloss>
+<example source="Nya">
+<note type="reference">
+<form lang="en"><text>Nya</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>check</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-09-06T16:18:38Z" id="bongwe_4b5afaed-1da7-4062-8992-e2f6076d2886" guid="4b5afaed-1da7-4062-8992-e2f6076d2886">
+<lexical-unit>
+<form lang="seh"><text>bongwe</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<field type="Plural">
+<form lang="seh"><text>mabongwe</text></form>
+</field>
+<sense id="eea4e67f-9514-4bfb-9bfc-af148446d34f">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+</grammatical-info>
+<gloss lang="en"><text>baboon</text></gloss>
+<gloss lang="pt"><text>babuíno</text></gloss>
+<definition>
+<form lang="en"><text>baboon</text></form>
+</definition>
+<example source="Orth; Meque">
+<note type="reference">
+<form lang="en"><text>Orth; Meque</text></form>
+</note>
+</example>
+<field type="scientific-name">
+<form lang="en"><text>genus Papio</text></form>
+</field>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-08-16T20:24:19Z" id="botari_16f79c67-c08f-4c8f-8df1-9209bc4005b2" guid="16f79c67-c08f-4c8f-8df1-9209bc4005b2">
+<lexical-unit>
+<form lang="seh"><text>botari</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="stem"/>
+<etymology type="borrowed" source="">
+<form lang="pt"><text>boa tarde</text></form>
+<field type="languagenotes">
+<form lang="pt"><text>Portuguese</text></form>
+</field>
+</etymology>
+<sense id="93dd2162-dedc-42bf-9fc6-49e6a765bdf8">
+<gloss lang="en"><text>good afternoon</text></gloss>
+<gloss lang="pt"><text>boa tarde</text></gloss>
+<example source="Nya">
+<note type="reference">
+<form lang="en"><text>Nya</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>check</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-09-06T16:19:08Z" id="bote_97fc469d-9916-454d-8ff0-277f973f8674" guid="97fc469d-9916-454d-8ff0-277f973f8674">
+<lexical-unit>
+<form lang="seh"><text>bote</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<etymology type="borrowed" source="">
+<form lang="en"><text>boat</text></form>
+<gloss lang="en"><text>boat</text></gloss>
+<field type="languagenotes">
+<form lang="pt"><text>English</text></form>
+</field>
+</etymology>
+<field type="Plural">
+<form lang="seh"><text>mabote</text></form>
+</field>
+<sense id="1dc5dfb2-e140-4fa2-85b4-ebf9c7cce900">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+</grammatical-info>
+<gloss lang="en"><text>boat</text></gloss>
+<gloss lang="pt"><text>barco</text></gloss>
+<example>
+</example>
+</sense>
+</entry>
+<entry dateCreated="2007-01-11T20:46:03Z" dateModified="2007-01-11T21:17:04Z" id="cen_72a67175-6d5f-4966-b5b2-f7163e776984" guid="72a67175-6d5f-4966-b5b2-f7163e776984">
+<lexical-unit>
+<form lang="seh"><text>cen</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="stem"/>
+<sense id="7dc211fe-5eac-4381-97fa-e8d1a0a8d674" order="0">
+<grammatical-info value="Verbo">
+</grammatical-info>
+<gloss lang="en"><text>white</text></gloss>
+<gloss lang="pt"><text>blanco</text></gloss>
+<definition>
+<form lang="en"><text>white, pure, holy</text></form>
+<form lang="pt"><text>blanco, puro, santo</text></form>
+</definition>
+<trait name ="semantic-domain-ddp4" value="8.3.3.3.1 White"/>
+</sense>
+<sense id="7d9e442d-044c-4766-8dad-435c6610a449" order="1">
+<grammatical-info value="Verbo">
+</grammatical-info>
+<gloss lang="en"><text>pure</text></gloss>
+<gloss lang="pt"><text>puro</text></gloss>
+<definition>
+<form lang="en"><text>pure, holy, having the character of God</text></form>
+<form lang="pt"><text>puro, santo</text></form>
+</definition>
+<trait name ="semantic-domain-ddp4" value="8.3.7 Good"/>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:31Z" dateModified="2006-08-23T19:41:31Z" id="cikalango_7ab16ccc-f41e-4a3c-8d45-82dc2d71c1cb" guid="7ab16ccc-f41e-4a3c-8d45-82dc2d71c1cb">
+<lexical-unit>
+<form lang="seh"><text>kalango</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>cikalango</text></form>
+</citation>
+<field type="Plural">
+<form lang="seh"><text>pikalango</text></form>
+</field>
+<sense id="f9b5a296-5d59-437e-a2ee-29c9a8b0680e">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:7/8]]"/>
+</grammatical-info>
+<gloss lang="en"><text>pot</text></gloss>
+<gloss lang="pt"><text>barro</text></gloss>
+<definition>
+<form lang="en"><text>clay pot</text></form>
+<form lang="pt"><text>panela de barro</text></form>
+</definition>
+<example source="Wordlist">
+<note type="reference">
+<form lang="en"><text>Wordlist</text></form>
+</note>
+</example>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:31Z" dateModified="2011-08-04T18:22:25Z" id="cimpfunye_3a982178-6213-4db7-bb55-8833cd568551" guid="3a982178-6213-4db7-bb55-8833cd568551">
+<lexical-unit>
+<form lang="seh"><text>mpfunye</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>cimpfunye</text></form>
+</citation>
+<field type="Plural">
+<form lang="seh"><text>pimpfunye</text></form>
+</field>
+<sense id="667eb258-45b0-413e-b101-f9ccc7cbb64c">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:7/8]]"/>
+</grammatical-info>
+<gloss lang="en"><text>bugs</text></gloss>
+<gloss lang="pt"><text>bichinhos</text></gloss>
+<example>
+</example>
+<note type="sociolinguistics">
+<form lang="en"><text>CT</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:31Z" dateModified="2006-08-23T19:41:32Z" id="dongo_4d1d3f09-ce9c-4f48-984a-1ac9de0748fe" guid="4d1d3f09-ce9c-4f48-984a-1ac9de0748fe">
+<lexical-unit>
+<form lang="seh"><text>dongo</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<field type="Plural">
+<form lang="seh"><text>=</text></form>
+</field>
+<sense id="946efc4c-dce4-49b1-a7ff-09ea2de426ce">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5]]"/>
+</grammatical-info>
+<gloss lang="en"><text>clay</text></gloss>
+<gloss lang="pt"><text>barro</text></gloss>
+<example source="Moreira:19; Nyazeze">
+<note type="reference">
+<form lang="en"><text>Moreira:19; Nyazeze</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>vocrev; Question: is there a plural? what class is the plural?</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:31Z" dateModified="2006-09-07T17:51:58Z" id="kang&apos;ombe_416cf9e4-98d6-4296-8c42-2e943ea01de7" guid="416cf9e4-98d6-4296-8c42-2e943ea01de7">
+<lexical-unit>
+<form lang="seh"><text>kang'ombe</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<field type="Plural">
+<form lang="seh"><text>ping'ombe</text></form>
+</field>
+<sense id="9134f0c8-c69f-49d4-af7d-86d170ffff68">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:12/8]]"/>
+</grammatical-info>
+<gloss lang="en"><text>small cow</text></gloss>
+<gloss lang="pt"><text>boizinho</text></gloss>
+<definition>
+<form lang="en"><text>small cow or bull</text></form>
+</definition>
+<example source="Moreira:22; George">
+<note type="reference">
+<form lang="en"><text>Moreira:22; George</text></form>
+</note>
+</example>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:31Z" dateModified="2011-08-04T18:22:25Z" id="kanwa_066cbf82-7cd9-4cf8-a4c7-c62a84da72ea" guid="066cbf82-7cd9-4cf8-a4c7-c62a84da72ea">
+<lexical-unit>
+<form lang="seh"><text>kanwa</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<field type="Plural">
+<form lang="seh"><text>makanwa</text></form>
+</field>
+<sense id="17a07bfd-3e70-4daf-ad3f-47d7c57d70ee">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+</grammatical-info>
+<gloss lang="en"><text>mouth inside</text></gloss>
+<gloss lang="pt"><text>boca interior</text></gloss>
+<example>
+<form lang="seh"><text>mpaka nyama ifikire pa n'kanwa mwace (Sulo 023)</text></form>
+<translation type="Free translation">
+<form lang="en"><text>until meat arrives in mouth his</text></form>
+<form lang="pt"><text>até a carne chega na boca d'ele</text></form>
+</translation>
+</example>
+<example source="Nyazeze">
+<form lang="seh"><text>khanwa mbee na kubira</text></form>
+<translation type="Free translation">
+<form lang="en"><text>always crying</text></form>
+<form lang="pt"><text>lit."boca aberta por chorar" id."sempre chora"</text></form>
+</translation>
+<note type="reference">
+<form lang="en"><text>Nyazeze</text></form>
+</note>
+</example>
+<note type="grammar">
+<form lang="en"><text>perhaps n'- kanwa detro de boca?</text></form>
+</note>
+<note type="phonology">
+<form lang="en"><text>alt: khanwa |probably dialectal difference</text></form>
+</note>
+<note type="semantics">
+<form lang="en"><text>mulomo is mouth, kanwa is inside the mouth</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:31Z" dateModified="2006-08-23T19:41:39Z" id="menya_b974fa51-77c1-46ee-9972-10b6fb3b6ea8" guid="b974fa51-77c1-46ee-9972-10b6fb3b6ea8">
+<lexical-unit>
+<form lang="seh"><text>meny</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>menya</text></form>
+</citation>
+<sense id="1cb19796-f0b4-459b-80ed-4ed620027d8e" order="0">
+<grammatical-info value="Verbo">
+</grammatical-info>
+<gloss lang="en"><text>hit</text></gloss>
+<gloss lang="pt"><text>bater</text></gloss>
+<example source="Wordlist; Orth">
+<note type="reference">
+<form lang="en"><text>Wordlist; Orth</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>See: menya-menya "repetively break bread"; vocrev; should split meanings</text></form>
+</note>
+</sense>
+<sense id="ad086c20-5484-4369-a988-86d1bee667a9" order="1">
+<grammatical-info value="Verbo">
+</grammatical-info>
+<gloss lang="en"><text>break bread</text></gloss>
+<gloss lang="pt"><text>partir pão</text></gloss>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:31Z" dateModified="2006-08-23T19:41:39Z" id="mimba_0ac275c1-cbea-4fff-b78c-44647e4c87da" guid="0ac275c1-cbea-4fff-b78c-44647e4c87da">
+<lexical-unit>
+<form lang="seh"><text>mimba</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>mimba</text></form>
+</citation>
+<sense id="66347a27-02b1-4634-9e15-6e558eea1975">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:9/10]]"/>
+</grammatical-info>
+<gloss lang="en"><text>belly</text></gloss>
+<gloss lang="pt"><text>barriga</text></gloss>
+<example source="Wordlist; Nyazeze">
+<note type="reference">
+<form lang="en"><text>Wordlist; Nyazeze</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>See: utumbu; cifu; vocrev</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:31Z" dateModified="2006-08-23T19:41:39Z" id="mpando_d04f5c9d-7b68-4e99-98db-0bc72341554e" guid="d04f5c9d-7b68-4e99-98db-0bc72341554e">
+<lexical-unit>
+<form lang="seh"><text>pando</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>mpando</text></form>
+</citation>
+<field type="Plural">
+<form lang="seh"><text>mipando</text></form>
+</field>
+<sense id="0aed8037-a007-49e4-9953-3aab76aa6f21" order="0">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+</grammatical-info>
+<gloss lang="en"><text>stool</text></gloss>
+<gloss lang="pt"><text>banco</text></gloss>
+<definition>
+<form lang="en"><text>one or two place bench without a back</text></form>
+<form lang="pt"><text>banco de um ou dois lugares sem costa</text></form>
+</definition>
+<example source="Nyazeze; Wordlist">
+<note type="reference">
+<form lang="en"><text>Nyazeze; Wordlist</text></form>
+</note>
+</example>
+<trait name ="semantic-domain-ddp4" value="5.1.1.2 Chair"/>
+<note>
+<form lang="en"><text>See: kadera = chair d2; vocrev</text></form>
+</note>
+<note type="sociolinguistics">
+<form lang="en"><text>C</text></form>
+</note>
+</sense>
+<sense id="fe140ec7-3093-4e13-99b5-9d34e707c2c8" order="1">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+</grammatical-info>
+<gloss lang="en"><text>chair</text></gloss>
+<gloss lang="pt"><text>cadera</text></gloss>
+<definition>
+<form lang="en"><text>at times by extention "chair"</text></form>
+</definition>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:31Z" dateModified="2011-08-04T18:22:25Z" id="mpfigu_d352b613-93ae-4f6b-9bd9-be5f21b94fb1" guid="d352b613-93ae-4f6b-9bd9-be5f21b94fb1">
+<lexical-unit>
+<form lang="seh"><text>pfigu</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>mpfigu</text></form>
+</citation>
+<variant>
+<form lang="seh"><text>figu</text></form>
+<trait name ="environment" value="/mi_"/>
+<trait  name="morph-type" value="root"/>
+</variant>
+<field type="Plural">
+<form lang="seh"><text>mifigu</text></form>
+</field>
+<sense id="21b1db45-dee8-44d8-a566-eee8e8705670">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+</grammatical-info>
+<gloss lang="en"><text>banana tree</text></gloss>
+<gloss lang="pt"><text>bananeira</text></gloss>
+<example source="Nyazeze">
+<form lang="seh"><text>mpfigu ukulu</text></form>
+<note type="reference">
+<form lang="en"><text>Nyazeze</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>The reason we don't write mfigu is because the fruit is pfigu; Question: Here is a 3/4 doing the 5/6 hardening mpfigu -&gt; mifigu? or is it because there is no contrast between mpf and mf?</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-09-29T21:44:20Z" id="mphuli_1914c74e-59b5-458d-9e70-4301d36aece7" guid="1914c74e-59b5-458d-9e70-4301d36aece7">
+<lexical-unit>
+<form lang="seh"><text>phuli</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>mphuli</text></form>
+</citation>
+<note type="restrictions">
+<form lang="en"><text>Do not use: </text></form>
+</note>
+<sense id="1c7f7bef-ff98-4eae-a377-d1249ab9a97f">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:9/10]]"/>
+</grammatical-info>
+<gloss lang="en"><text>steer</text></gloss>
+<gloss lang="pt"><text>boi</text></gloss>
+<example source="Moreira:16 (mphulu); Rogerio">
+<note type="reference">
+<form lang="en"><text>Moreira:16 (mphulu); Rogerio</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>Question: Nyazeze doesn't know</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:39Z" id="mpira_7482b8bd-5e7d-4636-9de0-d4dba36cee58" guid="7482b8bd-5e7d-4636-9de0-d4dba36cee58">
+<lexical-unit>
+<form lang="seh"><text>pira</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>mpira</text></form>
+</citation>
+<field type="Plural">
+<form lang="seh"><text>mipira</text></form>
+</field>
+<sense id="5303273f-e59f-4559-a7b9-3ed8c67e51b9">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+</grammatical-info>
+<gloss lang="en"><text>rubber</text></gloss>
+<gloss lang="pt"><text>borracha</text></gloss>
+<example source="Orth; Nyazeze">
+<note type="reference">
+<form lang="en"><text>Orth; Nyazeze</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>which meaning of borracha? rubber, no eraser</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-09-29T21:44:46Z" id="mpsimbo_a676fa4b-dabc-42f4-a9da-4e5213d06b8b" guid="a676fa4b-dabc-42f4-a9da-4e5213d06b8b">
+<lexical-unit>
+<form lang="seh"><text>psimbo</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>mpsimbo</text></form>
+</citation>
+<sense id="12ce5655-1077-43f3-a428-865c2382c5e5">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:9/10]]"/>
+</grammatical-info>
+<gloss lang="en"><text>walking stick</text></gloss>
+<gloss lang="pt"><text>bengala</text></gloss>
+<example source="Moreira:4">
+<note type="reference">
+<form lang="en"><text>Moreira:4</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>Moreira said mp'simbo - stick</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:40Z" id="mulinga_53f208d7-acb6-46a0-b8f6-28262838a5b5" guid="53f208d7-acb6-46a0-b8f6-28262838a5b5">
+<lexical-unit>
+<form lang="seh"><text>linga</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>mulinga</text></form>
+</citation>
+<field type="Plural">
+<form lang="seh"><text>miringa</text></form>
+</field>
+<sense id="0ec79a63-c04d-4cad-89a8-8202b248e9d6" order="0">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+</grammatical-info>
+<gloss lang="en"><text>jar</text></gloss>
+<gloss lang="pt"><text>bilha</text></gloss>
+<definition>
+<form lang="en"><text>small clay container for water</text></form>
+</definition>
+<example source="Orth">
+<note type="reference">
+<form lang="en"><text>Orth</text></form>
+</note>
+</example>
+<note type="phonology">
+<form lang="en"><text>múlinga; alt: <span lang="seh">linga</span></text></form>
+</note>
+</sense>
+<sense id="2335ea36-7ae3-4407-96c0-6c56ab0ab85f" order="1">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+</grammatical-info>
+<gloss lang="en"><text>stem</text></gloss>
+<gloss lang="pt"><text>cacho</text></gloss>
+<definition>
+<form lang="en"><text>banana stem</text></form>
+<form lang="pt"><text>cacho de banana</text></form>
+</definition>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:40Z" id="mulomo_11473a37-f10a-4201-b569-afd4b994373c" guid="11473a37-f10a-4201-b569-afd4b994373c">
+<lexical-unit>
+<form lang="seh"><text>lomo</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>mulomo</text></form>
+</citation>
+<field type="Plural">
+<form lang="seh"><text>miromo</text></form>
+</field>
+<sense id="4b00452e-9f58-40ee-b5bc-144ca16cfa99">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+</grammatical-info>
+<gloss lang="en"><text>mouth</text></gloss>
+<gloss lang="pt"><text>boca</text></gloss>
+<definition>
+<form lang="en"><text>exterior of the mouth; lips</text></form>
+<form lang="pt"><text>parte fora de boca; labios</text></form>
+</definition>
+<example source="Sulo; Orth; Wordlist">
+<note type="reference">
+<form lang="en"><text>Sulo; Orth; Wordlist</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>not the same as kanwe - inside mouth; vocrev</text></form>
+</note>
+<note type="phonology">
+<form lang="en"><text>múlomo (stress - Orth); alt: <span lang="seh">lomo</span></text></form>
+</note>
+<field type="Parsing Note">
+<form lang="en"><text>note l -&gt; r / i_ will CARLA handle this?</text></form>
+</field>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2011-08-04T18:22:25Z" id="mwa_935c0a9c-8294-4ed7-8dac-6c9b6addd09e" guid="935c0a9c-8294-4ed7-8dac-6c9b6addd09e">
+<lexical-unit>
+<form lang="seh"><text>mw</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>mwa</text></form>
+</citation>
+<sense id="076b345f-c4d7-4b07-885a-532a69eb125d">
+<grammatical-info value="Verbo">
+</grammatical-info>
+<gloss lang="en"><text>drink</text></gloss>
+<gloss lang="pt"><text>beber</text></gloss>
+<example source="Wordlist; Orth">
+<note type="reference">
+<form lang="en"><text>Wordlist; Orth</text></form>
+</note>
+</example>
+<trait name ="semantic-domain-ddp4" value="5.2.2.7 Drink"/>
+<note type="phonology">
+<form lang="en"><text>monosyllabic</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2009-05-15T19:19:36Z" id="ng&apos;oma_1c3896d4-90c0-4382-a316-beefea925c25" guid="1c3896d4-90c0-4382-a316-beefea925c25">
+<lexical-unit>
+<form lang="seh"><text>ng'oma</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>ng'oma</text></form>
+</citation>
+<field type="Plural">
+<form lang="seh"><text>zing'oma</text></form>
+</field>
+<sense id="8abb551d-571b-4612-a4cd-85d065bca104">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:9/10]]"/>
+</grammatical-info>
+<gloss lang="en"><text>drum</text></gloss>
+<gloss lang="pt"><text>batuque</text></gloss>
+<example source="Orth">
+<note type="reference">
+<form lang="en"><text>Orth</text></form>
+</note>
+</example>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-09-29T21:48:24Z" id="ng&apos;ombe_c74603b3-c270-4fa4-ba9b-44cf5abedea4" guid="c74603b3-c270-4fa4-ba9b-44cf5abedea4">
+<lexical-unit>
+<form lang="seh"><text>ng'ombe</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>ng'ombe</text></form>
+</citation>
+<sense id="df313b4b-f760-4864-a5f8-9854dff3af73" order="0">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:9/10]]"/>
+</grammatical-info>
+<gloss lang="en"><text>ox</text></gloss>
+<gloss lang="pt"><text>boi</text></gloss>
+<example source="Moreira:16">
+<note type="reference">
+<form lang="en"><text>Moreira:16</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>Sena doesn't distinguish between cow &amp; ox; vocrev</text></form>
+</note>
+</sense>
+<sense id="33493618-0bdb-4baa-aa80-235f7009c5a0" order="1">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:9/10]]"/>
+</grammatical-info>
+<gloss lang="en"><text>cow</text></gloss>
+<gloss lang="pt"><text>vaca</text></gloss>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2011-08-04T18:22:25Z" id="n&apos;kanwa_7f876006-1922-49b7-83f7-4f954b77f1bd" guid="7f876006-1922-49b7-83f7-4f954b77f1bd">
+<lexical-unit>
+<form lang="seh"><text>kanwa</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>n'kanwa</text></form>
+</citation>
+<sense id="e82993d5-549f-41b6-8844-105962d58f45">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:18]]"/>
+</grammatical-info>
+<gloss lang="en"><text>mouth inside</text></gloss>
+<gloss lang="pt"><text>boca detro</text></gloss>
+<definition>
+<form lang="en"><text>mouth, refers to the interior part of the mouth</text></form>
+</definition>
+<example source="Moreira p24">
+<note type="reference">
+<form lang="en"><text>Moreira p24</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>See: mulomo = boca; Question: nkanwa 9/10 former analysis but check concords</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:42Z" id="nkono_3ca7c7ad-c8c9-4cc8-aa6d-fe08222181ff" guid="3ca7c7ad-c8c9-4cc8-aa6d-fe08222181ff">
+<lexical-unit>
+<form lang="seh"><text>kono</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>nkono</text></form>
+</citation>
+<field type="Plural">
+<form lang="seh"><text>mikono</text></form>
+</field>
+<sense id="8125329e-2b09-4073-b9d2-566190f5f940" order="0">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+</grammatical-info>
+<gloss lang="en"><text>arm</text></gloss>
+<gloss lang="pt"><text>braço</text></gloss>
+<definition>
+<form lang="en"><text>arm (includes hand)</text></form>
+</definition>
+<example source="Wordlist; Moreira26">
+<note type="reference">
+<form lang="en"><text>Wordlist; Moreira26</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>vocrev; See: nkono-nkono "à direito"; kugonera unkono "dormiu no braço" fig. "faleceu"</text></form>
+</note>
+</sense>
+<sense id="af077c3d-81fb-440f-9bc9-28fa60edf42b" order="1">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+</grammatical-info>
+<gloss lang="en"><text>bull</text></gloss>
+<gloss lang="pt"><text>touro</text></gloss>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:43Z" id="nsengere_00f99de8-333b-4c51-a306-a6d54b58723a" guid="00f99de8-333b-4c51-a306-a6d54b58723a">
+<lexical-unit>
+<form lang="seh"><text>sengere</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>nsengere</text></form>
+</citation>
+<field type="Plural">
+<form lang="seh"><text>misengere</text></form>
+</field>
+<sense id="368b3592-de73-4b0b-a65d-654e61cec4ad">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+</grammatical-info>
+<gloss lang="en"><text>bamboo</text></gloss>
+<gloss lang="pt"><text>bambú</text></gloss>
+<example source="Moreira:19; Nyazeze">
+<note type="reference">
+<form lang="en"><text>Moreira:19; Nyazeze</text></form>
+</note>
+</example>
+<note type="sociolinguistics">
+<form lang="en"><text>A</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-09-29T21:52:15Z" id="nthonga_52c7195d-4ddc-41ec-81cc-5fd560039e4e" guid="52c7195d-4ddc-41ec-81cc-5fd560039e4e">
+<lexical-unit>
+<form lang="seh"><text>thonga</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>nthonga</text></form>
+</citation>
+<sense id="688c63ab-91b6-43f2-821f-71d3ec409900">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:9/10]]"/>
+</grammatical-info>
+<gloss lang="en"><text>noise</text></gloss>
+<gloss lang="pt"><text>barulho</text></gloss>
+<example source="Sulo2:14">
+<note type="reference">
+<form lang="en"><text>Sulo2:14</text></form>
+</note>
+</example>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-28T17:26:47Z" id="ntolo_8c0a6616-ba67-4060-80d9-c0d5bf5c7086" guid="8c0a6616-ba67-4060-80d9-c0d5bf5c7086">
+<lexical-unit>
+<form lang="seh"><text>tolo</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>ntolo</text></form>
+</citation>
+<field type="Plural">
+<form lang="seh"><text>mitolo</text></form>
+</field>
+<sense id="358c3a82-6cb9-4f98-9279-411ed528fb86">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+</grammatical-info>
+<gloss lang="en"><text>bagage</text></gloss>
+<gloss lang="pt"><text>bagagem</text></gloss>
+<example>
+</example>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:44Z" id="nyakapherú-pheru_c6ea6e29-547d-499d-a585-169497a3f186" guid="c6ea6e29-547d-499d-a585-169497a3f186">
+<lexical-unit>
+<form lang="seh"><text>nyakapherú-pheru</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="stem"/>
+<note type="restrictions">
+<form lang="en"><text>Do not use: </text></form>
+</note>
+<sense id="706da4f3-c698-4f9c-a850-aa18ebd8af13">
+<grammatical-info value="Nome">
+</grammatical-info>
+<gloss lang="en"><text>butterfly</text></gloss>
+<gloss lang="pt"><text>borboleta</text></gloss>
+<example source="Orth">
+<note type="reference">
+<form lang="en"><text>Orth</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>See: bemberuwa; Question: Nyazeze doesn't know</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:45Z" id="nyakucinga_3b0b9def-5194-44ec-af26-d270483dfc19" guid="3b0b9def-5194-44ec-af26-d270483dfc19">
+<lexical-unit>
+<form lang="seh"><text>nyakucinga</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<field type="Plural">
+<form lang="seh"><text>anyakucinga</text></form>
+</field>
+<sense id="a899604f-eb0f-49aa-bcee-ff35bfb31929">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:1/2]]"/>
+</grammatical-info>
+<gloss lang="en"><text>barber</text></gloss>
+<gloss lang="pt"><text>barbeiro</text></gloss>
+<example source="Nya">
+<note type="reference">
+<form lang="en"><text>Nya</text></form>
+</note>
+</example>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2007-01-10T22:09:28Z" id="nyati_9f0442e0-e702-4d89-98a1-6b4cb9fe9805" guid="9f0442e0-e702-4d89-98a1-6b4cb9fe9805">
+<lexical-unit>
+<form lang="seh"><text>yati</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>nyati</text></form>
+</citation>
+<sense id="e7864414-f020-4453-a46a-a2e783a319bb">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:9/10]]"/>
+</grammatical-info>
+<gloss lang="en"><text>Cape buffalo</text></gloss>
+<gloss lang="pt"><text>búfalo</text></gloss>
+<definition>
+<form lang="en"><text>Cape buffalo</text></form>
+</definition>
+<example source="Meque; Nyazeze; Rogerio">
+<note type="reference">
+<form lang="en"><text>Meque; Nyazeze; Rogerio</text></form>
+</note>
+</example>
+<field type="scientific-name">
+<form lang="en"><text>Syncerus caffer</text></form>
+</field>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2011-08-04T18:22:25Z" id="pfigu_57297a7e-451b-4411-a575-6a36a974a626" guid="57297a7e-451b-4411-a575-6a36a974a626">
+<lexical-unit>
+<form lang="seh"><text>pfigu</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<variant>
+<form lang="seh"><text>figu</text></form>
+<trait name ="environment" value="/ma_"/>
+<trait  name="morph-type" value="root"/>
+</variant>
+<field type="Plural">
+<form lang="seh"><text>mafigu</text></form>
+</field>
+<sense id="ca4a133b-e0f9-4a56-b60f-16718a39ddae">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+</grammatical-info>
+<gloss lang="en"><text>banana</text></gloss>
+<gloss lang="pt"><text>banana</text></gloss>
+<example source="Orth">
+<note type="reference">
+<form lang="en"><text>Orth</text></form>
+</note>
+</example>
+<note type="phonology">
+<form lang="en"><text>alt: <span lang="seh">pfigu</span>; variant: <span lang="seh">Phodzo says figu</span></text></form>
+</note>
+<note type="sociolinguistics">
+<form lang="en"><text>ACT</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2011-08-04T18:22:25Z" id="phanga_055bb251-95da-4959-92c1-aa7bab5cc7c0" guid="055bb251-95da-4959-92c1-aa7bab5cc7c0">
+<lexical-unit>
+<form lang="seh"><text>panga</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>phanga</text></form>
+</citation>
+<field type="Plural">
+<form lang="seh"><text>mapanga</text></form>
+</field>
+<sense id="55e6af15-103c-4b41-9e10-da36ee20f5da">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+</grammatical-info>
+<gloss lang="en"><text>bandit</text></gloss>
+<gloss lang="pt"><text>bandido</text></gloss>
+<example source="Orth">
+<note type="reference">
+<form lang="en"><text>Orth</text></form>
+</note>
+</example>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:47Z" id="phutu_b46e4739-7153-4883-b2c3-908365df67d3" guid="b46e4739-7153-4883-b2c3-908365df67d3">
+<lexical-unit>
+<form lang="seh"><text>putu</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>phutu</text></form>
+</citation>
+<field type="Plural">
+<form lang="seh"><text>maputu</text></form>
+</field>
+<sense id="2581c234-84f5-4ef9-ae06-3be67d528c6a">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+</grammatical-info>
+<gloss lang="en"><text>cheek</text></gloss>
+<gloss lang="pt"><text>buchecha</text></gloss>
+<example source="Orth">
+<note type="reference">
+<form lang="en"><text>Orth</text></form>
+</note>
+</example>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:47Z" id="samba_96c1522a-3124-4b58-9760-c97d8625a78a" guid="96c1522a-3124-4b58-9760-c97d8625a78a">
+<lexical-unit>
+<form lang="seh"><text>samb</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>samba</text></form>
+</citation>
+<sense id="8aaa121c-0d62-46ec-a3f8-932b53ec00f0">
+<grammatical-info value="Verbo">
+</grammatical-info>
+<gloss lang="en"><text>bathe</text></gloss>
+<gloss lang="pt"><text>banhar</text></gloss>
+<example source="Orth">
+<note type="reference">
+<form lang="en"><text>Orth</text></form>
+</note>
+</example>
+<note type="sociolinguistics">
+<form lang="en"><text>CT</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:48Z" id="senzeka_3f30b367-5496-4f7a-8c6b-95711f1b69e2" guid="3f30b367-5496-4f7a-8c6b-95711f1b69e2">
+<lexical-unit>
+<form lang="seh"><text>senzek</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>senzeka</text></form>
+</citation>
+<sense id="28376e7b-02a2-41bb-87bd-7161ce3ac904">
+<grammatical-info value="Verbo">
+</grammatical-info>
+<gloss lang="en"><text>play</text></gloss>
+<gloss lang="pt"><text>brincar</text></gloss>
+<definition>
+<form lang="en"><text>children's play, noncompetative play</text></form>
+<form lang="pt"><text>brincar de crianças</text></form>
+</definition>
+<example source="Nyezeze; Wordlist">
+<note type="reference">
+<form lang="en"><text>Nyezeze; Wordlist</text></form>
+</note>
+</example>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:48Z" id="sukuna_446538d9-1b1e-4b45-97c5-07af29dc72e9" guid="446538d9-1b1e-4b45-97c5-07af29dc72e9">
+<lexical-unit>
+<form lang="seh"><text>sukun</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>sukuna</text></form>
+</citation>
+<sense id="31c1e263-4dbc-402f-a0f3-82d860f258f4">
+<grammatical-info value="Verbo">
+</grammatical-info>
+<gloss lang="en"><text>pinch</text></gloss>
+<gloss lang="pt"><text>beliscão</text></gloss>
+<example source="Wordlist (said arranhar)">
+<note type="reference">
+<form lang="en"><text>Wordlist (said arranhar)</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>See: kwarunya "arranhar"</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2009-04-08T21:06:24Z" id="thikiti_daee4cec-ea74-485d-b750-3c46af48694c" guid="daee4cec-ea74-485d-b750-3c46af48694c">
+<lexical-unit>
+<form lang="seh"><text>atikiti</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>thikiti</text></form>
+</citation>
+<variant>
+<form lang="seh"><text>thikiti</text></form>
+<trait name ="environment" value="/ma_"/>
+<trait  name="morph-type" value="stem"/>
+</variant>
+<field type="Plural">
+<form lang="seh"><text>matikiti</text></form>
+</field>
+<sense id="94749a03-836e-4bd5-a4f1-9da4b3f5b05b">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+</grammatical-info>
+<gloss lang="en"><text>ticket</text></gloss>
+<gloss lang="pt"><text>bilhete</text></gloss>
+<example>
+</example>
+<note type="phonology">
+<form lang="en"><text>alt: <span lang="seh">thikiti; matikiti</span></text></form>
+</note>
+<note type="source">
+<form lang="en"><text>English</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:50Z" id="thumbi_3d85aa59-6fd2-46c9-8919-236af76e2af0" guid="3d85aa59-6fd2-46c9-8919-236af76e2af0">
+<lexical-unit>
+<form lang="seh"><text>thumbi</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<field type="Plural">
+<form lang="seh"><text>mathumbi</text></form>
+</field>
+<sense id="6dc56367-27f8-4f4f-bd7f-9a04bc470966">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+</grammatical-info>
+<gloss lang="en"><text>bag</text></gloss>
+<gloss lang="pt"><text>bolso</text></gloss>
+<definition>
+<form lang="en"><text>a small bag on a string for holding money or small personal items</text></form>
+</definition>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:50Z" id="udidi_91c553cd-7924-474f-a91a-4320f264a792" guid="91c553cd-7924-474f-a91a-4320f264a792">
+<lexical-unit>
+<form lang="seh"><text>didi</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>udidi</text></form>
+</citation>
+<sense id="78c00a11-2e56-4697-b5bf-80904626cdf3">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:14]]"/>
+</grammatical-info>
+<gloss lang="en"><text>goodness</text></gloss>
+<gloss lang="pt"><text>bondade</text></gloss>
+<example>
+</example>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:51Z" id="upumbuzi_72eee253-6013-448a-a7c8-0719aa95ef2c" guid="72eee253-6013-448a-a7c8-0719aa95ef2c">
+<lexical-unit>
+<form lang="seh"><text>upumbuzi</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<field type="Plural">
+<form lang="seh"><text>maupumbuzi</text></form>
+</field>
+<sense id="c658fc3b-450b-4488-a2b7-fcefd7d38652">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:14/6]]"/>
+</grammatical-info>
+<gloss lang="en"><text>gnat</text></gloss>
+<gloss lang="pt"><text>bichinho</text></gloss>
+<definition>
+<form lang="en"><text>a type of small flying insect that likes to get into one's eyes</text></form>
+<form lang="pt"><text>um típo de bichinho pequeno, voador, que gosta de entrar nos olhos</text></form>
+</definition>
+<example source="Moreira p26; Nya">
+<note type="reference">
+<form lang="en"><text>Moreira p26; Nya</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>plural is rare, can use pimaupumbuzi ping'ono or</text></form>
+</note>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:51Z" id="uyetimi_a1095120-e054-40ba-abe0-ec85c7446242" guid="a1095120-e054-40ba-abe0-ec85c7446242">
+<lexical-unit>
+<form lang="seh"><text>yetimi</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>uyetimi</text></form>
+</citation>
+<note type="restrictions">
+<form lang="en"><text>Do not parse: Derived form</text></form>
+</note>
+<sense id="ae62dd24-2425-4d9c-bf98-12f9af6e7573" order="0">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:14]]"/>
+</grammatical-info>
+<gloss lang="en"><text>brilliancy</text></gloss>
+<gloss lang="pt"><text>brilho</text></gloss>
+<example source="Moreira p32; Nya">
+<note type="reference">
+<form lang="en"><text>Moreira p32; Nya</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>See: kuyetima =brilhar; brilhante</text></form>
+</note>
+</sense>
+<sense id="56914d82-0650-4b31-bb28-a77197eca5ac" order="1">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:14]]"/>
+</grammatical-info>
+<gloss lang="en"><text>splendour</text></gloss>
+<gloss lang="pt"><text>esplendor</text></gloss>
+</sense>
+</entry>
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:51Z" id="yetima_3dcf17de-6e0b-48c3-9046-b5e28bdaddae" guid="3dcf17de-6e0b-48c3-9046-b5e28bdaddae">
+<lexical-unit>
+<form lang="seh"><text>yetim</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>yetima</text></form>
+</citation>
+<sense id="586ad21a-8694-415b-afb2-5843bcb03885">
+<grammatical-info value="Verbo">
+</grammatical-info>
+<gloss lang="en"><text>shine</text></gloss>
+<gloss lang="pt"><text>brilhar</text></gloss>
+<example source="Moreira p32; Nyazeze">
+<note type="reference">
+<form lang="en"><text>Moreira p32; Nyazeze</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>See: uyetimi "brilho, esplendor"; See: -yetimira "brilhar para mais tempo"</text></form>
+</note>
+</sense>
+</entry>
+</lift>
