@@ -1,8 +1,7 @@
-lift2csv_sense_table <- function(LIFT_file) {
+sense_table <- function(LIFT_file) {
   library(xml2)
   library(purrr)
   suppressMessages(library(dplyr))
-  library(readr)
 
   doc <- read_xml(LIFT_file)
 
@@ -30,5 +29,5 @@ lift2csv_sense_table <- function(LIFT_file) {
       })
     })
 
-  format_csv(sense_table, na = "")
+  sense_table
 }

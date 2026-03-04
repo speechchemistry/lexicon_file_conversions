@@ -1,9 +1,8 @@
-lift2csv_entry_table <- function(LIFT_file) {
+entry_table <- function(LIFT_file) {
   library(xml2)
   library(purrr)
   suppressMessages(library(dplyr))
   library(tidyr)
-  library(readr)
 
   doc = read_xml(LIFT_file)
 
@@ -61,6 +60,5 @@ lift2csv_entry_table <- function(LIFT_file) {
     left_join(fields_wide, by = "entry_id") |>
     left_join(citations_wide, by = "entry_id")
 
-  # write CSV entry_table to stdout
-  if(nrow(combined) == 0) "" else format_csv(combined, na = "")
+  combined
 }

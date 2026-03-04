@@ -2,6 +2,7 @@
 # - add the other entry level fields like morph type and pronunciation
 
 library(argparser)
+library(readr)
 
 script_path <- normalizePath(sub("^--file=", "", commandArgs(FALSE)[grep("^--file=", commandArgs(FALSE))]))
 script_dir <- dirname(script_path)
@@ -12,4 +13,9 @@ p <- arg_parser("This script takes the LIFT file and produces a CSV of the entry
 p <- add_argument(p, "LIFT_file", 
                   help="SIL Flex lexicon LIFT file")
 argv <- parse_args(p)
-cat(lift2csv_entry_table(argv$LIFT_file))
+table <- entry_table(argv$LIFT_file)
+if (nrow(table) == 0) {
+    cat("")
+} else {
+    cat(format_csv(table, na = ""))
+}
