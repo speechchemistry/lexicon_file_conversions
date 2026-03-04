@@ -17,5 +17,6 @@ This is a basic example which shows you how to generate the entry table and the 
 ``` bash
 Rscript scripts/lift2csv_entry-table.R Sena3.lift > Sena3_entry-table.csv
 Rscript scripts/lift2csv_sense-table.R Sena3.lift > Sena3_sense-table.csv
+Rscript scripts/lift2csv_join-sense-entry-table.R Sena3.lift > Sena3_join-sense-entry-table.csv
 ```
 
