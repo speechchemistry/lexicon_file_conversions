@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- See https://github.com/sillsdev/lift-standard for more information on the format used here. -->
+<lift producer="SIL.FLEx 9.2.11.1154" version="0.13">
+<header>
+<ranges>
+<range id="dialect" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="etymology" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="grammatical-info" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="lexical-relation" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="note-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="paradigm" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="reversal-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="semantic-domain-ddp4" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="status" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="users" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="location" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<!-- The following ranges are produced by FieldWorks Language Explorer, and are not part of the LIFT standard. -->
+<range id="anthro-code" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="translation-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<!-- The parts of speech are duplicated in another range because derivational affixes require a "From" PartOfSpeech as well as a "To" PartOfSpeech. -->
+<range id="from-part-of-speech" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="morph-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="exception-feature" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="inflection-feature" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="inflection-feature-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="genro-feature-value" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Num-feature-value" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Nome-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Preposição-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Possessivo-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Determiner-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Verbo-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="do-not-publish-in" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="usage-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+</ranges>
+<fields>
+<field tag="cv-pattern">
+<form lang="en"><text>This records the syllable pattern for a LexPronunciation in FieldWorks.</text></form>
+</field>
+<field tag="tone">
+<form lang="en"><text>This records the tone information for a LexPronunciation in FieldWorks.</text></form>
+</field>
+<field tag="comment">
+<form lang="en"><text>This records a comment (note) in a LexEtymology in FieldWorks.</text></form>
+</field>
+<field tag="import-residue">
+<form lang="en"><text>This records residue left over from importing a standard format file into FieldWorks (or LinguaLinks).</text></form>
+</field>
+<field tag="literal-meaning">
+<form lang="en"><text>This field is used to store a literal meaning of the entry.  Typically, this field is necessary only for a compound or an idiom where the meaning of the whole is different from the sum of its parts.</text></form>
+</field>
+<field tag="summary-definition">
+<form lang="en"><text>A summary definition (located at the entry level in the Entry pane) is a general definition summarizing all the senses of a primary entry. It has no theoretical value; its use is solely pragmatic.</text></form>
+</field>
+<field tag="exemplar">
+<form lang="en"><text>This field stores the exemplar form for the current sense.</text></form>
+</field>
+<field tag="scientific-name">
+<form lang="en"><text>This field stores the scientific name pertinent to the current sense.</text></form>
+</field>
+<field tag="Plural">
+<form lang="en"><text></text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=String; WsSelector=kwsVern</text></form>
+</field>
+<field tag="Singular">
+<form lang="en"><text>There are a number of words which have no singular or the singular is rare.</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=String; WsSelector=kwsAnal</text></form>
+</field>
+<field tag="Parsing Note">
+<form lang="en"><text></text></form>
+<form lang="qaa-x-spec"><text>Class=LexSense; Type=String; WsSelector=kwsAnal</text></form>
+</field>
+</fields>
+</header>
+
+<entry dateCreated="2005-06-23T16:30:31Z" dateModified="RUN_TIMESTAMP_UTC" id="cibubu_0006f482-a078-4cef-9c5a-8bd35b53cf72" guid="0006f482-a078-4cef-9c5a-8bd35b53cf72">
+<lexical-unit>
+<form lang="seh"><text>bubu bubu</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>cibubu</text></form>
+</citation>
+<field type="Plural">
+<form lang="seh"><text>pibubu</text></form>
+</field>
+<sense id="07086e7d-dfcc-4f4e-b0d6-0be7a7943f97">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:7/8]]"/>
+</grammatical-info>
+<gloss lang="en"><text>stammering</text></gloss>
+<gloss lang="pt"><text>gaguez</text></gloss>
+<example source="Moreira:22">
+<note type="reference">
+<form lang="en"><text>Moreira:22</text></form>
+</note>
+</example>
+<trait name ="semantic-domain-ddp4" value="2.5.4 Disabled"/>
+</sense>
+</entry>
+
+<entry dateCreated="2005-06-23T16:30:31Z" dateModified="RUN_TIMESTAMP_UTC" id="cibubu_0006f482-a078-4cef-9c5a-8bd35b53cf72" guid="0006f482-a078-4cef-9c5a-8bd35b53cf72">
+<lexical-unit>
+<form lang="seh"><text>bubu bubu</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>cibubu</text></form>
+</citation>
+<field type="Plural">
+<form lang="seh"><text>pibubu</text></form>
+</field>
+<sense id="07086e7d-dfcc-4f4e-b0d6-0be7a7943f97">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:7/8]]"/>
+</grammatical-info>
+<gloss lang="en"><text>stammering</text></gloss>
+<gloss lang="pt"><text>gaguez</text></gloss>
+<example source="Moreira:22">
+<note type="reference">
+<form lang="en"><text>Moreira:22</text></form>
+</note>
+</example>
+<trait name ="semantic-domain-ddp4" value="2.5.4 Disabled"/>
+</sense>
+</entry>
+
+</lift>

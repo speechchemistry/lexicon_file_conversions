@@ -8,7 +8,7 @@ The goal of lift2csv is to convert a SIL Flex LIFT file into tidy CSV files.
 
 ## Installation
 
-You can download the package by clicking on the green code button and selecting "Download ZIP2".
+You can download the package by clicking on the green code button and selecting "Download ZIP".
 
 ## Example
 
