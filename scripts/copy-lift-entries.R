@@ -8,7 +8,15 @@ devtools::load_all(project_dir, quiet = TRUE)
 p <- arg_parser("Extract selected LIFT entries by GUID and write a new LIFT document to stdout")
 p <- add_argument(p, "source_lift", help = "Path to source LIFT file")
 p <- add_argument(p, "guid_file", help = "File with one GUID per line, '-' for stdin, or omit for stdin", default = "-")
-argv <- parse_args(p)
+
+# argparser treats positional args as required even when a default is present,
+# so normalize one-arg invocation to use stdin for GUID input.
+raw_argv <- commandArgs(trailingOnly = TRUE)
+if (length(raw_argv) == 1 && !raw_argv[[1]] %in% c("-h", "--help")) {
+  raw_argv <- c(raw_argv, "-")
+}
+
+argv <- parse_args(p, argv = raw_argv)
 
 guide_source <- argv$guid_file
 if (is.null(guide_source) || !nzchar(guide_source) || identical(guide_source, "-")) {

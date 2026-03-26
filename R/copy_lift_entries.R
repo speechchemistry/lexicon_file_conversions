@@ -35,7 +35,9 @@ copy_lift_entries <- function(source_lift, guid_source = NULL, log_progress = TR
 
   # Stage 4: Read and clean GUID input lines.
   if (is.null(guid_source) || identical(guid_source, "-")) {
-    lines <- readr::read_lines(file("stdin", open = "r"), lazy = FALSE)
+    stdin_con <- file("stdin", open = "r")
+    on.exit(close(stdin_con), add = TRUE)
+    lines <- readLines(con = stdin_con, warn = FALSE)
   } else {
     lines <- readr::read_lines(guid_source, lazy = FALSE)
   }
