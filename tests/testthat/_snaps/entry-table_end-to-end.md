@@ -1527,3 +1527,11 @@
     Code
       writeLines(lines)
 
+# entry-table_end-to-end_sena3_single_entry_plant
+
+    Code
+      writeLines(lines)
+    Output
+      entry_id,dateCreated,dateModified,seh,citation_seh
+      f67e332a-b296-4967-ace3-5583ce66e95b,2006-08-23T21:07:21Z,2006-09-22T20:14:24Z,bzwal,bzwala
+
