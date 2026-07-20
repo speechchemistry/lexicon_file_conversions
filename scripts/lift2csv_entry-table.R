@@ -1,5 +1,5 @@
 # TO DO
-# - add the other entry level fields like morph type and pronunciation
+# - add the other entry level fields like pronunciation
 
 library(argparser)
 library(readr)
