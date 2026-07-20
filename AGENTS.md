@@ -34,3 +34,11 @@ Guidance for human and AI contributors working in this repository.
   - Write result content only to stdout.
   - Write progress, diagnostics, and errors to stderr.
 
+## Testing Approach
+
+- Prefer native `testthat` snapshot tests for CLI and file-conversion workflows when outputs are large or awkward to assert inline.
+- Keep input fixtures under `tests/data/<script>/input/` and let `testthat` manage approved artifacts under `tests/testthat/_snaps/`.
+- Follow the Emily Bache approval-testing workflow: checked-in snapshots are the approved artifacts, and `.new` snapshot files are the review artifacts.
+- Keep snapshot artifacts human-reviewable and deterministic so diffs are meaningful.
+- Do not auto-accept snapshot changes; review them explicitly with `testthat::snapshot_review()` or `testthat::snapshot_accept()`.
+

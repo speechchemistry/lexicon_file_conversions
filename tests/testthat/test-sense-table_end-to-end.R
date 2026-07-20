@@ -1,25 +1,14 @@
-test_that("sense-table_end-to-end", {
-  input <- "../data/lift2csv_sense-table/input/Sena3_gloss_initial_b.lift"
-  expected <- readLines("../data/lift2csv_sense-table/expected/Sena3_gloss_initial_b.csv")
+fixture_dir <- testthat::test_path("..", "data", "lift2csv_sense-table")
+script_path <- "../../scripts/lift2csv_sense-table.R"
 
-  result <- system2(
-    "Rscript",
-    args = c("../../scripts/lift2csv_sense-table.R", input),
-    stdout = TRUE
-  )
-
-  expect_equal(result, expected)
+test_that("sense-table fixtures have no legacy expected directory", {
+  expect_no_legacy_expected_dir(fixture_dir)
 })
 
-test_that("sense-table_end-to-end_empty-lexicon", {
-  input <- "../data/lift2csv_sense-table/input/lela-teli-empty-lexicon.lift"
-  expected <- readLines("../data/lift2csv_sense-table/expected/lela-teli-empty-lexicon.csv")
+for (input_path in fixture_inputs(fixture_dir)) {
+  stem <- fixture_stem(input_path)
 
-  result <- system2(
-    "Rscript",
-    args = c("../../scripts/lift2csv_sense-table.R", input),
-    stdout = TRUE
-  )
-
-  expect_equal(result, expected)
-})
+  test_that(paste0("sense-table_end-to-end_", stem), {
+    expect_cli_stdout_snapshot(script_path, input_path)
+  })
+}

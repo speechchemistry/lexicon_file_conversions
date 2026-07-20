@@ -20,6 +20,17 @@ Rscript scripts/lift2csv_sense-table.R Sena3.lift > Sena3_sense-table.csv
 Rscript scripts/lift2csv_join-sense-entry-table.R Sena3.lift > Sena3_join-sense-entry-table.csv
 ```
 
+## Testing
+
+End-to-end CLI approvals use native `testthat` snapshots.
+
+- Input fixtures stay under `tests/data/<script>/input/`.
+- Approved outputs live in `tests/testthat/_snaps/`.
+- When output changes, `testthat` writes a `.new` snapshot for review.
+- Review snapshot diffs before accepting them with `testthat::snapshot_review()` or `testthat::snapshot_accept()`.
+
+This follows the Emily Bache approval-testing workflow using `testthat` conventions: checked-in snapshots are the approved artifacts, and `.new` files are the review artifacts.
+
 ## Copy Selected Entries by GUID
 
 Use `scripts/copy-lift-entries.R` to extract specific `<entry>` elements from a source LIFT file and write a new LIFT document to stdout.
