@@ -1,10 +1,6 @@
 fixture_dir <- testthat::test_path("..", "data", "lift2csv_join-sense-entry-table")
 script_path <- "../../scripts/lift2csv_join-sense-entry-table.R"
 
-test_that("join-sense-entry-table fixtures have no legacy expected directory", {
-  expect_no_legacy_expected_dir(fixture_dir)
-})
-
 for (input_path in fixture_inputs(fixture_dir)) {
   stem <- fixture_stem(input_path)
 

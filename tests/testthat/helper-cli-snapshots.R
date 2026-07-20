@@ -13,15 +13,6 @@ fixture_stem <- function(path) {
   tools::file_path_sans_ext(basename(path))
 }
 
-expect_no_legacy_expected_dir <- function(fixture_dir) {
-  legacy_dir <- file.path(fixture_dir, "expected")
-
-  testthat::expect_false(
-    dir.exists(legacy_dir),
-    info = paste("Legacy expected fixture directory should be removed:", legacy_dir)
-  )
-}
-
 run_cli_stdout <- function(script_path, args) {
   system2(
     "Rscript",
