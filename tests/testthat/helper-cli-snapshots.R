@@ -13,21 +13,18 @@ fixture_stem <- function(path) {
   tools::file_path_sans_ext(basename(path))
 }
 
-run_cli_stdout <- function(script_path, args) {
+run_cli_to_file <- function(script_path, args, out_path, stdin = "") {
   system2(
     "Rscript",
     args = c(script_path, args),
-    stdout = TRUE
+    stdout = out_path,
+    stdin = stdin
   )
+  out_path
 }
 
-expect_cli_stdout_snapshot <- function(script_path, input_path, transform = identity) {
-  testthat::local_reproducible_output(width = 80)
-
-  result <- run_cli_stdout(script_path, input_path)
-  lines <- transform(result)
-
-  testthat::expect_snapshot({
-    writeLines(lines)
-  })
+expect_cli_stdout_file_snapshot <- function(script_path, args, name, transform = identity, stdin = "") {
+  out_path <- withr::local_tempfile()
+  run_cli_to_file(script_path, args, out_path, stdin = stdin)
+  testthat::expect_snapshot_file(out_path, name = name, compare = testthat::compare_file_text, transform = transform)
 }

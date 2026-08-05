@@ -52,9 +52,10 @@ Known limitations:
 End-to-end CLI approvals use native `testthat` snapshots.
 
 - Input fixtures stay under `tests/data/<script>/input/`.
-- Approved outputs live in `tests/testthat/_snaps/`.
+- Approved outputs live in `tests/testthat/_snaps/<test-file>/<fixture>.<ext>` as raw files (e.g. a `.csv` or `.lift` file), not markdown-wrapped text — CLI tests use `testthat::expect_snapshot_file()` (via the `expect_cli_stdout_file_snapshot()` helper) rather than `expect_snapshot()`.
 - When output changes, `testthat` writes a `.new` snapshot for review.
 - Review snapshot diffs before accepting them with `testthat::snapshot_review()` or `testthat::snapshot_accept()`.
+- Run the suite with `devtools::test()`, or set `NOT_CRAN=true` first if invoking `testthat::test_dir()`/`Rscript` directly — snapshot tests are otherwise silently skipped. `tests/testthat/setup.R` sets this automatically when unset.
 
 This follows the Emily Bache approval-testing workflow using `testthat` conventions: checked-in snapshots are the approved artifacts, and `.new` files are the review artifacts.
 

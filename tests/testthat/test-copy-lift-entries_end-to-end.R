@@ -9,60 +9,46 @@ normalize_run_timestamp <- function(lines) {
   )
 }
 
+script_path <- "../../scripts/copy-lift-entries.R"
+
 test_that("copy-lift-entries_end-to-end_one-guid", {
   input_lift <- "../data/copy-lift-entries/input/Sena3.lift"
   input_guids <- "../data/copy-lift-entries/input/one-guid.txt"
-  expected <- readLines("../data/copy-lift-entries/expected/Sena3_one-guid.lift")
 
-  result <- system2(
-    "Rscript",
-    args = c("../../scripts/copy-lift-entries.R", input_lift, input_guids),
-    stdout = TRUE
+  expect_cli_stdout_file_snapshot(
+    script_path, c(input_lift, input_guids),
+    name = "one-guid.lift", transform = normalize_run_timestamp
   )
-
-  expect_equal(normalize_run_timestamp(result), expected)
 })
 
 test_that("copy-lift-entries_end-to-end_duplicate-guid", {
   input_lift <- "../data/copy-lift-entries/input/Sena3.lift"
   input_guids <- "../data/copy-lift-entries/input/duplicate-guid.txt"
-  expected <- readLines("../data/copy-lift-entries/expected/Sena3_duplicate-guid.lift")
 
-  result <- system2(
-    "Rscript",
-    args = c("../../scripts/copy-lift-entries.R", input_lift, input_guids),
-    stdout = TRUE
+  expect_cli_stdout_file_snapshot(
+    script_path, c(input_lift, input_guids),
+    name = "duplicate-guid.lift", transform = normalize_run_timestamp
   )
-
-  expect_equal(normalize_run_timestamp(result), expected)
 })
 
 test_that("copy-lift-entries_end-to-end_guid-from-stdin", {
   input_lift <- "../data/copy-lift-entries/input/Sena3.lift"
-  expected <- readLines("../data/copy-lift-entries/expected/Sena3_one-guid.lift")
 
-  result <- system2(
-    "Rscript",
-    args = c("../../scripts/copy-lift-entries.R", input_lift, "-"),
-    stdin = "../data/copy-lift-entries/input/one-guid.txt",
-    stdout = TRUE
+  expect_cli_stdout_file_snapshot(
+    script_path, c(input_lift, "-"),
+    name = "guid-from-stdin.lift", transform = normalize_run_timestamp,
+    stdin = "../data/copy-lift-entries/input/one-guid.txt"
   )
-
-  expect_equal(normalize_run_timestamp(result), expected)
 })
 
 test_that("copy-lift-entries_end-to-end_guid-from-stdin_when-guid-arg-omitted", {
   input_lift <- "../data/copy-lift-entries/input/Sena3.lift"
-  expected <- readLines("../data/copy-lift-entries/expected/Sena3_one-guid.lift")
 
-  result <- system2(
-    "Rscript",
-    args = c("../../scripts/copy-lift-entries.R", input_lift),
-    stdin = "../data/copy-lift-entries/input/one-guid.txt",
-    stdout = TRUE
+  expect_cli_stdout_file_snapshot(
+    script_path, input_lift,
+    name = "guid-from-stdin_when-guid-arg-omitted.lift", transform = normalize_run_timestamp,
+    stdin = "../data/copy-lift-entries/input/one-guid.txt"
   )
-
-  expect_equal(normalize_run_timestamp(result), expected)
 })
 
 test_that("copy-lift-entries_missing-guid_errors", {

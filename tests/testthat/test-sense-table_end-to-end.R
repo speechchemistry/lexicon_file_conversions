@@ -5,6 +5,6 @@ for (input_path in fixture_inputs(fixture_dir)) {
   stem <- fixture_stem(input_path)
 
   test_that(paste0("sense-table_end-to-end_", stem), {
-    expect_cli_stdout_snapshot(script_path, input_path)
+    expect_cli_stdout_file_snapshot(script_path, input_path, name = paste0(stem, ".csv"))
   })
 }

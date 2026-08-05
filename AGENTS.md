@@ -17,6 +17,7 @@ Guidance for human and AI contributors working in this repository.
 - Before changing behaviour, check existing patterns in nearby files and follow them.
 - When behaviour changes are non-trivial, ask for confirmation before implementing.
 - If a requirement is ambiguous and could alter behaviour, ask a clarifying yes/no question first.
+- Ask clarifying questions in plain chat text, not via a multiple-choice/quick-answer UI widget.
 
 ## Libraries And Dependencies
 
@@ -38,7 +39,9 @@ Guidance for human and AI contributors working in this repository.
 
 - Prefer native `testthat` snapshot tests for CLI and file-conversion workflows when outputs are large or awkward to assert inline.
 - Keep input fixtures under `tests/data/<script>/input/` and let `testthat` manage approved artifacts under `tests/testthat/_snaps/`.
+- Use `testthat::expect_snapshot_file()` (via the `expect_cli_stdout_file_snapshot()` helper in `tests/testthat/helper-cli-snapshots.R`) for CLI output, not `expect_snapshot()`. This stores each approved artifact as its own raw file (e.g. `_snaps/<test-file>/<fixture>.csv`) instead of wrapping it in a markdown fence, while keeping the same `.new`/review/accept workflow.
 - Follow the Emily Bache approval-testing workflow: checked-in snapshots are the approved artifacts, and `.new` snapshot files are the review artifacts.
 - Keep snapshot artifacts human-reviewable and deterministic so diffs are meaningful.
 - Do not auto-accept snapshot changes; review them explicitly with `testthat::snapshot_review()` or `testthat::snapshot_accept()`.
+- `tests/testthat/setup.R` sets `NOT_CRAN=true` when unset. Both `expect_snapshot()` and `expect_snapshot_file()` silently skip otherwise (only `devtools::test()` sets this for you automatically) — without it, a bare `Rscript -e 'testthat::test_dir(...)'` run or a naive CI script would report all-green while skipping every snapshot-based test.
 
