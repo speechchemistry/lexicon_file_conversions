@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lift version="0.13" producer="lexicon_file_conversions csv2lift">
+  <entry dateCreated="2006-08-23T21:07:21Z" dateModified="2006-09-22T20:14:24Z" guid="f67e332a-b296-4967-ace3-5583ce66e95b">
+    <lexical-unit>
+      <form lang="seh">
+        <text>bzwal</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="stem"/>
+    <citation>
+      <form lang="seh">
+        <text>bzwala</text>
+      </form>
+    </citation>
+  </entry>
+</lift>
