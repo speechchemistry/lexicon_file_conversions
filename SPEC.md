@@ -8,6 +8,11 @@ This spec is the source of truth. When code and this document disagree, that is 
 
 Built incrementally as design decisions are actually made through development; it does not speculate ahead of what is implemented. See "Not Yet Specified" (§8) for what is deliberately left undesigned.
 
+### 1.1 LIFT model references
+
+- [lift.rng](https://github.com/sillsdev/lift-standard/blob/master/lift.rng) — the LIFT RelaxNG schema, the authoritative definition of the format. It shows how flexible the spec actually is (most elements are optional, ordering and repetition are loosely constrained).
+- [Technical Notes on LIFT used in FLEx](https://downloads.languagetechnology.org/fieldworks/Documentation/Technical%20Notes%20on%20LIFT%20used%20in%20FLEx.pdf) — describes the practical subset FLEx actually produces/consumes day to day, which is what this project's fixtures and rules are modeled on.
+
 ## 2. Conventions used throughout
 
 - **Dates**: `dateCreated`/`dateModified` are ISO 8601 UTC, format `YYYY-MM-DDTHH:MM:SSZ`, copied verbatim between LIFT and CSV — never regenerated or reformatted.

@@ -26,6 +26,7 @@ Guidance for human and AI contributors working in this repository.
 - When behaviour changes are non-trivial, ask for confirmation before implementing.
 - If a requirement is ambiguous and could alter behaviour, ask a clarifying yes/no question first.
 - Ask clarifying questions in plain chat text, not via a multiple-choice/quick-answer UI widget.
+- Save non-trivial implementation plans to `plans/<descriptive-name>.md` in the repo (not only wherever the tool's own ephemeral plan-mode file lives), so they're preserved and reviewable via git history. This is not a one-time save: whenever the plan is revised (e.g. new information surfaces mid-planning), re-sync `plans/<name>.md` with the latest approved version before or immediately after implementation starts.
 
 ## Libraries And Dependencies
 
@@ -53,4 +54,5 @@ Guidance for human and AI contributors working in this repository.
 - Keep snapshot artifacts human-reviewable and deterministic so diffs are meaningful.
 - Do not auto-accept snapshot changes; review them explicitly with `testthat::snapshot_review()` or `testthat::snapshot_accept()`.
 - `tests/testthat/setup.R` sets `NOT_CRAN=true` when unset. Both `expect_snapshot()` and `expect_snapshot_file()` silently skip otherwise (only `devtools::test()` sets this for you automatically) — without it, a bare `Rscript -e 'testthat::test_dir(...)'` run or a naive CI script would report all-green while skipping every snapshot-based test.
+- Follow TDD for behaviour changes: add/extend the fixture and confirm the corresponding test fails first (red), write the minimum implementation to make it pass (green), then refactor with the tests as a safety net before considering the change done.
 
