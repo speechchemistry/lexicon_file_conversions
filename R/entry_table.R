@@ -55,11 +55,26 @@ entry_table <- function(LIFT_file) {
       names_glue = "citation_{lang}"
     )
 
+  # extract plain (untyped) entry-level notes; [not(@type)] excludes typed
+  # notes like <note type="restrictions">, which are a distinct FLEx field
+  # that happens to reuse the <note> element
+  notes_long <- extract_multitext_element(entries, "./note[not(@type)]/form")
+
+  # pivot notes wider so each writing system becomes its own column
+  notes_wide <- notes_long |>
+    pivot_wider(
+      id_cols = entry_id,
+      names_from = lang,
+      values_from = text,
+      names_glue = "note_{lang}"
+    )
+
   # join with these extra fields our existing lexeme table
   combined <- entry_meta |>
     left_join(lex_wide, by = "entry_id") |>
     left_join(fields_wide, by = "entry_id") |>
-    left_join(citations_wide, by = "entry_id")
+    left_join(citations_wide, by = "entry_id") |>
+    left_join(notes_wide, by = "entry_id")
 
   combined
 }
