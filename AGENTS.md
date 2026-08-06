@@ -47,7 +47,7 @@ Guidance for human and AI contributors working in this repository.
 ## Testing Approach
 
 - Prefer native `testthat` snapshot tests for CLI and file-conversion workflows when outputs are large or awkward to assert inline.
-- Keep input fixtures under `tests/data/<script>/input/` and let `testthat` manage approved artifacts under `tests/testthat/_snaps/`.
+- Keep input fixtures under `tests/testthat/fixtures/<script>/` and let `testthat` manage approved artifacts under `tests/testthat/_snaps/`.
 - Use `testthat::expect_snapshot_file()` (via the `expect_cli_stdout_file_snapshot()` helper in `tests/testthat/helper-cli-snapshots.R`) for CLI output, not `expect_snapshot()`. This stores each approved artifact as its own raw file (e.g. `_snaps/<test-file>/<fixture>.csv`) instead of wrapping it in a markdown fence, while keeping the same `.new`/review/accept workflow.
 - Follow the Emily Bache approval-testing workflow: checked-in snapshots are the approved artifacts, and `.new` snapshot files are the review artifacts.
 - Keep snapshot artifacts human-reviewable and deterministic so diffs are meaningful.

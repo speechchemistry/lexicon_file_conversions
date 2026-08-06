@@ -1,9 +1,8 @@
 fixture_inputs <- function(fixture_dir, pattern = "\\.lift$") {
-  input_dir <- file.path(fixture_dir, "input")
-  inputs <- sort(list.files(input_dir, pattern = pattern, full.names = TRUE))
+  inputs <- sort(list.files(fixture_dir, pattern = pattern, full.names = TRUE))
 
   if (length(inputs) == 0) {
-    stop("No input fixtures found in ", input_dir, call. = FALSE)
+    stop("No input fixtures found in ", fixture_dir, call. = FALSE)
   }
 
   inputs

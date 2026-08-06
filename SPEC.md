@@ -74,7 +74,7 @@ This is a denormalized *view*, not a base table — csv2lift does not consume th
 
 ## 7. Verification
 
-All claims in this spec are checked by the approval tests under `tests/testthat/` (see `AGENTS.md`'s Testing Approach) — golden `.lift`/`.csv` files under `tests/testthat/_snaps/`, generated from fixtures under `tests/data/`.
+All claims in this spec are checked by the approval tests under `tests/testthat/` (see `AGENTS.md`'s Testing Approach) — golden `.lift`/`.csv` files under `tests/testthat/_snaps/`, generated from fixtures under `tests/testthat/fixtures/`.
 
 If a test's expected output and this spec disagree, that is a bug in one of them — resolve the disagreement explicitly (don't just edit whichever is more convenient) and update this spec if the resolution changes a stated rule.
 

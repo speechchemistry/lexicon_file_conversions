@@ -28,7 +28,7 @@ See [`SPEC.md`](SPEC.md) for the full table/column/LIFT-source reference and the
 
 End-to-end CLI approvals use native `testthat` snapshots.
 
-- Input fixtures stay under `tests/data/<script>/input/`.
+- Input fixtures stay under `tests/testthat/fixtures/<script>/`.
 - Approved outputs live in `tests/testthat/_snaps/<test-file>/<fixture>.<ext>` as raw files (e.g. a `.csv` or `.lift` file), not markdown-wrapped text — CLI tests use `testthat::expect_snapshot_file()` (via the `expect_cli_stdout_file_snapshot()` helper) rather than `expect_snapshot()`.
 - When output changes, `testthat` writes a `.new` snapshot for review.
 - Review snapshot diffs before accepting them with `testthat::snapshot_review()` or `testthat::snapshot_accept()`.

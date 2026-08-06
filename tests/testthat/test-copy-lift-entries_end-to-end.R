@@ -12,8 +12,8 @@ normalize_run_timestamp <- function(lines) {
 script_path <- "../../scripts/copy-lift-entries.R"
 
 test_that("copy-lift-entries_end-to-end_one-guid", {
-  input_lift <- "../data/copy-lift-entries/input/Sena3.lift"
-  input_guids <- "../data/copy-lift-entries/input/one-guid.txt"
+  input_lift <- "fixtures/copy-lift-entries/Sena3.lift"
+  input_guids <- "fixtures/copy-lift-entries/one-guid.txt"
 
   expect_cli_stdout_file_snapshot(
     script_path, c(input_lift, input_guids),
@@ -22,8 +22,8 @@ test_that("copy-lift-entries_end-to-end_one-guid", {
 })
 
 test_that("copy-lift-entries_end-to-end_duplicate-guid", {
-  input_lift <- "../data/copy-lift-entries/input/Sena3.lift"
-  input_guids <- "../data/copy-lift-entries/input/duplicate-guid.txt"
+  input_lift <- "fixtures/copy-lift-entries/Sena3.lift"
+  input_guids <- "fixtures/copy-lift-entries/duplicate-guid.txt"
 
   expect_cli_stdout_file_snapshot(
     script_path, c(input_lift, input_guids),
@@ -32,28 +32,28 @@ test_that("copy-lift-entries_end-to-end_duplicate-guid", {
 })
 
 test_that("copy-lift-entries_end-to-end_guid-from-stdin", {
-  input_lift <- "../data/copy-lift-entries/input/Sena3.lift"
+  input_lift <- "fixtures/copy-lift-entries/Sena3.lift"
 
   expect_cli_stdout_file_snapshot(
     script_path, c(input_lift, "-"),
     name = "guid-from-stdin.lift", transform = normalize_run_timestamp,
-    stdin = "../data/copy-lift-entries/input/one-guid.txt"
+    stdin = "fixtures/copy-lift-entries/one-guid.txt"
   )
 })
 
 test_that("copy-lift-entries_end-to-end_guid-from-stdin_when-guid-arg-omitted", {
-  input_lift <- "../data/copy-lift-entries/input/Sena3.lift"
+  input_lift <- "fixtures/copy-lift-entries/Sena3.lift"
 
   expect_cli_stdout_file_snapshot(
     script_path, input_lift,
     name = "guid-from-stdin_when-guid-arg-omitted.lift", transform = normalize_run_timestamp,
-    stdin = "../data/copy-lift-entries/input/one-guid.txt"
+    stdin = "fixtures/copy-lift-entries/one-guid.txt"
   )
 })
 
 test_that("copy-lift-entries_missing-guid_errors", {
-  input_lift <- "../data/copy-lift-entries/input/Sena3.lift"
-  input_guids <- "../data/copy-lift-entries/input/missing-guid.txt"
+  input_lift <- "fixtures/copy-lift-entries/Sena3.lift"
+  input_guids <- "fixtures/copy-lift-entries/missing-guid.txt"
 
   result <- suppressWarnings(system2(
     "Rscript",

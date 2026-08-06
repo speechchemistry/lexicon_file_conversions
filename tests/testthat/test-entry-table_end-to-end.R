@@ -1,4 +1,4 @@
-fixture_dir <- testthat::test_path("..", "data", "lift2csv_entry-table")
+fixture_dir <- testthat::test_path("fixtures", "lift2csv_entry-table")
 script_path <- "../../scripts/lift2csv_entry-table.R"
 
 for (input_path in fixture_inputs(fixture_dir)) {
