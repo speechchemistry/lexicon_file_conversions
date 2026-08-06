@@ -13,11 +13,11 @@
       </form>
     </citation>
     <field type="Plural">
-      <form lang="en">
-        <text>plants</text>
-      </form>
       <form lang="seh">
         <text>bzwala-bzwala</text>
+      </form>
+      <form lang="en">
+        <text>plants</text>
       </form>
     </field>
   </entry>

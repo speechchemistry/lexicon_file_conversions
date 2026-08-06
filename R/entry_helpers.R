@@ -67,3 +67,51 @@ extract_multitext_with_attribute <- function(entries, parent_xpath, attr_name,
       })
     })
 }
+
+# Inverse of the extractors above: classify a csv2lift input CSV's column
+# names into the four shapes entry_table() produces, so csv2lift can rebuild
+# the right LIFT element for each column without re-deriving column-naming
+# rules elsewhere.
+classify_entry_columns <- function(col_names) {
+  meta_columns <- c("entry_id", "dateCreated", "dateModified", "morph_type")
+
+  map_df(col_names, function(col) {
+    if (col %in% meta_columns) {
+      cat(sprintf("Classifying column '%s' as metadata\n", col), file = stderr())
+      return(tibble(column = col, kind = "meta", field_type = NA_character_, lang = NA_character_))
+    }
+
+    if (grepl("^citation_.+$", col)) {
+      lang <- sub("^citation_", "", col)
+      cat(sprintf("Classifying column '%s' as citation, lang=%s\n", col, lang), file = stderr())
+      return(tibble(column = col, kind = "citation", field_type = NA_character_, lang = lang))
+    }
+
+    if (!grepl("_", col, fixed = TRUE)) {
+      cat(sprintf("Classifying column '%s' as lexical-unit, lang=%s\n", col, col), file = stderr())
+      return(tibble(column = col, kind = "lexical_unit", field_type = NA_character_, lang = col))
+    }
+
+    # Custom field: split on the LAST underscore into field type and lang.
+    # Known limitation, accepted rather than solved generally: a writing
+    # system code containing an underscore, or a custom field literally
+    # named "citation", will misclassify here.
+    field_type <- sub("_[^_]+$", "", col)
+    lang <- sub("^.*_([^_]+)$", "\\1", col)
+    cat(sprintf("Classifying column '%s' as field type='%s', lang=%s\n", col, field_type, lang), file = stderr())
+    tibble(column = col, kind = "field", field_type = field_type, lang = lang)
+  })
+}
+
+# Inverse of the multitext-reading helpers: adds one <form lang><text> child
+# per non-blank entry in a named vector (name = lang, value = text). Shared
+# by lexical-unit, citation, and each custom field's <field> element.
+add_multitext_children <- function(parent_node, lang_values) {
+  for (lang in names(lang_values)) {
+    text <- lang_values[[lang]]
+    if (is.na(text) || !nzchar(text)) next
+    form_node <- xml_add_child(parent_node, "form", lang = lang)
+    text_node <- xml_add_child(form_node, "text")
+    xml_text(text_node) <- text
+  }
+}

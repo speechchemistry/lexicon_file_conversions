@@ -22,30 +22,7 @@ Rscript scripts/lift2csv_join-sense-entry-table.R Sena3.lift > Sena3_join-sense-
 
 ## Supported Fields
 
-| CSV Column                                               | LIFT Source                     | Notes                                                                                 |
-| -------------------------------------------------------- | ------------------------------- | ------------------------------------------------------------------------------------- |
-| `entry_id`                                               | `entry/@guid`                   |                                                                                       |
-| `dateCreated`                                            | `entry/@dateCreated`            |                                                                                       |
-| `dateModified`                                           | `entry/@dateModified`           |                                                                                       |
-| `morph_type`                                             | `entry/trait[@name='morph-type']/@value` |  |
-| `<lang>` (e.g. `seh`)                                    | `entry/lexical-unit/form`       | This is the lexeme form field. One column for each writing system                                       |
-| `citation_<lang>` (e.g. `citation_seh`)                  | `entry/citation/form`           |                                                                                       |
-| `<field-type>_<lang>` (e.g. `Plural_seh`, `Singular_en`) | `entry/field[@type]/form`       | Custom fields with their writing systems |
-| `sense_guid`                                             | `sense/@id`                     |                                                                                       |
-| `grammatical_info`                                       | `sense/grammatical-info/@value` | Only the first match per sense is used                                                |
-| `gloss_en`                                               | `sense/gloss[@lang='en']`       | Hardcoded to English only                                                             |
-
-Writing-system-tagged columns follow one of three naming patterns: a bare
-language code for the lexical-unit form (e.g. `seh`), `citation_<lang>` for
-citation forms, and `<field-type>_<lang>` for custom fields.
-
-Known limitations:
-
-- Entry-level pronunciation is not yet extracted.
-- Sense-level gloss is English-only (`gloss_en`); other gloss languages and
-  definitions are not extracted.
-- Only the first `grammatical-info` per sense is used, even if a sense has
-  multiple.
+See [`SPEC.md`](SPEC.md) for the full table/column/LIFT-source reference and the current known limitations — it's the source of truth for the CSV↔LIFT data model, kept in sync with the code as design decisions are made.
 
 ## Testing
 

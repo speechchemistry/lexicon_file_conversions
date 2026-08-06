@@ -1,0 +1,70 @@
+entry_table_to_lift <- function(entry_table) {
+  library(xml2)
+  library(purrr)
+  suppressMessages(library(dplyr))
+  library(tibble)
+
+  doc <- xml_new_document()
+  root <- xml_add_child(doc, "lift", version = "0.13", producer = "lexicon_file_conversions csv2lift")
+
+  if (nrow(entry_table) == 0) {
+    return(doc)
+  }
+
+  col_classes <- classify_entry_columns(names(entry_table))
+
+  lexical_unit_cols <- filter(col_classes, kind == "lexical_unit")
+  citation_cols <- filter(col_classes, kind == "citation")
+  field_cols <- filter(col_classes, kind == "field")
+
+  has_nonblank <- function(values) any(!is.na(values) & nzchar(values))
+
+  walk(seq_len(nrow(entry_table)), ~{
+    row <- entry_table[.x, ]
+
+    entry_args <- list(root, "entry")
+    if ("dateCreated" %in% names(row) && !is.na(row$dateCreated) && nzchar(row$dateCreated)) {
+      entry_args$dateCreated <- row$dateCreated
+    }
+    if ("dateModified" %in% names(row) && !is.na(row$dateModified) && nzchar(row$dateModified)) {
+      entry_args$dateModified <- row$dateModified
+    }
+    if ("entry_id" %in% names(row) && !is.na(row$entry_id) && nzchar(row$entry_id)) {
+      entry_args$guid <- row$entry_id
+    }
+    entry <- do.call(xml_add_child, entry_args)
+
+    if (nrow(lexical_unit_cols) > 0) {
+      lex_values <- set_names(as.character(row[lexical_unit_cols$column]), lexical_unit_cols$lang)
+      if (has_nonblank(lex_values)) {
+        lex_node <- xml_add_child(entry, "lexical-unit")
+        add_multitext_children(lex_node, lex_values)
+      }
+    }
+
+    if ("morph_type" %in% names(row) && !is.na(row$morph_type) && nzchar(row$morph_type)) {
+      xml_add_child(entry, "trait", name = "morph-type", value = row$morph_type)
+    }
+
+    if (nrow(citation_cols) > 0) {
+      citation_values <- set_names(as.character(row[citation_cols$column]), citation_cols$lang)
+      if (has_nonblank(citation_values)) {
+        citation_node <- xml_add_child(entry, "citation")
+        add_multitext_children(citation_node, citation_values)
+      }
+    }
+
+    if (nrow(field_cols) > 0) {
+      walk(unique(field_cols$field_type), ~{
+        type_cols <- field_cols[field_cols$field_type == .x, ]
+        field_values <- set_names(as.character(row[type_cols$column]), type_cols$lang)
+        if (has_nonblank(field_values)) {
+          field_node <- xml_add_child(entry, "field", type = .x)
+          add_multitext_children(field_node, field_values)
+        }
+      })
+    }
+  })
+
+  doc
+}

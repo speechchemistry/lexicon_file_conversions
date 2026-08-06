@@ -1,6 +1,6 @@
 # csv2lift v1: entry-level CSV → LIFT converter
 
-**Status:** Step 0 (test harness) approved for implementation now. Step 1+ (the actual R implementation) is deliberately deferred to a later pass — this plan follows TDD: get the tests in place and red first, implement to green afterward.
+**Status:** Done. Step 0 (test harness) and Step 1+ (implementation) are both complete — all 3 pre-seeded snapshots pass against `R/csv2lift_entry.R` + `R/entry_helpers.R` additions + `scripts/csv2lift_entry-table.R`, with no edits to the pre-seeded expectations except fixing one snapshot that had been hand-authored with the wrong `<form>` order (caught before implementation, see the ordering-rule note below). Full regression suite and a round-trip smoke test both pass.
 
 ## Context
 
@@ -95,7 +95,7 @@ Investigation (direct file reads of `R/entry_table.R`, `R/entry_helpers.R`, `R/s
    </lift>
    ```
 
-   Note `field`'s two `<form>` children come out lang-alphabetical (`en` before `seh`) — that's `dplyr`/tibble column order feeding `add_multitext_children`, not something to special-case; implementation should preserve whatever order the classified columns naturally produce rather than re-sorting.
+   **Ordering rule (clarified with the user):** `field`'s two `<form>` children must come out in the CSV's own column order (`seh` before `en`, matching `Plural_seh,Plural_en` in the header) — never re-sorted. This mirrors `entry_table()`'s forward direction: `pivot_wider` derives its column order from the order `<form>` elements appear in the original LIFT document (`xml_find_all` returns nodes in document order), so a faithful round trip means csv2lift must preserve whatever order the CSV already gives it, not impose its own (e.g. alphabetical) ordering. `classify_entry_columns()` already does this naturally, since it maps over `col_names` in the order given and never reorders.
 
 3. **Write `tests/testthat/test-csv2lift-entry-table_end-to-end.R`**, using the existing shared helpers unchanged:
    ```r
