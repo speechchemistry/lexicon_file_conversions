@@ -57,7 +57,7 @@ Primary key: `sense_guid` (= `sense/@id`). Foreign key: `entry_id`.
 
 Known limitations (lift2csv direction, pre-existing): only the first `grammatical-info` per sense is captured; only the English gloss is captured; other gloss languages, definitions, and multiple grammatical-info values are dropped.
 
-**csv2lift direction: not yet implemented.** No sense-level round-trip exists yet. Senses are entirely out of scope until this section is revised.
+**csv2lift direction:** implemented by `attach_senses_to_lift(doc, sense_table)` (`R/csv2lift_sense.R`). For each sense row, the entry to attach it to is found by matching `entry_id` against an existing `entry/@guid` in the document (not a separate `id` lookup — entries have no other stable key). LIFT uses `id` (not `guid`) for `<sense>`; it is emitted from `sense_guid`, omitted if blank. `<grammatical-info value=...>` and `<gloss lang="en"><text>...</text></gloss>` are each added only when their source column is non-blank. If a sense row's `entry_id` does not match any entry already in the document, this is a hard error (fail-fast) — the sense is never silently dropped. Multiple senses per entry works by construction but is not yet exercised by a dedicated fixture.
 
 ## 5. Join (entry ⋈ sense) view
 
@@ -69,8 +69,8 @@ This is a denormalized *view*, not a base table — csv2lift does not consume th
 
 - A single script, not one script per table — a LIFT file requires all tables joined together to build one coherent tree. There is no such thing as a "senses-only" LIFT file.
 - Takes one CSV per table as a separate parameter: the entry table is required; further tables (senses, etc.) are added as optional parameters as their round-trip support is implemented.
-- Internally joins tables by their declared foreign key before building the tree (e.g. will attach `<sense>` children to the `<entry>` whose `guid` matches each sense row's `entry_id`, once sense support exists).
-- Currently implemented: `scripts/csv2lift_entry-table.R`, entry table only. This will be renamed/generalized to `scripts/csv2lift.R` once a second table (senses) is added — not done yet.
+- Internally joins tables by their declared foreign key before building the tree (attaches `<sense>` children to the `<entry>` whose `guid` matches each sense row's `entry_id`).
+- Currently implemented: `scripts/csv2lift.R` (renamed from `scripts/csv2lift_entry-table.R`), positional `entries_csv` (required) plus `--senses` (optional).
 
 ## 7. Verification
 
@@ -82,8 +82,8 @@ If a test's expected output and this spec disagree, that is a bug in one of them
 
 Deliberately undesigned until actually built, to avoid speculating ahead of development:
 
-- Sense-level csv2lift (§4).
 - Pronunciation, variant, etymology, and other entry sub-elements not yet read by lift2csv.
 - Multi-lang gloss / multiple grammatical-info per sense.
+- Multiple senses per entry: works by construction in `attach_senses_to_lift()`, but not yet exercised by a dedicated fixture.
 - Any `<header>`/`<fields>` custom-field declaration handling.
 - Patch-in-place / merge-into-existing-LIFT mode for csv2lift.

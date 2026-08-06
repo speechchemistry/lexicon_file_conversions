@@ -36,6 +36,7 @@ Guidance for human and AI contributors working in this repository.
 ## R Code Conventions
 
 - Add brief comments for non-obvious logic so future readers can follow intent.
+- Prefer tidyverse idioms (`purrr`, `dplyr`, `stringr`, `tibble`) for iteration and data manipulation. Base R is fine for scalar NA/blank checks (`is.na(x) || !nzchar(x)`) and simple control flow, where a tidyverse equivalent wouldn't add clarity.
 
 ## CLI Script Conventions
 
