@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- See https://github.com/sillsdev/lift-standard for more information on the format used here. -->
+<lift producer="SIL.FLEx 9.3.10.1452" version="0.13">
+<header>
+<ranges>
+<range id="dialect" href="file://C:/Users/timke/Downloads/two_pronunciations_with_audio_and_IPA/two_pronunciations_with_audio_and_IPA.lift-ranges"/>
+<range id="etymology" href="file://C:/Users/timke/Downloads/two_pronunciations_with_audio_and_IPA/two_pronunciations_with_audio_and_IPA.lift-ranges"/>
+<range id="grammatical-info" href="file://C:/Users/timke/Downloads/two_pronunciations_with_audio_and_IPA/two_pronunciations_with_audio_and_IPA.lift-ranges"/>
+<range id="lexical-relation" href="file://C:/Users/timke/Downloads/two_pronunciations_with_audio_and_IPA/two_pronunciations_with_audio_and_IPA.lift-ranges"/>
+<range id="note-type" href="file://C:/Users/timke/Downloads/two_pronunciations_with_audio_and_IPA/two_pronunciations_with_audio_and_IPA.lift-ranges"/>
+<range id="paradigm" href="file://C:/Users/timke/Downloads/two_pronunciations_with_audio_and_IPA/two_pronunciations_with_audio_and_IPA.lift-ranges"/>
+<range id="reversal-type" href="file://C:/Users/timke/Downloads/two_pronunciations_with_audio_and_IPA/two_pronunciations_with_audio_and_IPA.lift-ranges"/>
+<range id="semantic-domain-ddp4" href="file://C:/Users/timke/Downloads/two_pronunciations_with_audio_and_IPA/two_pronunciations_with_audio_and_IPA.lift-ranges"/>
+<range id="status" href="file://C:/Users/timke/Downloads/two_pronunciations_with_audio_and_IPA/two_pronunciations_with_audio_and_IPA.lift-ranges"/>
+<range id="users" href="file://C:/Users/timke/Downloads/two_pronunciations_with_audio_and_IPA/two_pronunciations_with_audio_and_IPA.lift-ranges"/>
+<range id="location" href="file://C:/Users/timke/Downloads/two_pronunciations_with_audio_and_IPA/two_pronunciations_with_audio_and_IPA.lift-ranges"/>
+<!-- The following ranges are produced by FieldWorks Language Explorer, and are not part of the LIFT standard. -->
+<range id="anthro-code" href="file://C:/Users/timke/Downloads/two_pronunciations_with_audio_and_IPA/two_pronunciations_with_audio_and_IPA.lift-ranges"/>
+<range id="translation-type" href="file://C:/Users/timke/Downloads/two_pronunciations_with_audio_and_IPA/two_pronunciations_with_audio_and_IPA.lift-ranges"/>
+<!-- The parts of speech are duplicated in another range because derivational affixes require a "From" PartOfSpeech as well as a "To" PartOfSpeech. -->
+<range id="from-part-of-speech" href="file://C:/Users/timke/Downloads/two_pronunciations_with_audio_and_IPA/two_pronunciations_with_audio_and_IPA.lift-ranges"/>
+<range id="morph-type" href="file://C:/Users/timke/Downloads/two_pronunciations_with_audio_and_IPA/two_pronunciations_with_audio_and_IPA.lift-ranges"/>
+<range id="exception-feature" href="file://C:/Users/timke/Downloads/two_pronunciations_with_audio_and_IPA/two_pronunciations_with_audio_and_IPA.lift-ranges"/>
+<range id="inflection-feature" href="file://C:/Users/timke/Downloads/two_pronunciations_with_audio_and_IPA/two_pronunciations_with_audio_and_IPA.lift-ranges"/>
+<range id="inflection-feature-type" href="file://C:/Users/timke/Downloads/two_pronunciations_with_audio_and_IPA/two_pronunciations_with_audio_and_IPA.lift-ranges"/>
+<range id="do-not-publish-in" href="file://C:/Users/timke/Downloads/two_pronunciations_with_audio_and_IPA/two_pronunciations_with_audio_and_IPA.lift-ranges"/>
+</ranges>
+<fields>
+<field tag="cv-pattern">
+<form lang="en"><text>This records the syllable pattern for a LexPronunciation in FieldWorks.</text></form>
+</field>
+<field tag="tone">
+<form lang="en"><text>This records the tone information for a LexPronunciation in FieldWorks.</text></form>
+</field>
+<field tag="comment">
+<form lang="en"><text>This records a comment (note) in a LexEtymology in FieldWorks.</text></form>
+</field>
+<field tag="import-residue">
+<form lang="en"><text>This records residue left over from importing a standard format file into FieldWorks (or LinguaLinks).</text></form>
+</field>
+<field tag="literal-meaning">
+<form lang="en"><text>This field is used to store a literal meaning of the entry.  Typically, this field is necessary only for a compound or an idiom where the meaning of the whole is different from the sum of its parts.</text></form>
+</field>
+<field tag="summary-definition">
+<form lang="en"><text>A summary definition (located at the entry level in the Entry pane) is a general definition summarizing all the senses of a primary entry. It has no theoretical value; its use is solely pragmatic.</text></form>
+</field>
+<field tag="exemplar">
+<form lang="en"><text>This field stores the exemplar form for the current sense.</text></form>
+</field>
+<field tag="scientific-name">
+<form lang="en"><text>This field stores the scientific name pertinent to the current sense.</text></form>
+</field>
+<field tag="3SG PFV Form">
+<form lang="en"><text>Form elicited using English past-tense prompts (e.g., ‘he took’, ‘he saw’). Uses all vernacular WS.</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=MultiUnicode; WsSelector=kwsVerns</text></form>
+</field>
+<field tag="FTFlags">
+<form lang="en"><text>For use by FlexTools</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=String; WsSelector=kwsAnal</text></form>
+</field>
+<field tag="Pluractional Verb">
+<form lang="en"><text>Pluractional verb form (includes all vernacular writing systems)</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=MultiUnicode; WsSelector=kwsVerns</text></form>
+</field>
+<field tag="Plural Noun">
+<form lang="en"><text>Plural noun (includes all vernacular writing systems)</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=MultiUnicode; WsSelector=kwsVerns</text></form>
+</field>
+<field tag="Stem Type">
+<form lang="en"><text>s=simple, ns=not simple</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=String; WsSelector=kwsAnal</text></form>
+</field>
+</fields>
+</header>
+<entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-04-21T10:59:20Z" id="tsen_bed1e71d-bf62-4e67-8ff5-98063a182cad" guid="bed1e71d-bf62-4e67-8ff5-98063a182cad">
+<lexical-unit>
+<form lang="zhi"><text>tsen</text></form>
+<form lang="zhi-fonipa-x-emic"><text>tsēn</text></form>
+<form lang="zhi-fonipa-x-etic"><text>tsʼēn</text></form>
+<form lang="zhi-fonipa-x-pitch"><text>˦</text></form>
+<form lang="zhi-Zxxx-x-audio"><text>SILCAWL0385-_stranger_RMKS.webm</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="stem"/>
+<pronunciation>
+<form lang="zhi-fonipa-x-etic"><text>tsēn</text></form>
+<media href="Blench083-_guest_sg_RMTS.webm">
+</media></pronunciation>
+<pronunciation>
+<form lang="zhi-fonipa-x-etic"><text>tsʼēn</text></form>
+<media href="SILCAWL0385-_stranger_RMKS.webm">
+</media></pronunciation>
+<field type="Plural Noun">
+<form lang="zhi"><text>mo tsen</text></form>
+<form lang="zhi-fonipa-x-etic"><text>mò tsʼēn</text></form>
+<form lang="zhi-Zxxx-x-audio"><text>SILCAWL0385-_stranger-PL_RMKS.webm</text></form>
+</field>
+<sense id="209d194c-68b3-43d7-b573-3338b0753662" order="0">
+<grammatical-info value="Noun">
+</grammatical-info>
+<gloss lang="en"><text>guest; visitor</text></gloss>
+<gloss lang="ha"><text>bā̀ƙō</text></gloss>
+<trait name ="semantic-domain-ddp4" value="4.2.1.4 Visit"/>
+<note type="source">
+<form lang="en"><text>SILCAWL0384-</text></form>
+</note>
+<reversal type="en"><form lang="en"><text>guest</text></form>
+</reversal>
+<reversal type="en"><form lang="en"><text>visitor</text></form>
+</reversal>
+</sense>
+<sense id="5d08c796-0759-4a20-b42a-9359e307ec8e" order="1">
+<grammatical-info value="Noun">
+</grammatical-info>
+<gloss lang="en"><text>stranger</text></gloss>
+<gloss lang="ha"><text>bā̀ƙō</text></gloss>
+<trait name ="semantic-domain-ddp4" value="4.6.2.1 Foreigner"/>
+<note>
+<form lang="en"><text>Blench083-</text></form>
+</note>
+<note type="phonology">
+<form lang="en"><text>transcription was <span lang="zhi-fonipa-x-etic">tsʼɛ̄n </span>but changed for now to match participatory data which may be correct vowel</text></form>
+</note>
+<note type="source">
+<form lang="en"><text>SILCAWL0385-</text></form>
+</note>
+<reversal type="en"><form lang="en"><text>stranger</text></form>
+</reversal>
+</sense>
+</entry>
+</lift>
