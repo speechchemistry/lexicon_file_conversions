@@ -91,6 +91,8 @@ cp tests/testthat/_snaps/pronunciation-table_end-to-end/two_pronunciations_with_
 
 This needs a matching `_entries.csv`, which does not exist yet — produce it the same way, from `lift2csv_entry-table.R`'s own output for that fixture, which also means adding the `.lift` to `fixtures/lift2csv_entry-table/`. Also add a `_pronunciations.csv` for `note_and_phonology_notes`, whose `_entries.csv` already exists and is byte-identical to the entry-table snapshot.
 
+Add a `_senses.csv` for `two_pronunciations_with_audio_and_IPA` too, copied from its sense-table snapshot. That fixture is then the only one exercising entry + pronunciation + sense together, which is what actually proves the `<pronunciation>`-before-`<sense>` child ordering below rather than leaving it asserted.
+
 **New — `R/pronunciation_helpers.R`**: `classify_pronunciation_columns()`. Follow `classify_sense_columns()`'s stricter contract — exact match on `entry_id` / `media_href` → metadata; `^pronunciation_(.+)$` → form, lang = capture group; **else hard error**. Do not copy the entry-level last-underscore custom-field fallback: there are no pronunciation-level custom fields, so silently misclassifying one would be worse than failing.
 
 **New — `R/csv2lift_pronunciation.R`**: `attach_pronunciations_to_lift(doc, pronunciation_table)`, modelled on `R/csv2lift_sense.R`:

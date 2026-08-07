@@ -1,5 +1,6 @@
 # TO DO
-# - add the other entry level fields like pronunciation
+# - add the other entry level fields like variant and etymology
+#   (pronunciation has its own table: scripts/lift2csv_pronunciation-table.R)
 
 library(argparser)
 library(readr)

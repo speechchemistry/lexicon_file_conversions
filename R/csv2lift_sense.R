@@ -13,8 +13,6 @@ attach_senses_to_lift <- function(doc, sense_table) {
   gloss_cols <- filter(col_classes, kind == "gloss")
   definition_cols <- filter(col_classes, kind == "definition")
 
-  has_nonblank <- function(values) any(!is.na(values) & nzchar(values))
-
   walk(seq_len(nrow(sense_table)), ~{
     row <- sense_table[.x, ]
 

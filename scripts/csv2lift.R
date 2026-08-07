@@ -11,6 +11,8 @@ p <- add_argument(p, "entries_csv",
                   help="CSV matching lift2csv_entry-table.R's column conventions")
 p <- add_argument(p, "--senses",
                   help="CSV matching lift2csv_sense-table.R's column conventions", default = NA)
+p <- add_argument(p, "--pronunciations",
+                  help="CSV matching lift2csv_pronunciation-table.R's column conventions", default = NA)
 argv <- parse_args(p)
 
 # na = "" and forcing every column to character avoid readr silently
@@ -19,6 +21,14 @@ argv <- parse_args(p)
 # type-guessed and reformatted.
 entry_table <- read_csv(argv$entries_csv, na = "", col_types = cols(.default = "c"), show_col_types = FALSE)
 doc <- entry_table_to_lift(entry_table)
+
+# pronunciations before senses so each entry's children come out in the
+# canonical order (SPEC.md 3): both are appended by a second pass, so the
+# call order here is what fixes <pronunciation> ahead of <sense>
+if (!is.na(argv$pronunciations)) {
+  pronunciation_table <- read_csv(argv$pronunciations, na = "", col_types = cols(.default = "c"), show_col_types = FALSE)
+  doc <- attach_pronunciations_to_lift(doc, pronunciation_table)
+}
 
 if (!is.na(argv$senses)) {
   sense_table <- read_csv(argv$senses, na = "", col_types = cols(.default = "c"), show_col_types = FALSE)

@@ -29,6 +29,12 @@
         <text>merged</text>
       </form>
     </field>
+    <pronunciation>
+      <media href="SILCAWL1474a_look-for_RMKS.webm"/>
+    </pronunciation>
+    <pronunciation>
+      <media href="Blench530-_seek_RMKS.webm"/>
+    </pronunciation>
   </entry>
   <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-05-06T15:01:54Z" guid="41b17c59-3600-479e-bf34-50cdd8a05c2c">
     <lexical-unit>
@@ -56,6 +62,9 @@
         <text>tang-hiiya</text>
       </form>
     </field>
+    <pronunciation>
+      <media href="Blench546-_spit_RMKS.webm"/>
+    </pronunciation>
   </entry>
   <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-05-05T11:11:25Z" guid="4663978f-8e76-464a-b569-38b8c17960d9">
     <lexical-unit>
@@ -92,5 +101,8 @@
         <text>SILCAWL0251-_dead-PL_RMKS.webm</text>
       </form>
     </field>
+    <pronunciation>
+      <media href="SILCAWL0251-_dead_RMKS.webm"/>
+    </pronunciation>
   </entry>
 </lift>

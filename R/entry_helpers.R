@@ -109,6 +109,11 @@ classify_entry_columns <- function(col_names) {
   })
 }
 
+# Shared by every csv2lift writer: an optional element is only emitted when
+# at least one of its columns holds text, so blank CSV cells never turn into
+# empty <citation>/<note>/<definition>/<pronunciation> elements.
+has_nonblank <- function(values) any(!is.na(values) & nzchar(values))
+
 # Inverse of the multitext-reading helpers: adds one <tag lang><text> child
 # per non-blank entry in a named vector (name = lang, value = text). Shared
 # by lexical-unit, citation, each custom field's <field> element (tag="form",

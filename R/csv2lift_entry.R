@@ -18,8 +18,6 @@ entry_table_to_lift <- function(entry_table) {
   note_cols <- filter(col_classes, kind == "note")
   field_cols <- filter(col_classes, kind == "field")
 
-  has_nonblank <- function(values) any(!is.na(values) & nzchar(values))
-
   walk(seq_len(nrow(entry_table)), ~{
     row <- entry_table[.x, ]
 

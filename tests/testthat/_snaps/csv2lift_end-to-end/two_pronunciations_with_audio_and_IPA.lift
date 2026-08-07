@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lift version="0.13" producer="lexicon_file_conversions csv2lift">
+  <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-04-21T10:59:20Z" guid="bed1e71d-bf62-4e67-8ff5-98063a182cad">
+    <lexical-unit>
+      <form lang="zhi">
+        <text>tsen</text>
+      </form>
+      <form lang="zhi-fonipa-x-emic">
+        <text>tsēn</text>
+      </form>
+      <form lang="zhi-fonipa-x-etic">
+        <text>tsʼēn</text>
+      </form>
+      <form lang="zhi-fonipa-x-pitch">
+        <text>˦</text>
+      </form>
+      <form lang="zhi-Zxxx-x-audio">
+        <text>SILCAWL0385-_stranger_RMKS.webm</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="stem"/>
+    <field type="Plural Noun">
+      <form lang="zhi">
+        <text>mo tsen</text>
+      </form>
+      <form lang="zhi-fonipa-x-etic">
+        <text>mò tsʼēn</text>
+      </form>
+      <form lang="zhi-Zxxx-x-audio">
+        <text>SILCAWL0385-_stranger-PL_RMKS.webm</text>
+      </form>
+    </field>
+    <pronunciation>
+      <form lang="zhi-fonipa-x-etic">
+        <text>tsēn</text>
+      </form>
+      <media href="Blench083-_guest_sg_RMTS.webm"/>
+    </pronunciation>
+    <pronunciation>
+      <form lang="zhi-fonipa-x-etic">
+        <text>tsʼēn</text>
+      </form>
+      <media href="SILCAWL0385-_stranger_RMKS.webm"/>
+    </pronunciation>
+    <sense id="209d194c-68b3-43d7-b573-3338b0753662">
+      <grammatical-info value="Noun"/>
+      <gloss lang="en">
+        <text>guest; visitor</text>
+      </gloss>
+      <gloss lang="ha">
+        <text>bā̀ƙō</text>
+      </gloss>
+    </sense>
+    <sense id="5d08c796-0759-4a20-b42a-9359e307ec8e">
+      <grammatical-info value="Noun"/>
+      <gloss lang="en">
+        <text>stranger</text>
+      </gloss>
+      <gloss lang="ha">
+        <text>bā̀ƙō</text>
+      </gloss>
+    </sense>
+  </entry>
+</lift>
