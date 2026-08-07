@@ -10,15 +10,27 @@ The goal of lift2csv is to convert a SIL Flex LIFT file into tidy CSV files.
 
 You can download the package by clicking on the green code button and selecting "Download ZIP".
 
-## Example
+## Example: LIFT → CSV (lift2csv)
 
-This is a basic example which shows you how to generate the entry table and the sense table. The Sena3 LIFT file can be found in the test folder and was generated from Flex backup file on the SIL Flex website. 
+This is a basic example which shows you how to generate the entry table, the sense table, and the joined entry+sense table from a LIFT file. `Sena3.lift` is a real Sena FLEx project export, checked in as a test fixture.
 
 ``` bash
-Rscript scripts/lift2csv_entry-table.R Sena3.lift > Sena3_entry-table.csv
-Rscript scripts/lift2csv_sense-table.R Sena3.lift > Sena3_sense-table.csv
-Rscript scripts/lift2csv_join-sense-entry-table.R Sena3.lift > Sena3_join-sense-entry-table.csv
+Rscript scripts/lift2csv_entry-table.R tests/testthat/fixtures/lift2csv_entry-table/Sena3.lift > Sena3_entry-table.csv
+Rscript scripts/lift2csv_sense-table.R tests/testthat/fixtures/lift2csv_entry-table/Sena3.lift > Sena3_sense-table.csv
+Rscript scripts/lift2csv_join-sense-entry-table.R tests/testthat/fixtures/lift2csv_entry-table/Sena3.lift > Sena3_join-sense-entry-table.csv
 ```
+
+## Example: CSV → LIFT (csv2lift)
+
+`csv2lift.R` does the reverse: it takes an entry-level CSV (required) and, optionally, a sense-level CSV, and builds a LIFT file. The example below uses a small fixture pair — a single entry with one sense — so the output is easy to read in full.
+
+``` bash
+Rscript scripts/csv2lift.R tests/testthat/fixtures/csv2lift/sena3_single_entry_plant_entries.csv \
+  --senses tests/testthat/fixtures/csv2lift/sena3_single_entry_plant_senses.csv \
+  > sena3_single_entry_plant.lift
+```
+
+Omit `--senses` to build entry-only LIFT from a single CSV; see [`SPEC.md`](SPEC.md) §6 for the full CLI shape.
 
 ## Supported Fields
 

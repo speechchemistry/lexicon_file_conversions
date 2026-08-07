@@ -31,22 +31,26 @@ Primary key: `entry_id` (= `entry/@guid`).
 | `morph_type` | `entry/trait[@name='morph-type']/@value` | only first value if duplicated (warns) |
 | `<lang>` (e.g. `seh`) | `entry/lexical-unit/form` | one column per writing system found in the source |
 | `citation_<lang>` | `entry/citation/form` | reserved prefix `citation_` |
+| `note_<lang>` | `entry/note[not(@type)]/form` | reserved prefix `note_`; untyped note only (see below) |
 | `<field-type>_<lang>` | `entry/field[@type]/form` | custom fields; split on the **last** underscore |
 
 **Column classification algorithm** (must match exactly between directions):
 1. Exact match against `entry_id`, `dateCreated`, `dateModified`, `morph_type` → metadata.
 2. Else matches `^citation_(.+)$` → citation, lang = capture group.
-3. Else contains no underscore → lexical-unit, lang = column name.
-4. Else → custom field; split on the **last** underscore: field type = everything before, lang = everything after.
+3. Else matches `^note_(.+)$` → note, lang = capture group.
+4. Else contains no underscore → lexical-unit, lang = column name.
+5. Else → custom field; split on the **last** underscore: field type = everything before, lang = everything after.
 
-Known limitation (accepted, not solved generally): a writing-system code containing an underscore, or a custom field literally named `citation`, will misclassify.
+Known limitation (accepted, not solved generally): a writing-system code containing an underscore, or a custom field literally named `citation` or `note`, will misclassify.
+
+`<note>` is only read/written when it has no `type` attribute. LIFT/FLEx reuses the `<note>` element for other, unrelated fields distinguished by `type` (e.g. `<note type="restrictions">` is FLEx's separate "Restrictions" field, not its generic "Note" field — confirmed against real FieldWorks-exported data, where filtering for the Note field in FLEx does not surface `restrictions`-typed notes). Typed notes are out of scope for now (see §8).
 
 **LIFT structural rules for building an entry (csv2lift direction):**
 - Only `guid` is emitted (from `entry_id`); `id` is never synthesized — FLEx treats `guid` as the true primary key and does not require `id` when `guid` is present.
 - Emit `dateCreated`/`dateModified`/`guid` attributes only when non-blank.
-- Canonical child element order (not schema-required, but always emitted this way for readability): `<lexical-unit>`, `<trait name="morph-type">`, `<citation>`, then one `<field type=X>` per distinct field type — grouping every lang for that type into one `<field>` element, never one `<field>` per lang.
-- Within `<lexical-unit>`, `<citation>`, and each `<field>`, `<form lang>` children are emitted in the CSV's own column order (§2) — never re-sorted.
-- An entry with no data for a given optional element (lexical-unit/citation/morph_type/field) simply omits that element — no empty elements are emitted.
+- Canonical child element order (not schema-required, but always emitted this way for readability): `<lexical-unit>`, `<trait name="morph-type">`, `<citation>`, `<note>`, then one `<field type=X>` per distinct field type — grouping every lang for that type into one `<field>` element, never one `<field>` per lang.
+- Within `<lexical-unit>`, `<citation>`, `<note>`, and each `<field>`, `<form lang>` children are emitted in the CSV's own column order (§2) — never re-sorted.
+- An entry with no data for a given optional element (lexical-unit/citation/note/morph_type/field) simply omits that element — no empty elements are emitted.
 - Zero input rows still produce a valid `<lift version="0.13" producer="..."/>` root with no entries.
 
 ## 4. Sense table
@@ -87,7 +91,9 @@ If a test's expected output and this spec disagree, that is a bug in one of them
 
 Deliberately undesigned until actually built, to avoid speculating ahead of development:
 
-- Pronunciation, variant, etymology, and other entry sub-elements not yet read by lift2csv.
+- Pronunciation, variant, etymology, relations/cross-references, and other entry sub-elements not yet read by lift2csv.
+- Typed `<note>` elements (e.g. `<note type="restrictions">`) — only the untyped entry-level note round-trips today (§3). Typed notes are semantically distinct FLEx fields that happen to reuse the `<note>` element; they'd need type-keyed columns analogous to custom `<field>` handling.
+- Entry-level traits other than `morph-type` (e.g. `environment`, `dialect-labels`), and the entry `order`/`dateDeleted` attributes.
 - Multi-lang gloss / multiple grammatical-info per sense.
 - Multiple senses per entry: works by construction in `attach_senses_to_lift()`, but not yet exercised by a dedicated fixture.
 - Any `<header>`/`<fields>` custom-field declaration handling.
