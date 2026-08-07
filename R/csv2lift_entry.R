@@ -15,6 +15,7 @@ entry_table_to_lift <- function(entry_table) {
 
   lexical_unit_cols <- filter(col_classes, kind == "lexical_unit")
   citation_cols <- filter(col_classes, kind == "citation")
+  note_cols <- filter(col_classes, kind == "note")
   field_cols <- filter(col_classes, kind == "field")
 
   has_nonblank <- function(values) any(!is.na(values) & nzchar(values))
@@ -51,6 +52,14 @@ entry_table_to_lift <- function(entry_table) {
       if (has_nonblank(citation_values)) {
         citation_node <- xml_add_child(entry, "citation")
         add_multitext_children(citation_node, citation_values)
+      }
+    }
+
+    if (nrow(note_cols) > 0) {
+      note_values <- set_names(as.character(row[note_cols$column]), note_cols$lang)
+      if (has_nonblank(note_values)) {
+        note_node <- xml_add_child(entry, "note")
+        add_multitext_children(note_node, note_values)
       }
     }
 

@@ -87,6 +87,12 @@ classify_entry_columns <- function(col_names) {
       return(tibble(column = col, kind = "citation", field_type = NA_character_, lang = lang))
     }
 
+    if (grepl("^note_.+$", col)) {
+      lang <- sub("^note_", "", col)
+      cat(sprintf("Classifying column '%s' as note, lang=%s\n", col, lang), file = stderr())
+      return(tibble(column = col, kind = "note", field_type = NA_character_, lang = lang))
+    }
+
     if (!grepl("_", col, fixed = TRUE)) {
       cat(sprintf("Classifying column '%s' as lexical-unit, lang=%s\n", col, col), file = stderr())
       return(tibble(column = col, kind = "lexical_unit", field_type = NA_character_, lang = col))
@@ -95,7 +101,7 @@ classify_entry_columns <- function(col_names) {
     # Custom field: split on the LAST underscore into field type and lang.
     # Known limitation, accepted rather than solved generally: a writing
     # system code containing an underscore, or a custom field literally
-    # named "citation", will misclassify here.
+    # named "citation" or "note", will misclassify here.
     field_type <- sub("_[^_]+$", "", col)
     lang <- sub("^.*_([^_]+)$", "\\1", col)
     cat(sprintf("Classifying column '%s' as field type='%s', lang=%s\n", col, field_type, lang), file = stderr())
