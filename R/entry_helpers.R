@@ -109,14 +109,16 @@ classify_entry_columns <- function(col_names) {
   })
 }
 
-# Inverse of the multitext-reading helpers: adds one <form lang><text> child
+# Inverse of the multitext-reading helpers: adds one <tag lang><text> child
 # per non-blank entry in a named vector (name = lang, value = text). Shared
-# by lexical-unit, citation, and each custom field's <field> element.
-add_multitext_children <- function(parent_node, lang_values) {
+# by lexical-unit, citation, each custom field's <field> element (tag="form",
+# the default), and sense-level gloss (tag="gloss", attaches directly to
+# <sense> with no wrapping element, unlike the others).
+add_multitext_children <- function(parent_node, lang_values, tag = "form") {
   for (lang in names(lang_values)) {
     text <- lang_values[[lang]]
     if (is.na(text) || !nzchar(text)) next
-    form_node <- xml_add_child(parent_node, "form", lang = lang)
+    form_node <- xml_add_child(parent_node, tag, lang = lang)
     text_node <- xml_add_child(form_node, "text")
     xml_text(text_node) <- text
   }

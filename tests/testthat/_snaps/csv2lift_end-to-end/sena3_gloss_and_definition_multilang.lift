@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lift version="0.13" producer="lexicon_file_conversions csv2lift">
+  <entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-09-06T16:17:57Z" guid="05ef2b9c-f0a3-498e-b26b-47e860f20fe7">
+    <lexical-unit>
+      <form lang="seh">
+        <text>bokho</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="root"/>
+    <sense id="036e4c4f-31f1-4824-8ebe-51fa5a9fbe43">
+      <grammatical-info value="Nome"/>
+      <gloss lang="en">
+        <text>goat</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>cabrito</text>
+      </gloss>
+      <definition>
+        <form lang="en">
+          <text>goat male</text>
+        </form>
+        <form lang="pt">
+          <text>cabrito masculino</text>
+        </form>
+      </definition>
+    </sense>
+  </entry>
+</lift>
