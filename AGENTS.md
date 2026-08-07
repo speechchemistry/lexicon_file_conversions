@@ -20,6 +20,12 @@ Guidance for human and AI contributors working in this repository.
 - Do not speculatively extend `SPEC.md` to cover tables or features that aren't implemented yet; add to it incrementally as each is actually built (see `SPEC.md` §8, "Not yet specified").
 - **Split of concerns:** `AGENTS.md` documents how to work in this repo (process, conventions, workflow). `SPEC.md` documents what the software does and guarantees (the CSV↔LIFT data model). Repo-wide engineering conventions that happen to describe behaviour (e.g. stdout/stderr separation) stay in `AGENTS.md` since they apply uniformly across scripts; `SPEC.md` is reserved for the CSV↔LIFT contract specifically.
 
+## Skills
+
+Task-specific procedures live under `.claude/skills/<name>/SKILL.md` rather than in this file, so `AGENTS.md` stays a set of always-applicable rules. Add a new skill when a procedure is followed occasionally rather than always.
+
+- `adding-a-lift-field` — end-to-end procedure for supporting a new LIFT element in both directions (read direction first, then reuse its CSV output as the write direction's fixture).
+
 ## Working Style
 
 - Before changing behaviour, check existing patterns in nearby files and follow them.

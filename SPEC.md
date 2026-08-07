@@ -66,7 +66,7 @@ Primary key: `sense_guid` (= `sense/@id`). Foreign key: `entry_id`.
 
 Known limitations (lift2csv direction, pre-existing): only the first `grammatical-info` per sense is captured; only the English gloss is captured; other gloss languages, definitions, and multiple grammatical-info values are dropped.
 
-**csv2lift direction:** implemented by `attach_senses_to_lift(doc, sense_table)` (`R/csv2lift_sense.R`). For each sense row, the entry to attach it to is found by matching `entry_id` against an existing `entry/@guid` in the document (not a separate `id` lookup — entries have no other stable key). LIFT uses `id` (not `guid`) for `<sense>`; it is emitted from `sense_guid`, omitted if blank. `<grammatical-info value=...>` and `<gloss lang="en"><text>...</text></gloss>` are each added only when their source column is non-blank. If a sense row's `entry_id` does not match any entry already in the document, this is a hard error (fail-fast) — the sense is never silently dropped. Multiple senses per entry works by construction but is not yet exercised by a dedicated fixture.
+**csv2lift direction:** implemented by `attach_senses_to_lift(doc, sense_table)` (`R/csv2lift_sense.R`). For each sense row, the entry to attach it to is found by matching `entry_id` against an existing `entry/@guid` in the document (not a separate `id` lookup — entries have no other stable key). LIFT uses `id` (not `guid`) for `<sense>`; it is emitted from `sense_guid`, omitted if blank. `<grammatical-info value=...>` and `<gloss lang="en"><text>...</text></gloss>` are each added only when their source column is non-blank. If a sense row's `entry_id` does not match any entry already in the document, this is a hard error (fail-fast) — the sense is never silently dropped. Multiple senses per entry is supported in both directions: `sense_table()` (lift2csv) captures every `<sense>` child per entry (exercised by the real `Sena3.lift` fixture, which has entries with up to 6 senses), and `attach_senses_to_lift()` (csv2lift) attaches one `<sense>` per matching row, in CSV row order — proven by the `sena3_multiple_senses_per_entry` fixture.
 
 ## 5. Join (entry ⋈ sense) view
 
@@ -91,10 +91,9 @@ If a test's expected output and this spec disagree, that is a bug in one of them
 
 Deliberately undesigned until actually built, to avoid speculating ahead of development:
 
-- Pronunciation, variant, etymology, relations/cross-references, and other entry sub-elements not yet read by lift2csv.
+- Pronunciation, variant, etymology, relations/cross-references, and other entry sub-elements not yet read by lift2csv. This includes `<relation type="_component-lexeme">` (FLEx's "Complex Forms" field), which is stored as one `<relation ref="...">` per component entry, each with an `order` attribute and optional `is-primary`/`complex-form-type` traits.
 - Typed `<note>` elements (e.g. `<note type="restrictions">`) — only the untyped entry-level note round-trips today (§3). Typed notes are semantically distinct FLEx fields that happen to reuse the `<note>` element; they'd need type-keyed columns analogous to custom `<field>` handling.
 - Entry-level traits other than `morph-type` (e.g. `environment`, `dialect-labels`), and the entry `order`/`dateDeleted` attributes.
 - Multi-lang gloss / multiple grammatical-info per sense.
-- Multiple senses per entry: works by construction in `attach_senses_to_lift()`, but not yet exercised by a dedicated fixture.
 - Any `<header>`/`<fields>` custom-field declaration handling.
 - Patch-in-place / merge-into-existing-LIFT mode for csv2lift.

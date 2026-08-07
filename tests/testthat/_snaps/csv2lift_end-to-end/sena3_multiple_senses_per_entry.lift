@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lift version="0.13" producer="lexicon_file_conversions csv2lift">
+  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2011-08-04T18:22:25Z" guid="011185bb-e8c8-4ab9-80fb-2e19b670e3d0">
+    <lexical-unit>
+      <form lang="seh">
+        <text>tatu</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="root"/>
+    <citation>
+      <form lang="seh">
+        <text>citatu</text>
+      </form>
+    </citation>
+    <field type="Plural">
+      <form lang="seh">
+        <text>pitatu</text>
+      </form>
+    </field>
+    <sense id="50485a90-b701-4c13-8986-3b6a94d1e82f">
+      <grammatical-info value="Nome"/>
+      <gloss lang="en">
+        <text>Wednesday</text>
+      </gloss>
+    </sense>
+    <sense id="f5e72635-c18f-4558-bff8-af539d7f41c7">
+      <grammatical-info value="Nome"/>
+      <gloss lang="en">
+        <text>third</text>
+      </gloss>
+    </sense>
+  </entry>
+</lift>
