@@ -56,7 +56,34 @@ sense_table <- function(LIFT_file) {
       names_glue = "definition_{lang}"
     )
 
+  # plain (untyped) sense-level notes; FLEx's sense pane labels this field
+  # "General Note", distinct from both the entry-level "Note" field (§3) and
+  # the typed sense notes (Phonology Note, Grammar Note, etc.), so it gets
+  # its own reserved prefix rather than reusing "note_". [not(@type)]
+  # excludes those typed notes, which are distinct FLEx fields that happen
+  # to reuse the <note> element.
+  notes_long <- extract_sense_multitext_element(senses, "./note[not(@type)]/form")
+  notes_wide <- notes_long |>
+    pivot_wider(
+      id_cols = sense_guid,
+      names_from = lang,
+      values_from = text,
+      names_glue = "general_note_{lang}"
+    )
+
+  # custom <field> elements (type attribute) and their <form> children
+  fields_long <- extract_sense_multitext_with_attribute(senses, "./field", "type", "field_text")
+  fields_wide <- fields_long |>
+    pivot_wider(
+      id_cols = sense_guid,
+      names_from = c(type, lang),
+      names_glue = "{type}_{lang}",
+      values_from = field_text
+    )
+
   sense_meta |>
     left_join(gloss_wide, by = "sense_guid") |>
-    left_join(definition_wide, by = "sense_guid")
+    left_join(definition_wide, by = "sense_guid") |>
+    left_join(notes_wide, by = "sense_guid") |>
+    left_join(fields_wide, by = "sense_guid")
 }

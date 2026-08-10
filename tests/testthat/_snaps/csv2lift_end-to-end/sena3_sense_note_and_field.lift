@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lift version="0.13" producer="lexicon_file_conversions csv2lift">
+  <entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:40Z" guid="11473a37-f10a-4201-b569-afd4b994373c">
+    <lexical-unit>
+      <form lang="seh">
+        <text>lomo</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="root"/>
+    <citation>
+      <form lang="seh">
+        <text>mulomo</text>
+      </form>
+    </citation>
+    <field type="Plural">
+      <form lang="seh">
+        <text>miromo</text>
+      </form>
+    </field>
+    <sense id="4b00452e-9f58-40ee-b5bc-144ca16cfa99">
+      <grammatical-info value="Nome"/>
+      <gloss lang="en">
+        <text>mouth</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>boca</text>
+      </gloss>
+      <definition>
+        <form lang="en">
+          <text>exterior of the mouth; lips</text>
+        </form>
+        <form lang="pt">
+          <text>parte fora de boca; labios</text>
+        </form>
+      </definition>
+      <note>
+        <form lang="en">
+          <text>not the same as kanwe - inside mouth; vocrev</text>
+        </form>
+      </note>
+      <field type="Parsing Note">
+        <form lang="en">
+          <text>note l -&gt; r / i_ will CARLA handle this?</text>
+        </form>
+      </field>
+    </sense>
+  </entry>
+</lift>

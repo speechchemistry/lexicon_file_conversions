@@ -23,16 +23,16 @@ Built incrementally as design decisions are actually made through development; i
 
 Primary key: `entry_id` (= `entry/@guid`).
 
-| Column | LIFT source | Notes |
-|---|---|---|
-| `entry_id` | `entry/@guid` | primary key |
-| `dateCreated` | `entry/@dateCreated` | |
-| `dateModified` | `entry/@dateModified` | |
-| `morph_type` | `entry/trait[@name='morph-type']/@value` | only first value if duplicated (warns) |
-| `<lang>` (e.g. `seh`) | `entry/lexical-unit/form` | one column per writing system found in the source |
-| `citation_<lang>` | `entry/citation/form` | reserved prefix `citation_` |
-| `note_<lang>` | `entry/note[not(@type)]/form` | reserved prefix `note_`; untyped note only (see below) |
-| `<field-type>_<lang>` | `entry/field[@type]/form` | custom fields; split on the **last** underscore |
+| Column                | LIFT source                              | Notes                                                  |
+| --------------------- | ---------------------------------------- | ------------------------------------------------------ |
+| `entry_id`            | `entry/@guid`                            | primary key                                            |
+| `dateCreated`         | `entry/@dateCreated`                     |                                                        |
+| `dateModified`        | `entry/@dateModified`                    |                                                        |
+| `morph_type`          | `entry/trait[@name='morph-type']/@value` | only first value if duplicated (warns)                 |
+| `<lang>` (e.g. `seh`) | `entry/lexical-unit/form`                | one column per writing system found in the source      |
+| `citation_<lang>`     | `entry/citation/form`                    | reserved prefix `citation_`                            |
+| `note_<lang>`         | `entry/note[not(@type)]/form`            | reserved prefix `note_`; untyped note only (see below) |
+| `<field-type>_<lang>` | `entry/field[@type]/form`                | custom fields; split on the **last** underscore        |
 
 **Column classification algorithm** (must match exactly between directions):
 1. Exact match against `entry_id`, `dateCreated`, `dateModified`, `morph_type` → metadata.
@@ -57,17 +57,26 @@ Known limitation (accepted, not solved generally): a writing-system code contain
 
 Primary key: `sense_guid` (= `sense/@id`). Foreign key: `entry_id`.
 
-| Column | LIFT source | Notes |
-|---|---|---|
-| `sense_guid` | `sense/@id` | primary key |
-| `entry_id` | (parent `entry/@guid`) | foreign key → entry table |
-| `grammatical_info` | `sense/grammatical-info/@value` | LIFT permits at most one `grammatical-info` per sense (`lift.rng` wraps it in `<optional>` with no `zeroOrMore`/`oneOrMore`); confirmed by real data — no fixture, including the 1717-sense `Sena3.lift`, has ever had more than one |
-| `gloss_<lang>` (e.g. `gloss_en`) | `sense/gloss[@lang]` | one column per writing system found in the source; `<gloss>` itself carries `lang` and a `<text>` child, unlike the `<form>`-wrapped multitext elements |
-| `definition_<lang>` (e.g. `definition_en`) | `sense/definition/form` | one column per writing system found in the source |
+| Column                                     | LIFT source                     | Notes                                                                                                                                                                                                                                |
+| ------------------------------------------ | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `sense_guid`                               | `sense/@id`                     | primary key                                                                                                                                                                                                                          |
+| `entry_id`                                 | (parent `entry/@guid`)          | foreign key → entry table                                                                                                                                                                                                            |
+| `grammatical_info`                         | `sense/grammatical-info/@value` | LIFT permits at most one `grammatical-info` per sense (`lift.rng` wraps it in `<optional>` with no `zeroOrMore`/`oneOrMore`); confirmed by real data — no fixture, including the 1717-sense `Sena3.lift`, has ever had more than one |
+| `gloss_<lang>` (e.g. `gloss_en`)           | `sense/gloss[@lang]`            | one column per writing system found in the source; `<gloss>` itself carries `lang` and a `<text>` child, unlike the `<form>`-wrapped multitext elements                                                                              |
+| `definition_<lang>` (e.g. `definition_en`) | `sense/definition/form`         | one column per writing system found in the source                                                                                                                                                                                    |
+| `general_note_<lang>`                       | `sense/note[not(@type)]/form`   | reserved prefix `general_note_`; untyped note only. FLEx's sense pane labels this field "General Note", distinct from the entry-level "Note" field (§3) and from the typed sense notes (Phonology Note, Grammar Note, etc.) — hence a different reserved prefix from entry-level notes rather than reusing `note_` |
+| `<field-type>_<lang>`                       | `sense/field[@type]/form`       | custom fields; split on the **last** underscore, same rule as entry-level custom fields (§3)                                                                                                                                          |
 
-**Column classification algorithm** (must match exactly between directions): exact match against `sense_guid`, `entry_id`, `grammatical_info` → metadata; else matches `^gloss_(.+)$` → gloss, lang = capture group; else matches `^definition_(.+)$` → definition, lang = capture group; else → hard error (unlike entry columns, there is no dynamic custom-field fallback for senses yet, since sense-level custom fields aren't read/written at all — see §9).
+**Column classification algorithm** (must match exactly between directions):
+1. Exact match against `sense_guid`, `entry_id`, `grammatical_info` → metadata.
+2. Else matches `^gloss_(.+)$` → gloss, lang = capture group.
+3. Else matches `^definition_(.+)$` → definition, lang = capture group.
+4. Else matches `^general_note_(.+)$` → note, lang = capture group.
+5. Else → custom field; split on the **last** underscore: field type = everything before, lang = everything after.
 
-**csv2lift direction:** implemented by `attach_senses_to_lift(doc, sense_table)` (`R/csv2lift_sense.R`), using `classify_sense_columns()` (`R/sense_helpers.R`) to classify columns per the algorithm above. For each sense row, the entry to attach it to is found by matching `entry_id` against an existing `entry/@guid` in the document (not a separate `id` lookup — entries have no other stable key). LIFT uses `id` (not `guid`) for `<sense>`; it is emitted from `sense_guid`, omitted if blank. `<grammatical-info value=...>` is added only when non-blank. `<gloss lang><text>` children are added directly under `<sense>` (no wrapping element) for each non-blank `gloss_<lang>` column. A `<definition>` element wrapping one `<form lang><text>` per non-blank `definition_<lang>` column is added only if at least one such column is non-blank for that row — same "omit empty elements" rule as citation/note. If a sense row's `entry_id` does not match any entry already in the document, this is a hard error (fail-fast) — the sense is never silently dropped. Multiple senses per entry is supported in both directions: `sense_table()` (lift2csv) captures every `<sense>` child per entry (exercised by the real `Sena3.lift` fixture, which has entries with up to 6 senses), and `attach_senses_to_lift()` (csv2lift) attaches one `<sense>` per matching row, in CSV row order — proven by the `sena3_multiple_senses_per_entry` fixture.
+Known limitation (accepted, not solved generally): a writing-system code containing an underscore, or a custom field literally named `gloss`, `definition`, or `general_note`, will misclassify — the same limitation entry columns have (§3).
+
+**csv2lift direction:** implemented by `attach_senses_to_lift(doc, sense_table)` (`R/csv2lift_sense.R`), using `classify_sense_columns()` (`R/sense_helpers.R`) to classify columns per the algorithm above. For each sense row, the entry to attach it to is found by matching `entry_id` against an existing `entry/@guid` in the document (not a separate `id` lookup — entries have no other stable key). LIFT uses `id` (not `guid`) for `<sense>`; it is emitted from `sense_guid`, omitted if blank. Canonical child order: `<grammatical-info>`, `<gloss>` (one per non-blank `gloss_<lang>` column, added directly under `<sense>`), `<definition>`, `<note>` (from `general_note_<lang>` columns), one `<field type=X>` per distinct field type — grouping every lang for that type into one `<field>` element, never one `<field>` per lang. `<definition>`, `<note>`, and each `<field>` are only emitted when at least one of their columns is non-blank for that row — same "omit empty elements" rule as entry-level citation/note. If a sense row's `entry_id` does not match any entry already in the document, this is a hard error (fail-fast) — the sense is never silently dropped. Multiple senses per entry is supported in both directions: `sense_table()` (lift2csv) captures every `<sense>` child per entry (exercised by the real `Sena3.lift` fixture, which has entries with up to 6 senses), and `attach_senses_to_lift()` (csv2lift) attaches one `<sense>` per matching row, in CSV row order — proven by the `sena3_multiple_senses_per_entry` fixture.
 
 ## 5. Pronunciation table
 
@@ -75,11 +84,11 @@ One row per `<entry>/<pronunciation>`. Foreign key: `entry_id`. **No primary key
 
 This is a table of its own rather than columns on the entry table because `lift.rng` wraps `pronunciation` in `<zeroOrMore>`, and real exports use it: `two_pronunciations_with_audio_and_IPA.lift` has one entry with two pronunciations whose forms share a single writing system (`zhi-fonipa-x-etic`: `tsēn` and `tsʼēn`). Two values, one writing system, one entry cannot be represented in one row under any column-naming scheme.
 
-| Column | LIFT source | Notes |
-|---|---|---|
-| `entry_id` | (parent `entry/@guid`) | foreign key → entry table |
-| `pronunciation_<lang>` | `entry/pronunciation/form` | reserved prefix `pronunciation_`; one column per writing system found in the source |
-| `media_href` | `entry/pronunciation/media/@href` | the audio filename; at most one per row (see below) |
+| Column                 | LIFT source                       | Notes                                                                               |
+| ---------------------- | --------------------------------- | ----------------------------------------------------------------------------------- |
+| `entry_id`             | (parent `entry/@guid`)            | foreign key → entry table                                                           |
+| `pronunciation_<lang>` | `entry/pronunciation/form`        | reserved prefix `pronunciation_`; one column per writing system found in the source |
+| `media_href`           | `entry/pronunciation/media/@href` | the audio filename; at most one per row (see below)                                 |
 
 **Column classification algorithm** (must match exactly between directions): exact match against `entry_id`, `media_href` → metadata; else matches `^pronunciation_(.+)$` → form, lang = capture group; else → hard error. As with sense columns (§4), and unlike entry columns (§3), there is no last-underscore custom-field fallback — pronunciation-level `<field>`/`<trait>` aren't read or written at all (§9), so misclassifying one as a form would be worse than failing.
 
@@ -92,6 +101,8 @@ This is a table of its own rather than columns on the entry table because `lift.
 Produced by `lift2csv_join-sense-entry-table.R`: a left join of the sense table onto the entry table by `entry_id`, one row per sense, with entry-level columns repeated across all of an entry's senses.
 
 This is a denormalized *view*, not a base table — csv2lift does not consume this shape directly. Building a LIFT file from it would require grouping/de-duplicating the entry-level columns back out; the tool deliberately does not do this. Instead, csv2lift takes normalized per-table CSVs (§7).
+
+Sense and entry columns can in principle share a name — both tables use the `<field-type>_<lang>` custom-field scheme, so an entry-level custom field and a sense-level custom field of the same type and writing system would collide. (Entry-level notes and sense-level notes do not collide: they use different reserved prefixes, `note_` vs `general_note_`, precisely because they are different FLEx fields — see §4.) `join_sense_entry()` (`R/join_sense_entry.R`) resolves any such collision with explicit suffixes (`left_join(..., suffix = c("_sense", "_entry"))`) rather than dplyr's default `.x`/`.y`; a column with no counterpart at the other level keeps its plain name unsuffixed.
 
 ## 7. csv2lift CLI shape
 
@@ -112,9 +123,10 @@ Deliberately undesigned until actually built, to avoid speculating ahead of deve
 
 - Variant, etymology, relations/cross-references, and other entry sub-elements not yet read by lift2csv. This includes `<relation type="_component-lexeme">` (FLEx's "Complex Forms" field), which is stored as one `<relation ref="...">` per component entry, each with an `order` attribute and optional `is-primary`/`complex-form-type` traits.
 - Within `<pronunciation>` (§5): the optional `<label>` on a `<media>` element, pronunciation-level `<field>`/`<trait>`/`<annotation>` children (FLEx's "CV Pattern" and "Tone" are `<field>`s here), the `dateCreated`/`dateModified` attributes `extensible-content` allows, and more than one `<media>` per pronunciation — the second and later ones warn and are dropped. None of these appear in any fixture.
-- Typed `<note>` elements (e.g. `<note type="restrictions">`) — only the untyped entry-level note round-trips today (§3). Typed notes are semantically distinct FLEx fields that happen to reuse the `<note>` element; they'd need type-keyed columns analogous to custom `<field>` handling.
+- Typed `<note>` elements (e.g. `<note type="restrictions">` at entry level, `<note type="phonology">`/`<note type="source">`/etc. at sense level) — only the untyped note round-trips today, at both entry level (§3) and sense level (§4). Typed notes are semantically distinct FLEx fields that happen to reuse the `<note>` element; they'd need type-keyed columns analogous to custom `<field>` handling.
 - Entry-level traits other than `morph-type` (e.g. `environment`, `dialect-labels`), and the entry `order`/`dateDeleted` attributes.
+- Sense-level traits (e.g. `semantic-domain-ddp4`, `usage-type`), `<relation>`, `<reversal>`, `<subsense>`, and the sense `order`/`dateCreated`/`dateModified` attributes `extensible-content` allows.
 - Example sentences (`sense/example`, with its own multi-lang form and nested multi-lang `<translation>`) — not read or written at all.
-- Sense-level custom `<field>` elements (analogous to entry-level custom fields, §3) — not read or written at all; an unrecognized sense CSV column is a hard error rather than falling back to a generic field, unlike entry columns.
+- Two of the 632 untyped sense notes in `Sena3.lift` wrap an inline `<span lang="...">` inside `<text>`; `xml_text()` flattens it to plain text, dropping the inner language tagging — the same lossiness entry-level notes already have.
 - Any `<header>`/`<fields>` custom-field declaration handling.
 - Patch-in-place / merge-into-existing-LIFT mode for csv2lift.

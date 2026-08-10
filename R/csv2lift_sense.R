@@ -12,6 +12,8 @@ attach_senses_to_lift <- function(doc, sense_table) {
   col_classes <- classify_sense_columns(names(sense_table))
   gloss_cols <- filter(col_classes, kind == "gloss")
   definition_cols <- filter(col_classes, kind == "definition")
+  note_cols <- filter(col_classes, kind == "note")
+  field_cols <- filter(col_classes, kind == "field")
 
   walk(seq_len(nrow(sense_table)), ~{
     row <- sense_table[.x, ]
@@ -45,6 +47,25 @@ attach_senses_to_lift <- function(doc, sense_table) {
         definition_node <- xml_add_child(sense_node, "definition")
         add_multitext_children(definition_node, definition_values)
       }
+    }
+
+    if (nrow(note_cols) > 0) {
+      note_values <- set_names(as.character(row[note_cols$column]), note_cols$lang)
+      if (has_nonblank(note_values)) {
+        note_node <- xml_add_child(sense_node, "note")
+        add_multitext_children(note_node, note_values)
+      }
+    }
+
+    if (nrow(field_cols) > 0) {
+      walk(unique(field_cols$field_type), ~{
+        type_cols <- field_cols[field_cols$field_type == .x, ]
+        field_values <- set_names(as.character(row[type_cols$column]), type_cols$lang)
+        if (has_nonblank(field_values)) {
+          field_node <- xml_add_child(sense_node, "field", type = .x)
+          add_multitext_children(field_node, field_values)
+        }
+      })
     }
   })
 
