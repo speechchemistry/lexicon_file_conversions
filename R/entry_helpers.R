@@ -1,3 +1,23 @@
+# LIFT allows an inline <span lang="..."> inside a <text>, tagging a stretch of the value as a
+# different writing system (typically an alternate-orthography form quoted inside an English
+# note). xml_text() would flatten that and lose the tagging, so the <text>'s mixed content is
+# serialised with the <span> tag kept literally and the surrounding text left as-is:
+# 'variant: <span lang="seh">nkucauno</span>'. set_multitext_text() is the inverse.
+#
+# The tag is rebuilt with sprintf() rather than as.character(child) on purpose: as.character()
+# would XML-escape the span's content ("a & b" -> "a &amp; b") while the literal text around it
+# stays raw, so the cell would be inconsistently escaped and no longer plain text.
+multitext_value <- function(node) {
+  text_node <- xml_find_first(node, "./text")
+  paste0(
+    map_chr(xml_contents(text_node), function(child) {
+      if (xml_type(child) == "text") return(xml_text(child))
+      sprintf("<span lang=\"%s\">%s</span>", xml_attr(child, "lang"), xml_text(child))
+    }),
+    collapse = ""
+  )
+}
+
 extract_multitext_element <- function(entries, xpath, value_col = "text") {
   empty_result <- tibble(
     entry_id = character(),
@@ -15,7 +35,7 @@ extract_multitext_element <- function(entries, xpath, value_col = "text") {
       map_df(forms, ~tibble(
         entry_id = entry_id,
         lang = xml_attr(.x, "lang"),
-        !!value_col := xml_text(.x)
+        !!value_col := multitext_value(.x)
       ))
     })
 }
@@ -62,7 +82,7 @@ extract_multitext_with_attribute <- function(entries, parent_xpath, attr_name,
           entry_id = entry_id,
           !!attr_name := attr_value,
           lang = xml_attr(.x, "lang"),
-          !!value_col := xml_text(.x)
+          !!value_col := multitext_value(.x)
         ))
       })
     })
@@ -114,6 +134,35 @@ classify_entry_columns <- function(col_names) {
 # empty <citation>/<note>/<definition>/<pronunciation> elements.
 has_nonblank <- function(values) any(!is.na(values) & nzchar(values))
 
+# Inverse of multitext_value(): turns the literal <span lang="..."> tags in a CSV value back into
+# real child elements. Built by parsing a constructed XML string because `xml_text()<-` cannot
+# produce mixed content (see the plan). The value is walked as alternating literal / span pieces
+# rather than substituted in one pass, because only the literal pieces may be XML-escaped — the
+# span tags we emit must stay as markup, and escaping them would turn them back into text.
+SPAN_MARKUP_PATTERN <- "<span lang=\"([^\"]*)\">(.*?)</span>"
+
+set_multitext_text <- function(parent_node, value) {
+  spans <- stringr::str_match_all(value, SPAN_MARKUP_PATTERN)[[1]]
+  literals <- stringr::str_split(value, SPAN_MARKUP_PATTERN)[[1]]
+
+  inner <- escape_xml_text(literals[1])
+  for (i in seq_len(nrow(spans))) {
+    inner <- paste0(
+      inner,
+      sprintf("<span lang=\"%s\">%s</span>", spans[i, 2], escape_xml_text(spans[i, 3])),
+      escape_xml_text(literals[i + 1])
+    )
+  }
+
+  xml_add_child(parent_node, read_xml(paste0("<text>", inner, "</text>")))
+}
+
+escape_xml_text <- function(x) {
+  x <- gsub("&", "&amp;", x, fixed = TRUE)
+  x <- gsub("<", "&lt;", x, fixed = TRUE)
+  gsub(">", "&gt;", x, fixed = TRUE)
+}
+
 # Inverse of the multitext-reading helpers: adds one <tag lang><text> child
 # per non-blank entry in a named vector (name = lang, value = text). Shared
 # by lexical-unit, citation, each custom field's <field> element (tag="form",
@@ -124,7 +173,6 @@ add_multitext_children <- function(parent_node, lang_values, tag = "form") {
     text <- lang_values[[lang]]
     if (is.na(text) || !nzchar(text)) next
     form_node <- xml_add_child(parent_node, tag, lang = lang)
-    text_node <- xml_add_child(form_node, "text")
-    xml_text(text_node) <- text
+    set_multitext_text(form_node, text)
   }
 }

@@ -19,7 +19,7 @@ extract_pronunciation_multitext <- function(pronunciations, xpath) {
     map_df(forms, ~tibble(
       pronunciation_index = index,
       lang = xml_attr(.x, "lang"),
-      text = xml_text(.x)
+      text = multitext_value(.x)
     ))
   })
 }

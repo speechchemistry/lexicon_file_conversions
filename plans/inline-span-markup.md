@@ -31,15 +31,15 @@ verbatim, `variant: <span lang="seh">nkucauno</span>`.
 
 Span inventory across every fixture, which is what makes this sufficient:
 
-| property | finding |
-| --- | --- |
-| attributes on `<span>` | `lang` and nothing else, 924 of 924 |
-| element children of `<text>` | `span` and nothing else |
-| nesting inside a span | never |
-| several spans in one `<text>` | 54 cases |
-| text following a span | 78 cases |
-| span content containing `[` or `]` | 72 of 600 |
-| literal `</span>` in ordinary note text | 0 |
+| property                                | finding                             |
+| --------------------------------------- | ----------------------------------- |
+| attributes on `<span>`                  | `lang` and nothing else, 924 of 924 |
+| element children of `<text>`            | `span` and nothing else             |
+| nesting inside a span                   | never                               |
+| several spans in one `<text>`           | 54 cases                            |
+| text following a span                   | 78 cases                            |
+| span content containing `[` or `]`      | 72 of 600                           |
+| literal `</span>` in ordinary note text | 0                                   |
 
 ### Why not the two alternatives
 
@@ -172,11 +172,11 @@ value contains no span, so no csv2lift snapshot moves except where a span is gen
 `_snaps/sense-table_end-to-end/Sena3.csv` holds the flattened text; that is the red. Exactly 4 cells
 change, all in Sena3, all sense-level (there are no spans in any currently-read entry-level element):
 
-| sense | column | becomes |
-| --- | --- | --- |
-| `cddee31a-556f-4a76-8e75-2be21302d85f` | `definition_en` | `<span lang="pt">pull out (nail, tooth, etc.)</span>` |
-| `d1645b43-54ad-4ae3-86a8-2adc01b10b86` | `general_note_pt` | `<span lang="en">mostra tristeza, disapontamento mas com  submissao</span>` |
-| `f1d582f4-f8a1-4e6c-99f3-039650900166` | `general_note_pt` | `<span lang="en">inclua sentimente de zanga</span>` |
+| sense                                  | column            | becomes                                                                                                                             |
+| -------------------------------------- | ----------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
+| `cddee31a-556f-4a76-8e75-2be21302d85f` | `definition_en`   | `<span lang="pt">pull out (nail, tooth, etc.)</span>`                                                                               |
+| `d1645b43-54ad-4ae3-86a8-2adc01b10b86` | `general_note_pt` | `<span lang="en">mostra tristeza, disapontamento mas com  submissao</span>`                                                         |
+| `f1d582f4-f8a1-4e6c-99f3-039650900166` | `general_note_pt` | `<span lang="en">inclua sentimente de zanga</span>`                                                                                 |
 | `e2c0d4bd-f0f9-43a8-8f4e-778deabb7a34` | `Parsing Note_en` | `Question: … not working;<span lang="seh">es +/ {monosyllabic} _ \|eg adyesa; is / [AIU] [C] … </span>` — brackets need no escaping |
 
 **B — green (read).** `multitext_value()` + the five call-site swaps. Accept

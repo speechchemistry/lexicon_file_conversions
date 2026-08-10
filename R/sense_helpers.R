@@ -18,7 +18,7 @@ extract_sense_multitext_element <- function(senses, xpath, value_col = "text") {
       map_df(forms, ~tibble(
         sense_guid = sense_guid,
         lang = xml_attr(.x, "lang"),
-        !!value_col := xml_text(.x)
+        !!value_col := multitext_value(.x)
       ))
     })
 }
@@ -50,7 +50,7 @@ extract_sense_multitext_with_attribute <- function(senses, parent_xpath, attr_na
           sense_guid = sense_guid,
           !!attr_name := attr_value,
           lang = xml_attr(.x, "lang"),
-          !!value_col := xml_text(.x)
+          !!value_col := multitext_value(.x)
         ))
       })
     })
