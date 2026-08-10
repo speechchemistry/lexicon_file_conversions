@@ -30,6 +30,12 @@ attach_senses_to_lift <- function(doc, sense_table) {
     if (!is.na(row$sense_guid) && nzchar(row$sense_guid)) {
       sense_args$id <- row$sense_guid
     }
+    # Guarded on the column existing, not just being non-blank: a sense CSV
+    # written before sense_order existed omits it entirely, and must still
+    # convert. Mirrors entry_table_to_lift()'s dateCreated/dateModified guard.
+    if ("sense_order" %in% names(row) && !is.na(row$sense_order) && nzchar(row$sense_order)) {
+      sense_args$order <- row$sense_order
+    }
     sense_node <- do.call(xml_add_child, sense_args)
 
     if (!is.na(row$grammatical_info) && nzchar(row$grammatical_info)) {

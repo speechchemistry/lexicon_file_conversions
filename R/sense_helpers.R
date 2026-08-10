@@ -60,7 +60,7 @@ extract_sense_multitext_with_attribute <- function(senses, parent_xpath, attr_na
 # sense CSV's column names into the shapes sense_table() produces, so
 # csv2lift can rebuild the right LIFT element for each column.
 classify_sense_columns <- function(col_names) {
-  meta_columns <- c("sense_guid", "entry_id", "grammatical_info")
+  meta_columns <- c("sense_guid", "entry_id", "sense_order", "grammatical_info")
 
   map_df(col_names, function(col) {
     if (col %in% meta_columns) {

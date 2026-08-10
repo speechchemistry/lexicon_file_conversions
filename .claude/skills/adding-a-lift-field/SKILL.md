@@ -1,11 +1,16 @@
 ---
 name: adding-a-lift-field
-description: Add support for a new LIFT field/element to the CSV↔LIFT round-trip, covering both the lift2csv (read) and csv2lift (write) directions. Use when asked to support a LIFT element that isn't handled yet, at entry or sense level, whether it becomes a column on an existing table or a table of its own — e.g. a typed note or variant on an entry, an example sentence or additional gloss language on a sense.
+description: Add support for a new LIFT field/element to the CSV↔LIFT round-trip, covering both the lift2csv (read) and csv2lift (write) directions. Use when asked to support a LIFT element that isn't handled yet, at entry or sense level, whether it becomes a column on an existing table or a table of its own — e.g. a typed note or variant on an entry, an example sentence or additional gloss language on a sense. Also covers supporting an element at a level where it isn't yet read even though another level already handles it (e.g. sense-level notes once entry-level notes work).
 ---
 
 # Adding a new LIFT field
 
-Procedure for taking a LIFT element from unsupported to fully round-tripping. Three worked examples run throughout: the **entry-level** plain `<note>` field (see `plans/entry-level-note.md`), the **sense-level** multi-lang `<gloss>` / `<definition>` pair, and **`<pronunciation>`** (see `plans/entry-level-pronunciation.md`), the first element that did not fit an existing table at all.
+Procedure for taking a LIFT element from unsupported to fully round-tripping. Four worked examples run throughout:
+
+- the **entry-level** plain `<note>` field (see `plans/entry-level-note.md`);
+- the **sense-level** multi-lang `<gloss>` / `<definition>` pair;
+- **`<pronunciation>`** (see `plans/entry-level-pronunciation.md`), the first element that did not fit an existing table at all;
+- the **sense-level "General Note" + custom `<field>`** pair (see `plans/sense-level-note-and-custom-fields.md`), the first change to support an element *at a second level* when another level already handled it. That case is its own category of work: the extraction and emit code copy cleanly from the level that already works, but naming and the join view do not — see steps 0, 1 and 4.
 
 The ordering matters and is the main thing this skill exists to convey: **do the read direction first, then reuse its CSV output as the fixture for the write direction.** Do not hand-author CSV fixtures.
 
@@ -24,6 +29,7 @@ The ordering matters and is the main thing this skill exists to convey: **do the
   ```
   Then check whether occurrences are entry-level or sense-level, and tally any `type` attribute variants — a quick Python `xml.etree` script over `entry.findall('note')` is the reliable way, since grep can't tell you nesting depth.
 - Ask the user to confirm ambiguous semantics in the FLEx UI. For `<note>` the user checked that filtering for non-blank Note in FLEx returned nothing for a project full of `type="restrictions"` notes — that is what established they are separate fields.
+- **Name the column from the FLEx UI label for that field at that level, not from the XML tag.** The same tag is a *different field* at a different level, and FLEx labels them differently: `entry/note` is "Note", but `sense/note` is "General Note" (both distinct again from typed notes like "Phonology Note"). Naming the sense column `note_<lang>` looks consistent in XML terms and is wrong in FLEx terms — users search the CSV for the name the UI shows them. It also collides (step 1). A screenshot of the field in the FLEx pane settles it faster than any amount of schema reading, so ask for one when a tag repeats across levels.
 
 ## 1. Decide where it lives: a column, or a table of its own
 
@@ -37,6 +43,8 @@ Indexed column names (`pronunciation_1_<lang>`, `pronunciation_2_<lang>`) are th
 Do not settle it from the schema alone — **tally the real fixtures (step 0) and check the worst case actually present.** The schema being permissive is an argument; an entry in the repo already holding two is proof, and it is what makes the case to the user.
 
 **Ask the user before committing to a new table.** It is roughly three times the work of a column and adds a CLI flag to `scripts/csv2lift.R`, so it is their call. Bring them the fixture tally, not just the schema quote. `SPEC.md` §7 already anticipates the answer being yes — "further tables are added as optional parameters as their round-trip support is implemented".
+
+**Column names are one namespace across levels, not one per table.** Two tables can each own a `note_en` without either classifier noticing — but they meet in the entry ⋈ sense join view, where `left_join()` silently resolves the clash to `note_en.x` / `note_en.y` and ships it into an approved, human-reviewed CSV. Step 0's FLEx-label rule usually prevents this for free (`note_` vs `general_note_`), which is the right fix: make the names genuinely different because the fields genuinely are. Where a clash stays possible regardless — any two levels that both support custom `<field>`, since the type name comes from the user's data — `join_sense_entry()` (`R/join_sense_entry.R`) disambiguates with an explicit `suffix = c("_sense", "_entry")` instead of dplyr's default. Check both mechanisms before adding a column at a level the join view covers.
 
 **A new table's parent doesn't have to be `<entry>`.** `<pronunciation>` hangs off entries, but the same reasoning applies one level down — `sense/example` and `sense/reversal` (both named in SPEC.md §9 as not-yet-built) are `zeroOrMore` under `<sense>`, not `<entry>`. Name the new table's foreign key after whichever parent it hangs off — `entry_id` for an entry-parented table, `sense_guid` for a sense-parented one — mirroring how `sense_table()` itself uses `entry_id` as its own FK. The parent can even be a table you're building in the same change (e.g. a `translation` table hanging off `sense/example`), not only an existing one. This choice determines the lookup xpath and an ordering dependency in step 4 — read that before assuming entry-level mechanics apply unchanged.
 
@@ -78,6 +86,8 @@ A brand-new fixture produces a WARN and an auto-created snapshot, *not* a FAIL. 
 
 Use an xpath predicate to exclude variants that are semantically different fields — e.g. `./note[not(@type)]/form`. Without it, two variants sharing a language collide in `pivot_wider`.
 
+**Keep write-direction machinery out of the read step.** `classify_*_columns()` exists only for csv2lift, so editing it while making the reader green costs you the sharpest write red. Adding the sense custom-field fallback during the read step turned step 4's red from "hard error naming the unrecognized column" into "column classified fine, then silently dropped from the emitted XML" — still a real red, but one you have to go hunting for in the snapshot instead of one the test hands you. Touch only the extractor and its `pivot_wider`/`left_join` here.
+
 **Always return a *typed* empty tibble from every early-return path.** `map_df` over a zero-length list — or a bare `tibble()` returned when a node has no children — produces a tibble with **no columns**, and the downstream `left_join(by = "sense_guid")` then fails with `Join columns in 'x' must be present in the data`. Define the empty shape once and reuse it, *and* guard the outer call when the node list itself is empty (the empty-lexicon fixture has zero entries, which the inner guard never sees):
 
 ```r
@@ -97,7 +107,7 @@ sense_meta <- if (length(entries) == 0) {
 
 `extract_multitext_element()` already does this via its `empty_result`, which is why the entry-level path never trips over it — but any new extractor you write must.
 
-**Each table has its own parallel set of files and functions.** A new table means creating a whole column of this; copy the sense-level one, which is the closest model:
+**The codebase is a grid: one column per *level* (the parent element a table hangs off), one row per role that level needs filled.** Adding a field to a level that already exists touches only the cells that field needs; adding a level means filling a whole new column, copied from the closest existing one (usually sense-level):
 
 | entry-level | sense-level | pronunciation-level |
 |---|---|---|
@@ -114,7 +124,7 @@ sense_meta <- if (length(entries) == 0) {
 
 **A table whose element has no id/guid is keyed by position.** `<entry>` has `guid` and `<sense>` has `id`, but `<pronunciation>` has neither, so `extract_pronunciation_multitext()` keys forms on the element's index and that index is dropped before output. Row order then *is* the identity — say so explicitly in SPEC.md, because re-sorting the CSV silently re-orders the emitted elements. `sense/example` would face the same problem one level down (`<example>` has no id either); the fix is the same, just found via `.//entry/sense/example` instead of `.//entry/pronunciation`, with `sense_guid` (not `entry_id`) as the surviving foreign key.
 
-One deliberate asymmetry to preserve: `classify_entry_columns()` falls back to a last-underscore custom-field split, but `classify_sense_columns()` and `classify_pronunciation_columns()` treat an unrecognized column as a **hard error**. Sense- and pronunciation-level custom `<field>` elements aren't supported at all, so silently misclassifying one would be worse than failing. Any new table's classifier should follow the strict rule too.
+**A classifier ends in the last-underscore custom-field split only where custom `<field>` is actually supported at that level; otherwise it ends in a hard error.** `classify_entry_columns()` and `classify_sense_columns()` both have the fallback, because entry- and sense-level `<field>` round-trip. `classify_pronunciation_columns()` still errors on an unrecognized column, because pronunciation-level `<field>`/`<trait>` aren't read or written at all — silently misclassifying one as a form would be worse than failing. So a new level's classifier **starts strict**, and gains the fallback in the same change that implements custom fields for it, never before.
 
 Also copy the CLI's empty-output convention: `lift2csv_sense-table.R` emits `cat("")` rather than a bare header when `nrow(table) == 0`, so a lexicon with none of the element snapshots as an empty file.
 
@@ -163,13 +173,23 @@ for r in rows:
 
 Then pull the **matching** entry row (same `entry_id`) out of `_snaps/entry-table_end-to-end/Sena3.csv` for the paired `_entries.csv`, keeping both files' header order and values verbatim. Prefer a row whose text has no embedded quotes or commas — it keeps the fixture readable and sidesteps CSV-quoting noise in the diff. The rule the `cp` recipe exists to enforce still holds: every value must be copied from real reader output, never invented.
 
-**Red.** Run `devtools::test(filter = "csv2lift_end-to-end")` and read the auto-created `.lift` snapshot. Expect the field to fall through to the generic custom-field branch — `note_en` produced `<field type="note">` instead of `<note>`. The stderr classification log makes this obvious. For a new table the red looks different: the CLI has no such flag yet, so `argparser` fails in `preprocess_argv()` and the snapshot is empty. That is still a valid red — the output demonstrably lacks the element — but say which kind it is rather than reporting a generic failure.
+**Red.** Run `devtools::test(filter = "csv2lift_end-to-end")` and read the auto-created `.lift` snapshot. It takes one of four shapes depending on what is already in place — name which one you got rather than reporting a generic failure:
+
+| What's missing | The red looks like |
+|---|---|
+| No branch in the classifier, and the level has a custom-field fallback | Wrong element: `note_en` emitted as `<field type="note">`. The stderr classification log makes it obvious. |
+| No branch, and the level's classifier is strict | Hard error: "Unrecognized sense column 'note_en'". |
+| Classifier already updated, but no emit block | **Silent drop** — element simply absent from the `<sense>`. The weakest red; avoid creating it (see step 3). |
+| A whole new table | `argparser` fails in `preprocess_argv()` because the CLI has no such flag, so the snapshot is empty. |
+
+The bottom two prove absence rather than announcing it, so read the snapshot rather than trusting the pass/fail count.
 
 **Sometimes there is no green step, and the fixture is the whole deliverable.** A new fixture can reveal that the code already handles the case correctly — multiple senses per entry turned out to already work in `attach_senses_to_lift()`, so `sena3_multiple_senses_per_entry` went from auto-created snapshot straight to accept with no implementation edit. Do not manufacture a change to make the cycle look conventional. Inspect the snapshot, confirm it is genuinely right (don't just note that it didn't error), accept it, and say plainly in the commit and in SPEC.md that the fixture closes a coverage gap rather than fixing a defect.
 
-**Green (a new column).** Two edits:
+**Green (a new column).** Two edits, plus one check:
 - [R/entry_helpers.R](../../../R/entry_helpers.R) — add a branch to `classify_entry_columns()` mirroring the `citation` one (`^<field>_.+$` → `kind = "<field>"`), placed *before* the last-underscore custom-field fallback. Update the "known limitation" comment to name the new reserved prefix.
 - [R/csv2lift_entry.R](../../../R/csv2lift_entry.R) — add a `<field>_cols <- filter(col_classes, kind == "<field>")` alongside the others, and an emit block mirroring citation's, positioned to match SPEC.md's canonical child order.
+- **Then check the join view** if the new column's level appears in it. `join_sense_entry()` is a *third* consumer of column names that neither classifier sees (step 1), and it is where a cross-level clash surfaces — as `.x`/`.y` columns in an approved CSV. Adding sense-level notes forced the explicit `suffix =` there; the later rename to `general_note_<lang>` stopped the clash happening at all, and the suffix stayed as the fallback for the case still possible.
 
 **Green (a new table).** A new `R/csv2lift_<name>.R` modelled on `csv2lift_sense.R`, plus a flag on `scripts/csv2lift.R`. Three things differ from the column case:
 
@@ -186,14 +206,18 @@ Review the diff, then `snapshot_accept("csv2lift_end-to-end/")`.
   - Expect to **remove** known-limitation text, not only extend it. Fixing the English-only gloss made §4's whole "only the English gloss is captured" sentence obsolete; leaving it would have contradicted the new column rows.
 - **SPEC.md §9**: record what you deliberately did *not* implement (e.g. typed notes), so the boundary is explicit rather than looking like an oversight — and delete the entries your change just implemented. Do not list a schema-guaranteed constraint here: a cap `lift.rng` enforces isn't an unimplemented feature, and belongs in the §3/§4 column table instead (see step 0).
 - **A new table gets its own SPEC.md section**, not a row in someone else's. Give it the key/foreign-key line (state which parent's key the FK targets — `entry_id` or `sense_guid`), the column table, the classification algorithm, and a paragraph per direction — §5 is the model. State the attach-call ordering constraint explicitly if the table's parent is itself attached by another table (see step 4) — this is the one fact that isn't visible from reading the column table alone. Inserting a section means **renumbering every later section and fixing the cross-references**, which are easy to miss: `grep -n "§[0-9]" SPEC.md` afterwards and check each one still points where it means to. Also extend §3's canonical-child-order bullet and §7's CLI list.
+- **SPEC.md §6** (the join view): only when a column name could clash across levels — record which prefix belongs to which level and why they differ, so the next person doesn't "tidy" them back into agreement.
 - **README.md**: only if the CLI surface or examples change — a new table always changes both, and is worth an example showing the new flag.
 - Grep for stale TODOs naming the field (`scripts/lift2csv_entry-table.R` carried one for pronunciation for months).
+
+**A column name is a public contract, so renaming one is never a one-line edit.** Expect to touch, in order: the reader's `names_glue`; the classifier's regex *and* the known-limitation comment naming the prefix; every write-direction fixture header that carries the column; the approved snapshots in all three affected directories (`sense-table_`, `join-sense-entry-table_`, `csv2lift_`); SPEC.md's column table, classification algorithm, known-limitation sentence and per-direction paragraph; and the plan file. Re-run and re-review each snapshot set separately rather than accepting in bulk — a pure rename must change headers only, and reviewing is what proves it did. In the plan file, add a revision note rather than rewriting the original text: the rename was a real decision, and editing it out hides why the name is what it is.
 
 ## Gotchas
 
 - Run tests with `devtools::test()`, never bare `testthat::test_file()` — the latter fails with "requires 3rd edition".
 - `snapshot_accept("name")` without the trailing slash silently matches nothing and reports "No snapshots to update" without erroring. Always re-run the tests to confirm the accept took.
 - **"No snapshots to update" has a second, harmless cause**: a brand-new fixture's snapshot is written *directly* (with a WARN), not as a `.new` file, so there is nothing left to accept. Don't chase it as the trailing-slash bug — check whether the snapshot file already exists and is correct. It still needs reviewing; nothing vetted it.
+- **Python's `xml.etree` does not implement the xpath you wrote in R.** `findall("note[not(@type)]")` raises `SyntaxError: invalid predicate` — ElementTree supports only a subset with no `not()`. When verifying an R xpath predicate from Python, filter in Python instead: `[n for n in sense.findall('note') if n.get('type') is None]`.
 - Verify behaviour no fixture covers by hand rather than leaving it untested-and-unmentioned. The ">1 `<media>` per pronunciation warns and keeps the first" branch has no fixture, so it was checked against a throwaway LIFT file in the scratchpad and the result reported.
 - Pause at each red/green/refactor boundary so the user can commit — the history is meant to read as distinct TDD stages.
 - Consult `plans/` for prior worked examples; save non-trivial plans there and keep them synced (see AGENTS.md).

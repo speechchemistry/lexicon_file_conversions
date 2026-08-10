@@ -42,7 +42,7 @@
       </form>
       <media href="SILCAWL0385-_stranger_RMKS.webm"/>
     </pronunciation>
-    <sense id="209d194c-68b3-43d7-b573-3338b0753662">
+    <sense id="209d194c-68b3-43d7-b573-3338b0753662" order="0">
       <grammatical-info value="Noun"/>
       <gloss lang="en">
         <text>guest; visitor</text>
@@ -51,7 +51,7 @@
         <text>bā̀ƙō</text>
       </gloss>
     </sense>
-    <sense id="5d08c796-0759-4a20-b42a-9359e307ec8e">
+    <sense id="5d08c796-0759-4a20-b42a-9359e307ec8e" order="1">
       <grammatical-info value="Noun"/>
       <gloss lang="en">
         <text>stranger</text>
@@ -59,6 +59,11 @@
       <gloss lang="ha">
         <text>bā̀ƙō</text>
       </gloss>
+      <note>
+        <form lang="en">
+          <text>Blench083-</text>
+        </form>
+      </note>
     </sense>
   </entry>
 </lift>

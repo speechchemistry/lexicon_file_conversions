@@ -140,5 +140,9 @@ Plus a manual round-trip on the real export: `Sena3.lift` → sense CSV → back
 2. **Semantic domains** — `trait[@name='semantic-domain-ddp4']`, up to 3 per sense, atomic values:
    a thin `sense_guid, semantic_domain` table (indexed columns are ruled out by the skill).
 3. **Typed sense notes** — `note_<type>_<lang>` columns; design shared with entry-level typed notes.
-4. **Cheap extra**: `sense/@order` (present on 446 Sena3 senses) is silently lost today — a single
-   metadata column would fix it.
+4. ~~**Cheap extra**: `sense/@order` (present on 446 Sena3 senses) is silently lost today — a single
+   metadata column would fix it.~~ **Done** — implemented as the `sense_order` metadata column
+   (SPEC.md §4). Named `sense_order`, not `order`, to match `sense_guid` and to avoid a future clash
+   with the entry-level `@order` attribute in the join view. Copied verbatim, never regenerated from
+   row position; the writer omits the attribute when the column is blank *or absent*, so sense CSVs
+   produced before the column existed still convert.

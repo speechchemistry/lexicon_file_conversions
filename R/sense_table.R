@@ -12,10 +12,12 @@ sense_table <- function(LIFT_file) {
   empty_sense_meta <- tibble(
     sense_guid = character(),
     entry_id = character(),
+    sense_order = character(),
     grammatical_info = character()
   )
 
-  # first stage: sense-level metadata only (sense_guid, entry_id, grammatical_info)
+  # first stage: sense-level metadata only (sense_guid, entry_id, sense_order,
+  # grammatical_info)
   sense_meta <- if (length(entries) == 0) {
     empty_sense_meta
   } else {
@@ -28,6 +30,11 @@ sense_table <- function(LIFT_file) {
           tibble(
             sense_guid = xml_attr(.x, "id"),
             entry_id = entry_id,
+            # FLEx emits order only on the senses of multi-sense entries
+            # (446 of 446 such senses in Sena3.lift, and on none of the 1271
+            # single-sense ones). Copied verbatim, never regenerated from row
+            # position — same rule as the entry dates (§2).
+            sense_order = xml_attr(.x, "order"),
             grammatical_info = xml_attr(xml_find_first(.x, "./grammatical-info"), "value")
           )
         })

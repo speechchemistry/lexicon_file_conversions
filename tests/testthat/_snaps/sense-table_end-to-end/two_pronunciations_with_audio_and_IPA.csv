@@ -1,3 +1,3 @@
-sense_guid,entry_id,grammatical_info,gloss_en,gloss_ha,general_note_en
-209d194c-68b3-43d7-b573-3338b0753662,bed1e71d-bf62-4e67-8ff5-98063a182cad,Noun,guest; visitor,bā̀ƙō,
-5d08c796-0759-4a20-b42a-9359e307ec8e,bed1e71d-bf62-4e67-8ff5-98063a182cad,Noun,stranger,bā̀ƙō,Blench083-
+sense_guid,entry_id,sense_order,grammatical_info,gloss_en,gloss_ha,general_note_en
+209d194c-68b3-43d7-b573-3338b0753662,bed1e71d-bf62-4e67-8ff5-98063a182cad,0,Noun,guest; visitor,bā̀ƙō,
+5d08c796-0759-4a20-b42a-9359e307ec8e,bed1e71d-bf62-4e67-8ff5-98063a182cad,1,Noun,stranger,bā̀ƙō,Blench083-
