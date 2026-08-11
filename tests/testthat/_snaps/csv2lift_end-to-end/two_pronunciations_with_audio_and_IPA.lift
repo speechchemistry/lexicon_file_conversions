@@ -50,6 +50,11 @@
       <gloss lang="ha">
         <text>bā̀ƙō</text>
       </gloss>
+      <note type="source">
+        <form lang="en">
+          <text>SILCAWL0384-</text>
+        </form>
+      </note>
     </sense>
     <sense id="5d08c796-0759-4a20-b42a-9359e307ec8e" order="1">
       <grammatical-info value="Noun"/>
@@ -62,6 +67,16 @@
       <note>
         <form lang="en">
           <text>Blench083-</text>
+        </form>
+      </note>
+      <note type="source">
+        <form lang="en">
+          <text>SILCAWL0385-</text>
+        </form>
+      </note>
+      <note type="phonology">
+        <form lang="en">
+          <text>transcription was <span lang="zhi-fonipa-x-etic">tsʼɛ̄n </span>but changed for now to match participatory data which may be correct vowel</text>
         </form>
       </note>
     </sense>

@@ -86,6 +86,17 @@ classify_sense_columns <- function(col_names) {
       return(tibble(column = col, kind = "note", field_type = NA_character_, lang = lang))
     }
 
+    # Typed notes are type-keyed exactly like custom <field>s: note_<type>_<lang>, split on the LAST
+    # underscore. Must precede the custom-field fallback below, or note_phonology_en becomes
+    # <field type="note_phonology">.
+    if (grepl("^note_.+_[^_]+$", col)) {
+      note_type <- sub("^note_(.+)_[^_]+$", "\\1", col)
+      lang <- sub("^note_.+_([^_]+)$", "\\1", col)
+      cat(sprintf("Classifying column '%s' as typed note type='%s', lang=%s\n",
+                  col, note_type, lang), file = stderr())
+      return(tibble(column = col, kind = "typed_note", field_type = note_type, lang = lang))
+    }
+
     # Custom field: split on the LAST underscore into field type and lang,
     # same known limitation as classify_entry_columns() (a writing system
     # code containing an underscore, or a custom field literally named

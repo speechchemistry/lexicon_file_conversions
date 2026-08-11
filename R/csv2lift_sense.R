@@ -13,6 +13,7 @@ attach_senses_to_lift <- function(doc, sense_table) {
   gloss_cols <- filter(col_classes, kind == "gloss")
   definition_cols <- filter(col_classes, kind == "definition")
   note_cols <- filter(col_classes, kind == "note")
+  typed_note_cols <- filter(col_classes, kind == "typed_note")
   field_cols <- filter(col_classes, kind == "field")
 
   walk(seq_len(nrow(sense_table)), ~{
@@ -61,6 +62,17 @@ attach_senses_to_lift <- function(doc, sense_table) {
         note_node <- xml_add_child(sense_node, "note")
         add_multitext_children(note_node, note_values)
       }
+    }
+
+    if (nrow(typed_note_cols) > 0) {
+      walk(unique(typed_note_cols$field_type), ~{
+        type_cols <- typed_note_cols[typed_note_cols$field_type == .x, ]
+        note_values <- set_names(as.character(row[type_cols$column]), type_cols$lang)
+        if (has_nonblank(note_values)) {
+          note_node <- xml_add_child(sense_node, "note", type = .x)
+          add_multitext_children(note_node, note_values)
+        }
+      })
     }
 
     if (nrow(field_cols) > 0) {

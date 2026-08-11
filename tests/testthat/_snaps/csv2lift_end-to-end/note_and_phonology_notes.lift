@@ -35,6 +35,30 @@
     <pronunciation>
       <media href="Blench530-_seek_RMKS.webm"/>
     </pronunciation>
+    <sense id="24783cb4-c7b4-4a2f-bb61-fb4c752b5ebe">
+      <grammatical-info value="Verb"/>
+      <gloss lang="en">
+        <text>to seek; to search; to look for</text>
+      </gloss>
+      <gloss lang="ha">
+        <text>nḕmā</text>
+      </gloss>
+      <note>
+        <form lang="en">
+          <text>Blench530-</text>
+        </form>
+      </note>
+      <note type="phonology">
+        <form lang="en">
+          <text>Lexeme form (orthography) is derived from lexeme form (phonemic). on card V1 is long</text>
+        </form>
+      </note>
+      <note type="source">
+        <form lang="en">
+          <text>Blench530- SILCAWL1474a SILCAWL1474-</text>
+        </form>
+      </note>
+    </sense>
   </entry>
   <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-05-06T15:01:54Z" guid="41b17c59-3600-479e-bf34-50cdd8a05c2c">
     <lexical-unit>
@@ -65,6 +89,30 @@
     <pronunciation>
       <media href="Blench546-_spit_RMKS.webm"/>
     </pronunciation>
+    <sense id="73288e00-624f-4ada-a77c-c19c819c48e5">
+      <grammatical-info value="Verb"/>
+      <gloss lang="en">
+        <text>to spit</text>
+      </gloss>
+      <gloss lang="ha">
+        <text>tōfà; tōfā̀ ?</text>
+      </gloss>
+      <note>
+        <form lang="en">
+          <text>Blench546-</text>
+        </form>
+      </note>
+      <note type="phonology">
+        <form lang="en">
+          <text>Noun Lexeme form (orthography) is derived from lexeme form (phonemic). Was <span lang="zhi">tang-hiiya</span></text>
+        </form>
+      </note>
+      <note type="source">
+        <form lang="en">
+          <text>SILCAWL0111-</text>
+        </form>
+      </note>
+    </sense>
   </entry>
   <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-05-05T11:11:25Z" guid="4663978f-8e76-464a-b569-38b8c17960d9">
     <lexical-unit>
@@ -104,5 +152,24 @@
     <pronunciation>
       <media href="SILCAWL0251-_dead_RMKS.webm"/>
     </pronunciation>
+    <sense id="6ab0209c-e797-4f57-a253-3df19b2b4b0e">
+      <grammatical-info value="Noun"/>
+      <gloss lang="en">
+        <text>corpse</text>
+      </gloss>
+      <gloss lang="ha">
+        <text>mutu gawa</text>
+      </gloss>
+      <definition>
+        <form lang="en">
+          <text>corpse</text>
+        </form>
+      </definition>
+      <note type="source">
+        <form lang="en">
+          <text>SILCAWL0251-</text>
+        </form>
+      </note>
+    </sense>
   </entry>
 </lift>

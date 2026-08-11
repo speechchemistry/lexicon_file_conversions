@@ -16,6 +16,7 @@ entry_table_to_lift <- function(entry_table) {
   lexical_unit_cols <- filter(col_classes, kind == "lexical_unit")
   citation_cols <- filter(col_classes, kind == "citation")
   note_cols <- filter(col_classes, kind == "note")
+  typed_note_cols <- filter(col_classes, kind == "typed_note")
   field_cols <- filter(col_classes, kind == "field")
 
   walk(seq_len(nrow(entry_table)), ~{
@@ -59,6 +60,17 @@ entry_table_to_lift <- function(entry_table) {
         note_node <- xml_add_child(entry, "note")
         add_multitext_children(note_node, note_values)
       }
+    }
+
+    if (nrow(typed_note_cols) > 0) {
+      walk(unique(typed_note_cols$field_type), ~{
+        type_cols <- typed_note_cols[typed_note_cols$field_type == .x, ]
+        note_values <- set_names(as.character(row[type_cols$column]), type_cols$lang)
+        if (has_nonblank(note_values)) {
+          note_node <- xml_add_child(entry, "note", type = .x)
+          add_multitext_children(note_node, note_values)
+        }
+      })
     }
 
     if (nrow(field_cols) > 0) {

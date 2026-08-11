@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lift version="0.13" producer="lexicon_file_conversions csv2lift">
+  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2006-09-07T16:34:27Z" guid="708ff551-9116-458a-b6a9-ea8eab0beff0">
+    <lexical-unit>
+      <form lang="seh">
+        <text>kambaz</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="root"/>
+    <citation>
+      <form lang="seh">
+        <text>kambaza</text>
+      </form>
+    </citation>
+    <sense id="d5eaedae-e470-4785-9b74-f67507701cd0">
+      <grammatical-info value="Verbo"/>
+      <gloss lang="en">
+        <text>crawl</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>gatinhar</text>
+      </gloss>
+      <definition>
+        <form lang="en">
+          <text>crawl, for a person</text>
+        </form>
+        <form lang="pt">
+          <text>gatinhar, pessoa</text>
+        </form>
+      </definition>
+      <note type="semantics">
+        <form lang="en">
+          <text>agent= person</text>
+        </form>
+        <form lang="pt">
+          <text>N1(kambaza)=tem que ser pessoa, não animal</text>
+        </form>
+      </note>
+    </sense>
+  </entry>
+  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2006-09-29T21:58:00Z" guid="7ecbb299-bf35-4795-a5cc-8d38ce8b891c">
+    <lexical-unit>
+      <form lang="seh">
+        <text>infa</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="root"/>
+    <note type="restrictions">
+      <form lang="en">
+        <text>Do not use: Check this out</text>
+      </form>
+    </note>
+    <sense id="6895e856-d373-4190-b7ac-8d185a18e4ce">
+      <grammatical-info value="Nome"/>
+      <gloss lang="en">
+        <text>death</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>morte</text>
+      </gloss>
+      <note>
+        <form lang="en">
+          <text>Question: Nyazeze uses kufa this is another dialect, Cewa?</text>
+        </form>
+      </note>
+      <note type="phonology">
+        <form lang="en">
+          <text>This is dubious as im would be expected  / _ f.</text>
+        </form>
+      </note>
+    </sense>
+  </entry>
+</lift>
