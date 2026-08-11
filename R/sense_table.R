@@ -88,9 +88,22 @@ sense_table <- function(LIFT_file) {
       values_from = field_text
     )
 
+  # typed sense-level notes: <note type="phonology"> etc. are separate FLEx fields that reuse the
+  # <note> element, so they get type-keyed columns like custom <field>s rather than merging into
+  # general_note_<lang> above. [@type] is the exact complement of the [not(@type)] predicate used there.
+  typed_notes_long <- extract_sense_multitext_with_attribute(senses, "./note[@type]", "type", "note_text")
+  typed_notes_wide <- typed_notes_long |>
+    pivot_wider(
+      id_cols = sense_guid,
+      names_from = c(type, lang),
+      names_glue = "note_{type}_{lang}",
+      values_from = note_text
+    )
+
   sense_meta |>
     left_join(gloss_wide, by = "sense_guid") |>
     left_join(definition_wide, by = "sense_guid") |>
     left_join(notes_wide, by = "sense_guid") |>
-    left_join(fields_wide, by = "sense_guid")
+    left_join(fields_wide, by = "sense_guid") |>
+    left_join(typed_notes_wide, by = "sense_guid")
 }
