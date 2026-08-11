@@ -139,7 +139,10 @@ Plus a manual round-trip on the real export: `Sena3.lift` → sense CSV → back
    form, so the omit-when-empty rules need care.
 2. **Semantic domains** — `trait[@name='semantic-domain-ddp4']`, up to 3 per sense, atomic values:
    a thin `sense_guid, semantic_domain` table (indexed columns are ruled out by the skill).
-3. **Typed sense notes** — `note_<type>_<lang>` columns; design shared with entry-level typed notes.
+3. ~~**Typed sense notes** — `note_<type>_<lang>` columns; design shared with entry-level typed notes.~~
+   **Done** — implemented in `plans/typed-notes-entry-and-sense.md`, alongside the entry-level typed
+   notes (SPEC.md §3, §4). `note_<type>_<lang>` is shared verbatim across both tables, not
+   `general_note_`-prefixed at sense level, because a type's FLEx label is the same at both levels.
 4. ~~**Cheap extra**: `sense/@order` (present on 446 Sena3 senses) is silently lost today — a single
    metadata column would fix it.~~ **Done** — implemented as the `sense_order` metadata column
    (SPEC.md §4). Named `sense_order`, not `order`, to match `sense_guid` and to avoid a future clash
