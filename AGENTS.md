@@ -17,7 +17,7 @@ Guidance for human and AI contributors working in this repository.
 - `SPEC.md` is the source of truth for the CSV↔LIFT data model (tables, keys, column-naming, LIFT structural conventions shared by lift2csv and csv2lift).
 - Whenever a change alters or clarifies a rule `SPEC.md` covers, update `SPEC.md` in the same change — do not let it drift out of sync with the code.
 - If code and `SPEC.md` disagree, that is a bug: fix whichever is wrong, do not silently favour one.
-- Do not speculatively extend `SPEC.md` to cover tables or features that aren't implemented yet; add to it incrementally as each is actually built (see `SPEC.md` §8, "Not yet specified").
+- Do not speculatively extend `SPEC.md` to cover tables or features that aren't implemented yet; add to it incrementally as each is actually built (see `SPEC.md` §9, "Not yet specified").
 - **Split of concerns:** `AGENTS.md` documents how to work in this repo (process, conventions, workflow). `SPEC.md` documents what the software does and guarantees (the CSV↔LIFT data model). Repo-wide engineering conventions that happen to describe behaviour (e.g. stdout/stderr separation) stay in `AGENTS.md` since they apply uniformly across scripts; `SPEC.md` is reserved for the CSV↔LIFT contract specifically.
 
 ## Skills
