@@ -22,6 +22,13 @@
       <gloss lang="en">
         <text>Wednesday</text>
       </gloss>
+      <example source="Moreira p33">
+        <note type="reference">
+          <form lang="en">
+            <text>Moreira p33</text>
+          </form>
+        </note>
+      </example>
     </sense>
     <sense id="f5e72635-c18f-4558-bff8-af539d7f41c7" order="1">
       <grammatical-info value="Nome"/>

@@ -43,6 +43,13 @@
           <text>note l -&gt; r / i_ will CARLA handle this?</text>
         </form>
       </field>
+      <example source="Sulo; Orth; Wordlist">
+        <note type="reference">
+          <form lang="en">
+            <text>Sulo; Orth; Wordlist</text>
+          </form>
+        </note>
+      </example>
     </sense>
   </entry>
 </lift>

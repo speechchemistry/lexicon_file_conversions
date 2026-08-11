@@ -118,3 +118,47 @@ extract_example_translation <- function(examples) {
     forms = if (length(forms_list) == 0) empty_forms else bind_rows(forms_list)
   )
 }
+
+# Example-level analogue of classify_sense_columns(): classifies a csv2lift
+# example CSV's column names into the shapes example_table() produces.
+# Follows the pronunciation rule, not the sense one — an unrecognized column
+# is a hard error, with no last-underscore custom-field fallback, since
+# example-level <field> isn't read or written at all.
+classify_example_columns <- function(col_names) {
+  meta_columns <- c("sense_guid", "example_source", "translation_type")
+
+  map_df(col_names, function(col) {
+    # Exact match must precede the prefix checks below: example_source
+    # matches ^example_.+$ and translation_type matches ^translation_.+$, so
+    # both would otherwise misclassify as a form with lang="source"/"type".
+    if (col %in% meta_columns) {
+      cat(sprintf("Classifying column '%s' as metadata\n", col), file = stderr())
+      return(tibble(column = col, kind = "meta", field_type = NA_character_, lang = NA_character_))
+    }
+
+    # Typed note must precede the example-form fallback below, or
+    # note_reference_en would be read as an example form with lang
+    # "reference_en" — same ordering rule as entry/sense typed notes.
+    if (grepl("^note_.+_[^_]+$", col)) {
+      note_type <- sub("^note_(.+)_[^_]+$", "\\1", col)
+      lang <- sub("^note_.+_([^_]+)$", "\\1", col)
+      cat(sprintf("Classifying column '%s' as typed note type='%s', lang=%s\n",
+                  col, note_type, lang), file = stderr())
+      return(tibble(column = col, kind = "typed_note", field_type = note_type, lang = lang))
+    }
+
+    if (grepl("^example_.+$", col)) {
+      lang <- sub("^example_", "", col)
+      cat(sprintf("Classifying column '%s' as example form, lang=%s\n", col, lang), file = stderr())
+      return(tibble(column = col, kind = "form", field_type = NA_character_, lang = lang))
+    }
+
+    if (grepl("^translation_.+$", col)) {
+      lang <- sub("^translation_", "", col)
+      cat(sprintf("Classifying column '%s' as translation form, lang=%s\n", col, lang), file = stderr())
+      return(tibble(column = col, kind = "translation_form", field_type = NA_character_, lang = lang))
+    }
+
+    stop(sprintf("Unrecognized example column '%s'", col), call. = FALSE)
+  })
+}

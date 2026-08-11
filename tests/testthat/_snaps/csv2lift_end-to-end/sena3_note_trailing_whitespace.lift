@@ -30,6 +30,13 @@
           <text>Question: can include common civet?; Question: Nyazeze doesn't know; nor Rogerio</text>
         </form>
       </note>
+      <example source="Meque">
+        <note type="reference">
+          <form lang="en">
+            <text>Meque</text>
+          </form>
+        </note>
+      </example>
     </sense>
   </entry>
   <entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-09-06T15:15:02Z" guid="5db6e79d-de66-4ec6-84c1-af3cd170f90d">
@@ -62,6 +69,24 @@
           <text>Question: is this in twice? </text>
         </form>
       </note>
+      <example source="Orth">
+        <form lang="seh">
+          <text>Ng'ona yaambuka.</text>
+        </form>
+        <translation type="Free translation">
+          <form lang="pt">
+            <text>O crocodilo atravessou (rio).</text>
+          </form>
+          <form lang="en">
+            <text>The crocodile crossed (the river).</text>
+          </form>
+        </translation>
+        <note type="reference">
+          <form lang="en">
+            <text>Orth</text>
+          </form>
+        </note>
+      </example>
     </sense>
   </entry>
   <entry dateCreated="2005-06-23T16:08:17Z" dateModified="2006-08-22T18:59:37Z" guid="db8ade5b-dcab-4ccf-89d3-0c4cbc30189b">
