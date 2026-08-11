@@ -175,6 +175,22 @@ escape_xml_text <- function(x) {
   gsub(">", "&gt;", x, fixed = TRUE)
 }
 
+# Shared by the two type-keyed emit loops (custom <field>s and typed
+# <note type>s, at both entry and sense level): each unique type value in
+# type_cols becomes one <tag type="..."> child, populated with one
+# <form lang> per non-blank column of that type, omitted entirely if every
+# column for that type is blank.
+emit_typed_children <- function(parent_node, type_cols, row, tag) {
+  walk(unique(type_cols$field_type), ~{
+    cols_for_type <- type_cols[type_cols$field_type == .x, ]
+    values <- set_names(as.character(row[cols_for_type$column]), cols_for_type$lang)
+    if (has_nonblank(values)) {
+      child_node <- xml_add_child(parent_node, tag, type = .x)
+      add_multitext_children(child_node, values)
+    }
+  })
+}
+
 # Inverse of the multitext-reading helpers: adds one <tag lang><text> child
 # per non-blank entry in a named vector (name = lang, value = text). Shared
 # by lexical-unit, citation, each custom field's <field> element (tag="form",

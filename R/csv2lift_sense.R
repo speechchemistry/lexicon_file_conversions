@@ -65,25 +65,11 @@ attach_senses_to_lift <- function(doc, sense_table) {
     }
 
     if (nrow(typed_note_cols) > 0) {
-      walk(unique(typed_note_cols$field_type), ~{
-        type_cols <- typed_note_cols[typed_note_cols$field_type == .x, ]
-        note_values <- set_names(as.character(row[type_cols$column]), type_cols$lang)
-        if (has_nonblank(note_values)) {
-          note_node <- xml_add_child(sense_node, "note", type = .x)
-          add_multitext_children(note_node, note_values)
-        }
-      })
+      emit_typed_children(sense_node, typed_note_cols, row, "note")
     }
 
     if (nrow(field_cols) > 0) {
-      walk(unique(field_cols$field_type), ~{
-        type_cols <- field_cols[field_cols$field_type == .x, ]
-        field_values <- set_names(as.character(row[type_cols$column]), type_cols$lang)
-        if (has_nonblank(field_values)) {
-          field_node <- xml_add_child(sense_node, "field", type = .x)
-          add_multitext_children(field_node, field_values)
-        }
-      })
+      emit_typed_children(sense_node, field_cols, row, "field")
     }
   })
 
