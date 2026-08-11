@@ -9,7 +9,7 @@ Procedure for taking a LIFT element from unsupported to fully round-tripping.
 
 **The ordering is the main thing this skill exists to convey: do the read direction first, then reuse its CSV output as the fixture for the write direction.** Do not hand-author CSV fixtures.
 
-**Two paths run through steps 2–5, and step 1 decides which.** A **column on an existing table** is the common case — read straight through and ignore §6. A **table of its own** is rarer and roughly 3× the work; steps 2–5 still apply, but §6 collects everything that changes, step by step.
+**Two paths run through steps 2–5, and step 1 decides which.** A **column on an existing table** is the common case — read straight through and ignore step 6. A **table of its own** is rarer and roughly 3× the work; steps 2–5 still apply, but step 6 collects everything that changes, step by step.
 
 Five worked examples run throughout:
 
@@ -42,7 +42,7 @@ Five worked examples run throughout:
 Every field this skill covered before `<pronunciation>` — `citation`, `note`, custom `field`, sense `gloss`/`definition` — is **at-most-one-per-parent**, and that is the only reason a flat `<prefix>_<lang>` column works at all. Settle this before writing any xpath, because it decides the whole shape of the work:
 
 - **`<optional>` in `lift.rng` → a column.** One value per row. Steps 2–5 apply as written.
-- **`<zeroOrMore>` / `<oneOrMore>` → probably its own table.** A single row cannot hold two values for one writing system. `<pronunciation>` is the worked example: `two_pronunciations_with_audio_and_IPA.lift` has one entry with two pronunciations whose forms share a single writing system (`zhi-fonipa-x-etic`: `tsēn` and `tsʼēn`). No prefix scheme represents that in one row, and `pivot_wider` would collide on the duplicate key. **Then read §6.**
+- **`<zeroOrMore>` / `<oneOrMore>` → probably its own table.** A single row cannot hold two values for one writing system. `<pronunciation>` is the worked example: `two_pronunciations_with_audio_and_IPA.lift` has one entry with two pronunciations whose forms share a single writing system (`zhi-fonipa-x-etic`: `tsēn` and `tsʼēn`). No prefix scheme represents that in one row, and `pivot_wider` would collide on the duplicate key. **Then read step 6.**
 
 Indexed column names (`pronunciation_1_<lang>`, `pronunciation_2_<lang>`) are the tempting way to dodge a new table. Reject them: the column set becomes data-dependent, and both classifiers then have to parse an index back out of every name.
 
@@ -55,6 +55,8 @@ Do not settle it from the schema alone — **tally the real fixtures (step 0) an
 **Sometimes the clash is the correct answer.** Typed notes deliberately share `note_<type>_<lang>` across both levels, and `note_restrictions_en` does exist on both tables in `Sena3.lift` (61 entry-level notes against a single sense-level one — one instance on the far side is enough to trigger it), so the join view emits `note_restrictions_en_sense` / `note_restrictions_en_entry`. That is right, not a defect: the untyped split (`note_` vs `general_note_`) earned its keep because FLEx labels those two fields differently, but a *type's* label is identical at both levels — entry "Restrictions" and sense "Restrictions" are both just "Restrictions", and a per-level prefix would invent a distinction FLEx does not make. Ask which case you are in: **different fields that happen to share a tag → different names; the same field at two levels → the same name, and let `suffix =` do the job it exists for.** Record the reasoning in SPEC.md §6, or someone will later "tidy" the names apart and break the classifier.
 
 ## 2. Get a real fixture
+
+> **New table?** Step 6 overrides this step: a new table is the exception to fixture auto-discovery, and its fixture directory is curated separately.
 
 **First check whether the existing fixtures already contain the field** — often no new fixture is needed. Multi-lang gloss and `<definition>` were both already present in `Sena3.lift`, so that whole task ran on fixtures already in the repo. Use the step-0 Python tally to confirm coverage, not just presence.
 
@@ -78,6 +80,8 @@ When you do add a new `.lift` fixture:
 - `tests/testthat/fixtures/lift2csv_join-sense-entry-table/` is a **separate directory with its own copies** of the shared fixtures, not a symlink. Copy the fixture there too for join coverage — but only if the field can actually reach that view, which is entry ⋈ sense. A pronunciation cannot, so copying it there would add a snapshot and no coverage.
 
 ## 3. TDD the read direction (lift2csv)
+
+> **New table?** Step 6 adds a whole new column of the grid below — positional keying when the element has no id/guid, and a classifier that starts strict.
 
 **Red.** Run the suite and inspect the auto-created baseline:
 
@@ -145,6 +149,8 @@ Rscript -e 'testthat::snapshot_accept("join-sense-entry-table_end-to-end/")'
 
 ## 4. TDD the write direction (csv2lift)
 
+> **New table?** Step 6 adds a paired `_entries.csv` you may have to produce first, a new `R/csv2lift_<name>.R`, a CLI flag, and a hard attach-call ordering constraint.
+
 **Use the read direction's output as the fixture.** This is the key step:
 
 ```bash
@@ -179,7 +185,7 @@ Then pull the **matching** entry row (same `entry_id`) out of `_snaps/entry-tabl
 | No branch in the classifier, and the level has a custom-field fallback | Wrong element: `note_en` emitted as `<field type="note">`. The stderr classification log makes it obvious. |
 | No branch, and the level's classifier is strict | Hard error: "Unrecognized sense column 'note_en'". |
 | Classifier already updated, but no emit block | **Silent drop** — element simply absent from the `<sense>`. The weakest red; avoid creating it (see step 3). |
-| A whole new table (§6) | `argparser` fails in `preprocess_argv()` because the CLI has no such flag, so the snapshot is empty. |
+| A whole new table (step 6) | `argparser` fails in `preprocess_argv()` because the CLI has no such flag, so the snapshot is empty. |
 
 The bottom two prove absence rather than announcing it, so read the snapshot rather than trusting the pass/fail count.
 
@@ -196,11 +202,13 @@ Review the diff, then `snapshot_accept("csv2lift_end-to-end/")`.
 
 ## 5. Documentation
 
+> **New table?** Step 6 replaces the first bullet below — a new table gets its own SPEC.md section rather than a column row, and inserting one means renumbering every later section.
+
 - **SPEC.md §3** (or §4 for sense-level): add the column row, insert the classification step and renumber, extend the known-limitation sentence with the new reserved prefix, and update the canonical-child-order / form-order / omit-when-empty bullets.
-  - The section may not have a **Column classification algorithm** block yet — §4 didn't until gloss/definition were added. Write one rather than trying to insert a step into a list that isn't there, and state that it must match exactly between directions.
-  - Expect to **remove** known-limitation text, not only extend it. Fixing the English-only gloss made §4's whole "only the English gloss is captured" sentence obsolete; leaving it would have contradicted the new column rows.
-- **SPEC.md §9**: record what you deliberately did *not* implement (e.g. typed notes), so the boundary is explicit rather than looking like an oversight — and delete the entries your change just implemented. Do not list a schema-guaranteed constraint here: a cap `lift.rng` enforces isn't an unimplemented feature, and belongs in the §3/§4 column table instead (see step 0).
-- **§9 also holds round-trip infidelities that are not lossiness** — a category the "not yet implemented" framing hides, so it is easy to leave undocumented. Attribute-keyed siblings are the worked example: the CSV carries one *global* column order (first appearance anywhere in the document) while each parent's element order is whatever FLEx emitted, so where the two disagree csv2lift re-orders that parent's siblings. 47 senses in `Sena3.lift` hold `(phonology, sociolinguistics)` and re-emit as `(sociolinguistics, phonology)` — content preserved, order not. `<field type>` carries the identical latent exposure and has simply never fired. Say explicitly that this must **not** be "fixed" by sorting the columns: that is a re-sort, flatly against §2, and only appears to work because FLEx happens to emit its own siblings alphabetically. Check for this whenever you add an attribute-keyed field.
+  - The section may not have a **Column classification algorithm** block yet — SPEC.md §4 didn't until gloss/definition were added. Write one rather than trying to insert a step into a list that isn't there, and state that it must match exactly between directions.
+  - Expect to **remove** known-limitation text, not only extend it. Fixing the English-only gloss made SPEC.md §4's whole "only the English gloss is captured" sentence obsolete; leaving it would have contradicted the new column rows.
+- **SPEC.md §9**: record what you deliberately did *not* implement (e.g. typed notes), so the boundary is explicit rather than looking like an oversight — and delete the entries your change just implemented. Do not list a schema-guaranteed constraint here: a cap `lift.rng` enforces isn't an unimplemented feature, and belongs in the SPEC.md §3/§4 column table instead (see step 0).
+- **SPEC.md §9 also holds round-trip infidelities that are not lossiness** — a category the "not yet implemented" framing hides, so it is easy to leave undocumented. Attribute-keyed siblings are the worked example: the CSV carries one *global* column order (first appearance anywhere in the document) while each parent's element order is whatever FLEx emitted, so where the two disagree csv2lift re-orders that parent's siblings. 47 senses in `Sena3.lift` hold `(phonology, sociolinguistics)` and re-emit as `(sociolinguistics, phonology)` — content preserved, order not. `<field type>` carries the identical latent exposure and has simply never fired. Say explicitly that this must **not** be "fixed" by sorting the columns: that is a re-sort, flatly against SPEC.md §2, and only appears to work because FLEx happens to emit its own siblings alphabetically. Check for this whenever you add an attribute-keyed field.
 - **Re-derive any figure before writing it into SPEC.md** — counts there are load-bearing claims, and a plan's tally can predate the code or simply be wrong (one asserted 44 reordered senses where the fixture has 47).
 - **SPEC.md §6** (the join view): only when a column name could clash across levels — record which prefix belongs to which level and **why they differ, or why they deliberately don't** (step 1), so the next person doesn't "tidy" distinct names back into agreement or split shared ones apart.
 - **README.md**: only if the CLI surface or examples change.
@@ -232,7 +240,7 @@ Then a new `R/csv2lift_<name>.R` modelled on `csv2lift_sense.R`, plus a flag on 
 - **A table can only attach after its parent nodes exist, and that is a correctness dependency, not just a readability one.** `<entry>` nodes all exist as soon as `entry_table_to_lift()` runs, which is why `attach_pronunciations_to_lift()` and `attach_senses_to_lift()` could go in either order without either one *failing* — call order there only decided XML child position. `<sense>` nodes don't exist until `attach_senses_to_lift()` creates them, so a table hanging off `<sense>` (e.g. `sense/example`) has no choice: its attach call **must** come after `attach_senses_to_lift()` in `scripts/csv2lift.R`, or every lookup fails with the fail-fast error above on the very first row. Work out the attach-call order from the parent chain (entry → sense → example → ...) before wiring the CLI flag, not from what reads nicely.
 - **Child order is set by call order, not by where you put the code**, for whichever ordering constraint above leaves free. A column's emit block sits inside `entry_table_to_lift()`, so its position in the function *is* its position in the XML. A table's elements are appended by a later pass over the whole document, so what fixes their place — among siblings that don't have a hard ordering dependency on each other — is the order `scripts/csv2lift.R` makes the `attach_*` calls; pronunciations are attached before senses purely to keep `<pronunciation>` ahead of `<sense>`. Note the chosen order in SPEC.md, or the next person will look for it in the wrong file.
 
-**Documentation (step 5). A new table gets its own SPEC.md section**, not a row in someone else's. Give it the key/foreign-key line (state which parent's key the FK targets — `entry_id` or `sense_guid`), the column table, the classification algorithm, and a paragraph per direction — §5 is the model. State the attach-call ordering constraint explicitly if the table's parent is itself attached by another table — this is the one fact that isn't visible from reading the column table alone. Inserting a section means **renumbering every later section and fixing the cross-references**, which are easy to miss: `grep -n "§[0-9]" SPEC.md` afterwards and check each one still points where it means to. Also extend §3's canonical-child-order bullet and §7's CLI list, and add a README example showing the new flag.
+**Documentation (step 5). A new table gets its own SPEC.md section**, not a row in someone else's. Give it the key/foreign-key line (state which parent's key the FK targets — `entry_id` or `sense_guid`), the column table, the classification algorithm, and a paragraph per direction — SPEC.md §5 is the model. State the attach-call ordering constraint explicitly if the table's parent is itself attached by another table — this is the one fact that isn't visible from reading the column table alone. Inserting a section means **renumbering every later section and fixing the cross-references**, which are easy to miss: `grep -n "§[0-9]" SPEC.md` afterwards and check each one still points where it means to. Also extend SPEC.md §3's canonical-child-order bullet and §7's CLI list, and add a README example showing the new flag.
 
 ## Gotchas
 
