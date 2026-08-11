@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lift version="0.13" producer="lexicon_file_conversions csv2lift">
+  <entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:41Z" guid="2dc39f33-d145-4a66-a846-c4e68e3837e2">
+    <lexical-unit>
+      <form lang="seh">
+        <text>nfangu</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="root"/>
+    <note type="restrictions">
+      <form lang="en">
+        <text>Do not use: </text>
+      </form>
+    </note>
+    <sense id="b4a02fc9-2ae5-4c96-ae87-ceec6845871e">
+      <grammatical-info value="Nome"/>
+      <gloss lang="en">
+        <text>genet</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>gineta</text>
+      </gloss>
+      <definition>
+        <form lang="en">
+          <text>genet, kill small livestock and use the same bathroom, Genus Genetta</text>
+        </form>
+      </definition>
+      <note>
+        <form lang="en">
+          <text>Question: can include common civet?; Question: Nyazeze doesn't know; nor Rogerio</text>
+        </form>
+      </note>
+    </sense>
+  </entry>
+  <entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-09-06T15:15:02Z" guid="5db6e79d-de66-4ec6-84c1-af3cd170f90d">
+    <lexical-unit>
+      <form lang="seh">
+        <text>ambuk</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="root"/>
+    <citation>
+      <form lang="seh">
+        <text>ambuka</text>
+      </form>
+    </citation>
+    <sense id="67d78fa6-b914-4ac0-94c5-6acd1c2fe657">
+      <grammatical-info value="Verbo"/>
+      <gloss lang="en">
+        <text>cross</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>atravessar</text>
+      </gloss>
+      <definition>
+        <form lang="en">
+          <text>to cross a body of water</text>
+        </form>
+      </definition>
+      <note>
+        <form lang="en">
+          <text>Question: is this in twice? </text>
+        </form>
+      </note>
+    </sense>
+  </entry>
+  <entry dateCreated="2005-06-23T16:08:17Z" dateModified="2006-08-22T18:59:37Z" guid="db8ade5b-dcab-4ccf-89d3-0c4cbc30189b">
+    <lexical-unit>
+      <form lang="seh">
+        <text>ka-</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="prefix"/>
+    <sense id="439845c9-6baf-47fd-9103-4765365279bc">
+      <grammatical-info value="Nome"/>
+      <gloss lang="en">
+        <text>12</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>12</text>
+      </gloss>
+      <note type="phonology">
+        <form lang="en">
+          <text> does this have an allomorph? k / _ [V] |kene</text>
+        </form>
+      </note>
+    </sense>
+  </entry>
+</lift>

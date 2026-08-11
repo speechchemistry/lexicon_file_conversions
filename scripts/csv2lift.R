@@ -18,20 +18,23 @@ argv <- parse_args(p)
 # na = "" and forcing every column to character avoid readr silently
 # corrupting the round trip: blank cells must stay blank (not become "NA"),
 # and guid/date/custom-field text that happens to look numeric must not be
-# type-guessed and reformatted.
-entry_table <- read_csv(argv$entries_csv, na = "", col_types = cols(.default = "c"), show_col_types = FALSE)
+# type-guessed and reformatted. trim_ws = FALSE for the same reason: a note
+# ending "Do not parse: " is real source data, and format_csv() only quotes
+# a value for embedded commas/quotes/newlines, not for edge whitespace, so
+# read_csv()'s default trim_ws = TRUE would silently drop it on read.
+entry_table <- read_csv(argv$entries_csv, na = "", col_types = cols(.default = "c"), trim_ws = FALSE, show_col_types = FALSE)
 doc <- entry_table_to_lift(entry_table)
 
 # pronunciations before senses so each entry's children come out in the
 # canonical order (SPEC.md 3): both are appended by a second pass, so the
 # call order here is what fixes <pronunciation> ahead of <sense>
 if (!is.na(argv$pronunciations)) {
-  pronunciation_table <- read_csv(argv$pronunciations, na = "", col_types = cols(.default = "c"), show_col_types = FALSE)
+  pronunciation_table <- read_csv(argv$pronunciations, na = "", col_types = cols(.default = "c"), trim_ws = FALSE, show_col_types = FALSE)
   doc <- attach_pronunciations_to_lift(doc, pronunciation_table)
 }
 
 if (!is.na(argv$senses)) {
-  sense_table <- read_csv(argv$senses, na = "", col_types = cols(.default = "c"), show_col_types = FALSE)
+  sense_table <- read_csv(argv$senses, na = "", col_types = cols(.default = "c"), trim_ws = FALSE, show_col_types = FALSE)
   doc <- attach_senses_to_lift(doc, sense_table)
 }
 

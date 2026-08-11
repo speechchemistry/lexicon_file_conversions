@@ -258,11 +258,18 @@ nothing else.
 
 ## Follow-ups (not in this change)
 
-1. **`trim_ws` bug** — `scripts/csv2lift.R`'s `read_csv()` leaves `trim_ws = TRUE`, and `format_csv`
+1. ~~**`trim_ws` bug** — `scripts/csv2lift.R`'s `read_csv()` leaves `trim_ws = TRUE`, and `format_csv`
    doesn't quote a value merely for trailing whitespace, so `"Do not parse: "` round-trips as
    `"Do not parse:"`. Affects 14 of 61 entry `restrictions` notes, 2 phonology and 5 untyped sense
    notes. Currently unexercised (no fixture cell has padding, and the stage-C rows were chosen to keep
-   it that way). A real one-line fix, but it needs its own red and its own fixture.
+   it that way). A real one-line fix, but it needs its own red and its own fixture.~~ **Done** —
+   `trim_ws = FALSE` added to all three `read_csv()` calls in `scripts/csv2lift.R`. New fixture
+   `sena3_note_trailing_whitespace_{entries,senses}.csv` uses three real Sena3 notes with edge
+   whitespace (entry-level `restrictions`, and sense-level untyped and `phonology`). Fixing the bug
+   also changed the existing `sena3_inline_span_markup` snapshot, which turned out to already contain
+   an untyped sense note with trailing whitespace (`general_note_en` on entry `8d3435f5-...`) that had
+   been silently trimmed — the "no fixture cell has padding" premise above was already false by the
+   time this landed.
 2. **Example sentences** (`sense/example`) — still the highest-coverage unread field (73% of senses),
    and the gate on `example/note[@type="reference"]`.
 3. **Semantic domains** — `trait[@name='semantic-domain-ddp4']`, up to 3 per sense.
