@@ -182,6 +182,11 @@ Four parallel `*_table.R` / `*_helpers.R` / `csv2lift_*.R` triples will exist. `
 
 Optionally align `<pronunciation>`'s all-blank-row rule to always-emit for consistency with (b) — no approved pronunciation snapshot exercises the drop branch (`R/csv2lift_pronunciation.R:36-38`), so this moves zero snapshots. If left divergent, document why in both sections.
 
+**Revision note (post-implementation).** Neither optional item above was taken:
+
+- The write-direction emit primitives (`has_nonblank()`, `add_multitext_children()`, `emit_typed_children()`) are already shared across all three levels without duplication — `R/csv2lift_example.R` reuses them as-is, matching the refactor the pronunciation plan actually completed. The read-direction *extractors*, however, are a deliberate per-level "grid" (SKILL.md's own framing: one column per level, one row per role), and the existing entry/sense `*_multitext_with_attribute` pair was never unified despite being just as duplicative — direct precedent that this codebase keeps per-level extractors separate rather than generalizing across levels. Forcing a merge here would also cross a real type boundary (character keys for entry/sense vs. an integer positional key for example), adding a parameter and branching that outweighs the ~15 lines saved. Left as three separate functions.
+- `<pronunciation>`'s all-blank-row rule was left as omit-when-empty rather than switched to always-emit, to keep this change scoped to the example table. The divergence is documented in SPEC.md §2.3.
+
 ## Documentation
 
 - **New SPEC.md §6 "Example table"**, placed after the sense table it hangs off, which **renumbers §6–§9 → §7–§10**. There are ~31 `§n` references in SPEC.md and ~14 across SKILL.md / AGENTS.md / README.md — do the renumber in one commit and `grep -n "§[0-9]"` afterwards, checking each still points where it means to. Model on §5: key/FK line, column table, classification algorithm (must match exactly between directions), no-PK/row-order rule, a paragraph per direction, the always-emit deviation, and the attach-order constraint — the one fact not visible from the column table.
