@@ -4,7 +4,7 @@
 <!-- badges: start -->
 <!-- badges: end -->
 
-The goal of lift2csv is to convert a SIL Flex LIFT file into tidy CSV files.
+The goal of lift2csv is to convert a SIL Flex LIFT file into tidy CSV files. The goal of csv2lift is to convert it back again.
 
 ## Installation
 
@@ -49,7 +49,7 @@ Rscript scripts/csv2lift.R tests/testthat/fixtures/csv2lift/sena3_example_duplic
   > sena3_example_duplicate_translation.lift
 ```
 
-Omit the optional flags to build entry-only LIFT from a single CSV; see [`SPEC.md`](SPEC.md) §8 for the full CLI shape.
+Omit the optional flags to build entry-only LIFT from a single CSV; see [`SPEC.md`'s CLI shape section](SPEC.md#csv2lift-cli-shape) for the full CLI shape.
 
 ## Supported Fields
 
