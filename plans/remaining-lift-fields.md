@@ -31,6 +31,7 @@ Counts are from `tests/testthat/fixtures/lift2csv_entry-table/Sena3.lift` unless
 Two findings that reorder the work:
 
 - **`entry/relation/@ref` targets `entry/@id`, not `@guid`** — all 31 refs resolve against the `headword_guid` form, none against the bare guid. So A2 (`entry/@id`) is a **prerequisite** for C3: emitting relations without it produces dangling refs. (`sense/relation/@ref` targets `sense/@id`, all 44 resolve, so that half is already keyable.)
+- **`entry/@id` is fully derived, so A2 is a redundancy question rather than a data-recovery one.** Measured over all 1462 entries: `@id` = headword + (`@order` or `""`) + `"_"` + `@guid`, where headword is the citation form when present (848 entries) else the lexical-unit form (506), and the homograph digit (108 entries) *is* `@order` — identical on all 108. Nothing unexplained, no escaping. Every input is therefore in the entry CSV once A1 lands, and `@id` could be synthesized on write instead of stored.
 - **Traits repeat the same `name` on one parent, and `lift.rng` permits it** — `trait-content` carries no `sch:assert` on uniqueness, and real data repeats `semantic-domain-ddp4` (24 senses) and `environment` (4 variants). That rules out flat `trait_<name>` columns at every level and is why C1 comes before C2/C3 rather than each table growing its own trait columns.
 
 ## Increments
@@ -41,7 +42,17 @@ Each is a separate skill run with its own red/green/refactor commits, SPEC.md up
 
 **A1 · `entry/@order` → `entry_order`.** Warm-up, exactly the shape of `sense_order`. Read in `entry_table()`'s `entry_meta` block (`R/entry_table.R`); add to `meta_columns` in `classify_entry_columns()` (`R/entry_helpers.R`); emit in `entry_table_to_lift()` (`R/csv2lift_entry.R`) alongside the existing `dateCreated`/`dateModified`/`guid` guards, omitted when blank *or absent*, mirroring `attach_senses_to_lift()`'s `order` handling. Refreshes every `entry-table_`, `join-sense-entry-table_` and `csv2lift_` snapshot whose source has `@order`.
 
-**A2 · `entry/@id` → new column.** Same three edits. Two things to settle first (see [Decisions](#decisions-to-settle)): the column **name**, and that emitting `@id` is a deliberate reversal of [SPEC.md's Entry table](../SPEC.md#entry-table) rule "`id` is never synthesized" — it is not synthesis, it is carrying through what the export held, and C3 needs it. The name will contain an underscore, so it needs an exact-match `meta_columns` entry ahead of the custom-field fallback, plus a line in the known-limitation comment.
+**A2 · `entry/@id` → new column.** Same three edits. Emitting `@id` at all is a deliberate revision of [SPEC.md's Entry table](../SPEC.md#entry-table) rule "`id` is never synthesized": storing it verbatim is not synthesis, and C3's relation refs need it to resolve. The column name will contain an underscore, so it needs an exact-match `meta_columns` entry ahead of the custom-field fallback, plus a line in the known-limitation comment.
+
+Because `@id` is derivable (see above), three options — settle before starting, since they differ in output, not just in tidiness:
+
+| | Behaviour | Cost |
+| --- | --- | --- |
+| **Store verbatim** (recommended) | column carried through unchanged | one redundant column; matches the stance [SPEC.md's Example table](../SPEC.md#example-table) takes on `@source` vs `note[@type="reference"]` — FLEx wrote it twice, so the tool carries both |
+| Synthesize on write | no new column | encodes FLEx's headword rule into csv2lift, and needs a writing-system choice the CSV deliberately does not record. A user editing a citation form silently changes every derived id while the relations CSV still holds the old refs — **every ref then dangles** |
+| Skip entirely | current behaviour | fine until C3; relation refs would then point at ids no entry in the output carries |
+
+Recommendation is verbatim storage, on the strength of that middle row: it is the only option under which a headword edit leaves refs resolving.
 
 ### Phase B — new tables whose data is already in the repo
 
@@ -85,7 +96,7 @@ If two tables/flags for one element feels heavy, the alternative is one `relatio
 
 Recommendations are in the increments above; these are the four points where a different answer changes the work. Each is answerable when its increment starts — none of them block Phase A.
 
-1. **A2 name for `entry/@id`** — `entry_lift_id` is the suggestion (descriptive, and `entry_id` is taken by the guid). Renaming later is expensive: [the skill spells out](../.claude/skills/adding-a-lift-field/SKILL.md#documentation) that a column name is a public contract touching reader, classifier, every fixture header, three snapshot directories and SPEC.md.
+1. **A2: store `entry/@id`, derive it, or skip it** — see the table in A2; recommendation is store. If stored, the name needs settling too: `entry_lift_id` is the suggestion (descriptive, and `entry_id` is taken by the guid). Renaming later is expensive: [the skill spells out](../.claude/skills/adding-a-lift-field/SKILL.md#documentation) that a column name is a public contract touching reader, classifier, every fixture header, three snapshot directories and SPEC.md.
 2. **C1's table shape** — one unified long `traits` table (recommended: one flag, one SPEC section, one test file, and future trait kinds need no new code) versus per-level trait tables (`--sense-traits`, `--variant-traits`, …: no cross-CSV positional coupling, but 3–4 more tables). The unified version's only real cost is `owner_index` pointing at another CSV's row position, which a fail-fast lookup makes loud rather than silent.
 3. **C3 one relations table or two** — see C3.
 4. **D2 at all** — does FLEx need `<header>` to import csv2lift output, and is import-into-FLEx even a goal for this tool? If the answer is "not a goal", D2 drops off the list entirely.
