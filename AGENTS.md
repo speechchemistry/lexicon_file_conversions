@@ -19,13 +19,18 @@ Guidance for human and AI contributors working in this repository.
 - If code and `SPEC.md` disagree, that is a bug: fix whichever is wrong, do not silently favour one.
 - Do not speculatively extend `SPEC.md` to cover tables or features that aren't implemented yet; add to it incrementally as each is actually built (see [SPEC.md's Not Yet Specified section](SPEC.md#not-yet-specified)).
 - **Split of concerns:** `AGENTS.md` documents how to work in this repo (process, conventions, workflow). `SPEC.md` documents what the software does and guarantees (the CSV↔LIFT data model). Repo-wide engineering conventions that happen to describe behaviour (e.g. stdout/stderr separation) stay in `AGENTS.md` since they apply uniformly across scripts; `SPEC.md` is reserved for the CSV↔LIFT contract specifically.
-- **Reference `SPEC.md` sections by Markdown anchor link, never by number** (e.g. `[SPEC.md's Entry Table](SPEC.md#entry-table)`, not `SPEC.md §3`). `SPEC.md`'s headings carry no numbering for exactly this reason: a numbered section shifts whenever one is inserted above it, silently breaking every cross-reference to it — inside `SPEC.md` and in every file that cites it (`AGENTS.md`, `README.md`, skills, plans). An anchor link survives reordering; only a heading rename breaks it, and that's a one-time, greppable fix (`grep -rn '#anchor-slug'`) rather than a renumbering cascade. When renaming a `SPEC.md` heading, grep the repo for its old anchor slug and update every match.
 
 ## Skills
 
 Task-specific procedures live under `.claude/skills/<name>/SKILL.md` rather than in this file, so `AGENTS.md` stays a set of always-applicable rules. Add a new skill when a procedure is followed occasionally rather than always.
 
 - `adding-a-lift-field` — end-to-end procedure for supporting a new LIFT element in both directions (read direction first, then reuse its CSV output as the write direction's fixture).
+
+## Markdown Conventions
+
+- **Don't number Markdown headings** (`## 3. Entry table`, `## 1. Decide where it lives`) in any file in this repo — `SPEC.md`, skills (`SKILL.md`), and other reference docs — unless there's a specific reason a given file needs it. A numbered heading shifts whenever a section is inserted or reordered above it, silently breaking every cross-reference to that section, both within the file and in every other file that cites it.
+- **Reference a heading elsewhere by Markdown anchor link and its actual name, not a number**: `[SPEC.md's Entry Table](SPEC.md#entry-table)`, not `SPEC.md §3`; `[the "Decide where it lives" step](.claude/skills/adding-a-lift-field/SKILL.md#decide-where-it-lives-a-column-or-a-table-of-its-own)`, not `SKILL.md §1`. An anchor link survives reordering; only a heading rename breaks it, and that's a one-time, greppable fix (`grep -rn '#anchor-slug'`) rather than a renumbering cascade. When renaming a heading that other files link into, grep the repo for its old anchor slug and update every match.
+- **Exception: `plans/*.md` keep whatever numbering they already have.** A plan is a point-in-time historical record, not a live document — one that narrates a past renumbering (e.g. "renumbers §6–§9 → §7–§10") is describing history, and rewriting it to match current headings would falsify that history. Don't retroactively edit a plan's own numbering or its `SPEC.md §N` / `SKILL.md §N` citations; write new plans following the anchor-link convention above instead.
 
 ## Working Style
 

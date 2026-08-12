@@ -1,13 +1,13 @@
 # copy-lift-entries.R Specification
 
-## 1. Purpose
+## Purpose
 
 Define the behavior of scripts/copy-lift-entries.R, a command-line tool that:
 - extracts selected <entry> elements from a source LIFT file by GUID,
 - updates each extracted entry dateModified value to the current UTC timestamp,
 - emits a complete LIFT document to stdout.
 
-## 2. Scope
+## Scope
 
 This specification covers:
 - command-line interface
@@ -21,7 +21,7 @@ This specification does not cover:
 - malformed XML recovery
 - automatic GUID deduplication
 
-## 3. Command-Line Interface
+## Command-Line Interface
 
 Script name:
 - scripts/copy-lift-entries.R
@@ -42,9 +42,9 @@ Logging and errors:
 - progress messages are written to stderr
 - error messages are written to stderr
 
-## 4. Input Rules
+## Input Rules
 
-### 4.1 Source LIFT
+### Source LIFT
 
 Required input. Source file must exist.
 
@@ -52,7 +52,7 @@ Expected source content:
 - one <header>...</header> section
 - one or more <entry ...>...</entry> blocks
 
-### 4.2 GUID Input
+### GUID Input
 
 GUIDs are read line-by-line from either:
 - guid_file, or
@@ -62,7 +62,7 @@ Parsing rules:
 - blank lines are ignored
 - non-blank lines are used exactly as provided
 
-## 5. Processing Rules
+## Processing Rules
 
 1. Read source file content.
 2. Extract the first <header>...</header> block.
@@ -79,12 +79,12 @@ Parsing rules:
    - closing </lift>
 7. Write complete output document to stdout.
 
-## 6. Ordering and Duplication
+## Ordering and Duplication
 
 - Output entry order matches GUID input order.
 - Repeated GUIDs are preserved (no deduplication).
 
-## 7. Error Behavior
+## Error Behavior
 
 The script exits non-zero and writes an ERROR message to stderr when:
 - source_lift is missing
@@ -98,19 +98,19 @@ The script exits non-zero and writes an ERROR message to stderr when:
 Failure model:
 - fail-fast on first unrecoverable error
 
-## 8. Streams Contract
+## Streams Contract
 
 - stdout: only LIFT XML output
 - stderr: progress, success, and error messages
 
-## 9. Output Envelope (Current)
+## Output Envelope (Current)
 
 The emitted document currently uses:
 - the source file's original prefix from the beginning of file through the opening <lift ...> tag
 - the source file's extracted <header>...</header>
 - a closing </lift> tag
 
-## 10. Acceptance Criteria
+## Acceptance Criteria
 
 A run is correct when all conditions hold:
 - output LIFT document is written to stdout and can be redirected
