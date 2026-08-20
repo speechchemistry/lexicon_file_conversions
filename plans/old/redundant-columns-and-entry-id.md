@@ -4,10 +4,10 @@
 
 Two places in the repo argue for carrying redundant data in the CSVs:
 
-- [SPEC.md's Example table](../SPEC.md#example-table) keeps `example_source` **and** `note_reference_<lang>` as separate columns, even though FLEx's exporter writes the same "Reference" field twice, and cites [Data handling](../SPEC.md#data-handling)'s `Plural_seh`/`Plural_en` case as precedent.
-- [remaining-lift-fields.md](remaining-lift-fields.md)'s A2 recommends storing `entry/@id` verbatim even though it is fully derivable, citing the `@source` case as precedent.
+- [SPEC.md's Example table](../../SPEC.md#example-table) keeps `example_source` **and** `note_reference_<lang>` as separate columns, even though FLEx's exporter writes the same "Reference" field twice, and cites [Data handling](../../SPEC.md#data-handling)'s `Plural_seh`/`Plural_en` case as precedent.
+- [remaining-lift-fields.md](../remaining-lift-fields.md)'s A2 recommends storing `entry/@id` verbatim even though it is fully derivable, citing the `@source` case as precedent.
 
-That stance was questioned: is carrying redundant columns actually a good idea? Re-examining it found that the word covers three unrelated situations, and that the `@id` question turned on whether FLEx treats `@id` as authoritative on import — which **the [Technical Notes on LIFT used in FLEx](https://downloads.languagetechnology.org/fieldworks/Documentation/Technical%20Notes%20on%20LIFT%20used%20in%20FLEx.pdf) answers directly** (already cited under [SPEC.md's LIFT model references](../SPEC.md#lift-model-references)). This plan records the sharpened reasoning and the changes that follow.
+That stance was questioned: is carrying redundant columns actually a good idea? Re-examining it found that the word covers three unrelated situations, and that the `@id` question turned on whether FLEx treats `@id` as authoritative on import — which **the [Technical Notes on LIFT used in FLEx](https://downloads.languagetechnology.org/fieldworks/Documentation/Technical%20Notes%20on%20LIFT%20used%20in%20FLEx.pdf) answers directly** (already cited under [SPEC.md's LIFT model references](../../SPEC.md#lift-model-references)). This plan records the sharpened reasoning and the changes that follow.
 
 Section numbers below (§1, §2, §3) refer to that PDF, not to any file in this repo.
 
@@ -45,7 +45,7 @@ Other measurements, re-derived against `tests/testthat/fixtures/lift2csv_entry-t
 
 ## The same doc also settles D2 (`<header>` passthrough)
 
-[remaining-lift-fields.md](remaining-lift-fields.md)'s D2 proposed a `--header-from` flag copying `<header>` verbatim, with decision 4 asking "does FLEx need `<header>` to import?" Answered, and the answer splits the element in two:
+[remaining-lift-fields.md](../remaining-lift-fields.md)'s D2 proposed a `--header-from` flag copying `<header>` verbatim, with decision 4 asking "does FLEx need `<header>` to import?" Answered, and the answer splits the element in two:
 
 > §2 Header: **The header element is optional in a LIFT file.** It provides a place to define fields that are not built into the basic LIFT structure.
 
@@ -58,24 +58,24 @@ So D2 narrows from "pass the header through verbatim" to "**pass `<fields>` thro
 
 ## The option A2 never listed
 
-A2 weighs store-vs-synthesize *assuming* C3 copies `relation_ref` verbatim as the `@id` string. That assumption is the worst redundancy in the set — cross-table, embedding another row's headword and guid in a text field, while every other FK in the repo is a guid ([SPEC.md's Structural rules](../SPEC.md#structural-rules-csv2lift-direction)).
+A2 weighs store-vs-synthesize *assuming* C3 copies `relation_ref` verbatim as the `@id` string. That assumption is the worst redundancy in the set — cross-table, embedding another row's headword and guid in a text field, while every other FK in the repo is a guid ([SPEC.md's Structural rules](../../SPEC.md#structural-rules-csv2lift-direction)).
 
 **Key `relation_ref` on the target's guid** and translate to the target's stored `entry_lift_id` on write. Then refs use the CSV's one key discipline, csv2lift owns internal consistency regardless of user edits, the doc's entry-uses-id/sense-uses-guid asymmetry is hidden where it belongs, and `entry_lift_id` stops being idle — it becomes the stored guid→`@id` mapping the write pass needs.
 
 ## Changes
 
-**1. `SPEC.md`, [Data handling](../SPEC.md#data-handling) — add a "Redundant columns" bullet** stating the three-way distinction: preserve variation (not redundancy); mirror source-level duplication without reconciling it, but warn when it disagrees; and decide a *derived* column on what the consumer does with the value, citing the "any text as long as it is unique" / "converted to a guid during import" quotes. Correct the `Plural` citation in [Example table](../SPEC.md#example-table) to point here instead.
+**1. `SPEC.md`, [Data handling](../../SPEC.md#data-handling) — add a "Redundant columns" bullet** stating the three-way distinction: preserve variation (not redundancy); mirror source-level duplication without reconciling it, but warn when it disagrees; and decide a *derived* column on what the consumer does with the value, citing the "any text as long as it is unique" / "converted to a guid during import" quotes. Correct the `Plural` citation in [Example table](../../SPEC.md#example-table) to point here instead.
 
-**2. Warn when redundant columns disagree** (`R/csv2lift_example.R`, using the classifier in `R/example_helpers.R`): on write, if `example_source` and any `note_reference_<lang>` are both non-blank and unequal, warn on stderr naming the sense — same shape as `extract_example_translation()`'s existing duplicate-translation warning (`R/example_helpers.R`). Both values still emit unchanged. TDD per [AGENTS.md's Testing Approach](../AGENTS.md#testing-approach): red first via a hand-edited `_examples.csv` fixture with the two cells disagreeing.
+**2. Warn when redundant columns disagree** (`R/csv2lift_example.R`, using the classifier in `R/example_helpers.R`): on write, if `example_source` and any `note_reference_<lang>` are both non-blank and unequal, warn on stderr naming the sense — same shape as `extract_example_translation()`'s existing duplicate-translation warning (`R/example_helpers.R`). Both values still emit unchanged. TDD per [AGENTS.md's Testing Approach](../../AGENTS.md#testing-approach): red first via a hand-edited `_examples.csv` fixture with the two cells disagreeing.
 
-**3. Amend [remaining-lift-fields.md](remaining-lift-fields.md)** — done in the same change as this plan file:
+**3. Amend [remaining-lift-fields.md](../remaining-lift-fields.md)** — done in the same change as this plan file:
 - A2: replace the cost table's reasoning with the doc findings — recommendation stays "store verbatim", now settled rather than argued. Drop the proposed guid-suffix consistency check (the suffix is a convention the doc calls "normal", not a rule) and replace it with a **uniqueness check** across `entry_lift_id`, which *is* a documented requirement and is what a ref needs to resolve unambiguously. Remove the "is `@id` authoritative?" open question — answered.
 - A2/C3: record that the doc makes A2 a hard prerequisite for C3 — a ref is the target's `@id` string at both levels, so an entry needs an `@id` to point at.
 - C3: change `relation_ref` to hold the target guid, note the write-time translation via `entry_lift_id`, record the 31/31 lossless measurement, and add the doc's warning that "the import process will try to unify the relation sets" for Collection-type relations.
 - D2 and decision 4: narrow to `<fields>`-only passthrough per the section above.
 - Decisions to settle: item 1's store-vs-derive-vs-skip half is now settled by the documentation rather than pending a judgement call — only the column-name choice (`entry_lift_id` suggested) is still open.
 
-**4. `SPEC.md`, [Not yet specified](../SPEC.md#not-yet-specified) — add the LT-21075 note** so the inherited non-ASCII-id import hazard is recorded rather than rediscovered, with the 5-of-1462 / 0-combining-marks figures and an explicit "do not rewrite ids to work around this".
+**4. `SPEC.md`, [Not yet specified](../../SPEC.md#not-yet-specified) — add the LT-21075 note** so the inherited non-ASCII-id import hazard is recorded rather than rediscovered, with the 5-of-1462 / 0-combining-marks figures and an explicit "do not rewrite ids to work around this".
 
 No A2/C3/D2 implementation here — Phase A is still unstarted.
 
@@ -84,7 +84,7 @@ No A2/C3/D2 implementation here — Phase A is still unstarted.
 Two things surfaced while reading the doc that are worth a note somewhere but are *not* part of this change:
 
 - **Embedded newlines in a text node are untested in the write direction.** The doc says "Any actual CR/LF in the middle of a string will be converted to a LINE SEPARATOR on import" (FLEx's Shift+Enter, U+2028). `Sena3.lift` has exactly **1** such text node of 9742, on entry `1ba747b1-…` (`subenza`). It appears in the read-direction snapshots (`_snaps/sense-table_end-to-end/Sena3.csv`, `_snaps/join-sense-entry-table_end-to-end/Sena3.csv`) but in **no** `csv2lift` fixture or snapshot — so no test covers a CSV cell containing a literal newline surviving back into LIFT. `readr` should quote and re-read it correctly, which is exactly why it deserves one cheap fixture rather than an assumption.
-- **The doc confirms the span-drop behaviour [SPEC.md's Data handling](../SPEC.md#data-handling) already documents** as a limitation: "If a LIFT file has embedding in a Unicode field, on import into FLEx, the text will be kept, but all span hierarchy will be lost including styles, writing systems, etc." That is FLEx's loss on import, not this tool's on round-trip — worth a pointer from the inline-span bullet so the two are not confused.
+- **The doc confirms the span-drop behaviour [SPEC.md's Data handling](../../SPEC.md#data-handling) already documents** as a limitation: "If a LIFT file has embedding in a Unicode field, on import into FLEx, the text will be kept, but all span hierarchy will be lost including styles, writing systems, etc." That is FLEx's loss on import, not this tool's on round-trip — worth a pointer from the inline-span bullet so the two are not confused.
 
 ## Verification
 
