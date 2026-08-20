@@ -33,61 +33,39 @@ table_registry <- function() {
   registry
 }
 
-# A prefix ending in a path separator means "one CSV per table, named after
-# the table, inside this folder" (a user's per-export folder); a prefix not
-# ending in one means "one CSV per table, named <prefix>_<table>.csv" (the
-# flat many-stems-per-directory layout the fixtures use).
-is_folder_prefix <- function(prefix) {
-  grepl("[/\\\\]$", prefix)
+# --tables <dir> names a directory, one CSV per table, named after the
+# table (entries.csv, senses.csv, ...). A trailing slash is tolerated but
+# not required or significant — normalized away so a path built from it
+# (e.g. in an error message) never shows a doubled slash.
+table_dir <- function(dir) {
+  sub("/+$", "", dir)
 }
 
-table_csv_path <- function(prefix, name) {
-  if (is_folder_prefix(prefix)) {
-    file.path(prefix, paste0(name, ".csv"))
-  } else {
-    paste0(prefix, "_", name, ".csv")
-  }
+table_csv_path <- function(dir, name) {
+  file.path(table_dir(dir), paste0(name, ".csv"))
 }
 
-# Every *.csv in scope for a prefix: the whole folder for a folder prefix,
-# or just the files sharing its stem for a flat prefix. Used both to build
-# the discovered path list and to catch a CSV whose name matches no
-# registered table (a typo'd filename that would otherwise silently drop a
-# whole table from the round-trip).
-scoped_csvs <- function(prefix) {
-  if (is_folder_prefix(prefix)) {
-    list.files(prefix, pattern = "\\.csv$", full.names = TRUE)
-  } else {
-    dir <- dirname(prefix)
-    stem <- basename(prefix)
-    all_csvs <- list.files(dir, pattern = "\\.csv$", full.names = TRUE)
-    all_csvs[startsWith(basename(all_csvs), paste0(stem, "_"))]
-  }
+# Every *.csv directly inside `dir`. Used both to build the discovered path
+# list and to catch a CSV whose name matches no registered table (a typo'd
+# filename that would otherwise silently drop a whole table from the round
+# trip).
+scoped_csvs <- function(dir) {
+  list.files(table_dir(dir), pattern = "\\.csv$", full.names = TRUE)
 }
 
-table_name_from_csv <- function(prefix, path) {
-  base <- tools::file_path_sans_ext(basename(path))
-  if (is_folder_prefix(prefix)) {
-    base
-  } else {
-    stem <- basename(prefix)
-    substring(base, nchar(stem) + 2)
-  }
-}
-
-# Named list of table name -> CSV path, for every CSV found under `prefix`
-# that matches a table in `registry`. Errors on any in-scope CSV that
-# matches no registered table, per SPEC.md's Structural rules — a silently
-# dropped table is worse than a loud one.
-discover_tables <- function(prefix, registry) {
-  found <- scoped_csvs(prefix)
-  found_names <- vapply(found, function(p) table_name_from_csv(prefix, p), character(1), USE.NAMES = FALSE)
+# Named list of table name -> CSV path, for every CSV found in `dir` that
+# matches a table in `registry`. Errors on any CSV that matches no
+# registered table, per SPEC.md's Structural rules — a silently dropped
+# table is worse than a loud one.
+discover_tables <- function(dir, registry) {
+  found <- scoped_csvs(dir)
+  found_names <- tools::file_path_sans_ext(basename(found))
 
   unknown <- setdiff(found_names, registry$name)
   if (length(unknown) > 0) {
     stop(sprintf(
       "Unrecognised CSV(s) under --tables %s: %s (expected one of: %s)",
-      prefix, paste(unknown, collapse = ", "), paste(registry$name, collapse = ", ")
+      table_dir(dir), paste(unknown, collapse = ", "), paste(registry$name, collapse = ", ")
     ), call. = FALSE)
   }
 

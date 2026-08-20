@@ -12,7 +12,7 @@ You can download the package by clicking on the green code button and selecting 
 
 ## Example: LIFT → CSV (lift2csv)
 
-`scripts/lift2csv.R` writes every table it knows how to read (see `R/table_registry.R`) from a LIFT file into `--tables <prefix>` in one pass — a trailing `/` writes a folder of plainly-named CSVs, anything else writes `<prefix>_<table>.csv` files side by side. `Sena3.lift` is a real Sena FLEx project export, checked in as a test fixture.
+`scripts/lift2csv.R` writes every table it knows how to read (see `R/table_registry.R`) from a LIFT file into `--tables <dir>` in one pass, one plainly-named CSV per table (`entries.csv`, `senses.csv`, ...). `Sena3.lift` is a real Sena FLEx project export, checked in as a test fixture.
 
 ``` bash
 Rscript scripts/lift2csv.R tests/testthat/fixtures/lift2csv_entry-table/Sena3.lift --tables Sena3_tables/
@@ -29,7 +29,7 @@ Rscript scripts/lift2csv_join-sense-entry-table.R tests/testthat/fixtures/lift2c
 ```
 ## Example: CSV → LIFT (csv2lift)
 
-`csv2lift.R` does the reverse: it takes an entry-level CSV (required) and, optionally, sense-level, pronunciation-level, and example-level CSVs, and builds a LIFT file. `--tables <prefix>` discovers all of them at once, using the same prefix convention as `lift2csv.R` above:
+`csv2lift.R` does the reverse: it takes an entry-level CSV (required) and, optionally, sense-level, pronunciation-level, and example-level CSVs, and builds a LIFT file. `--tables <dir>` discovers all of them at once from a directory laid out the same way `lift2csv.R` writes one above:
 
 ``` bash
 Rscript scripts/csv2lift.R --tables tests/testthat/fixtures/csv2lift/two_pronunciations_with_audio_and_IPA \
@@ -39,9 +39,9 @@ Rscript scripts/csv2lift.R --tables tests/testthat/fixtures/csv2lift/two_pronunc
 Each table can also be named explicitly with its own `--<table>` flag (an explicit flag overrides a discovered file of the same table) — useful when a CSV isn't named to the `--tables` convention, or the entry CSV as a bare positional argument, kept for backward compatibility:
 
 ``` bash
-Rscript scripts/csv2lift.R tests/testthat/fixtures/csv2lift/sena3_example_duplicate_translation_entries.csv \
-  --senses tests/testthat/fixtures/csv2lift/sena3_example_duplicate_translation_senses.csv \
-  --examples tests/testthat/fixtures/csv2lift/sena3_example_duplicate_translation_examples.csv \
+Rscript scripts/csv2lift.R tests/testthat/fixtures/csv2lift/sena3_example_duplicate_translation/entries.csv \
+  --senses tests/testthat/fixtures/csv2lift/sena3_example_duplicate_translation/senses.csv \
+  --examples tests/testthat/fixtures/csv2lift/sena3_example_duplicate_translation/examples.csv \
   > sena3_example_duplicate_translation.lift
 ```
 

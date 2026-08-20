@@ -155,20 +155,20 @@ Rscript -e 'testthat::snapshot_accept("join-sense-entry-table_end-to-end/")'
 
 ## TDD the write direction (csv2lift)
 
-> **New table?** [If it needs a table of its own](#if-it-needs-a-table-of-its-own) adds a paired `_entries.csv` you may have to produce first, a new `R/csv2lift_<name>.R`, a CLI flag, and a hard attach-call ordering constraint.
+> **New table?** [If it needs a table of its own](#if-it-needs-a-table-of-its-own) adds a paired `entries.csv` you may have to produce first, a new `R/csv2lift_<name>.R`, a registry row, and a hard attach-order constraint.
 
 **Use the read direction's output as the fixture.** This is the key step:
 
 ```bash
 cp tests/testthat/_snaps/entry-table_end-to-end/note_and_phonology_notes.csv \
-   tests/testthat/fixtures/csv2lift/note_and_phonology_notes_entries.csv
+   tests/testthat/fixtures/csv2lift/note_and_phonology_notes/entries.csv
 ```
 
-The `_entries.csv` suffix is required — `test-csv2lift_end-to-end.R` globs `*_entries.csv` and picks up an optional matching `*_senses.csv` / `*_pronunciations.csv`. This gives real data on both sides, makes round-trip consistency structural, and removes any chance of inventing a column name the reader would never emit.
+Each fixture is a directory, one CSV per table (`entries.csv`, `senses.csv`, `pronunciations.csv`, ...) — `test-csv2lift_end-to-end.R` discovers every such directory automatically, no test code change needed. `entries.csv` is required in each; the others are picked up whenever present. This gives real data on both sides, makes round-trip consistency structural, and removes any chance of inventing a column name the reader would never emit.
 
-**"Optional" hides a coverage hole — check each fixture set actually has the companion CSVs its source calls for.** `note_and_phonology_notes` had no `_senses.csv`, so its approved `.lift` held **zero `<sense>` elements** while the source `.lift` had three: green tests, a reviewed snapshot, and an entire level untested. Nothing reports it, because a missing companion is indistinguishable from a fixture that legitimately has no senses. Backfill it as **its own commit, before** the change you came to make — otherwise several whole sense subtrees appear inside your field's diff and neither change is reviewable.
+**"Optional" hides a coverage hole — check each fixture directory actually has the companion CSVs its source calls for.** `note_and_phonology_notes` had no `senses.csv`, so its approved `.lift` held **zero `<sense>` elements** while the source `.lift` had three: green tests, a reviewed snapshot, and an entire level untested. Nothing reports it, because a missing companion is indistinguishable from a fixture that legitimately has no senses. Backfill it as **its own commit, before** the change you came to make — otherwise several whole sense subtrees appear inside your field's diff and neither change is reviewable.
 
-**Adding a column retroactively stales every existing write fixture whose source has that field.** The invariant this step exists to enforce — the write fixture *is* the reader's output — is not a one-time property. The moment `sense_table()` gains `note_<type>_<lang>`, `two_pronunciations_with_audio_and_IPA_senses.csv` quietly stops being reader output and under-tests the new column, and **nothing fails if you skip the refresh**. Once the read direction is green, re-copy every csv2lift fixture whose source `.lift` contains the new field — and leave the others strictly alone: their byte-identical snapshots are the regression net proving the writer still tolerates the new columns being absent entirely.
+**Adding a column retroactively stales every existing write fixture whose source has that field.** The invariant this step exists to enforce — the write fixture *is* the reader's output — is not a one-time property. The moment `sense_table()` gains `note_<type>_<lang>`, `two_pronunciations_with_audio_and_IPA/senses.csv` quietly stops being reader output and under-tests the new column, and **nothing fails if you skip the refresh**. Once the read direction is green, re-copy every csv2lift fixture whose source `.lift` contains the new field — and leave the others strictly alone: their byte-identical snapshots are the regression net proving the writer still tolerates the new columns being absent entirely.
 
 A whole-file `cp` is right when the source snapshot is small. When it's `Sena3.csv` at 1717 rows, extract a **representative real row** instead, so the fixture stays focused and its expected `.lift` output is reviewable by eye:
 
@@ -182,7 +182,7 @@ for r in rows:
 "
 ```
 
-Then pull the **matching** entry row (same `entry_id`) out of `_snaps/entry-table_end-to-end/Sena3.csv` for the paired `_entries.csv`, keeping both files' header order and values verbatim. Prefer a row whose text has no embedded quotes or commas — it keeps the fixture readable and sidesteps CSV-quoting noise in the diff. The rule the `cp` recipe exists to enforce still holds: every value must be copied from real reader output, never invented.
+Then pull the **matching** entry row (same `entry_id`) out of `_snaps/entry-table_end-to-end/Sena3.csv` for the paired `entries.csv`, keeping both files' header order and values verbatim. Prefer a row whose text has no embedded quotes or commas — it keeps the fixture readable and sidesteps CSV-quoting noise in the diff. The rule the `cp` recipe exists to enforce still holds: every value must be copied from real reader output, never invented.
 
 **Red.** Run `devtools::test(filter = "csv2lift_end-to-end")` and read the auto-created `.lift` snapshot. It takes one of four shapes depending on what is already in place — name which one you got rather than reporting a generic failure:
 
@@ -238,7 +238,7 @@ Only if [Decide where it lives](#decide-where-it-lives-a-column-or-a-table-of-it
 
 Also copy the CLI's empty-output convention: `lift2csv_sense-table.R` emits `cat("")` rather than a bare header when `nrow(table) == 0`, so a lexicon with none of the element snapshots as an empty file.
 
-**Write direction ([TDD the write direction](#tdd-the-write-direction-csv2lift)).** The fixture needs a matching `_entries.csv` that may not exist yet. Produce it the same way — from `lift2csv_entry-table.R`'s own output — which in turn means adding the `.lift` to `fixtures/lift2csv_entry-table/` as well. Adding the `_senses.csv` too is usually worth it: `two_pronunciations_with_audio_and_IPA` is the only fixture exercising entry + pronunciation + sense together, which is what actually proves the child ordering below instead of leaving it asserted. Add the new suffix to the glob in `test-csv2lift_end-to-end.R` — this is the one test file a new table has to edit.
+**Write direction ([TDD the write direction](#tdd-the-write-direction-csv2lift)).** The fixture directory needs a matching `entries.csv` that may not exist yet. Produce it the same way — from `lift2csv_entry-table.R`'s own output — which in turn means adding the `.lift` to `fixtures/lift2csv_entry-table/` as well. Adding `senses.csv` too is usually worth it: `two_pronunciations_with_audio_and_IPA` is the only fixture exercising entry + pronunciation + sense together, which is what actually proves the child ordering below instead of leaving it asserted. Add a row to `R/table_registry.R` for the new table — that is what makes `--tables` discover its CSV, and the one registry edit a new table needs; `test-csv2lift_end-to-end.R` itself needs no change, since it discovers fixture directories automatically.
 
 **A new table stales nothing in existing csv2lift fixtures, but opens a coverage hole in them instead.** [TDD the write direction](#tdd-the-write-direction-csv2lift)'s column-case warning ("adding a column retroactively stales every existing write fixture whose source has that field") doesn't apply — no existing `_<level>.csv` companion gains a column just because a new table exists elsewhere. What happens instead: any existing stem whose parent rows already own real instances of the new element (in the source `.lift` that stem was built from) will produce an approved `.lift` with **zero** of them, silently, because nothing tells `scripts/csv2lift.R` to attach any. Cross-reference every existing stem's parent-row keys against the new table's own reader output before calling the write direction done, and add the missing companion CSV to each stem that needs one — leaving every other stem alone, since its byte-identical snapshot is the regression net proving the new flag being absent still works.
 

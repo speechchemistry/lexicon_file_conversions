@@ -6,7 +6,7 @@ The CSV↔LIFT round-trip currently covers four tables (entry, sense, pronunciat
 
 This plan is that inventory and that order, derived by tallying every element path and attribute actually present in the checked-in fixtures (`Sena3.lift`, 1462 entries / 1717 senses, plus the five small ones) rather than from the schema alone. Outcome: a sequence of increments, each one a self-contained run of the [`adding-a-lift-field` skill](../.claude/skills/adding-a-lift-field/SKILL.md) (read direction first, its CSV output becomes the write fixture), so the work can stop cleanly after any increment. The one exception is [Phase T](#phase-t--the-table-folder-convention), which is CLI infrastructure rather than a field and so is not a skill run.
 
-**Status: A1, A2 and T1 done. Next: T2, then T3**, then Phase B (B1). Keep this file synced as remaining [decisions below](#decisions-to-settle) land, per [AGENTS.md's Working Style](../AGENTS.md).
+**Status: A1, A2, T1 and T2 done. Next: T3**, then Phase B (B1). Keep this file synced as remaining [decisions below](#decisions-to-settle) land, per [AGENTS.md's Working Style](../AGENTS.md).
 
 Companion plan: [redundant-columns-and-entry-id.md](old/redundant-columns-and-entry-id.md) revisits whether carrying redundant/derivable columns is a good idea at all, and settles A2 and part of D2 against the FLEx LIFT documentation. A2, C3, D2 and [decisions 1 and 4](#decisions-to-settle) below have been updated from its findings.
 
@@ -134,7 +134,9 @@ Files touched: `R/table_registry.R` (new), `scripts/csv2lift.R` (flags and attac
 
 #### T2 · drop flat mode, folder-only discovery
 
-**Next.** T1 shipped two discovery modes because the fixtures were already laid out flat and moving 34 files was out of scope. Keeping both is the wrong trade: flat mode exists to serve one directory's historical layout, and it is the source of most of T1's remaining complexity and both defects above. T2 deletes it.
+**Done.** T1 shipped two discovery modes because the fixtures were already laid out flat and moving 34 files was out of scope. Keeping both is the wrong trade: flat mode exists to serve one directory's historical layout, and it is the source of most of T1's remaining complexity and both defects above. T2 deletes it.
+
+Built as designed below. The two invariants both held: `csv2lift_end-to-end` snapshots came out byte-identical (`FAIL 0 | WARN 0`, and every approved file's checksum unchanged), and the `Sena3_gloss_initial_b` fold-in was git-detected as three renames rather than delete+add. `table_dir()` also normalizes a trailing slash away (`sub("/+$", "", dir)`) rather than merely tolerating it, so `--tables dir` and `--tables dir/` are identical, including in error messages — replacing the dropped folder-vs-flat equivalence test with a trailing-slash-tolerance one in `test-csv2lift_table-discovery.R`. The missing `lift2csv.R` coverage landed as `test-lift2csv_end-to-end.R`, covering the two fixtures the plan named (with vs. without pronunciations) plus a third (the empty lexicon, confirming `entries.csv` is still written when every table is empty). One live-doc fix found and applied beyond the plan's file list: `.claude/skills/adding-a-lift-field/SKILL.md` still described the flat `_entries.csv` suffix convention as the write-fixture procedure — corrected to the directory form. Its "CLI flag" / "attach-call order in `scripts/csv2lift.R`" language predates the registry (a T1-era staleness, not a T2 one) and is unfixed — worth a pass before B1.
 
 The two modes, concretely — 13 exports either way:
 
@@ -278,7 +280,7 @@ Per **field** increment, in this order. T1 is not a field increment and carries 
 1. `Rscript -e 'devtools::test(filter = "<table>-table_end-to-end")'` — read direction. A brand-new fixture auto-creates its snapshot with a WARN, so **read the file**; that absence is the red.
 2. Verify the new column/table contents against the tallies in the inventory table above with a throwaway `python3 -c` over the `.new` CSV (counts must match: 108 `entry_order`, 105 etymologies, 197 sense traits, 1078 gram-info traits, 168 variants, 31 + 44 relations, 5 reversals). Re-derive any figure before it goes into SPEC.md.
 3. `Rscript -e 'testthat::snapshot_accept("<name>-table_end-to-end/")'` (trailing slash required) and the same for `join-sense-entry-table_end-to-end/` where the level reaches that view; re-run to confirm the accept took.
-4. Refresh every `tests/testthat/fixtures/csv2lift/*_<level>.csv` whose source `.lift` contains the new field by re-copying reader output — and leave the rest strictly alone, since their byte-identical snapshots prove the writer still tolerates the columns being absent.
+4. Refresh every `tests/testthat/fixtures/csv2lift/<stem>/<level>.csv` whose source `.lift` contains the new field by re-copying reader output — and leave the rest strictly alone, since their byte-identical snapshots prove the writer still tolerates the columns being absent.
 5. `Rscript -e 'devtools::test(filter = "csv2lift_end-to-end")'` — write direction; review the `.lift` diff before accepting.
 6. Full `Rscript -e 'devtools::test()'` green, then SPEC.md updated in the same change (column row or new section, classification algorithm, canonical child order, CLI shape list, and deletion of the Not-yet-specified entries the increment retires), plus a README example for each new flag.
 

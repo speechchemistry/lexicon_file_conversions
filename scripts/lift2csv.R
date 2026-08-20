@@ -1,6 +1,6 @@
 # lift2csv.R
 # Reads a LIFT file and writes every table in the registry (see
-# R/table_registry.R) as one CSV under --tables <prefix>, in one pass —
+# R/table_registry.R) as one CSV under --tables <dir>, in one pass —
 # the read-side counterpart to csv2lift.R's --tables discovery.
 
 library(argparser)
@@ -11,10 +11,9 @@ script_dir <- dirname(script_path)
 project_dir <- normalizePath(file.path(script_dir, ".."))
 devtools::load_all(project_dir, quiet = TRUE)
 
-p <- arg_parser("This script takes a LIFT file and writes one CSV per table into --tables <prefix>")
+p <- arg_parser("This script takes a LIFT file and writes one CSV per table into --tables <dir>")
 p <- add_argument(p, "LIFT_file", help = "SIL Flex lexicon LIFT file")
-p <- add_argument(p, "--tables",
-                  help = "Prefix to write per-table CSVs under: a folder ending in '/' (files named entries.csv, senses.csv, ...) or a stem (files named <stem>_entries.csv, <stem>_senses.csv, ...)")
+p <- add_argument(p, "--tables", help = "Directory to write per-table CSVs into (entries.csv, senses.csv, ...)")
 argv <- parse_args(p)
 
 registry <- table_registry()
