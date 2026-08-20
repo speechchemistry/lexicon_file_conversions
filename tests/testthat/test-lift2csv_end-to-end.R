@@ -18,14 +18,16 @@ per_table_script <- list(
 
 expect_lift2csv_umbrella_matches_per_table_scripts <- function(lift_file, expected_tables) {
   out_dir <- withr::local_tempdir()
-  system2("Rscript", args = c(script_path, lift_file, "--tables", out_dir), stdout = FALSE, stderr = FALSE)
+  status <- system2("Rscript", args = c(script_path, lift_file, "--tables", out_dir), stdout = FALSE, stderr = FALSE)
+  expect_cli_success(status, what = "lift2csv.R")
 
   written <- sort(tools::file_path_sans_ext(list.files(out_dir, pattern = "\\.csv$")))
   expect_identical(written, sort(expected_tables))
 
   for (name in expected_tables) {
     umbrella_out <- readLines(file.path(out_dir, paste0(name, ".csv")))
-    per_table_out <- system2("Rscript", args = c(per_table_script[[name]], lift_file), stdout = TRUE)
+    per_table_out <- suppressWarnings(system2("Rscript", args = c(per_table_script[[name]], lift_file), stdout = TRUE))
+    expect_cli_success(per_table_out, what = per_table_script[[name]])
     expect_identical(umbrella_out, per_table_out, info = name)
   }
 }

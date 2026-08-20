@@ -22,14 +22,6 @@ expect_usage_error <- function(args, pattern) {
   expect_true(any(grepl(pattern, result, fixed = TRUE)))
 }
 
-# system2()'s "status" attribute is only set on a nonzero exit, not on
-# success (it is simply absent, not 0L), so a successful run is asserted by
-# its absence rather than by comparing to 0.
-expect_cli_success <- function(result) {
-  status <- attr(result, "status")
-  expect_true(is.null(status) || status == 0)
-}
-
 test_that("csv2lift_table-discovery_trailing-slash is tolerated and insignificant", {
   export_dir <- testthat::test_path("fixtures", "csv2lift", "sena3-gloss-initial-b")
 
