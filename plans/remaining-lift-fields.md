@@ -6,7 +6,7 @@ The CSV↔LIFT round-trip currently covers four tables (entry, sense, pronunciat
 
 This plan is that inventory and that order, derived by tallying every element path and attribute actually present in the checked-in fixtures (`Sena3.lift`, 1462 entries / 1717 senses, plus the five small ones) rather than from the schema alone. Outcome: a sequence of increments, each one a self-contained run of the [`adding-a-lift-field` skill](../.claude/skills/adding-a-lift-field/SKILL.md) (read direction first, its CSV output becomes the write fixture), so the work can stop cleanly after any increment. The one exception is [Phase T](#phase-t--the-table-folder-convention), which is CLI infrastructure rather than a field and so is not a skill run.
 
-**Status: A1, A2 and T1 done. Next: T2**, then Phase B (B1). Keep this file synced as remaining [decisions below](#decisions-to-settle) land, per [AGENTS.md's Working Style](../AGENTS.md).
+**Status: A1, A2 and T1 done. Next: T2, then T3**, then Phase B (B1). Keep this file synced as remaining [decisions below](#decisions-to-settle) land, per [AGENTS.md's Working Style](../AGENTS.md).
 
 Companion plan: [redundant-columns-and-entry-id.md](old/redundant-columns-and-entry-id.md) revisits whether carrying redundant/derivable columns is a good idea at all, and settles A2 and part of D2 against the FLEx LIFT documentation. A2, C3, D2 and [decisions 1 and 4](#decisions-to-settle) below have been updated from its findings.
 
@@ -164,7 +164,46 @@ Work: `git mv` the 34 CSVs into 13 directories; fold `tests/testthat/fixtures/cs
 
 Verification: **every `csv2lift_end-to-end` snapshot must again come out byte-identical** — snapshot names derive from the stem, which becomes the directory name, so nothing in `_snaps/` moves or changes. Plus the missing coverage from T1: a snapshot test for `scripts/lift2csv.R` asserting **the set of filenames it writes** for two fixtures (one with pronunciations, one without, so the skip-empty-table rule is exercised in both directions) and byte-comparing each written CSV against the corresponding per-table script's output — that pins the naming rule and the skip rule without duplicating any table's content snapshots.
 
-One open point: whether the 13 fixture directories keep their current stems as directory names (`Sena3_gloss_initial_b/`, `note_and_phonology_notes/`) or get renamed while they are being moved anyway — see [decision 6](#decisions-to-settle).
+**T2 keeps every fixture name exactly as it is.** The names are being normalised, but in [T3](#t3--normalise-fixture-names-to-kebab-case) as a separate commit — a restructure and a rename must not share a diff, since each has its own single verifiable invariant and mixing them means a failure tells you nothing about which change caused it.
+
+#### T3 · normalise fixture names to kebab-case
+
+**After T2.** Fixture names are currently inconsistent in case (`Sena3_` vs `sena3_`, `IPA`), in separator (`citation-and-custom-field` vs `note_and_phonology_notes`), and in whether they carry their source project at all (10 of 15 do).
+
+**Scope is bigger than a fixture-directory rename, which is why this is its own increment.** These names are not just csv2lift export directories — the same name identifies a `.lift` input in up to 5 `lift2csv_*` fixture families and an approved snapshot in up to 6 `_snaps/` directories. Measured: **14 of 15 names change, touching 96 files** (`sena3_single_entry_plant` alone appears in 13). `lela-teli-empty-lexicon` is already conformant and keeps its 10 files untouched.
+
+That makes it **all-or-nothing per name**. Renaming only the csv2lift export directories would leave `csv2lift/sena3-single-entry-plant/` derived from `lift2csv_entry-table/sena3_single_entry_plant.lift` — a worse inconsistency than the one being fixed.
+
+**Rule: lowercase kebab-case, `<source>-<what-it-tests>`.** One rule for every filesystem name in the repo, matching [T2's kebab table filenames](#t2--drop-flat-mode-folder-only-discovery), so a path reads uniformly end to end (`sena3-gloss-initial-b/entry-relations.csv`). The `<source>` prefixes are deliberately not all the same *kind* of identifier — `sena3` is a FLEx project name, `zhi` is the ISO 639-3 code for Zhire, `lela-teli` is a project name — and that is accepted: what the prefix has to do is make provenance visible, not be drawn from one registry.
+
+| current                                          | new                                              |
+| ------------------------------------------------ | ------------------------------------------------ |
+| `Sena3`                                          | `sena3`                                          |
+| `Sena3_gloss_initial_b`                           | `sena3-gloss-initial-b`                           |
+| `citation-and-custom-field`                       | `sena3-citation-and-custom-field`                 |
+| `sena3_entry_and_sense_typed_notes`               | `sena3-entry-and-sense-typed-notes`               |
+| `sena3_example_duplicate_translation`             | `sena3-example-duplicate-translation`             |
+| `sena3_gloss_and_definition_multilang`            | `sena3-gloss-and-definition-multilang`            |
+| `sena3_inline_span_markup`                        | `sena3-inline-span-markup`                        |
+| `sena3_multiple_senses_per_entry`                 | `sena3-multiple-senses-per-entry`                 |
+| `sena3_note_trailing_whitespace`                  | `sena3-note-trailing-whitespace`                  |
+| `sena3_sense_note_and_field`                      | `sena3-sense-note-and-field`                      |
+| `sena3_single_entry_plant`                        | `sena3-single-entry-plant`                        |
+| `sena3_single_entry_two_custom_fields_river_mud`  | `sena3-single-entry-two-custom-fields-river-mud`  |
+| `note_and_phonology_notes`                        | `zhi-note-and-phonology-notes`                    |
+| `two_pronunciations_with_audio_and_IPA`            | `zhi-two-pronunciations-with-audio-and-ipa`        |
+| `lela-teli-empty-lexicon`                         | *unchanged*                                       |
+
+**Substitution hazard, verified: `Sena3` is a prefix of `Sena3_gloss_initial_b`.** A per-name `sed` in arbitrary order would rewrite `Sena3_gloss_initial_b` to `sena3_gloss_initial_b` via the short rule and never reach the long one, leaving a half-renamed name that still resolves to nothing. Apply renames **longest name first**, or anchor each rule on the whole basename. Nothing else in the set collides.
+
+**Two invariants make this provable rather than hopeful:**
+
+1. **The multiset of file checksums under `tests/testthat/` is byte-identical before and after.** A rename cannot change content, so any shift means something was edited, dropped or duplicated. Capture it before starting.
+2. **`WARN 0`, not just `FAIL 0`.** This is the trap: if a fixture is renamed and its snapshot is not, `expect_snapshot_file()` auto-creates a fresh snapshot with a **WARN** ([AGENTS.md's Testing Approach](../AGENTS.md#testing-approach)), so the suite reports green while silently accepting unvetted output and orphaning the approved file. Pair it with an explicit sweep for snapshots having no matching fixture and fixtures having no matching snapshot.
+
+**Live references to update** (the rename is not just file moves): 4 test files hardcode fixture names — `test-csv2lift_table-discovery.R`, `test-copy-lift-entries_end-to-end.R`, `test-example-source-note-redundancy.R`, `test-multitext-span-markup.R` — plus `SPEC.md`, `README.md`, `.claude/skills/adding-a-lift-field/SKILL.md`, and this plan. The `test-*_end-to-end.R` discovery loops glob and need no edit.
+
+**`plans/old/*.md` is deliberately left alone.** Every archived plan references these names heavily, and [AGENTS.md's Markdown Conventions](../AGENTS.md#markdown-conventions) treat a plan as a point-in-time historical record rather than a live document. The map above stays in this file as the translation table, so an old plan remains navigable without rewriting history.
 
 ### Phase B — new tables whose data is already in the repo
 
@@ -230,7 +269,7 @@ Recommendations are in the increments above; these are the points where a differ
 3. **C3 one relations table or two** — see C3.
 4. **D2 at all** — the "does FLEx need `<header>` to import" half is **answered: no**, the element is optional (see D2). What remains is the other half: is import-into-FLEx even a goal for this tool? If not, D2 drops off the list entirely; if it is, D2 is `<fields>`-only and exists purely so custom fields arrive with their declared types.
 5. ~~**T1's prefix rule.**~~ **Settled, then superseded**: T1 shipped one `--tables <prefix>` where a trailing path separator switches from `<prefix>_<name>.csv` to `<name>.csv`. [T2](#t2--drop-flat-mode-folder-only-discovery) drops the flat half entirely, so the trailing-separator rule goes away with it and `--tables <dir>` becomes just a directory.
-6. **T2's fixture directory names** — the 34 flat CSVs become 13 directories, and their stems become directory names. Keep them as they are (`Sena3_gloss_initial_b/`, `note_and_phonology_notes/`, `two_pronunciations_with_audio_and_IPA/`), or rename while they are being moved anyway? Keeping them means a zero-thought `git mv` and snapshot names that do not change (snapshot filenames derive from the stem, so a rename means renaming files in `_snaps/csv2lift_end-to-end/` in lockstep). Renaming is only worth it if the current names are actually unhelpful — they are inconsistently cased (`Sena3_` vs `sena3_`) and inconsistently separated (`citation-and-custom-field` vs `note_and_phonology_notes`), so there is a real case for normalising. Recommend **keep as-is for T2** and treat normalisation as a separate, purely-mechanical commit if wanted, so the T2 diff stays reviewable as a structural change rather than a rename-plus-restructure.
+6. ~~**T2's fixture directory names.**~~ **Settled: rename, but as its own increment — [T3](#t3--normalise-fixture-names-to-kebab-case), after T2.** The question as originally framed was scoped wrong: these are not 13 csv2lift export-directory names but 15 fixture names shared across 6 fixture families and 7 snapshot directories, so a rename touches 96 files and is all-or-nothing per name. Full map, hazards and invariants are in T3; `zhi` (ISO 639-3 for Zhire) prefixes the two Zhire fixtures, and lowercasing `Sena3` → `sena3` is accepted so that one rule covers every path in the repo.
 
 ## Verification
 
