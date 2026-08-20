@@ -25,13 +25,15 @@ attach_examples_to_lift <- function(doc, example_table) {
       ), call. = FALSE)
     }
 
+    warn_on_reference_disagreement(row, note_cols, .x)
+
     # Unlike every other optional element in this model, <example> is
     # emitted unconditionally: identity here is purely positional (SPEC.md
     # 6), so dropping a blank row would shift the index of its surviving
     # siblings — six senses in Sena3.lift interleave blank and non-blank
     # examples.
     example_args <- list(sense_node, "example")
-    if ("example_source" %in% names(row) && !is.na(row$example_source) && nzchar(row$example_source)) {
+    if ("example_source" %in% names(row) && has_nonblank(row$example_source)) {
       example_args$source <- row$example_source
     }
     example_node <- do.call(xml_add_child, example_args)

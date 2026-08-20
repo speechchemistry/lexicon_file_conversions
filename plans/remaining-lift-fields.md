@@ -8,30 +8,32 @@ This plan is that inventory and that order, derived by tallying every element pa
 
 **Status: planning only — no code written yet.** Keep this file synced as the [decisions below](#decisions-to-settle) land, per [AGENTS.md's Working Style](../AGENTS.md).
 
+Companion plan: [redundant-columns-and-entry-id.md](redundant-columns-and-entry-id.md) revisits whether carrying redundant/derivable columns is a good idea at all, and settles A2 and part of D2 against the FLEx LIFT documentation. A2, C3, D2 and [decisions 1 and 4](#decisions-to-settle) below have been updated from its findings.
+
 ## What is actually left (measured, not guessed)
 
 Counts are from `tests/testthat/fixtures/lift2csv_entry-table/Sena3.lift` unless noted. "max/parent" is what decides column vs. table per [the skill's "Decide where it lives" step](../.claude/skills/adding-a-lift-field/SKILL.md#decide-where-it-lives-a-column-or-a-table-of-its-own).
 
-| LIFT item | Count | max/parent | Shape | Increment |
-| --- | --- | --- | --- | --- |
-| `entry/@order` | 108 | 1 | column `entry_order` | A1 |
-| `entry/@id` (`headword_guid`, ≠ guid) | 1462 | 1 | column, name TBD | A2 |
-| `sense/reversal` (`@type` + form) | 5 (in 2 small fixtures) | 2 | **new table** | B1 |
-| `entry/etymology` (`@type`, `@source`, form, gloss, `field type=comment/languagenotes`) | 105 | 1 (schema: many) | **new table** | B2 |
-| `sense/trait` (`semantic-domain-ddp4` 181, `usage-type` 16) | 197 | 3, names repeat | **new long table** | C1 |
-| `sense/grammatical-info/trait` (`inflection-feature`, `type`, `*-slot`, `from-part-of-speech`) | 1078 | 4, names repeat | same long table | C1 |
-| `entry/variant` (form + `morph-type`/`environment` traits) | 168 | 8 | **new table** (+ traits via C1) | C2 |
-| `entry/relation` (`@type`/`@ref`/`@order` + traits) | 31 | 3 | **new table** (+ traits via C1) | C3 |
-| `sense/relation` (`@type`/`@ref`) | 44 | 2 | **new table** (+ traits via C1) | C3 |
-| `sense/subsense` (recursive `<sense>`) | 8 | 1 deep | column `parent_sense_guid` on sense table | D1 |
-| `header/fields` + `header/ranges` | 11 + 27 | — | verbatim passthrough, not a table | D2 |
-| pronunciation `field` (cv-pattern, tone) / `trait`, media `@label` | **0 in any fixture** (declared in headers only) | — | blocked on a real export | D3 |
-| `entry/@dateDeleted`, sense/example/pronunciation dates, `annotation`, `illustration`, `variant/pronunciation`, `variant/relation`, `relation/usage`, `reversal/main` | 0 | — | stay in Not yet specified | — |
+| LIFT item                                                                                                                                                             | Count                                           | max/parent       | Shape                                     | Increment |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------- | ---------------- | ----------------------------------------- | --------- |
+| `entry/@order`                                                                                                                                                        | 108                                             | 1                | column `entry_order`                      | A1        |
+| `entry/@id` (`headword_guid`, ≠ guid)                                                                                                                                 | 1462                                            | 1                | column, name TBD                          | A2        |
+| `sense/reversal` (`@type` + form)                                                                                                                                     | 5 (in 2 small fixtures)                         | 2                | **new table**                             | B1        |
+| `entry/etymology` (`@type`, `@source`, form, gloss, `field type=comment/languagenotes`)                                                                               | 105                                             | 1 (schema: many) | **new table**                             | B2        |
+| `sense/trait` (`semantic-domain-ddp4` 181, `usage-type` 16)                                                                                                           | 197                                             | 3, names repeat  | **new long table**                        | C1        |
+| `sense/grammatical-info/trait` (`inflection-feature`, `type`, `*-slot`, `from-part-of-speech`)                                                                        | 1078                                            | 4, names repeat  | same long table                           | C1        |
+| `entry/variant` (form + `morph-type`/`environment` traits)                                                                                                            | 168                                             | 8                | **new table** (+ traits via C1)           | C2        |
+| `entry/relation` (`@type`/`@ref`/`@order` + traits)                                                                                                                   | 31                                              | 3                | **new table** (+ traits via C1)           | C3        |
+| `sense/relation` (`@type`/`@ref`)                                                                                                                                     | 44                                              | 2                | **new table** (+ traits via C1)           | C3        |
+| `sense/subsense` (recursive `<sense>`)                                                                                                                                | 8                                               | 1 deep           | column `parent_sense_guid` on sense table | D1        |
+| `header/fields` + `header/ranges`                                                                                                                                     | 11 + 27                                         | —                | verbatim passthrough, not a table         | D2        |
+| pronunciation `field` (cv-pattern, tone) / `trait`, media `@label`                                                                                                    | **0 in any fixture** (declared in headers only) | —                | blocked on a real export                  | D3        |
+| `entry/@dateDeleted`, sense/example/pronunciation dates, `annotation`, `illustration`, `variant/pronunciation`, `variant/relation`, `relation/usage`, `reversal/main` | 0                                               | —                | stay in Not yet specified                 | —         |
 
 Two findings that reorder the work:
 
-- **`entry/relation/@ref` targets `entry/@id`, not `@guid`** — all 31 refs resolve against the `headword_guid` form, none against the bare guid. So A2 (`entry/@id`) is a **prerequisite** for C3: emitting relations without it produces dangling refs. (`sense/relation/@ref` targets `sense/@id`, all 44 resolve, so that half is already keyable.)
-- **`entry/@id` is fully derived, so A2 is a redundancy question rather than a data-recovery one.** Measured over all 1462 entries: `@id` = headword + (`@order` or `""`) + `"_"` + `@guid`, where headword is the citation form when present (848 entries) else the lexical-unit form (506), and the homograph digit (108 entries) *is* `@order` — identical on all 108. Nothing unexplained, no escaping. Every input is therefore in the entry CSV once A1 lands, and `@id` could be synthesized on write instead of stored.
+- **`entry/relation/@ref` targets `entry/@id`, not `@guid`** — all 31 refs resolve against the `headword_guid` form, none against the bare guid. So A2 (`entry/@id`) is a **prerequisite** for C3: without an `@id` there is nothing for a ref to point at. (`sense/relation/@ref` targets `sense/@id`, all 44 resolve, so that half is already keyable.) The FLEx documentation states this as one rule for both levels — "References to entries and senses within the LIFT file use the id string" — which holds at sense level because "the sense id has always been a guid" (verified: 1717/1717 guid-shaped).
+- **`entry/@id` is fully derived, so A2 is a redundancy question rather than a data-recovery one.** Measured over all 1462 entries: `@id` = headword + (`@order` or `""`) + `"_"` + `@guid`, where headword is the citation form when present (848 entries) else the lexical-unit form (506), and the homograph digit (108 entries) *is* `@order` — identical on all 108. Nothing unexplained, no escaping. Every input is therefore in the entry CSV once A1 lands, and `@id` could be synthesized on write instead of stored. **The FLEx documentation settles which to do** — see [redundant-columns-and-entry-id.md](redundant-columns-and-entry-id.md).
 - **Traits repeat the same `name` on one parent, and `lift.rng` permits it** — `trait-content` carries no `sch:assert` on uniqueness, and real data repeats `semantic-domain-ddp4` (24 senses) and `environment` (4 variants). That rules out flat `trait_<name>` columns at every level and is why C1 comes before C2/C3 rather than each table growing its own trait columns.
 
 ## Increments
@@ -44,15 +46,15 @@ Each is a separate skill run with its own red/green/refactor commits, SPEC.md up
 
 **A2 · `entry/@id` → new column.** Same three edits. Emitting `@id` at all is a deliberate revision of [SPEC.md's Entry table](../SPEC.md#entry-table) rule "`id` is never synthesized": storing it verbatim is not synthesis, and C3's relation refs need it to resolve. The column name will contain an underscore, so it needs an exact-match `meta_columns` entry ahead of the custom-field fallback, plus a line in the known-limitation comment.
 
-Because `@id` is derivable (see above), three options — settle before starting, since they differ in output, not just in tidiness:
+Because `@id` is derivable (see above), there were three options. **Settled: store verbatim**, on the FLEx documentation rather than on a judgement call — reasoning and quotes in [redundant-columns-and-entry-id.md](redundant-columns-and-entry-id.md).
 
-| | Behaviour | Cost |
-| --- | --- | --- |
-| **Store verbatim** (recommended) | column carried through unchanged | one redundant column; matches the stance [SPEC.md's Example table](../SPEC.md#example-table) takes on `@source` vs `note[@type="reference"]` — FLEx wrote it twice, so the tool carries both |
-| Synthesize on write | no new column | encodes FLEx's headword rule into csv2lift, and needs a writing-system choice the CSV deliberately does not record. A user editing a citation form silently changes every derived id while the relations CSV still holds the old refs — **every ref then dangles** |
-| Skip entirely | current behaviour | fine until C3; relation refs would then point at ids no entry in the output carries |
+|                                | Behaviour                        | Cost                                                                                                                                                                                                                                              |
+| ------------------------------ | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Store verbatim** (settled)   | column carried through unchanged | one derivable column. The doc makes `@id` an opaque within-file handle — "any text as long as it is unique in the LIFT file", and "any non-guid id will be converted to a guid during import" — so there is no semantic content to keep in sync   |
+| Synthesize on write            | no new column                    | regenerates a string whose content the consumer discards, encodes a WeSay convention ("normally… the lexeme form and guid") into csv2lift, needs a writing-system choice the CSV does not record, and builds the LT-21075 hazard in by construction |
+| Skip entirely                  | current behaviour                | fine until C3; relation refs would then point at ids no entry in the output carries                                                                                                                                                                |
 
-Recommendation is verbatim storage, on the strength of that middle row: it is the only option under which a headword edit leaves refs resolving.
+Because `@id` is only required to be unique, the write-side guard is a **uniqueness check** across the `entry_lift_id` column — not a check that it still matches the headword or carries the guid as a suffix, both of which the doc treats as convention rather than rule. A duplicate is a hard error, per [SPEC.md's Structural rules](../SPEC.md#structural-rules-csv2lift-direction).
 
 ### Phase B — new tables whose data is already in the repo
 
@@ -66,13 +68,13 @@ Note the pre-existing coverage hole this closes: `_snaps/csv2lift_end-to-end/not
 
 **C1 · a long `traits` table (`--traits`).** The one shape that survives repeated `name`s. One row per trait, document order preserved:
 
-| Column | Meaning |
-| --- | --- |
-| `entry_id` | FK → entry table (always filled) |
-| `sense_guid` | FK → sense table; filled when `owner` is `sense`/`grammatical-info`, blank otherwise |
-| `owner` | `sense`, `grammatical-info`, `variant`, or `relation` |
-| `owner_index` | 1-based position of the owner among that parent's like-owner siblings; blank for `sense`/`grammatical-info` (at most one each) |
-| `trait_name`, `trait_value` | the pair, verbatim |
+| Column                      | Meaning                                                                                                                        |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| `entry_id`                  | FK → entry table (always filled)                                                                                               |
+| `sense_guid`                | FK → sense table; filled when `owner` is `sense`/`grammatical-info`, blank otherwise                                           |
+| `owner`                     | `sense`, `grammatical-info`, `variant`, or `relation`                                                                          |
+| `owner_index`               | 1-based position of the owner among that parent's like-owner siblings; blank for `sense`/`grammatical-info` (at most one each) |
+| `trait_name`, `trait_value` | the pair, verbatim                                                                                                             |
 
 Scope deliberately excludes entry-level traits: `morph-type` keeps its existing dedicated `morph_type` column (a public contract already in every snapshot), and no other entry-level trait occurs in any fixture, so it stays in Not yet specified rather than being speculatively covered. Read xpath at sense level is `./trait`; at gram-info level `./grammatical-info/trait`.
 
@@ -82,24 +84,35 @@ Implementable in two halves so the first is small: **C1a** `owner ∈ {sense, gr
 
 **C3 · `entry/relation` + `sense/relation` → relation tables.** Needs A2 done. Two tables, one per level, matching the codebase's one-column-per-level grid: `--entry-relations` (`entry_id`, `relation_type`, `relation_ref`, `relation_order`) and `--sense-relations` (`sense_guid`, `relation_type`, `relation_ref`). Both positionally keyed. Entry-relation traits (`is-primary`, `complex-form-type`, `variant-type`, one relation repeating a name) ride in C1's traits table with `owner = "relation"`. `relation_order` is copied verbatim, never regenerated. `relation/usage` and `variant/relation` do not occur; leave unimplemented.
 
+**`relation_ref` holds the target's guid, not the raw `@id` string**, translated to the target entry's stored `entry_lift_id` on write. Copying the `@id` verbatim would embed another row's headword and guid in a text field, while every other FK in the repo is a guid ([SPEC.md's Structural rules](../SPEC.md#structural-rules-csv2lift-direction)); guid-keying also hides the doc's entry-uses-id/sense-uses-guid asymmetry and makes csv2lift responsible for internal consistency regardless of user edits. Lossless: all 31 entry refs carry the target guid as the after-last-underscore suffix, so both directions recover exactly. See [redundant-columns-and-entry-id.md](redundant-columns-and-entry-id.md).
+
+One import behaviour to design around when this is built: the FLEx doc warns that for Collection-type relations "the import process will try to unify the relation sets… If collection references overlap in a way that cannot be unified, the import log will list multiple Combined Collections… If there are many of these, the result will probably be very bad."
+
 If two tables/flags for one element feels heavy, the alternative is one `relations` table with both `entry_id` and `sense_guid` and exactly one filled — cheaper CLI, but the first table in the repo that spans two levels. Recommend the two-table version; flag it in the commit so it is a visible choice.
 
 ### Phase D — structural and blocked items
 
 **D1 · `sense/subsense` → `parent_sense_guid` on the sense table.** 8 in Sena3, one level deep, each with its own `@id`. Add a `parent_sense_guid` column (blank = a direct sense of the entry); switch `sense_table()`'s axis from `./sense` to a recursive walk; in `attach_senses_to_lift()`, emit parentless rows first, then rows whose parent exists, as `<subsense>` (the tag differs from `<sense>`). Then widen the FK lookups that currently say `.//sense[@id=…]` to match `<subsense>` too, and `example_table()`'s `.//entry/sense/example` axis to include the 1 subsense example — which is what retires three separate Not-yet-specified entries at once. Do this **after** Phase C, since every sense-parented table (examples, reversals, traits) inherits the widened lookup.
 
-**D2 · `header` passthrough.** `<header>/<fields>` (11 custom-field declarations with English descriptions) and `<header>/<ranges>` (27 `href`s into an external `.lift-ranges` file) are per-document metadata, not per-entry data, and a CSV round-trip of them buys little. Proposal: a `--header-from <lift-file>` flag on `scripts/csv2lift.R` that copies the `<header>` element verbatim into the output. Whether this is needed at all depends on whether FLEx will import a header-less LIFT cleanly — see [Decisions](#decisions-to-settle).
+**D2 · `header` passthrough — narrowed to `<fields>` only.** `<header>/<fields>` (11 custom-field declarations with English descriptions) and `<header>/<ranges>` (27 `href`s into an external `.lift-ranges` file) are per-document metadata, not per-entry data, and a CSV round-trip of them buys little. Proposal: a `--header-from <lift-file>` flag on `scripts/csv2lift.R` copying `<header>/<fields>` into the output.
+
+The FLEx doc settles the "will FLEx import a header-less LIFT" question: "**The header element is optional in a LIFT file**", and the doc's own minimal importable example has none. The two halves differ, though:
+
+- **`<ranges>`: drop it.** "On import into FLEx, any references to range elements in senses and entries will try to find an existing item in the FLEx list. If not found, a new item will be added." Nothing lost but import-log noise — and the `href`s are absolute paths to one machine's `.lift-ranges` file, so copying them verbatim is worse than omitting them.
+- **`<fields>`: keep it, for custom-field typing only.** "The fields element is not used during import, **except for FLEx custom fields**. Without a field definition for a custom field, the import will create a custom field in the target project, but it defaults to a MultiUnicode field with `kwsAnalVerns` as the selector." The payload is the `qaa-x-spec` pseudo-writing-system carrying `Class=`/`Type=`/`WsSelector=`. Dropping it preserves all data and degrades the schema — Sena3's 11 declarations would all arrive as MultiUnicode/`kwsAnalVerns`.
+
+So D2 is only worth building if importing into a *fresh* FLEx project is a goal — see [Decisions](#decisions-to-settle). Details in [redundant-columns-and-entry-id.md](redundant-columns-and-entry-id.md).
 
 **D3 · pronunciation-level `field`/`trait`, media `@label`.** Genuinely blocked: zero occurrences in any fixture (Sena3 has no `<pronunciation>` at all; the two small pronunciation fixtures carry only forms and media). `cv-pattern` and `tone` are *declared* in every header, so the data exists in other projects. Per [the skill's fixture rule](../.claude/skills/adding-a-lift-field/SKILL.md#get-a-real-fixture), ask for a real export rather than hand-writing one; until then this stays in Not yet specified.
 
 ## Decisions to settle
 
-Recommendations are in the increments above; these are the four points where a different answer changes the work. Each is answerable when its increment starts — none of them block Phase A.
+Recommendations are in the increments above; these are the points where a different answer changes the work. Each is answerable when its increment starts — none of them block Phase A.
 
-1. **A2: store `entry/@id`, derive it, or skip it** — see the table in A2; recommendation is store. If stored, the name needs settling too: `entry_lift_id` is the suggestion (descriptive, and `entry_id` is taken by the guid). Renaming later is expensive: [the skill spells out](../.claude/skills/adding-a-lift-field/SKILL.md#documentation) that a column name is a public contract touching reader, classifier, every fixture header, three snapshot directories and SPEC.md.
+1. **A2's column name.** The store-vs-derive-vs-skip half is **settled** (store verbatim, per the FLEx documentation — see A2 and [redundant-columns-and-entry-id.md](redundant-columns-and-entry-id.md)); only the name is open. `entry_lift_id` is the suggestion (descriptive, and `entry_id` is taken by the guid). Renaming later is expensive: [the skill spells out](../.claude/skills/adding-a-lift-field/SKILL.md#documentation) that a column name is a public contract touching reader, classifier, every fixture header, three snapshot directories and SPEC.md.
 2. **C1's table shape** — one unified long `traits` table (recommended: one flag, one SPEC section, one test file, and future trait kinds need no new code) versus per-level trait tables (`--sense-traits`, `--variant-traits`, …: no cross-CSV positional coupling, but 3–4 more tables). The unified version's only real cost is `owner_index` pointing at another CSV's row position, which a fail-fast lookup makes loud rather than silent.
 3. **C3 one relations table or two** — see C3.
-4. **D2 at all** — does FLEx need `<header>` to import csv2lift output, and is import-into-FLEx even a goal for this tool? If the answer is "not a goal", D2 drops off the list entirely.
+4. **D2 at all** — the "does FLEx need `<header>` to import" half is **answered: no**, the element is optional (see D2). What remains is the other half: is import-into-FLEx even a goal for this tool? If not, D2 drops off the list entirely; if it is, D2 is `<fields>`-only and exists purely so custom fields arrive with their declared types.
 
 ## Verification
 

@@ -162,3 +162,33 @@ classify_example_columns <- function(col_names) {
     stop(sprintf("Unrecognized example column '%s'", col), call. = FALSE)
   })
 }
+
+# example/@source and note[@type="reference"] are the same FLEx field
+# ("Reference") written twice by the exporter, so the CSV carries both columns
+# rather than collapsing one away — collapsing would have to invent a lang for
+# the note on write, which the source actually carries (SPEC.md's Redundant
+# columns). Nothing reconciles the two, and in Sena3.lift they are
+# byte-identical on all 744 examples that have them, so a user editing one
+# cell and not the other is the only way they ever diverge — and it would
+# otherwise diverge silently. Warn instead; both values are still emitted
+# unchanged, since deciding which one wins is not this tool's call.
+warn_on_reference_disagreement <- function(row, note_cols, row_index) {
+  if (!"example_source" %in% names(row)) return(invisible(NULL))
+  source_value <- row$example_source
+  if (!has_nonblank(source_value)) return(invisible(NULL))
+
+  reference_cols <- note_cols[note_cols$field_type == "reference", ]
+
+  for (col in reference_cols$column) {
+    note_value <- row[[col]]
+    if (!has_nonblank(note_value) || identical(note_value, source_value)) next
+
+    warning(sprintf(
+      paste0("Example row %d (sense %s) has example_source '%s' but %s '%s'. ",
+             "These are the same FLEx field ('Reference'); both are emitted unchanged."),
+      row_index, row$sense_guid, source_value, col, note_value
+    ), call. = FALSE)
+  }
+
+  invisible(NULL)
+}
