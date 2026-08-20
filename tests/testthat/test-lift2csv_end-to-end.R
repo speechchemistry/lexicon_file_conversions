@@ -32,14 +32,14 @@ expect_lift2csv_umbrella_matches_per_table_scripts <- function(lift_file, expect
 
 test_that("lift2csv_end-to-end_with-pronunciations writes entries, senses, pronunciations (no examples)", {
   expect_lift2csv_umbrella_matches_per_table_scripts(
-    file.path(entry_fixture_dir, "two_pronunciations_with_audio_and_IPA.lift"),
+    file.path(entry_fixture_dir, "zhi-two-pronunciations-with-audio-and-ipa.lift"),
     c("entries", "senses", "pronunciations")
   )
 })
 
 test_that("lift2csv_end-to-end_without-pronunciations writes entries, senses, examples (no pronunciations)", {
   expect_lift2csv_umbrella_matches_per_table_scripts(
-    file.path(entry_fixture_dir, "Sena3_gloss_initial_b.lift"),
+    file.path(entry_fixture_dir, "sena3-gloss-initial-b.lift"),
     c("entries", "senses", "examples")
   )
 })

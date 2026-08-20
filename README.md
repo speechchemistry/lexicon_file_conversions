@@ -12,37 +12,37 @@ You can download the package by clicking on the green code button and selecting 
 
 ## Example: LIFT → CSV (lift2csv)
 
-`scripts/lift2csv.R` writes every table it knows how to read (see `R/table_registry.R`) from a LIFT file into `--tables <dir>` in one pass, one plainly-named CSV per table (`entries.csv`, `senses.csv`, ...). `Sena3.lift` is a real Sena FLEx project export, checked in as a test fixture.
+`scripts/lift2csv.R` writes every table it knows how to read (see `R/table_registry.R`) from a LIFT file into `--tables <dir>` in one pass, one plainly-named CSV per table (`entries.csv`, `senses.csv`, ...). `sena3.lift` is a real Sena FLEx project export, checked in as a test fixture.
 
 ``` bash
-Rscript scripts/lift2csv.R tests/testthat/fixtures/lift2csv_entry-table/Sena3.lift --tables Sena3_tables/
+Rscript scripts/lift2csv.R tests/testthat/fixtures/lift2csv_entry-table/sena3.lift --tables sena3-tables/
 ```
 
 The per-table scripts remain available for generating one table (or the denormalized joined entry+sense view) at a time:
 
 ``` bash
-Rscript scripts/lift2csv_entry-table.R tests/testthat/fixtures/lift2csv_entry-table/Sena3.lift > Sena3_entry-table.csv
-Rscript scripts/lift2csv_sense-table.R tests/testthat/fixtures/lift2csv_entry-table/Sena3.lift > Sena3_sense-table.csv
-Rscript scripts/lift2csv_pronunciation-table.R tests/testthat/fixtures/lift2csv_pronunciation-table/two_pronunciations_with_audio_and_IPA.lift > two_pronunciations_with_audio_and_IPA.csv
-Rscript scripts/lift2csv_example-table.R tests/testthat/fixtures/lift2csv_example-table/Sena3_gloss_initial_b.lift > Sena3_gloss_initial_b_example-table.csv
-Rscript scripts/lift2csv_join-sense-entry-table.R tests/testthat/fixtures/lift2csv_entry-table/Sena3.lift > Sena3_join-sense-entry-table.csv
+Rscript scripts/lift2csv_entry-table.R tests/testthat/fixtures/lift2csv_entry-table/sena3.lift > sena3-entry-table.csv
+Rscript scripts/lift2csv_sense-table.R tests/testthat/fixtures/lift2csv_entry-table/sena3.lift > sena3-sense-table.csv
+Rscript scripts/lift2csv_pronunciation-table.R tests/testthat/fixtures/lift2csv_pronunciation-table/zhi-two-pronunciations-with-audio-and-ipa.lift > zhi-two-pronunciations-with-audio-and-ipa.csv
+Rscript scripts/lift2csv_example-table.R tests/testthat/fixtures/lift2csv_example-table/sena3-gloss-initial-b.lift > sena3-gloss-initial-b_example-table.csv
+Rscript scripts/lift2csv_join-sense-entry-table.R tests/testthat/fixtures/lift2csv_entry-table/sena3.lift > sena3-join-sense-entry-table.csv
 ```
 ## Example: CSV → LIFT (csv2lift)
 
 `csv2lift.R` does the reverse: it takes an entry-level CSV (required) and, optionally, sense-level, pronunciation-level, and example-level CSVs, and builds a LIFT file. `--tables <dir>` discovers all of them at once from a directory laid out the same way `lift2csv.R` writes one above:
 
 ``` bash
-Rscript scripts/csv2lift.R --tables tests/testthat/fixtures/csv2lift/two_pronunciations_with_audio_and_IPA \
-  > two_pronunciations_with_audio_and_IPA.lift
+Rscript scripts/csv2lift.R --tables tests/testthat/fixtures/csv2lift/zhi-two-pronunciations-with-audio-and-ipa \
+  > zhi-two-pronunciations-with-audio-and-ipa.lift
 ```
 
 Each table can also be named explicitly with its own `--<table>` flag (an explicit flag overrides a discovered file of the same table) — useful when a CSV isn't named to the `--tables` convention, or the entry CSV as a bare positional argument, kept for backward compatibility:
 
 ``` bash
-Rscript scripts/csv2lift.R tests/testthat/fixtures/csv2lift/sena3_example_duplicate_translation/entries.csv \
-  --senses tests/testthat/fixtures/csv2lift/sena3_example_duplicate_translation/senses.csv \
-  --examples tests/testthat/fixtures/csv2lift/sena3_example_duplicate_translation/examples.csv \
-  > sena3_example_duplicate_translation.lift
+Rscript scripts/csv2lift.R tests/testthat/fixtures/csv2lift/sena3-example-duplicate-translation/entries.csv \
+  --senses tests/testthat/fixtures/csv2lift/sena3-example-duplicate-translation/senses.csv \
+  --examples tests/testthat/fixtures/csv2lift/sena3-example-duplicate-translation/examples.csv \
+  > sena3-example-duplicate-translation.lift
 ```
 
 `--examples` requires `--senses` (or a discovered senses table), since examples attach to `<sense>` elements; the entry table is the only mandatory one. See [`SPEC.md`'s CLI shape section](SPEC.md#csv2lift-cli-shape) for the full CLI shape.
@@ -84,15 +84,15 @@ Examples:
 
 ``` bash
 # Read GUIDs from a file
-Rscript scripts/copy-lift-entries.R Sena3.lift one-guid.txt > subset.lift
+Rscript scripts/copy-lift-entries.R sena3.lift one-guid.txt > subset.lift
 
 # Read GUIDs from stdin (explicit "-")
 printf '0006f482-a078-4cef-9c5a-8bd35b53cf72\n' | \
-	Rscript scripts/copy-lift-entries.R Sena3.lift - > subset.lift
+	Rscript scripts/copy-lift-entries.R sena3.lift - > subset.lift
 
 # Read multiple GUIDs from stdin (omit guid_file)
 printf '0006f482-a078-4cef-9c5a-8bd35b53cf72\n00f99de8-333b-4c51-a306-a6d54b58723a\n' | \
-	Rscript scripts/copy-lift-entries.R Sena3.lift > subset.lift
+	Rscript scripts/copy-lift-entries.R sena3.lift > subset.lift
 ```
 
 

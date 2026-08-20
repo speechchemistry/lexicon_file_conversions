@@ -4,7 +4,7 @@ library(tibble)
 # example/@source and note[@type="reference"] are the same FLEx field
 # ("Reference") written twice by the exporter, so the CSV carries both columns
 # rather than collapsing them (SPEC.md's Example table / Redundant columns).
-# In Sena3.lift the two agree on all 744 examples that have them, which is
+# In sena3.lift the two agree on all 744 examples that have them, which is
 # exactly why a user desyncing them in the CSV would otherwise be silent:
 # no fixture reaches this shape, and stderr is not snapshotted by the
 # end-to-end tests. These are non-snapshot unit tests for that gap, following
@@ -47,7 +47,7 @@ test_that("both disagreeing values are still emitted unchanged", {
   )
 })
 
-test_that("agreeing values do not warn (the shape all 744 in Sena3.lift have)", {
+test_that("agreeing values do not warn (the shape all 744 in sena3.lift have)", {
   expect_no_warning(
     suppressMessages(attach_examples_to_lift(one_sense_doc(), example_row("Ref A", "Ref A")))
   )

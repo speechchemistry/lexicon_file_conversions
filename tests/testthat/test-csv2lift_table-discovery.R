@@ -31,7 +31,7 @@ expect_cli_success <- function(result) {
 }
 
 test_that("csv2lift_table-discovery_trailing-slash is tolerated and insignificant", {
-  export_dir <- testthat::test_path("fixtures", "csv2lift", "Sena3_gloss_initial_b")
+  export_dir <- testthat::test_path("fixtures", "csv2lift", "sena3-gloss-initial-b")
 
   without_slash <- run_csv2lift(c("--tables", export_dir))
   with_slash <- run_csv2lift(c("--tables", paste0(export_dir, "/")))
@@ -41,15 +41,15 @@ test_that("csv2lift_table-discovery_trailing-slash is tolerated and insignifican
 })
 
 test_that("csv2lift_table-discovery_missing-entries_errors", {
-  senses_path <- testthat::test_path("fixtures", "csv2lift", "sena3_single_entry_plant", "senses.csv")
+  senses_path <- testthat::test_path("fixtures", "csv2lift", "sena3-single-entry-plant", "senses.csv")
   expect_usage_error(c("--senses", senses_path), "No entries CSV supplied")
 })
 
 test_that("csv2lift_table-discovery_examples-without-senses_errors", {
   # Built under a temp dir, not the checked-in fixtures: this shape (examples
   # with no senses) is only interesting as an error case, so it doesn't earn
-  # a place among the static fixtures the way Sena3_gloss_initial_b does.
-  export_dir <- testthat::test_path("fixtures", "csv2lift", "Sena3_gloss_initial_b")
+  # a place among the static fixtures the way sena3-gloss-initial-b does.
+  export_dir <- testthat::test_path("fixtures", "csv2lift", "sena3-gloss-initial-b")
   tables_dir <- withr::local_tempdir()
   file.copy(file.path(export_dir, "entries.csv"), file.path(tables_dir, "entries.csv"))
   file.copy(file.path(export_dir, "examples.csv"), file.path(tables_dir, "examples.csv"))
@@ -58,7 +58,7 @@ test_that("csv2lift_table-discovery_examples-without-senses_errors", {
 })
 
 test_that("csv2lift_table-discovery_unrecognised-csv_errors", {
-  export_dir <- testthat::test_path("fixtures", "csv2lift", "Sena3_gloss_initial_b")
+  export_dir <- testthat::test_path("fixtures", "csv2lift", "sena3-gloss-initial-b")
   tables_dir <- withr::local_tempdir()
   file.copy(file.path(export_dir, "entries.csv"), file.path(tables_dir, "entries.csv"))
   file.copy(file.path(export_dir, "senses.csv"), file.path(tables_dir, "sense.csv"))
@@ -67,10 +67,10 @@ test_that("csv2lift_table-discovery_unrecognised-csv_errors", {
 })
 
 test_that("csv2lift_table-discovery_explicit-flag-overrides-discovery", {
-  # note_and_phonology_notes has entries + pronunciations + senses and no
+  # zhi-note-and-phonology-notes has entries + pronunciations + senses and no
   # examples, so truncating its senses.csv carries no risk of leaving an
   # example pointing at a sense_guid that no longer exists.
-  tables_dir <- testthat::test_path("fixtures", "csv2lift", "note_and_phonology_notes")
+  tables_dir <- testthat::test_path("fixtures", "csv2lift", "zhi-note-and-phonology-notes")
 
   # A truncated copy of that fixture's own senses.csv: same entry_id values
   # (so the FK still resolves), fewer rows (so the output visibly differs),

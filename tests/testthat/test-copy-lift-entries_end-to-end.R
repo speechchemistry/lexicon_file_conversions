@@ -12,7 +12,7 @@ normalize_run_timestamp <- function(lines) {
 script_path <- "../../scripts/copy-lift-entries.R"
 
 test_that("copy-lift-entries_end-to-end_one-guid", {
-  input_lift <- "fixtures/copy-lift-entries/Sena3.lift"
+  input_lift <- "fixtures/copy-lift-entries/sena3.lift"
   input_guids <- "fixtures/copy-lift-entries/one-guid.txt"
 
   expect_cli_stdout_file_snapshot(
@@ -22,7 +22,7 @@ test_that("copy-lift-entries_end-to-end_one-guid", {
 })
 
 test_that("copy-lift-entries_end-to-end_duplicate-guid", {
-  input_lift <- "fixtures/copy-lift-entries/Sena3.lift"
+  input_lift <- "fixtures/copy-lift-entries/sena3.lift"
   input_guids <- "fixtures/copy-lift-entries/duplicate-guid.txt"
 
   expect_cli_stdout_file_snapshot(
@@ -32,7 +32,7 @@ test_that("copy-lift-entries_end-to-end_duplicate-guid", {
 })
 
 test_that("copy-lift-entries_end-to-end_guid-from-stdin", {
-  input_lift <- "fixtures/copy-lift-entries/Sena3.lift"
+  input_lift <- "fixtures/copy-lift-entries/sena3.lift"
 
   expect_cli_stdout_file_snapshot(
     script_path, c(input_lift, "-"),
@@ -42,7 +42,7 @@ test_that("copy-lift-entries_end-to-end_guid-from-stdin", {
 })
 
 test_that("copy-lift-entries_end-to-end_guid-from-stdin_when-guid-arg-omitted", {
-  input_lift <- "fixtures/copy-lift-entries/Sena3.lift"
+  input_lift <- "fixtures/copy-lift-entries/sena3.lift"
 
   expect_cli_stdout_file_snapshot(
     script_path, input_lift,
@@ -52,7 +52,7 @@ test_that("copy-lift-entries_end-to-end_guid-from-stdin_when-guid-arg-omitted", 
 })
 
 test_that("copy-lift-entries_missing-guid_errors", {
-  input_lift <- "fixtures/copy-lift-entries/Sena3.lift"
+  input_lift <- "fixtures/copy-lift-entries/sena3.lift"
   input_guids <- "fixtures/copy-lift-entries/missing-guid.txt"
 
   result <- suppressWarnings(system2(
