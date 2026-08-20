@@ -6,7 +6,7 @@ The CSV↔LIFT round-trip currently covers four tables (entry, sense, pronunciat
 
 This plan is that inventory and that order, derived by tallying every element path and attribute actually present in the checked-in fixtures (`Sena3.lift`, 1462 entries / 1717 senses, plus the five small ones) rather than from the schema alone. Outcome: a sequence of increments, each one a self-contained run of the [`adding-a-lift-field` skill](../.claude/skills/adding-a-lift-field/SKILL.md) (read direction first, its CSV output becomes the write fixture), so the work can stop cleanly after any increment.
 
-**Status: planning only — no code written yet.** Keep this file synced as the [decisions below](#decisions-to-settle) land, per [AGENTS.md's Working Style](../AGENTS.md).
+**Status: A1 done.** Keep this file synced as remaining [decisions below](#decisions-to-settle) land, per [AGENTS.md's Working Style](../AGENTS.md).
 
 Companion plan: [redundant-columns-and-entry-id.md](old/redundant-columns-and-entry-id.md) revisits whether carrying redundant/derivable columns is a good idea at all, and settles A2 and part of D2 against the FLEx LIFT documentation. A2, C3, D2 and [decisions 1 and 4](#decisions-to-settle) below have been updated from its findings.
 
@@ -42,7 +42,7 @@ Each is a separate skill run with its own red/green/refactor commits, SPEC.md up
 
 ### Phase A — entry-table columns (cheap, no new tables)
 
-**A1 · `entry/@order` → `entry_order`.** Warm-up, exactly the shape of `sense_order`. Read in `entry_table()`'s `entry_meta` block (`R/entry_table.R`); add to `meta_columns` in `classify_entry_columns()` (`R/entry_helpers.R`); emit in `entry_table_to_lift()` (`R/csv2lift_entry.R`) alongside the existing `dateCreated`/`dateModified`/`guid` guards, omitted when blank *or absent*, mirroring `attach_senses_to_lift()`'s `order` handling. Refreshes every `entry-table_`, `join-sense-entry-table_` and `csv2lift_` snapshot whose source has `@order`.
+**A1 · `entry/@order` → `entry_order`. Done.** Warm-up, exactly the shape of `sense_order`. Read in `entry_table()`'s `entry_meta` block (`R/entry_table.R`); added to `meta_columns` in `classify_entry_columns()` (`R/entry_helpers.R`); emitted in `entry_table_to_lift()` (`R/csv2lift_entry.R`) alongside the existing `dateCreated`/`dateModified`/`guid` guards, omitted when blank *or absent*, mirroring `attach_senses_to_lift()`'s `order` handling. Refreshed every `entry-table_` and `join-sense-entry-table_` snapshot (the column is new for all of them), plus the two `csv2lift_` fixtures/snapshots whose source entries actually carry `@order` (`note_and_phonology_notes`, `sena3_note_trailing_whitespace`); the other `csv2lift_` fixtures' selected rows carry no `@order` so nothing round-trips there. Confirmed 108/1462 `Sena3.lift` entries carry `@order`, matching the plan's tally, and that it equals the homograph digit in `@id`. SPEC.md's Entry Table, Sense Table (cross-reference) and Not Yet Specified sections updated; no README change needed (README doesn't enumerate columns).
 
 **A2 · `entry/@id` → new column.** Same three edits. Emitting `@id` at all is a deliberate revision of [SPEC.md's Entry table](../SPEC.md#entry-table) rule "`id` is never synthesized": storing it verbatim is not synthesis, and C3's relation refs need it to resolve. The column name will contain an underscore, so it needs an exact-match `meta_columns` entry ahead of the custom-field fallback, plus a line in the known-limitation comment.
 

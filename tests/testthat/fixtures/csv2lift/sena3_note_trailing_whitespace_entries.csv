@@ -1,4 +1,4 @@
-entry_id,dateCreated,dateModified,morph_type,seh,citation_seh,note_restrictions_en
-2dc39f33-d145-4a66-a846-c4e68e3837e2,2005-06-23T16:30:32Z,2006-08-23T19:41:41Z,root,nfangu,,"Do not use: "
-5db6e79d-de66-4ec6-84c1-af3cd170f90d,2005-06-23T16:30:30Z,2006-09-06T15:15:02Z,root,ambuk,ambuka,
-db8ade5b-dcab-4ccf-89d3-0c4cbc30189b,2005-06-23T16:08:17Z,2006-08-22T18:59:37Z,prefix,ka-,,
+entry_id,dateCreated,dateModified,entry_order,morph_type,seh,citation_seh,note_restrictions_en
+2dc39f33-d145-4a66-a846-c4e68e3837e2,2005-06-23T16:30:32Z,2006-08-23T19:41:41Z,,root,nfangu,,"Do not use: "
+5db6e79d-de66-4ec6-84c1-af3cd170f90d,2005-06-23T16:30:30Z,2006-09-06T15:15:02Z,,root,ambuk,ambuka,
+db8ade5b-dcab-4ccf-89d3-0c4cbc30189b,2005-06-23T16:08:17Z,2006-08-22T18:59:37Z,1,prefix,ka-,,

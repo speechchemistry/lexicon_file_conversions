@@ -1,4 +1,4 @@
-entry_id,dateCreated,dateModified,morph_type,zhi,zhi-fonipa-x-emic,zhi-fonipa-x-etic,zhi-fonipa-x-pitch,zhi-Zxxx-x-audio,FTFlags_en,Plural Noun_zhi,Plural Noun_zhi-fonipa-x-etic,Plural Noun_zhi-Zxxx-x-audio,note_en
-3be3064b-636a-47b6-a7c3-9b58928199fb,2025-05-26T13:49:36Z,2026-05-15T16:10:34Z,stem,kerɔ,kèrɔ̄,kèrɔ̄,˨ ˦,SILCAWL1474a_look-for_RMKS.webm,merged,,,,"see also SILCAWL 1474. Tone minimal pair with ""caution"""
-41b17c59-3600-479e-bf34-50cdd8a05c2c,2025-05-26T13:49:36Z,2026-05-06T15:01:54Z,stem,khwabɔ,xwàbɔ̄,xwàbɔ̄,,Blench546-_spit_RMKS.webm,,tang-hiiya,,,(hiiya eat)
-4663978f-8e76-464a-b569-38b8c17960d9,2025-05-26T13:49:36Z,2026-05-05T11:11:25Z,stem,kom,kōm,kōm,˦,SILCAWL0251-_dead_RMKS.webm,,ri-kwom,ɾīko᷆m,SILCAWL0251-_dead-PL_RMKS.webm,gloss should be corpse (see 953 which has wrong spelling)
+entry_id,dateCreated,dateModified,entry_order,morph_type,zhi,zhi-fonipa-x-emic,zhi-fonipa-x-etic,zhi-fonipa-x-pitch,zhi-Zxxx-x-audio,FTFlags_en,Plural Noun_zhi,Plural Noun_zhi-fonipa-x-etic,Plural Noun_zhi-Zxxx-x-audio,note_en
+3be3064b-636a-47b6-a7c3-9b58928199fb,2025-05-26T13:49:36Z,2026-05-15T16:10:34Z,1,stem,kerɔ,kèrɔ̄,kèrɔ̄,˨ ˦,SILCAWL1474a_look-for_RMKS.webm,merged,,,,"see also SILCAWL 1474. Tone minimal pair with ""caution"""
+41b17c59-3600-479e-bf34-50cdd8a05c2c,2025-05-26T13:49:36Z,2026-05-06T15:01:54Z,,stem,khwabɔ,xwàbɔ̄,xwàbɔ̄,,Blench546-_spit_RMKS.webm,,tang-hiiya,,,(hiiya eat)
+4663978f-8e76-464a-b569-38b8c17960d9,2025-05-26T13:49:36Z,2026-05-05T11:11:25Z,3,stem,kom,kōm,kōm,˦,SILCAWL0251-_dead_RMKS.webm,,ri-kwom,ɾīko᷆m,SILCAWL0251-_dead-PL_RMKS.webm,gloss should be corpse (see 953 which has wrong spelling)

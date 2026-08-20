@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lift version="0.13" producer="lexicon_file_conversions csv2lift">
-  <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-05-15T16:10:34Z" guid="3be3064b-636a-47b6-a7c3-9b58928199fb">
+  <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-05-15T16:10:34Z" guid="3be3064b-636a-47b6-a7c3-9b58928199fb" order="1">
     <lexical-unit>
       <form lang="zhi">
         <text>kerɔ</text>
@@ -114,7 +114,7 @@
       </note>
     </sense>
   </entry>
-  <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-05-05T11:11:25Z" guid="4663978f-8e76-464a-b569-38b8c17960d9">
+  <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-05-05T11:11:25Z" guid="4663978f-8e76-464a-b569-38b8c17960d9" order="3">
     <lexical-unit>
       <form lang="zhi">
         <text>kom</text>

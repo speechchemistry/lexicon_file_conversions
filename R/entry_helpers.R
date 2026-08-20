@@ -93,7 +93,7 @@ extract_multitext_with_attribute <- function(entries, parent_xpath, attr_name,
 # the right LIFT element for each column without re-deriving column-naming
 # rules elsewhere.
 classify_entry_columns <- function(col_names) {
-  meta_columns <- c("entry_id", "dateCreated", "dateModified", "morph_type")
+  meta_columns <- c("entry_id", "dateCreated", "dateModified", "entry_order", "morph_type")
 
   map_df(col_names, function(col) {
     if (col %in% meta_columns) {

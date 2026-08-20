@@ -16,6 +16,7 @@ entry_table <- function(LIFT_file) {
     entry_id = map_chr(entries, ~xml_attr(.x, "guid"), .progress = FALSE),
     dateCreated = map_chr(entries, ~xml_attr(.x, "dateCreated"), .progress = FALSE),
     dateModified = map_chr(entries, ~xml_attr(.x, "dateModified"), .progress = FALSE),
+    entry_order = map_chr(entries, ~xml_attr(.x, "order"), .progress = FALSE),
     morph_type = extract_single_trait(entries, "morph-type")
   )
   # second stage: extract lexical-unit forms

@@ -1,2 +1,2 @@
-sense_guid,entry_id,sense_order,grammatical_info,gloss_en,gloss_pt,dateCreated,dateModified,morph_type,seh,citation_seh
-b84dc935-feaf-4489-9434-1da83cfb5e7c,f67e332a-b296-4967-ace3-5583ce66e95b,,Verbo,plant,semear,2006-08-23T21:07:21Z,2006-09-22T20:14:24Z,stem,bzwal,bzwala
+sense_guid,entry_id,sense_order,grammatical_info,gloss_en,gloss_pt,dateCreated,dateModified,entry_order,morph_type,seh,citation_seh
+b84dc935-feaf-4489-9434-1da83cfb5e7c,f67e332a-b296-4967-ace3-5583ce66e95b,,Verbo,plant,semear,2006-08-23T21:07:21Z,2006-09-22T20:14:24Z,,stem,bzwal,bzwala

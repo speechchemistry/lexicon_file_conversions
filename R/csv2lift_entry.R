@@ -32,6 +32,12 @@ entry_table_to_lift <- function(entry_table) {
     if ("entry_id" %in% names(row) && !is.na(row$entry_id) && nzchar(row$entry_id)) {
       entry_args$guid <- row$entry_id
     }
+    # Guarded on the column existing, not just being non-blank: an entry CSV
+    # written before entry_order existed still converts. Mirrors
+    # attach_senses_to_lift()'s sense_order guard.
+    if ("entry_order" %in% names(row) && !is.na(row$entry_order) && nzchar(row$entry_order)) {
+      entry_args$order <- row$entry_order
+    }
     entry <- do.call(xml_add_child, entry_args)
 
     if (nrow(lexical_unit_cols) > 0) {
