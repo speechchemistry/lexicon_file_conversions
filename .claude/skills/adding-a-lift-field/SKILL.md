@@ -80,7 +80,7 @@ Only if the field is genuinely absent, ask the user for a real FLEx export conta
 
 When you do add a new `.lift` fixture:
 
-- Fixtures are auto-discovered — no test code changes needed. `tests/testthat/test-entry-table_end-to-end.R` globs `*.lift` from its fixture directory.
+- Fixtures are auto-discovered — no test code changes needed. `tests/testthat/test-entry-table.R` globs `*.lift` from its fixture directory.
 - `tests/testthat/fixtures/lift2csv_join-sense-entry-table/` is a **separate directory with its own copies** of the shared fixtures, not a symlink. Copy the fixture there too for join coverage — but only if the field can actually reach that view, which is entry ⋈ sense. A pronunciation cannot, so copying it there would add a snapshot and no coverage.
 
 ## TDD the read direction (lift2csv)
@@ -90,7 +90,7 @@ When you do add a new `.lift` fixture:
 **Red.** Run the suite and inspect the auto-created baseline:
 
 ```bash
-Rscript -e 'devtools::test(filter = "entry-table_end-to-end")'
+Rscript -e 'devtools::test(filter = "entry-table")'
 ```
 
 A brand-new fixture produces a WARN and an auto-created snapshot, *not* a FAIL. That file is simply whatever today's code emits — read it and confirm the new field is absent. That absence is your red.
@@ -129,7 +129,7 @@ sense_meta <- if (length(entries) == 0) {
 | `extract_multitext_element()` (keys `entry_id`) | `extract_sense_multitext_element()` (keys `sense_guid`, iterates senses) | `extract_pronunciation_multitext()` (keys document position) | `extract_example_multitext()` (keys document position, iterates senses' examples) |
 | `classify_entry_columns()` | `classify_sense_columns()` | `classify_pronunciation_columns()` | `classify_example_columns()` |
 | [R/csv2lift_entry.R](../../../R/csv2lift_entry.R) / `entry_table_to_lift()` | [R/csv2lift_sense.R](../../../R/csv2lift_sense.R) / `attach_senses_to_lift()` | [R/csv2lift_pronunciation.R](../../../R/csv2lift_pronunciation.R) / `attach_pronunciations_to_lift()` | [R/csv2lift_example.R](../../../R/csv2lift_example.R) / `attach_examples_to_lift()` |
-| snapshots `entry-table_end-to-end/` | snapshots `sense-table_end-to-end/` | snapshots `pronunciation-table_end-to-end/` | snapshots `example-table_end-to-end/` |
+| snapshots `entry-table/` | snapshots `sense-table/` | snapshots `pronunciation-table/` | snapshots `example-table/` |
 
 The grid keeps growing sideways, not down — a fifth level adds a fifth column of these same six rows, not a new kind of row. `example-level` is also the first column keyed by *two* things at once (`sense_guid` as the surviving FK, document position as the row identity), because it is a table hanging off another table (`sense`) rather than off `<entry>` directly — see "If it needs a table of its own" below for what that combination costs.
 
@@ -140,7 +140,7 @@ The grid keeps growing sideways, not down — a fifth level adds a fifth column 
 ```bash
 python3 -c "
 import csv
-rows = list(csv.DictReader(open('tests/testthat/_snaps/entry-table_end-to-end/sena3.new.csv')))
+rows = list(csv.DictReader(open('tests/testthat/_snaps/entry-table/sena3.new.csv')))
 nonblank = [r for r in rows if r.get('note_en','').strip()]
 print(len(nonblank)); [print(r['entry_id'], repr(r['note_en'])) for r in nonblank]
 "
@@ -149,8 +149,8 @@ print(len(nonblank)); [print(r['entry_id'], repr(r['note_en'])) for r in nonblan
 Confirm the count matches what you found in [Understand the field](#understand-the-field-in-the-real-lift-model), and that no excluded variant leaked in. Then accept (trailing slash required — see Gotchas):
 
 ```bash
-Rscript -e 'testthat::snapshot_accept("entry-table_end-to-end/")'
-Rscript -e 'testthat::snapshot_accept("join-sense-entry-table_end-to-end/")'
+Rscript -e 'testthat::snapshot_accept("entry-table/")'
+Rscript -e 'testthat::snapshot_accept("join-sense-entry-table/")'
 ```
 
 ## TDD the write direction (csv2lift)
@@ -160,11 +160,11 @@ Rscript -e 'testthat::snapshot_accept("join-sense-entry-table_end-to-end/")'
 **Use the read direction's output as the fixture.** This is the key step:
 
 ```bash
-cp tests/testthat/_snaps/entry-table_end-to-end/zhi-note-and-phonology-notes.csv \
+cp tests/testthat/_snaps/entry-table/zhi-note-and-phonology-notes.csv \
    tests/testthat/fixtures/csv2lift/zhi-note-and-phonology-notes/entries.csv
 ```
 
-Each fixture is a directory, one CSV per table (`entries.csv`, `senses.csv`, `pronunciations.csv`, ...) — `test-csv2lift_end-to-end.R` discovers every such directory automatically, no test code change needed. `entries.csv` is required in each; the others are picked up whenever present. This gives real data on both sides, makes round-trip consistency structural, and removes any chance of inventing a column name the reader would never emit.
+Each fixture is a directory, one CSV per table (`entries.csv`, `senses.csv`, `pronunciations.csv`, ...) — `test-csv2lift.R` discovers every such directory automatically, no test code change needed. `entries.csv` is required in each; the others are picked up whenever present. This gives real data on both sides, makes round-trip consistency structural, and removes any chance of inventing a column name the reader would never emit.
 
 **"Optional" hides a coverage hole — check each fixture directory actually has the companion CSVs its source calls for.** `zhi-note-and-phonology-notes` had no `senses.csv`, so its approved `.lift` held **zero `<sense>` elements** while the source `.lift` had three: green tests, a reviewed snapshot, and an entire level untested. Nothing reports it, because a missing companion is indistinguishable from a fixture that legitimately has no senses. Backfill it as **its own commit, before** the change you came to make — otherwise several whole sense subtrees appear inside your field's diff and neither change is reviewable.
 
@@ -175,16 +175,16 @@ A whole-file `cp` is right when the source snapshot is small. When it's `sena3.c
 ```bash
 python3 -c "
 import csv
-rows = list(csv.DictReader(open('tests/testthat/_snaps/sense-table_end-to-end/sena3.csv')))
+rows = list(csv.DictReader(open('tests/testthat/_snaps/sense-table/sena3.csv')))
 for r in rows:
     if r['definition_en'].strip() and r['definition_pt'].strip() and r['gloss_pt'].strip():
         print(r); break
 "
 ```
 
-Then pull the **matching** entry row (same `entry_id`) out of `_snaps/entry-table_end-to-end/sena3.csv` for the paired `entries.csv`, keeping both files' header order and values verbatim. Prefer a row whose text has no embedded quotes or commas — it keeps the fixture readable and sidesteps CSV-quoting noise in the diff. The rule the `cp` recipe exists to enforce still holds: every value must be copied from real reader output, never invented.
+Then pull the **matching** entry row (same `entry_id`) out of `_snaps/entry-table/sena3.csv` for the paired `entries.csv`, keeping both files' header order and values verbatim. Prefer a row whose text has no embedded quotes or commas — it keeps the fixture readable and sidesteps CSV-quoting noise in the diff. The rule the `cp` recipe exists to enforce still holds: every value must be copied from real reader output, never invented.
 
-**Red.** Run `devtools::test(filter = "csv2lift_end-to-end")` and read the auto-created `.lift` snapshot. It takes one of four shapes depending on what is already in place — name which one you got rather than reporting a generic failure:
+**Red.** Run `devtools::test(filter = "csv2lift")` and read the auto-created `.lift` snapshot. It takes one of four shapes depending on what is already in place — name which one you got rather than reporting a generic failure:
 
 | What's missing | The red looks like |
 |---|---|
@@ -204,7 +204,7 @@ The bottom two prove absence rather than announcing it, so read the snapshot rat
 - **A type-keyed column reuses the custom-field machinery instead of growing the classifier's schema.** For `note_<type>_<lang>`, return `kind = "typed_note"` and put the type in the *existing* `field_type` column — do not add a fifth `note_type` column, which costs an explicit `NA_character_` in a dozen other branches for a name four lines read. Do **not** instead reuse `kind = "note"` with `field_type = NA` for the untyped case: `cols$field_type == .x` yields `NA` for that row, and `cols[c(TRUE, NA), ]` returns an all-`NA` slice rather than nothing, so the emit loop writes a garbage element instead of skipping. The emit block is then the custom-field loop with the tag swapped (`"field"` → `"note"`); once two such loops exist at a level, extract them (`emit_typed_children()` in `entry_helpers.R`).
 - **Then check the join view** if the new column's level appears in it. `join_sense_entry()` is a *third* consumer of column names that neither classifier sees, and where a cross-level clash surfaces — as `.x`/`.y` columns in an approved CSV. [Decide where it lives](#decide-where-it-lives-a-column-or-a-table-of-its-own) has the rule and both mechanisms.
 
-Review the diff, then `snapshot_accept("csv2lift_end-to-end/")`.
+Review the diff, then `snapshot_accept("csv2lift/")`.
 
 ## Documentation
 
@@ -228,7 +228,7 @@ Only if [Decide where it lives](#decide-where-it-lives-a-column-or-a-table-of-it
 
 **Design ([Decide where it lives](#decide-where-it-lives-a-column-or-a-table-of-its-own)). A new table's parent doesn't have to be `<entry>`.** `<pronunciation>` hangs off entries, but the same reasoning applies one level down — `sense/reversal` (named in [SPEC.md's Not Yet Specified section](../../../SPEC.md#not-yet-specified) as not-yet-built) is `zeroOrMore` under `<sense>`, not `<entry>`, the same shape `sense/example` turned out to have ([SPEC.md's Example Table](../../../SPEC.md#example-table), `plans/sense-level-example-sentences.md`). Name the new table's foreign key after whichever parent it hangs off — `entry_id` for an entry-parented table, `sense_guid` for a sense-parented one — mirroring how `sense_table()` itself uses `entry_id` as its own FK. The parent can even be a table you're building in the same change, not only an existing one — the example table's `translation_type` turned out not to need this (one Translation per Example, per the FLEx UI), but a genuinely `zeroOrMore` child of a table you're building in the same change would. This choice determines the lookup xpath and the attach-call ordering below.
 
-**Fixtures ([Get a real fixture](#get-a-real-fixture)).** A new table is the exception to fixture auto-discovery: it needs its own `test-<name>-table_end-to-end.R` (a 10-line copy of the sense-table one) and its own fixture directory before anything is discovered at all. Fixture directories are **curated per table, not kept at parity** — `lift2csv_sense-table/` does not carry `zhi-note-and-phonology-notes.lift`. A new table's directory needs only the fixtures that say something about it: the one with the data, one with parents but no instances, and the empty lexicon.
+**Fixtures ([Get a real fixture](#get-a-real-fixture)).** A new table is the exception to fixture auto-discovery: it needs its own `test-<name>-table.R` (a 10-line copy of the sense-table one) and its own fixture directory before anything is discovered at all. Fixture directories are **curated per table, not kept at parity** — `lift2csv_sense-table/` does not carry `zhi-note-and-phonology-notes.lift`. A new table's directory needs only the fixtures that say something about it: the one with the data, one with parents but no instances, and the empty lexicon.
 
 **Read direction ([TDD the read direction](#tdd-the-read-direction-lift2csv)).** Fill a whole new column of the grid, copied from the closest existing one (usually sense-level). Three things the column path never faces:
 
@@ -238,7 +238,7 @@ Only if [Decide where it lives](#decide-where-it-lives-a-column-or-a-table-of-it
 
 Also copy the CLI's empty-output convention: `lift2csv.R`'s shared `format_table_csv()` emits `""` rather than a bare header when `nrow(table) == 0`, so a lexicon with none of the element snapshots as an empty file — both via `--table <name>` to stdout and, for the write-fixture step below, via `--table-dir`.
 
-**Write direction ([TDD the write direction](#tdd-the-write-direction-csv2lift)).** The fixture directory needs a matching `entries.csv` that may not exist yet. Produce it the same way — from `lift2csv.R --table entries`'s own output — which in turn means adding the `.lift` to `fixtures/lift2csv_entry-table/` as well. Adding `senses.csv` too is usually worth it: `zhi-two-pronunciations-with-audio-and-ipa` is the only fixture exercising entry + pronunciation + sense together, which is what actually proves the child ordering below instead of leaving it asserted. Add a row to `R/table_registry.R` for the new table — that is what makes `--table-dir` discover its CSV (and `--table <name>` reach it directly), and the one registry edit a new table needs; `test-csv2lift_end-to-end.R` itself needs no change, since it discovers fixture directories automatically.
+**Write direction ([TDD the write direction](#tdd-the-write-direction-csv2lift)).** The fixture directory needs a matching `entries.csv` that may not exist yet. Produce it the same way — from `lift2csv.R --table entries`'s own output — which in turn means adding the `.lift` to `fixtures/lift2csv_entry-table/` as well. Adding `senses.csv` too is usually worth it: `zhi-two-pronunciations-with-audio-and-ipa` is the only fixture exercising entry + pronunciation + sense together, which is what actually proves the child ordering below instead of leaving it asserted. Add a row to `R/table_registry.R` for the new table — that is what makes `--table-dir` discover its CSV (and `--table <name>` reach it directly), and the one registry edit a new table needs; `test-csv2lift.R` itself needs no change, since it discovers fixture directories automatically.
 
 **A new table stales nothing in existing csv2lift fixtures, but opens a coverage hole in them instead.** [TDD the write direction](#tdd-the-write-direction-csv2lift)'s column-case warning ("adding a column retroactively stales every existing write fixture whose source has that field") doesn't apply — no existing `<level>.csv` companion gains a column just because a new table exists elsewhere. What happens instead: any existing fixture directory whose parent rows already own real instances of the new element (in the source `.lift` that directory was built from) will produce an approved `.lift` with **zero** of them, silently, because that directory has no CSV for the new table and nothing forces one. Cross-reference every existing fixture's parent-row keys against the new table's own reader output before calling the write direction done, and add the missing companion CSV to each directory that needs one — leaving every other directory alone, since its byte-identical snapshot is the regression net proving the new table's CSV being absent still works.
 

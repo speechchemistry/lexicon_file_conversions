@@ -6,11 +6,11 @@
 
 That was right at the time. It stops being right at [Phase B](remaining-lift-fields.md#phase-b--new-tables-whose-data-is-already-in-the-repo), because six more tables are queued (`reversals`, `etymologies`, `traits`, `variants`, `entry-relations`, `sense-relations`) and each one currently costs a hand-copied 20-line script whose only per-table content is a function name and a help string. This plan removes that per-increment cost before the six increments rather than after, on the same reasoning that put Phase T ahead of them.
 
-Three increments, deliberately separable: **R0** closes a hole in the CLI snapshot helper that lets a crashed script pass as a correct empty result; **R1** folds the four registry-table scripts into `lift2csv.R` and renames `--tables` to `--table-dir` in both directions; **R2** deletes two registry fields nothing reads. A proposed **R3** (test-file naming) is recorded under [Decisions to settle](#decisions-to-settle) and is *not* approved.
+Four increments, deliberately separable: **R0** closes a hole in the CLI snapshot helper that lets a crashed script pass as a correct empty result; **R1** folds the four registry-table scripts into `lift2csv.R` and renames `--tables` to `--table-dir` in both directions; **R2** deletes two registry fields nothing reads; **R3** drops the `_end-to-end` suffix from test filenames.
 
 No increment here is a skill run — like Phase T, this is CLI infrastructure, not a field.
 
-**Status: not started. Sequence R0 → R1 → R2 → (R3 if approved), then Phase B (B1).** R0 comes first because it strengthens the safety net the other two lean on: R1 and R2 both assert that nothing under `_snaps/` moved, and that assertion is only worth as much as the tests behind it. None of the three changes a single approved snapshot.
+**Status: R0, R1, R2 and R3 done — Sequence complete. Next: Phase B (B1).** R0 came first because it strengthens the safety net R1 and R2 lean on: both assert that nothing under `_snaps/` moved, and that assertion is only worth as much as the tests behind it. R3 was sequenced last, after R1 changed what the per-table test files cover, and executed as the **plain suffix drop** (`test-sense-table.R`, `_snaps/sense-table/`) rather than the fuller `test-lift2csv_<name>.R` realignment also considered under [Decisions to settle](#decisions-to-settle) — every rename this increment made is confirmed by `git status` as a clean rename (byte-identical content), and the full suite is green with zero `_snaps/` content changes across all four increments.
 
 ## R0 · assert exit status in the CLI snapshot helper
 
@@ -181,9 +181,9 @@ Nothing is lost: `SPEC.md` documents every table's keys properly and in more det
 
 Kept separate from R1 so R1's "no snapshot changed" claim is checked against an otherwise-untouched tree.
 
-## Decisions to settle
+## R3 · drop the `_end-to-end` suffix from test filenames
 
-**R3 (proposed, not approved) · drop the `_end-to-end` suffix from test filenames.** Measured, the suffix does not mean what it says:
+Measured, the suffix does not mean what it says:
 
 | | files | owns a `_snaps/` dir | actually end-to-end |
 |---|---|---|---|
@@ -192,11 +192,44 @@ Kept separate from R1 so R1's "no snapshot changed" claim is checked against an 
 
 It correlates *perfectly* with owning approved snapshots and only *loosely* with being end-to-end. `test-csv2lift_table-discovery.R` spawns `Rscript scripts/csv2lift.R` five times with no suffix; `test-copy-lift-entries_end-to-end.R` carries a non-snapshot error-path test. Only `test-multitext-span-markup.R` and `test-example-source-note-redundancy.R` are genuinely unit-level, and both already say so in their header comments — better documentation than a filename could be. So the suffix labels the wrong axis, and 9 of 11 files being end-to-end makes it near-uninformative anyway.
 
-**Sequence it after R1, never with it.** R1's whole verification is that no snapshot moved; a simultaneous rename moves all 46 and makes that unreadable. R1 also *changes what these files cover* — all four per-table tests will point at `lift2csv.R` — so the right names are only knowable afterwards.
+**Sequenced after R1, not with it.** R1's whole verification is that no snapshot moved; a simultaneous rename moves all 46 and makes that unreadable. R1 also *changes what these files cover* — all four per-table tests now point at `lift2csv.R` — so the right names were only knowable afterwards.
 
-Sub-decision, open: whether R3 is a **plain suffix drop** (`test-sense-table.R`, `_snaps/sense-table/`) or also **realigns the names on what they now cover** (`test-lift2csv_senses.R`, with the umbrella as `test-lift2csv_tables.R`). The second is more honest post-R1 — every one of those files tests `scripts/lift2csv.R` — but it is a larger rename and touches more prose. Either way the cost is 46 approved files moving across 7 directories with **byte-identical content**, so git detects renames rather than delete+add, exactly as [T2's fold-in](remaining-lift-fields.md#t2--drop-flat-mode-folder-only-discovery) did. Prose to update: `AGENTS.md`'s Testing Approach (2 mentions, including the `_snaps/<test-file>/` path convention and the `snapshot_accept("entry-table_end-to-end/")` example), `SKILL.md` (14), `plans/remaining-lift-fields.md` (20), plus the `test_that()` label strings inside each file, which embed the suffix too.
+**Decided: a plain suffix drop** (`test-sense-table.R`, `_snaps/sense-table/`), not the fuller realignment onto `test-lift2csv_<name>.R` that was also on the table. Every one of the four per-table files does test `lift2csv.R` post-R1, which would have made that realignment more honest — but it is a larger rename touching more prose for a naming question that isn't this plan's central concern, and the table name (`sense-table`, `entry-table`, ...) is what actually distinguishes these files from each other; a constant `lift2csv_` prefix would not.
 
-**Also open (raised while costing R1) · approval-test the directory instead of the table.** The alternative to `--table` is to snapshot a **manifest** of the filenames `--table-dir` wrote, per fixture, optionally with each file's content in one digest artifact. This was initially dismissed on two grounds that turned out to be false — see [R1's opening](#why-a-second-mode-rather-than-reading-from-a-table-directory) — so it deserves recording as a live option rather than a closed one.
+### What was renamed
+
+8 test files, matching 7 `_snaps/` directories (`test-lift2csv.R` never owned one, since R1 removed its byte-comparison snapshot arm):
+
+| before | after |
+|---|---|
+| `test-entry-table_end-to-end.R` | `test-entry-table.R` |
+| `test-sense-table_end-to-end.R` | `test-sense-table.R` |
+| `test-pronunciation-table_end-to-end.R` | `test-pronunciation-table.R` |
+| `test-example-table_end-to-end.R` | `test-example-table.R` |
+| `test-join-sense-entry-table_end-to-end.R` | `test-join-sense-entry-table.R` |
+| `test-csv2lift_end-to-end.R` | `test-csv2lift.R` |
+| `test-copy-lift-entries_end-to-end.R` | `test-copy-lift-entries.R` |
+| `test-lift2csv_end-to-end.R` | `test-lift2csv.R` |
+
+`_snaps/<name>_end-to-end/` → `_snaps/<name>/` for the first seven. `test-csv2lift_table-discovery.R`, `test-example-source-note-redundancy.R`, `test-multitext-span-markup.R` and R0's `test-cli-snapshot-helper.R` already carried no suffix and are untouched.
+
+### Files
+
+- The 8 renames and 7 directory renames above, done via `git mv` so git records them as renames against byte-identical content rather than delete+add.
+- Each renamed file's own `test_that()` label strings — e.g. `paste0("entry-table_end-to-end_", stem)` → `paste0("entry-table_", stem)` — since a stale suffix baked into a test's own description is the same problem as one baked into its filename.
+- `AGENTS.md`'s Testing Approach: the `snapshot_accept("entry-table_end-to-end/")` example repointed at `entry-table/`, plus a new bullet recording the naming convention itself (why there is no suffix) so the next test file follows it without re-deriving the reasoning here.
+- `.claude/skills/adding-a-lift-field/SKILL.md`: every literal `<name>_end-to-end` reference — the read-direction filter example, the snapshot-accept commands, the fixture-copy paths, the write-direction filter, and the new-table checklist's `test-<name>-table_end-to-end.R` template name.
+- `plans/remaining-lift-fields.md`: the **forward-looking** references only — B1's script list, the coverage-hole note, the per-field Verification recipe's three `filter=`/`snapshot_accept()` calls, and the "file drop" consequence of Phase T. The **historical** T1/T2/T3 narrative describing what the files were called at the time is left as written, per [AGENTS.md's Markdown Conventions](../AGENTS.md#markdown-conventions) treating a plan as a point-in-time record, with one note added marking that the live names changed here.
+
+### Verification
+
+- Every rename shows as `R` (rename, not delete+add) in `git status --porcelain`, for all 8 files and all 46 snapshot artifacts.
+- Full `Rscript -e 'devtools::test()'` green immediately after the `git mv`s and label-string edits, before touching any prose — proving the rename alone is behaviour-neutral.
+- `grep -rn "end-to-end\|end_to_end" tests/testthat/*.R .claude/skills/adding-a-lift-field/SKILL.md AGENTS.md` clean (aside from AGENTS.md's unrelated use of "end-to-end" to describe the `adding-a-lift-field` skill itself, and `remaining-lift-fields.md`'s historical narrative, checked separately by hand since its exemption is deliberate, not an oversight).
+
+## Decisions to settle
+
+**Open · approval-test the directory instead of the table.** The alternative to `--table` is to snapshot a **manifest** of the filenames `--table-dir` wrote, per fixture, optionally with each file's content in one digest artifact. This was initially dismissed on two grounds that turned out to be false — see [R1's opening](#why-a-second-mode-rather-than-reading-from-a-table-directory) — so it deserves recording as a live option rather than a closed one.
 
 In its favour: absence-from-a-manifest is a cleaner assertion of the empty case than a zero-byte file; the four per-table test files collapse into one; and it would drop the per-table snapshot count from 24 artifacts to 8. Against: it re-baselines all 24 approved CSVs at once, which is where a real regression hides; it dissolves the documented per-table fixture curation; it costs about +8 s of suite time now and more per table added; and it removes single-table-to-stdout unless `--table` is kept anyway.
 

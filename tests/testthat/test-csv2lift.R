@@ -7,7 +7,7 @@ script_path <- "../../scripts/csv2lift.R"
 for (export_dir in sort(list.dirs(fixture_dir, full.names = TRUE, recursive = FALSE))) {
   stem <- basename(export_dir)
 
-  test_that(paste0("csv2lift_end-to-end_", stem), {
+  test_that(paste0("csv2lift_", stem), {
     expect_cli_stdout_file_snapshot(script_path, c("--table-dir", export_dir), name = paste0(stem, ".lift"))
   })
 }
