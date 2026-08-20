@@ -13,10 +13,10 @@ table_registry <- function() {
 
   registry <- tribble(
     ~name,            ~cli_flag,           ~help,
-    "entries",        "--entries",         "CSV matching lift2csv_entry-table.R's column conventions",
-    "pronunciations", "--pronunciations",  "CSV matching lift2csv_pronunciation-table.R's column conventions",
-    "senses",         "--senses",          "CSV matching lift2csv_sense-table.R's column conventions",
-    "examples",       "--examples",        "CSV matching lift2csv_example-table.R's column conventions"
+    "entries",        "--entries",         "CSV of the entries table (see SPEC.md's Entry Table; also `lift2csv.R --table entries`)",
+    "pronunciations", "--pronunciations",  "CSV of the pronunciations table (see SPEC.md's Pronunciation Table; also `lift2csv.R --table pronunciations`)",
+    "senses",         "--senses",          "CSV of the senses table (see SPEC.md's Sense Table; also `lift2csv.R --table senses`)",
+    "examples",       "--examples",        "CSV of the examples table (see SPEC.md's Example Table; also `lift2csv.R --table examples`)"
   )
 
   registry$read_fn <- list(entry_table, pronunciation_table, sense_table, example_table)
@@ -33,7 +33,7 @@ table_registry <- function() {
   registry
 }
 
-# --tables <dir> names a directory, one CSV per table, named after the
+# --table-dir <dir> names a directory, one CSV per table, named after the
 # table (entries.csv, senses.csv, ...). A trailing slash is tolerated but
 # not required or significant — normalized away so a path built from it
 # (e.g. in an error message) never shows a doubled slash.
@@ -64,7 +64,7 @@ discover_tables <- function(dir, registry) {
   unknown <- setdiff(found_names, registry$name)
   if (length(unknown) > 0) {
     stop(sprintf(
-      "Unrecognised CSV(s) under --tables %s: %s (expected one of: %s)",
+      "Unrecognised CSV(s) under --table-dir %s: %s (expected one of: %s)",
       table_dir(dir), paste(unknown, collapse = ", "), paste(registry$name, collapse = ", ")
     ), call. = FALSE)
   }

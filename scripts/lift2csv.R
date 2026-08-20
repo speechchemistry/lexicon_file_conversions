@@ -1,7 +1,11 @@
 # lift2csv.R
-# Reads a LIFT file and writes every table in the registry (see
-# R/table_registry.R) as one CSV under --tables <dir>, in one pass —
-# the read-side counterpart to csv2lift.R's --tables discovery.
+# Reads a LIFT file and writes it out as CSV, in one of two modes:
+#   --table <name>     writes one registry table's CSV to stdout
+#   --table-dir <dir>  writes every table in the registry (see
+#                       R/table_registry.R) as one CSV under <dir>, in one
+#                       pass -- the read-side counterpart to csv2lift.R's
+#                       --table-dir discovery.
+# Exactly one of the two must be given.
 
 library(argparser)
 library(readr)
@@ -11,32 +15,53 @@ script_dir <- dirname(script_path)
 project_dir <- normalizePath(file.path(script_dir, ".."))
 devtools::load_all(project_dir, quiet = TRUE)
 
-p <- arg_parser("This script takes a LIFT file and writes one CSV per table into --tables <dir>")
-p <- add_argument(p, "LIFT_file", help = "SIL Flex lexicon LIFT file")
-p <- add_argument(p, "--tables", help = "Directory to write per-table CSVs into (entries.csv, senses.csv, ...)")
-argv <- parse_args(p)
-
 registry <- table_registry()
 
-for (i in seq_len(nrow(registry))) {
-  name <- registry$name[i]
-  table <- registry$read_fn[[i]](argv$LIFT_file)
+p <- arg_parser("This script takes a LIFT file and writes it as CSV, one table to stdout (--table) or every table into a directory (--table-dir)")
+p <- add_argument(p, "LIFT_file", help = "SIL Flex lexicon LIFT file")
+p <- add_argument(p, "--table", help = sprintf("Write one table's CSV to stdout (one of: %s)", paste(registry$name, collapse = ", ")), default = NA)
+p <- add_argument(p, "--table-dir", help = "Directory to write every table's CSV into (entries.csv, senses.csv, ...)", default = NA)
+argv <- parse_args(p)
 
-  # A table with no rows for this LIFT file is omitted entirely, not written
-  # as an empty file: csv2lift.R's --tables discovery treats any CSV present
-  # as "this table should be attached", so writing an empty file for every
-  # table regardless of content would make every table's optionality
-  # disappear. entries is the exception — it is the one mandatory table, so
-  # its CSV is always written, empty or not, exactly like
-  # scripts/lift2csv_entry-table.R does today.
-  if (nrow(table) == 0 && name != "entries") next
+if (!is.na(argv$table) && !is.na(argv$table_dir)) {
+  stop("--table and --table-dir are mutually exclusive: one table to stdout, or every table into a directory.", call. = FALSE)
+}
+if (is.na(argv$table) && is.na(argv$table_dir)) {
+  stop("Supply either --table <name> or --table-dir <dir>.", call. = FALSE)
+}
 
-  out_path <- table_csv_path(argv$tables, name)
-  dir.create(dirname(out_path), recursive = TRUE, showWarnings = FALSE)
+# format_table_csv() below is shared by both modes so the empty-table
+# convention (an untyped empty tibble is a schema-losing bug, per the
+# adding-a-lift-field skill) is enforced identically regardless of which
+# mode a table is reached through.
+format_table_csv <- function(table) {
+  if (nrow(table) == 0) "" else format_csv(table, na = "")
+}
 
-  if (nrow(table) == 0) {
-    cat("", file = out_path)
-  } else {
-    cat(format_csv(table, na = ""), file = out_path)
+if (!is.na(argv$table)) {
+  row <- which(registry$name == argv$table)
+  if (length(row) == 0) {
+    stop(sprintf("Unrecognised --table %s (expected one of: %s)", argv$table, paste(registry$name, collapse = ", ")), call. = FALSE)
+  }
+
+  table <- registry$read_fn[[row]](argv$LIFT_file)
+  cat(format_table_csv(table))
+} else {
+  for (i in seq_len(nrow(registry))) {
+    name <- registry$name[i]
+    table <- registry$read_fn[[i]](argv$LIFT_file)
+
+    # A table with no rows for this LIFT file is omitted entirely, not
+    # written as an empty file: csv2lift.R's --table-dir discovery treats
+    # any CSV present as "this table should be attached", and the set of
+    # files present is how a table folder documents what the lexicon
+    # actually contains -- a folder with no pronunciations.csv means no
+    # pronunciations, not an empty one. entries is the exception -- it is
+    # the one mandatory table, so its CSV is always written, empty or not.
+    if (nrow(table) == 0 && name != "entries") next
+
+    out_path <- table_csv_path(argv$table_dir, name)
+    dir.create(dirname(out_path), recursive = TRUE, showWarnings = FALSE)
+    cat(format_table_csv(table), file = out_path)
   }
 }

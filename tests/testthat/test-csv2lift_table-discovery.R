@@ -1,4 +1,4 @@
-# Covers the --tables discovery rule itself (plans/remaining-lift-fields.md's
+# Covers the --table-dir discovery rule itself (plans/remaining-lift-fields.md's
 # Phase T): a trailing slash on the directory being tolerated, the error
 # paths a snapshot can't capture (the snapshot helper only records stdout),
 # and that an explicit flag overrides a discovered file of the same table.
@@ -25,8 +25,8 @@ expect_usage_error <- function(args, pattern) {
 test_that("csv2lift_table-discovery_trailing-slash is tolerated and insignificant", {
   export_dir <- testthat::test_path("fixtures", "csv2lift", "sena3-gloss-initial-b")
 
-  without_slash <- run_csv2lift(c("--tables", export_dir))
-  with_slash <- run_csv2lift(c("--tables", paste0(export_dir, "/")))
+  without_slash <- run_csv2lift(c("--table-dir", export_dir))
+  with_slash <- run_csv2lift(c("--table-dir", paste0(export_dir, "/")))
 
   expect_cli_success(without_slash)
   expect_identical(as.character(without_slash), as.character(with_slash))
@@ -46,7 +46,7 @@ test_that("csv2lift_table-discovery_examples-without-senses_errors", {
   file.copy(file.path(export_dir, "entries.csv"), file.path(tables_dir, "entries.csv"))
   file.copy(file.path(export_dir, "examples.csv"), file.path(tables_dir, "examples.csv"))
 
-  expect_usage_error(c("--tables", tables_dir), "--examples requires --senses")
+  expect_usage_error(c("--table-dir", tables_dir), "--examples requires --senses")
 })
 
 test_that("csv2lift_table-discovery_unrecognised-csv_errors", {
@@ -55,7 +55,7 @@ test_that("csv2lift_table-discovery_unrecognised-csv_errors", {
   file.copy(file.path(export_dir, "entries.csv"), file.path(tables_dir, "entries.csv"))
   file.copy(file.path(export_dir, "senses.csv"), file.path(tables_dir, "sense.csv"))
 
-  expect_usage_error(c("--tables", tables_dir), "Unrecognised CSV(s)")
+  expect_usage_error(c("--table-dir", tables_dir), "Unrecognised CSV(s)")
 })
 
 test_that("csv2lift_table-discovery_explicit-flag-overrides-discovery", {
@@ -72,10 +72,10 @@ test_that("csv2lift_table-discovery_explicit-flag-overrides-discovery", {
   writeLines(full_senses[1:2], file.path(override_dir, "override_senses.csv"))
 
   with_override <- run_csv2lift(c(
-    "--tables", tables_dir,
+    "--table-dir", tables_dir,
     "--senses", file.path(override_dir, "override_senses.csv")
   ))
-  without_override <- run_csv2lift(c("--tables", tables_dir))
+  without_override <- run_csv2lift(c("--table-dir", tables_dir))
 
   expect_cli_success(with_override)
   expect_false(identical(as.character(with_override), as.character(without_override)))

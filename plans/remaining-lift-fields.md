@@ -293,26 +293,28 @@ Per **field** increment, in this order. T1 is not a field increment and carries 
 End-to-end round-trip spot check after each new table, using the largest fixture that exercises it:
 
 ```bash
-Rscript scripts/lift2csv_entry-table.R <fixture>.lift > /tmp/e.csv
-Rscript scripts/lift2csv_<new>-table.R <fixture>.lift > /tmp/n.csv
+Rscript scripts/lift2csv.R <fixture>.lift --table entries > /tmp/e.csv
+Rscript scripts/lift2csv.R <fixture>.lift --table <new> > /tmp/n.csv
 Rscript scripts/csv2lift.R /tmp/e.csv --<new> /tmp/n.csv > /tmp/out.lift
 # then diff element/attribute tallies between <fixture>.lift and /tmp/out.lift
 ```
 
-After T1 this becomes two lines regardless of how many tables the fixture exercises, which is the point of building it first:
+After T1 this becomes two lines regardless of how many tables the fixture exercises, which is the point of building it first (`--tables` below is `--table-dir` as of `plans/per-table-script-consolidation.md`'s R1, which also folded the four per-table scripts above into `lift2csv.R --table <name>`):
 
 ```bash
-Rscript scripts/lift2csv.R <fixture>.lift --tables /tmp/rt/
-Rscript scripts/csv2lift.R --tables /tmp/rt/ > /tmp/out.lift
+Rscript scripts/lift2csv.R <fixture>.lift --table-dir /tmp/rt/
+Rscript scripts/csv2lift.R --table-dir /tmp/rt/ > /tmp/out.lift
 ```
 
 ## Files touched (pattern, per increment)
 
 A column increment touches the level's four files plus docs: `R/<level>_table.R` (extract + `pivot_wider` + `left_join`), `R/<level>_helpers.R` (`classify_<level>_columns()`), `R/csv2lift_<level>.R` (emit block, positioned to match SPEC.md's canonical child order), and `SPEC.md`.
 
-A new table adds a fifth column to that grid — `R/<name>_table.R`, `R/<name>_helpers.R`, `R/csv2lift_<name>.R`, `scripts/lift2csv_<name>-table.R`, a flag in `scripts/csv2lift.R`, `tests/testthat/test-<name>-table_end-to-end.R`, a curated `tests/testthat/fixtures/lift2csv_<name>-table/` directory, the `*_<name>.csv` glob in `tests/testthat/test-csv2lift_end-to-end.R`, its own SPEC.md section, and a README example.
+A new table adds a fifth column to that grid — `R/<name>_table.R`, `R/<name>_helpers.R`, `R/csv2lift_<name>.R`, `scripts/lift2csv_<name>-table.R`, a flag in `scripts/csv2lift.R`, `tests/testthat/test-<name>-table_end-to-end.R`, a curated `tests/testthat/fixtures/lift2csv_<name>-table/` directory, the `*_<name>.csv` glob in `tests/testthat/test-csv2lift_end-to-end.R`, its own SPEC.md section, and a README example. (This paragraph describes the state before [`plans/per-table-script-consolidation.md`](per-table-script-consolidation.md), left as written since it explains why Phase T was sequenced first; see that plan for what a new table costs now.)
 
 **After [Phase T](#phase-t--the-table-folder-convention), five of those nine collapse into one registry row.** The flag, the attach call and its position, the `requires` guard, the test-loop glob and the SPEC.md CLI bullet all become fields in `R/table_registry.R`; the README's per-flag example becomes unnecessary because `--tables` covers every table at once. What is left per new table is the genuinely per-table work: the three `R/` files, the `scripts/lift2csv_<name>-table.R` one-liner, the test file, the fixture directory, the registry row, and the SPEC.md section describing the table's columns and keys. That is the reason Phase T comes before the six remaining tables rather than after them.
+
+**Superseded by [`plans/per-table-script-consolidation.md`](per-table-script-consolidation.md) (R0-R2), run before Phase B.** The `scripts/lift2csv_<name>-table.R` one-liner above is no longer part of a new table's cost — `lift2csv.R --table <name>` reaches it via the registry row alone, the same way `--tables` (renamed `--table-dir`) already did for the directory case. A new table's cost is now: the three `R/` files, the test file, the fixture directory, the registry row, and the SPEC.md section.
 
 Two further consequences of Phase T, both of which reduce per-increment work but need naming right up front:
 

@@ -23,7 +23,7 @@ if (length(raw_argv) > 0 && !startsWith(raw_argv[1], "-")) {
 registry <- table_registry()
 
 p <- arg_parser("This script takes CSVs of entry-level (and optionally other) LIFT tables and produces a LIFT file")
-p <- add_argument(p, "--tables",
+p <- add_argument(p, "--table-dir",
                   help = "Directory to discover a CSV per table in (entries.csv, senses.csv, ...). Explicit flags below override a discovered file of the same table.",
                   default = NA)
 for (i in seq_len(nrow(registry))) {
@@ -31,7 +31,7 @@ for (i in seq_len(nrow(registry))) {
 }
 argv <- parse_args(p, argv = raw_argv)
 
-discovered <- if (!is.na(argv$tables)) discover_tables(argv$tables, registry) else list()
+discovered <- if (!is.na(argv$table_dir)) discover_tables(argv$table_dir, registry) else list()
 
 resolve_path <- function(name) {
   explicit <- argv[[name]]
@@ -43,7 +43,7 @@ resolve_path <- function(name) {
 resolved <- setNames(lapply(registry$name, resolve_path), registry$name)
 
 if (is.null(resolved$entries) || is.na(resolved$entries)) {
-  stop("No entries CSV supplied: provide it as a positional argument, --entries, or via --tables <dir>.", call. = FALSE)
+  stop("No entries CSV supplied: provide it as a positional argument, --entries, or via --table-dir <dir>.", call. = FALSE)
 }
 
 # Checked up front so a missing required table reads as a CLI usage error,

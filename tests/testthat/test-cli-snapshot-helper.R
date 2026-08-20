@@ -10,7 +10,7 @@ test_that("expect_cli_stdout_file_snapshot fails when the script exits nonzero",
   expect_failure(
     expect_cli_stdout_file_snapshot(
       "../../scripts/lift2csv.R",
-      c("/nonexistent/missing.lift", "--tables", withr::local_tempdir()),
+      c("/nonexistent/missing.lift", "--table-dir", withr::local_tempdir()),
       name = "nonzero-exit-guard.csv"
     )
   )
