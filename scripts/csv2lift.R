@@ -6,53 +6,74 @@ script_dir <- dirname(script_path)
 project_dir <- normalizePath(file.path(script_dir, ".."))
 devtools::load_all(project_dir, quiet = TRUE)
 
-p <- arg_parser("This script takes CSVs of entry-level (and optionally sense-level) fields and produces a LIFT file")
-p <- add_argument(p, "entries_csv",
-                  help="CSV matching lift2csv_entry-table.R's column conventions")
-p <- add_argument(p, "--senses",
-                  help="CSV matching lift2csv_sense-table.R's column conventions", default = NA)
-p <- add_argument(p, "--pronunciations",
-                  help="CSV matching lift2csv_pronunciation-table.R's column conventions", default = NA)
-p <- add_argument(p, "--examples",
-                  help="CSV matching lift2csv_example-table.R's column conventions", default = NA)
-argv <- parse_args(p)
-
-# Examples attach to <sense> elements, which only exist once --senses has
-# been processed below — check up front so a missing --senses reads as a CLI
-# usage error, not a per-row "sense_guid not found" that looks like bad data.
-if (!is.na(argv$examples) && is.na(argv$senses)) {
-  stop("--examples requires --senses: examples attach to <sense> elements, which the sense table creates.", call. = FALSE)
+# entries_csv used to be a required positional argument. It's now optional
+# (an --entries flag or a --tables discovery can supply it instead), and
+# argparser's positional arguments cannot be made optional regardless of
+# `default` (see plans/remaining-lift-fields.md's Phase T) — so a bare
+# leading positional is intercepted here, before argparser ever sees it,
+# rather than declared through add_argument(). This is what keeps every
+# existing `Rscript csv2lift.R entries.csv --senses ...` invocation working.
+raw_argv <- commandArgs(trailingOnly = TRUE)
+positional_entries_csv <- NA_character_
+if (length(raw_argv) > 0 && !startsWith(raw_argv[1], "-")) {
+  positional_entries_csv <- raw_argv[1]
+  raw_argv <- raw_argv[-1]
 }
 
-# na = "" and forcing every column to character avoid readr silently
-# corrupting the round trip: blank cells must stay blank (not become "NA"),
-# and guid/date/custom-field text that happens to look numeric must not be
-# type-guessed and reformatted. trim_ws = FALSE for the same reason: a note
-# ending "Do not parse: " is real source data, and format_csv() only quotes
-# a value for embedded commas/quotes/newlines, not for edge whitespace, so
-# read_csv()'s default trim_ws = TRUE would silently drop it on read.
-entry_table <- read_csv(argv$entries_csv, na = "", col_types = cols(.default = "c"), trim_ws = FALSE, show_col_types = FALSE)
-doc <- entry_table_to_lift(entry_table)
+registry <- table_registry()
 
-# pronunciations before senses so each entry's children come out in the
-# canonical order (SPEC.md's Entry Table): both are appended by a second pass, so the
-# call order here is what fixes <pronunciation> ahead of <sense>
-if (!is.na(argv$pronunciations)) {
-  pronunciation_table <- read_csv(argv$pronunciations, na = "", col_types = cols(.default = "c"), trim_ws = FALSE, show_col_types = FALSE)
-  doc <- attach_pronunciations_to_lift(doc, pronunciation_table)
+p <- arg_parser("This script takes CSVs of entry-level (and optionally other) LIFT tables and produces a LIFT file")
+p <- add_argument(p, "--tables",
+                  help = "Prefix under which to discover a CSV per table: a folder ending in '/' (files named entries.csv, senses.csv, ...) or a stem (files named <stem>_entries.csv, <stem>_senses.csv, ...). Explicit flags below override a discovered file of the same table.",
+                  default = NA)
+for (i in seq_len(nrow(registry))) {
+  p <- add_argument(p, registry$cli_flag[i], help = registry$help[i], default = NA)
+}
+argv <- parse_args(p, argv = raw_argv)
+
+discovered <- if (!is.na(argv$tables)) discover_tables(argv$tables, registry) else list()
+
+resolve_path <- function(name) {
+  explicit <- argv[[name]]
+  if (!is.na(explicit)) return(explicit)
+  if (name == "entries" && !is.na(positional_entries_csv)) return(positional_entries_csv)
+  discovered[[name]]
 }
 
-if (!is.na(argv$senses)) {
-  sense_table <- read_csv(argv$senses, na = "", col_types = cols(.default = "c"), trim_ws = FALSE, show_col_types = FALSE)
-  doc <- attach_senses_to_lift(doc, sense_table)
+resolved <- setNames(lapply(registry$name, resolve_path), registry$name)
+
+if (is.null(resolved$entries) || is.na(resolved$entries)) {
+  stop("No entries CSV supplied: provide it as a positional argument, --entries, or via --tables <prefix>.", call. = FALSE)
 }
 
-# Examples attach to <sense> elements, so this call must come after
-# attach_senses_to_lift() above — <sense> nodes do not exist before then, so
-# this is a correctness dependency, not just a readability convention.
-if (!is.na(argv$examples)) {
-  example_table <- read_csv(argv$examples, na = "", col_types = cols(.default = "c"), trim_ws = FALSE, show_col_types = FALSE)
-  doc <- attach_examples_to_lift(doc, example_table)
+# Checked up front so a missing required table reads as a CLI usage error,
+# not as a per-row lookup failure (e.g. "sense_guid not found") that looks
+# like bad data.
+for (i in seq_len(nrow(registry))) {
+  name <- registry$name[i]
+  reqs <- registry$requires[[i]]
+  if (length(reqs) == 0) next
+  present <- !is.null(resolved[[name]]) && !is.na(resolved[[name]])
+  if (!present) next
+  missing_reqs <- reqs[vapply(reqs, function(r) is.null(resolved[[r]]) || is.na(resolved[[r]]), logical(1))]
+  if (length(missing_reqs) > 0) {
+    stop(sprintf(
+      "--%s requires %s: attaches to an element the latter table's rows create.",
+      name, paste0("--", missing_reqs, collapse = ", ")
+    ), call. = FALSE)
+  }
+}
+
+# Registry row order is attach order (matches SPEC.md's Entry Table canonical
+# child order): entries first (its attach_fn creates the document rather
+# than attaching to one), then pronunciations, senses, examples.
+doc <- NULL
+for (i in seq_len(nrow(registry))) {
+  name <- registry$name[i]
+  path <- resolved[[name]]
+  if (is.null(path) || is.na(path)) next
+  table <- read_csv(path, na = "", col_types = cols(.default = "c"), trim_ws = FALSE, show_col_types = FALSE)
+  doc <- registry$attach_fn[[i]](doc, table)
 }
 
 cat(as.character(doc))

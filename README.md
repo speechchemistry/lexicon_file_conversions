@@ -12,7 +12,13 @@ You can download the package by clicking on the green code button and selecting 
 
 ## Example: LIFT → CSV (lift2csv)
 
-This is a basic example which shows you how to generate the entry table, the sense table, the pronunciation table, the example table, and the joined entry+sense table from a LIFT file. `Sena3.lift` is a real Sena FLEx project export, checked in as a test fixture.
+`scripts/lift2csv.R` writes every table it knows how to read (see `R/table_registry.R`) from a LIFT file into `--tables <prefix>` in one pass — a trailing `/` writes a folder of plainly-named CSVs, anything else writes `<prefix>_<table>.csv` files side by side. `Sena3.lift` is a real Sena FLEx project export, checked in as a test fixture.
+
+``` bash
+Rscript scripts/lift2csv.R tests/testthat/fixtures/lift2csv_entry-table/Sena3.lift --tables Sena3_tables/
+```
+
+The per-table scripts remain available for generating one table (or the denormalized joined entry+sense view) at a time:
 
 ``` bash
 Rscript scripts/lift2csv_entry-table.R tests/testthat/fixtures/lift2csv_entry-table/Sena3.lift > Sena3_entry-table.csv
@@ -23,24 +29,14 @@ Rscript scripts/lift2csv_join-sense-entry-table.R tests/testthat/fixtures/lift2c
 ```
 ## Example: CSV → LIFT (csv2lift)
 
-`csv2lift.R` does the reverse: it takes an entry-level CSV (required) and, optionally, sense-level, pronunciation-level, and example-level CSVs, and builds a LIFT file. The example below uses a small fixture pair — a single entry with one sense — so the output is easy to read in full.
+`csv2lift.R` does the reverse: it takes an entry-level CSV (required) and, optionally, sense-level, pronunciation-level, and example-level CSVs, and builds a LIFT file. `--tables <prefix>` discovers all of them at once, using the same prefix convention as `lift2csv.R` above:
 
 ``` bash
-Rscript scripts/csv2lift.R tests/testthat/fixtures/csv2lift/sena3_single_entry_plant_entries.csv \
-  --senses tests/testthat/fixtures/csv2lift/sena3_single_entry_plant_senses.csv \
-  > sena3_single_entry_plant.lift
-```
-
-Add `--pronunciations` to attach the pronunciation table as well:
-
-``` bash
-Rscript scripts/csv2lift.R tests/testthat/fixtures/csv2lift/two_pronunciations_with_audio_and_IPA_entries.csv \
-  --senses tests/testthat/fixtures/csv2lift/two_pronunciations_with_audio_and_IPA_senses.csv \
-  --pronunciations tests/testthat/fixtures/csv2lift/two_pronunciations_with_audio_and_IPA_pronunciations.csv \
+Rscript scripts/csv2lift.R --tables tests/testthat/fixtures/csv2lift/two_pronunciations_with_audio_and_IPA \
   > two_pronunciations_with_audio_and_IPA.lift
 ```
 
-Add `--examples` to attach example sentences — this requires `--senses`, since examples attach to `<sense>` elements:
+Each table can also be named explicitly with its own `--<table>` flag (an explicit flag overrides a discovered file of the same table) — useful when a CSV isn't named to the `--tables` convention, or the entry CSV as a bare positional argument, kept for backward compatibility:
 
 ``` bash
 Rscript scripts/csv2lift.R tests/testthat/fixtures/csv2lift/sena3_example_duplicate_translation_entries.csv \
@@ -49,7 +45,7 @@ Rscript scripts/csv2lift.R tests/testthat/fixtures/csv2lift/sena3_example_duplic
   > sena3_example_duplicate_translation.lift
 ```
 
-Omit the optional flags to build entry-only LIFT from a single CSV; see [`SPEC.md`'s CLI shape section](SPEC.md#csv2lift-cli-shape) for the full CLI shape.
+`--examples` requires `--senses` (or a discovered senses table), since examples attach to `<sense>` elements; the entry table is the only mandatory one. See [`SPEC.md`'s CLI shape section](SPEC.md#csv2lift-cli-shape) for the full CLI shape.
 
 ## Supported Fields
 
