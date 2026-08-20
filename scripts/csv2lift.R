@@ -35,7 +35,7 @@ entry_table <- read_csv(argv$entries_csv, na = "", col_types = cols(.default = "
 doc <- entry_table_to_lift(entry_table)
 
 # pronunciations before senses so each entry's children come out in the
-# canonical order (SPEC.md 3): both are appended by a second pass, so the
+# canonical order (SPEC.md's Entry Table): both are appended by a second pass, so the
 # call order here is what fixes <pronunciation> ahead of <sense>
 if (!is.na(argv$pronunciations)) {
   pronunciation_table <- read_csv(argv$pronunciations, na = "", col_types = cols(.default = "c"), trim_ws = FALSE, show_col_types = FALSE)

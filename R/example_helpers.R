@@ -3,7 +3,7 @@
 # forms cannot be keyed on either — they are keyed by the example's position
 # among all <entry>/<sense>/<example> elements instead, mirroring
 # extract_pronunciation_multitext() (R/pronunciation_helpers.R). Row order is
-# what carries identity for this table (SPEC.md 2), so the index must survive
+# what carries identity for this table (SPEC.md's Data Handling), so the index must survive
 # unchanged from extraction through to the final join.
 extract_example_multitext <- function(examples, xpath, value_col = "text") {
   empty_result <- tibble(

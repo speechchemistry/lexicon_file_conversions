@@ -2,7 +2,7 @@
 # <sense>'s id), so its forms cannot be keyed the way the entry- and
 # sense-level extractors key theirs. They are keyed by the pronunciation's
 # position in the document instead, which is also what fixes row order:
-# SPEC.md 2 requires both directions to preserve source order rather than
+# SPEC.md's Data Handling requires both directions to preserve source order rather than
 # re-sort, and row order is the only thing carrying it for this table.
 extract_pronunciation_multitext <- function(pronunciations, xpath) {
   empty_result <- tibble(

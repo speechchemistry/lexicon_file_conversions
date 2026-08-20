@@ -7,7 +7,7 @@ example_table <- function(LIFT_file) {
   doc <- read_xml(LIFT_file)
 
   # Direct-child axis, so this deliberately excludes sense/subsense/example
-  # (1 occurrence in Sena3.lift): <subsense> is unsupported (SPEC.md 9), its
+  # (1 occurrence in Sena3.lift): <subsense> is unsupported (SPEC.md's Not Yet Specified), its
   # senses have no row in the sense table, and an example keyed to one would
   # have a dangling sense_guid FK on write.
   examples <- xml_find_all(doc, ".//entry/sense/example")
@@ -53,8 +53,8 @@ example_table <- function(LIFT_file) {
       names_glue = "translation_{lang}"
     )
 
-  # fourth stage: the reference note; reuses the typed-note scheme (SPEC.md
-  # 2.2), which is deliberately shared across every level.
+  # fourth stage: the reference note; reuses the typed-note scheme (SPEC.md's
+  # Column Classification), which is deliberately shared across every level.
   note_long <- extract_example_multitext_with_attribute(examples, "./note[@type]", "type", "note_text")
   note_wide <- note_long |>
     pivot_wider(

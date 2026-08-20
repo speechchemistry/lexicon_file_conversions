@@ -28,8 +28,8 @@ attach_examples_to_lift <- function(doc, example_table) {
     warn_on_reference_disagreement(row, note_cols, .x)
 
     # Unlike every other optional element in this model, <example> is
-    # emitted unconditionally: identity here is purely positional (SPEC.md
-    # 6), so dropping a blank row would shift the index of its surviving
+    # emitted unconditionally: identity here is purely positional (SPEC.md's
+    # Structural Rules), so dropping a blank row would shift the index of its surviving
     # siblings — six senses in Sena3.lift interleave blank and non-blank
     # examples.
     example_args <- list(sense_node, "example")
