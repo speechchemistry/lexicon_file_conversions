@@ -1,8 +1,10 @@
 # The single source of truth for which CSV tables csv2lift.R and lift2csv.R
 # know about: what each is called, what CLI flag supplies it, how to read it
-# from a LIFT file, how to attach it onto a <lift> document, what table(s)
-# must accompany it, and which column is its foreign key. See plans/
-# remaining-lift-fields.md's Phase T for why this exists.
+# from a LIFT file, how to attach it onto a <lift> document, and what
+# table(s) must accompany it. See plans/remaining-lift-fields.md's Phase T
+# for why this exists. Each table's actual foreign key(s) are documented in
+# SPEC.md rather than here -- a registry column can only hold one value per
+# table, and C1's traits table needs two (entry_id and sense_guid).
 #
 # Row order is attach order: entries always comes first (its attach_fn
 # creates the document rather than attaching to one, so the incoming `doc`
@@ -26,9 +28,7 @@ table_registry <- function() {
     attach_senses_to_lift,
     attach_examples_to_lift
   )
-  registry$fk <- c(NA_character_, "entry_id", "entry_id", "sense_guid")
   registry$requires <- list(character(0), character(0), character(0), "senses")
-  registry$creates_doc <- c(TRUE, FALSE, FALSE, FALSE)
 
   registry
 }
