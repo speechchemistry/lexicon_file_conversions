@@ -93,7 +93,7 @@ extract_multitext_with_attribute <- function(entries, parent_xpath, attr_name,
 # the right LIFT element for each column without re-deriving column-naming
 # rules elsewhere.
 classify_entry_columns <- function(col_names) {
-  meta_columns <- c("entry_id", "dateCreated", "dateModified", "entry_order", "morph_type")
+  meta_columns <- c("entry_id", "entry_lift_id", "dateCreated", "dateModified", "entry_order", "morph_type")
 
   map_df(col_names, function(col) {
     if (col %in% meta_columns) {
@@ -133,7 +133,9 @@ classify_entry_columns <- function(col_names) {
     # Custom field: split on the LAST underscore into field type and lang.
     # Known limitation, accepted rather than solved generally: a writing
     # system code containing an underscore, or a custom field literally
-    # named "citation" or "note", will misclassify here.
+    # named "citation" or "note", will misclassify here — and so will one
+    # whose type_lang split happens to spell "entry_lift_id" exactly (or
+    # any other meta_columns name above).
     field_type <- sub("_[^_]+$", "", col)
     lang <- sub("^.*_([^_]+)$", "\\1", col)
     cat(sprintf("Classifying column '%s' as field type='%s', lang=%s\n", col, field_type, lang), file = stderr())

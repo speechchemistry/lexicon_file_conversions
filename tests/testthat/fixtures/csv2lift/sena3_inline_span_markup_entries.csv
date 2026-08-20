@@ -1,4 +1,4 @@
-entry_id,dateCreated,dateModified,morph_type,seh,Plural_seh,Singular_en,Plural_en,citation_seh,note_en
-44af4d61-fa9c-4b62-8d30-1c70c2e9361b,2005-06-23T16:30:31Z,2006-09-07T19:24:01Z,root,khuch,,,,khucha,
-6d5fdb31-6c26-4f20-bab3-8d86a38eea78,2005-06-23T16:30:31Z,2006-08-28T17:11:00Z,stem,eoo,,,,,
-8d3435f5-a7c2-4628-86de-1b02fe3623f6,2005-06-23T15:50:47Z,2006-11-10T17:38:12Z,suffix,-es,,,,,
+entry_id,entry_lift_id,dateCreated,dateModified,entry_order,morph_type,seh,Plural_seh,Singular_en,Plural_en,citation_seh,note_en
+44af4d61-fa9c-4b62-8d30-1c70c2e9361b,khucha_44af4d61-fa9c-4b62-8d30-1c70c2e9361b,2005-06-23T16:30:31Z,2006-09-07T19:24:01Z,,root,khuch,,,,khucha,
+6d5fdb31-6c26-4f20-bab3-8d86a38eea78,eoo_6d5fdb31-6c26-4f20-bab3-8d86a38eea78,2005-06-23T16:30:31Z,2006-08-28T17:11:00Z,,stem,eoo,,,,,
+8d3435f5-a7c2-4628-86de-1b02fe3623f6,-es_8d3435f5-a7c2-4628-86de-1b02fe3623f6,2005-06-23T15:50:47Z,2006-11-10T17:38:12Z,,suffix,-es,,,,,

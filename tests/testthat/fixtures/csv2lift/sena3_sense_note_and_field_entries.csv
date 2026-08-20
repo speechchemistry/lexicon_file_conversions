@@ -1,2 +1,2 @@
-entry_id,dateCreated,dateModified,morph_type,seh,Plural_seh,Singular_en,Plural_en,citation_seh,note_en
-11473a37-f10a-4201-b569-afd4b994373c,2005-06-23T16:30:32Z,2006-08-23T19:41:40Z,root,lomo,miromo,,,mulomo,
+entry_id,entry_lift_id,dateCreated,dateModified,entry_order,morph_type,seh,Plural_seh,Singular_en,Plural_en,citation_seh,note_en
+11473a37-f10a-4201-b569-afd4b994373c,mulomo_11473a37-f10a-4201-b569-afd4b994373c,2005-06-23T16:30:32Z,2006-08-23T19:41:40Z,,root,lomo,miromo,,,mulomo,

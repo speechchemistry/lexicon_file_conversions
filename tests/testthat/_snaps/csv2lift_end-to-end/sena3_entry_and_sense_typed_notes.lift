@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lift version="0.13" producer="lexicon_file_conversions csv2lift">
-  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2006-09-07T16:34:27Z" guid="708ff551-9116-458a-b6a9-ea8eab0beff0">
+  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2006-09-07T16:34:27Z" id="kambaza_708ff551-9116-458a-b6a9-ea8eab0beff0" guid="708ff551-9116-458a-b6a9-ea8eab0beff0">
     <lexical-unit>
       <form lang="seh">
         <text>kambaz</text>
@@ -38,7 +38,7 @@
       </note>
     </sense>
   </entry>
-  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2006-09-29T21:58:00Z" guid="7ecbb299-bf35-4795-a5cc-8d38ce8b891c">
+  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2006-09-29T21:58:00Z" id="infa_7ecbb299-bf35-4795-a5cc-8d38ce8b891c" guid="7ecbb299-bf35-4795-a5cc-8d38ce8b891c">
     <lexical-unit>
       <form lang="seh">
         <text>infa</text>

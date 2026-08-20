@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lift version="0.13" producer="lexicon_file_conversions csv2lift">
-  <entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:41Z" guid="2dc39f33-d145-4a66-a846-c4e68e3837e2">
+  <entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:41Z" id="nfangu_2dc39f33-d145-4a66-a846-c4e68e3837e2" guid="2dc39f33-d145-4a66-a846-c4e68e3837e2">
     <lexical-unit>
       <form lang="seh">
         <text>nfangu</text>
@@ -39,7 +39,7 @@
       </example>
     </sense>
   </entry>
-  <entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-09-06T15:15:02Z" guid="5db6e79d-de66-4ec6-84c1-af3cd170f90d">
+  <entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-09-06T15:15:02Z" id="ambuka_5db6e79d-de66-4ec6-84c1-af3cd170f90d" guid="5db6e79d-de66-4ec6-84c1-af3cd170f90d">
     <lexical-unit>
       <form lang="seh">
         <text>ambuk</text>
@@ -89,7 +89,7 @@
       </example>
     </sense>
   </entry>
-  <entry dateCreated="2005-06-23T16:08:17Z" dateModified="2006-08-22T18:59:37Z" guid="db8ade5b-dcab-4ccf-89d3-0c4cbc30189b" order="1">
+  <entry dateCreated="2005-06-23T16:08:17Z" dateModified="2006-08-22T18:59:37Z" id="ka-1_db8ade5b-dcab-4ccf-89d3-0c4cbc30189b" guid="db8ade5b-dcab-4ccf-89d3-0c4cbc30189b" order="1">
     <lexical-unit>
       <form lang="seh">
         <text>ka-</text>

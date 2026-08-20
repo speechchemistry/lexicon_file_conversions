@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lift version="0.13" producer="lexicon_file_conversions csv2lift">
-  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2006-09-07T19:24:01Z" guid="44af4d61-fa9c-4b62-8d30-1c70c2e9361b">
+  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2006-09-07T19:24:01Z" id="khucha_44af4d61-fa9c-4b62-8d30-1c70c2e9361b" guid="44af4d61-fa9c-4b62-8d30-1c70c2e9361b">
     <lexical-unit>
       <form lang="seh">
         <text>khuch</text>
@@ -44,7 +44,7 @@
       </example>
     </sense>
   </entry>
-  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2006-08-28T17:11:00Z" guid="6d5fdb31-6c26-4f20-bab3-8d86a38eea78">
+  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2006-08-28T17:11:00Z" id="eoo_6d5fdb31-6c26-4f20-bab3-8d86a38eea78" guid="6d5fdb31-6c26-4f20-bab3-8d86a38eea78">
     <lexical-unit>
       <form lang="seh">
         <text>eoo</text>
@@ -77,7 +77,7 @@
       <example/>
     </sense>
   </entry>
-  <entry dateCreated="2005-06-23T15:50:47Z" dateModified="2006-11-10T17:38:12Z" guid="8d3435f5-a7c2-4628-86de-1b02fe3623f6">
+  <entry dateCreated="2005-06-23T15:50:47Z" dateModified="2006-11-10T17:38:12Z" id="-es_8d3435f5-a7c2-4628-86de-1b02fe3623f6" guid="8d3435f5-a7c2-4628-86de-1b02fe3623f6">
     <lexical-unit>
       <form lang="seh">
         <text>-es</text>

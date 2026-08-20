@@ -11,6 +11,18 @@ entry_table_to_lift <- function(entry_table) {
     return(doc)
   }
 
+  # entry_lift_id's only documented requirement is uniqueness within the file
+  # (not that it still matches the headword or carries the guid as a suffix,
+  # both of which the FLEx documentation treats as convention rather than
+  # rule) - so that is the one thing checked here, once, rather than per row.
+  if ("entry_lift_id" %in% names(entry_table)) {
+    ids <- entry_table$entry_lift_id[!is.na(entry_table$entry_lift_id) & nzchar(entry_table$entry_lift_id)]
+    dupes <- unique(ids[duplicated(ids)])
+    if (length(dupes) > 0) {
+      stop(sprintf("Duplicate entry_lift_id value(s), must be unique: %s", paste(dupes, collapse = ", ")), call. = FALSE)
+    }
+  }
+
   col_classes <- classify_entry_columns(names(entry_table))
 
   lexical_unit_cols <- filter(col_classes, kind == "lexical_unit")
@@ -28,6 +40,14 @@ entry_table_to_lift <- function(entry_table) {
     }
     if ("dateModified" %in% names(row) && !is.na(row$dateModified) && nzchar(row$dateModified)) {
       entry_args$dateModified <- row$dateModified
+    }
+    # id is stored verbatim (never synthesized from headword/guid): the FLEx
+    # documentation treats @id as an opaque within-file handle whose only
+    # real constraint is uniqueness, so there is no derived content to keep
+    # in sync (see SPEC.md's Entry Table). Uniqueness is enforced once,
+    # below, before any entry is emitted.
+    if ("entry_lift_id" %in% names(row) && !is.na(row$entry_lift_id) && nzchar(row$entry_lift_id)) {
+      entry_args$id <- row$entry_lift_id
     }
     if ("entry_id" %in% names(row) && !is.na(row$entry_id) && nzchar(row$entry_id)) {
       entry_args$guid <- row$entry_id

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lift version="0.13" producer="lexicon_file_conversions csv2lift">
-  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2011-08-04T18:22:25Z" guid="011185bb-e8c8-4ab9-80fb-2e19b670e3d0">
+  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2011-08-04T18:22:25Z" id="citatu_011185bb-e8c8-4ab9-80fb-2e19b670e3d0" guid="011185bb-e8c8-4ab9-80fb-2e19b670e3d0">
     <lexical-unit>
       <form lang="seh">
         <text>tatu</text>

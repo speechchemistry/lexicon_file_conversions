@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lift version="0.13" producer="lexicon_file_conversions csv2lift">
-  <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-04-21T10:59:20Z" guid="bed1e71d-bf62-4e67-8ff5-98063a182cad">
+  <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-04-21T10:59:20Z" id="tsen_bed1e71d-bf62-4e67-8ff5-98063a182cad" guid="bed1e71d-bf62-4e67-8ff5-98063a182cad">
     <lexical-unit>
       <form lang="zhi">
         <text>tsen</text>

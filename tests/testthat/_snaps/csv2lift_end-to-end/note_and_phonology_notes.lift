@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lift version="0.13" producer="lexicon_file_conversions csv2lift">
-  <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-05-15T16:10:34Z" guid="3be3064b-636a-47b6-a7c3-9b58928199fb" order="1">
+  <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-05-15T16:10:34Z" id="kerɔ_3be3064b-636a-47b6-a7c3-9b58928199fb" guid="3be3064b-636a-47b6-a7c3-9b58928199fb" order="1">
     <lexical-unit>
       <form lang="zhi">
         <text>kerɔ</text>
@@ -60,7 +60,7 @@
       </note>
     </sense>
   </entry>
-  <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-05-06T15:01:54Z" guid="41b17c59-3600-479e-bf34-50cdd8a05c2c">
+  <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-05-06T15:01:54Z" id="khwabɔ_41b17c59-3600-479e-bf34-50cdd8a05c2c" guid="41b17c59-3600-479e-bf34-50cdd8a05c2c">
     <lexical-unit>
       <form lang="zhi">
         <text>khwabɔ</text>
@@ -114,7 +114,7 @@
       </note>
     </sense>
   </entry>
-  <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-05-05T11:11:25Z" guid="4663978f-8e76-464a-b569-38b8c17960d9" order="3">
+  <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-05-05T11:11:25Z" id="kom_4663978f-8e76-464a-b569-38b8c17960d9" guid="4663978f-8e76-464a-b569-38b8c17960d9" order="3">
     <lexical-unit>
       <form lang="zhi">
         <text>kom</text>

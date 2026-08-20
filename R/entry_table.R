@@ -14,6 +14,7 @@ entry_table <- function(LIFT_file) {
   # first stage: extract entry-level metadata only
   entry_meta <- tibble(
     entry_id = map_chr(entries, ~xml_attr(.x, "guid"), .progress = FALSE),
+    entry_lift_id = map_chr(entries, ~xml_attr(.x, "id"), .progress = FALSE),
     dateCreated = map_chr(entries, ~xml_attr(.x, "dateCreated"), .progress = FALSE),
     dateModified = map_chr(entries, ~xml_attr(.x, "dateModified"), .progress = FALSE),
     entry_order = map_chr(entries, ~xml_attr(.x, "order"), .progress = FALSE),

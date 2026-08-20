@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lift version="0.13" producer="lexicon_file_conversions csv2lift">
-  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2026-08-11T13:10:00Z" guid="d5cb3ce5-cbf9-4c51-8d1f-5964ce10a703">
+  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2026-08-11T13:10:00Z" id="khoboka_d5cb3ce5-cbf9-4c51-8d1f-5964ce10a703" guid="d5cb3ce5-cbf9-4c51-8d1f-5964ce10a703">
     <lexical-unit>
       <form lang="seh">
         <text>khobok</text>

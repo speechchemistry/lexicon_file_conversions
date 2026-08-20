@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lift version="0.13" producer="lexicon_file_conversions csv2lift">
-  <entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:40Z" guid="11473a37-f10a-4201-b569-afd4b994373c">
+  <entry dateCreated="2005-06-23T16:30:32Z" dateModified="2006-08-23T19:41:40Z" id="mulomo_11473a37-f10a-4201-b569-afd4b994373c" guid="11473a37-f10a-4201-b569-afd4b994373c">
     <lexical-unit>
       <form lang="seh">
         <text>lomo</text>

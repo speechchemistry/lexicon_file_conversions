@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <lift version="0.13" producer="lexicon_file_conversions csv2lift">
-  <entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-09-06T16:17:57Z" guid="05ef2b9c-f0a3-498e-b26b-47e860f20fe7">
+  <entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-09-06T16:17:57Z" id="bokho_05ef2b9c-f0a3-498e-b26b-47e860f20fe7" guid="05ef2b9c-f0a3-498e-b26b-47e860f20fe7">
     <lexical-unit>
       <form lang="seh">
         <text>bokho</text>
