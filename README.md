@@ -18,11 +18,10 @@ You can download the package by clicking on the green code button and selecting 
 Rscript scripts/lift2csv.R tests/testthat/fixtures/lift2csv_entry-table/sena3.lift --table-dir sena3-tables/
 ```
 
-The same script also writes a single table's CSV to stdout with `--table <name>` — useful for one table (or the denormalized joined entry+sense view, via its own script) at a time:
+The same script also writes a single table's CSV to stdout with `--table <name>` — useful for one table at a time:
 
 ``` bash
 Rscript scripts/lift2csv.R tests/testthat/fixtures/lift2csv_entry-table/sena3.lift --table senses > sena3-sense-table.csv
-Rscript scripts/lift2csv_join-sense-entry-table.R tests/testthat/fixtures/lift2csv_entry-table/sena3.lift > sena3-join-sense-entry-table.csv
 ```
 ## Example: CSV → LIFT (csv2lift)
 

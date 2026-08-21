@@ -70,11 +70,20 @@ extract_example_multitext_with_attribute <- function(examples, parent_xpath, att
 # notes/fields, which never faces this because every fixture's typed note has
 # a form).
 #
-# lift.rng's own schematron asserts at most one <translation> per <example>
-# ("Translations should be of different types"), so a second one is invalid
-# LIFT that FLEx emitted, not a shape the CSV declines to model. When it
-# occurs (1 of 1296 in Sena3.lift), warn on stderr naming the sense and keep
-# the first, mirroring extract_single_media_href() (R/pronunciation_helpers.R).
+# lift.rng's own schematron forbids two <translation>s on one <example> that
+# share a @type ("Translations should be of different types") — not two
+# translations outright, which the schema and the FLEx technical notes both
+# allow. The single translation_type column assumes FLEx's UI limits data
+# entry to one Translation per Type per Example; a screenshot of real FLEx
+# data entry shows a second Translation control left at the same Type
+# ("Free translation"), so that assumption is not something the UI is known
+# to enforce, and whether that's a deliberate feature or a UI quirk is
+# unclear. The one duplicate in Sena3.lift is the same-@type kind (two
+# type="Literal translation"), which the schema calls invalid regardless of
+# how the UI produced it, so it is treated as invalid LIFT that FLEx emitted,
+# not a shape the CSV declines to model. When it occurs (1 of 1296 in
+# Sena3.lift), warn on stderr naming the sense and keep the first, mirroring
+# extract_single_media_href() (R/pronunciation_helpers.R).
 extract_example_translation <- function(examples) {
   empty_type <- tibble(example_index = integer(), translation_type = character())
   empty_forms <- tibble(example_index = integer(), lang = character(), text = character())
