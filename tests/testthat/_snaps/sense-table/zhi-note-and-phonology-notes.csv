@@ -1,4 +1,4 @@
-sense_guid,entry_id,sense_order,grammatical_info,gloss_en,gloss_ha,definition_en,general_note_en,note_phonology_en,note_source_en
-24783cb4-c7b4-4a2f-bb61-fb4c752b5ebe,3be3064b-636a-47b6-a7c3-9b58928199fb,,Verb,to seek; to search; to look for,nḕmā,,Blench530-,Lexeme form (orthography) is derived from lexeme form (phonemic). on card V1 is long,Blench530- SILCAWL1474a SILCAWL1474-
-73288e00-624f-4ada-a77c-c19c819c48e5,41b17c59-3600-479e-bf34-50cdd8a05c2c,,Verb,to spit,tōfà; tōfā̀ ?,,Blench546-,"Noun Lexeme form (orthography) is derived from lexeme form (phonemic). Was <span lang=""zhi"">tang-hiiya</span>",SILCAWL0111-
-6ab0209c-e797-4f57-a253-3df19b2b4b0e,4663978f-8e76-464a-b569-38b8c17960d9,,Noun,corpse,mutu gawa,corpse,,,SILCAWL0251-
+sense_guid,entry_id,grammatical_info,gloss_en,gloss_ha,definition_en,general_note_en,note_phonology_en,note_source_en
+24783cb4-c7b4-4a2f-bb61-fb4c752b5ebe,3be3064b-636a-47b6-a7c3-9b58928199fb,Verb,to seek; to search; to look for,nḕmā,,Blench530-,Lexeme form (orthography) is derived from lexeme form (phonemic). on card V1 is long,Blench530- SILCAWL1474a SILCAWL1474-
+73288e00-624f-4ada-a77c-c19c819c48e5,41b17c59-3600-479e-bf34-50cdd8a05c2c,Verb,to spit,tōfà; tōfā̀ ?,,Blench546-,"Noun Lexeme form (orthography) is derived from lexeme form (phonemic). Was <span lang=""zhi"">tang-hiiya</span>",SILCAWL0111-
+6ab0209c-e797-4f57-a253-3df19b2b4b0e,4663978f-8e76-464a-b569-38b8c17960d9,Noun,corpse,mutu gawa,corpse,,,SILCAWL0251-

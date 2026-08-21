@@ -30,13 +30,9 @@ if (is.na(argv$table) && is.na(argv$table_dir)) {
   stop("Supply either --table <name> or --table-dir <dir>.", call. = FALSE)
 }
 
-# format_table_csv() below is shared by both modes so the empty-table
-# convention (an untyped empty tibble is a schema-losing bug, per the
-# adding-a-lift-field skill) is enforced identically regardless of which
-# mode a table is reached through.
-format_table_csv <- function(table) {
-  if (nrow(table) == 0) "" else format_csv(table, na = "")
-}
+# format_table_csv() (R/table_csv.R) is shared by both modes so the
+# empty-column/empty-table convention is enforced identically regardless of
+# which mode a table is reached through.
 
 if (!is.na(argv$table)) {
   row <- which(registry$name == argv$table)

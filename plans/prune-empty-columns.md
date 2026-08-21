@@ -2,7 +2,7 @@
 
 ## Status
 
-Planned, not started. Own file; does not touch `plans/remaining-lift-fields.md`.
+Done. E1–E5 executed as written: 9 snapshot changes (join view was already removed first), all matching the predicted table exactly; `_snaps/csv2lift/` byte-identical throughout; format-time pruning in `R/table_csv.R` as the weakly-preferred option. Own file; does not touch `plans/remaining-lift-fields.md`.
 
 ## Decision
 
