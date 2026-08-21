@@ -6,11 +6,11 @@
 
 That was right at the time. It stops being right at [Phase B](remaining-lift-fields.md#phase-b--new-tables-whose-data-is-already-in-the-repo), because six more tables are queued (`reversals`, `etymologies`, `traits`, `variants`, `entry-relations`, `sense-relations`) and each one currently costs a hand-copied 20-line script whose only per-table content is a function name and a help string. This plan removes that per-increment cost before the six increments rather than after, on the same reasoning that put Phase T ahead of them.
 
-Four increments, deliberately separable: **R0** closes a hole in the CLI snapshot helper that lets a crashed script pass as a correct empty result; **R1** folds the four registry-table scripts into `lift2csv.R` and renames `--tables` to `--table-dir` in both directions; **R2** deletes two registry fields nothing reads; **R3** drops the `_end-to-end` suffix from test filenames.
+Five increments, deliberately separable: **R0** closes a hole in the CLI snapshot helper that lets a crashed script pass as a correct empty result; **R1** folds the four registry-table scripts into `lift2csv.R` and renames `--tables` to `--table-dir` in both directions; **R2** deletes two registry fields nothing reads; **R3** drops the `_end-to-end` suffix from test filenames; **R4** folds the four per-table test files' shared loop into a helper.
 
 No increment here is a skill run — like Phase T, this is CLI infrastructure, not a field.
 
-**Status: R0, R1, R2 and R3 done — Sequence complete. Next: Phase B (B1).** R0 came first because it strengthens the safety net R1 and R2 lean on: both assert that nothing under `_snaps/` moved, and that assertion is only worth as much as the tests behind it. R3 was sequenced last, after R1 changed what the per-table test files cover, and executed as the **plain suffix drop** (`test-sense-table.R`, `_snaps/sense-table/`) rather than the fuller `test-lift2csv_<name>.R` realignment also considered under [Decisions to settle](#decisions-to-settle) — every rename this increment made is confirmed by `git status` as a clean rename (byte-identical content), and the full suite is green with zero `_snaps/` content changes across all four increments.
+**Status: R0, R1, R2 and R3 done. R4 planned, not started — then Phase B (B1).** R0 came first because it strengthens the safety net R1 and R2 lean on: both assert that nothing under `_snaps/` moved, and that assertion is only worth as much as the tests behind it. R3 was sequenced last, after R1 changed what the per-table test files cover, and executed as the **plain suffix drop** (`test-sense-table.R`, `_snaps/sense-table/`) rather than the fuller `test-lift2csv_<name>.R` realignment also considered under [Decisions to settle](#decisions-to-settle) — every rename this increment made is confirmed by `git status` as a clean rename (byte-identical content), and the full suite is green with zero `_snaps/` content changes across all four increments. **R4 was added after those four had landed**, when the directory-digest option under [Decisions to settle](#decisions-to-settle) was re-examined and declined: R0 and R1 had between them already delivered what that option was really for, leaving only the per-table test-file duplication it would have removed as a side effect — which R4 removes directly, and without moving an artifact. It is sequenced before B1 for the same reason R1 was: it removes a per-table cost that six queued tables would otherwise each pay.
 
 ## R0 · assert exit status in the CLI snapshot helper
 
@@ -227,18 +227,95 @@ It correlates *perfectly* with owning approved snapshots and only *loosely* with
 - Full `Rscript -e 'devtools::test()'` green immediately after the `git mv`s and label-string edits, before touching any prose — proving the rename alone is behaviour-neutral.
 - `grep -rn "end-to-end\|end_to_end" tests/testthat/*.R .claude/skills/adding-a-lift-field/SKILL.md AGENTS.md` clean (aside from AGENTS.md's unrelated use of "end-to-end" to describe the `adding-a-lift-field` skill itself, and `remaining-lift-fields.md`'s historical narrative, checked separately by hand since its exemption is deliberate, not an oversight).
 
+## R4 · collapse the per-table test files onto a shared helper
+
+Post-R1 the four per-table test files are byte-identical except for two strings — the fixture directory and the `--table` name:
+
+```r
+fixture_dir <- testthat::test_path("fixtures", "lift2csv_entry-table")
+script_path <- "../../scripts/lift2csv.R"
+
+for (input_path in fixture_inputs(fixture_dir)) {
+  stem <- fixture_stem(input_path)
+
+  test_that(paste0("entry-table_", stem), {
+    expect_cli_stdout_file_snapshot(script_path, c(input_path, "--table", "entries"), name = paste0(stem, ".csv"))
+  })
+}
+```
+
+That is the same duplication R1 removed from `scripts/`, one directory over: nine lines hand-copied per table, two of which carry content. Six queued Phase B tables means six more copies, and the loop / `fixture_stem` / `paste0` scaffolding is exactly what a copy gets half-right. Move the loop into `helper-cli-snapshots.R` and each file reduces to its two facts:
+
+```r
+# tests/testthat/test-entry-table.R
+# Approval tests for `lift2csv.R --table entries`, one per curated fixture.
+expect_table_snapshots("entries", "lift2csv_entry-table")
+```
+
+### Why one thin file per table, and not one file for all four
+
+The tempting version — a single `test-registry-tables.R` looping over `table_registry()` — is the [declined directory-digest decision](#decisions-to-settle) in a smaller costume, and it fails on two **measured** properties of testthat 3.3.2:
+
+**A snapshot directory is named after the test file, and cannot nest.** `expect_snapshot_file(name = "entries/sena3.csv")` does not create `_snaps/registry-tables/entries/`. It emits `cannot create file '_snaps/…/entries/one.csv', reason 'No such file or directory'` and then reports `Adding new file snapshot` anyway — both as **warnings, not failures**, having written nothing. So one test file means one flat directory, and the 24 artifacts would have to be renamed `entries-sena3.csv`, `senses-sena3.csv`, … to avoid colliding on shared fixture stems (`lela-teli-empty-lexicon` occurs in all four).
+
+**`snapshot_accept()`'s `files` matching is exact, with no globbing.** `testthat:::snapshot_meta()` filters on `out$name %in% files | out$test %in% dirs` — so `snapshot_accept("entry-table/")` works today precisely because `entry-table` *is* a directory, while `snapshot_accept("registry-tables/entries-*")` would match nothing and report "No snapshots to update" rather than erroring (the same trap [AGENTS.md's Testing Approach](../AGENTS.md#testing-approach) already documents for the missing trailing slash). Review granularity would collapse to all-24-or-nothing, in a repo whose entire method is per-table approval.
+
+Keeping one file per table keeps `_snaps/<name>-table/` intact, so **no artifact moves at all** — a stronger invariant than R1's or R3's, both of which moved or renamed files while preserving content.
+
+**A registry loop would also be wrong on the merits**, not merely awkward: `fixture_inputs()` errors on a directory with no `.lift` files, so looping the registry would force every table to have a curated fixture directory before its row could land, coupling test scaffolding to registry membership. Phase B adds rows one at a time; a per-table file should appear exactly when that table's fixtures do.
+
+### Behaviour
+
+`expect_table_snapshots(table, fixture_dir, script_path = "../../scripts/lift2csv.R")`:
+
+- Test labels stay **byte-identical to today's**, by deriving the prefix from the fixture directory rather than the table name: `sub("^lift2csv_", "", fixture_dir)` yields `entry-table`, so the label is still `entry-table_sena3` and not `entries_sena3`. [R3](#r3--drop-the-_end-to-end-suffix-from-test-filenames) has just settled these labels; R4 must not churn them again.
+- Snapshot names stay `<stem>.csv`, unchanged.
+- Both arguments are required, and neither is derived from the other: `entries` → `lift2csv_entry-table` needs irregular singularisation (`entries`→`entry` where `senses`→`sense`), and a rule for that would be more machinery than the two-argument call it replaces.
+- **No check that `table` is a registry name.** A typo already fails loudly end-to-end — R1 made `--table bogus` a nonzero-exit usage error listing the valid names, and R0 made the helper assert exit status — so a second guard in the helper would duplicate one that is already tested.
+
+Verified in a throwaway package that `test_that()` calls issued from a helper function at a test file's top level register normally and keep the calling file's own `_snaps/` directory. They do report their location as `test-entry-table.R:1:1`, which is the only line such a file has.
+
+### Files
+
+- `tests/testthat/helper-cli-snapshots.R` — add `expect_table_snapshots()`, with a comment recording *why* it is called once per file instead of looped over the registry (the two measured testthat properties above). That is precisely the refactor a later reader would otherwise "finish".
+- `tests/testthat/test-{entry,sense,pronunciation,example}-table.R` — each reduced to a header comment plus one call. **Filenames unchanged**, so no `_snaps/` directory moves.
+- `.claude/skills/adding-a-lift-field/SKILL.md` — the new-table checklist's test-file step becomes "add a two-line `test-<name>-table.R` calling `expect_table_snapshots()`", and the read-direction worked example shows the call rather than the loop. This is the increment's whole payoff, so it has to land in the skill or Phase B will not see it.
+- `AGENTS.md`'s [Testing Approach](../AGENTS.md#testing-approach) — one bullet: per-table CLI approval tests go through `expect_table_snapshots()`, one file per table so each keeps its own `_snaps/` directory, and why (snapshot names cannot nest; `snapshot_accept()` is exact-match).
+
+**Not changed: `tests/testthat/test-join-sense-entry-table.R`.** It drives `scripts/lift2csv_join-sense-entry-table.R` with no `--table` flag, for the same reason R1 kept that script — the join view is a derived view, not a registry row. Routing it through `script_path` would leave the helper's `table` argument meaningless for one caller.
+
+**No `SPEC.md` change, and no snapshot change.** Like R0, R4 alters how the suite is written, not what the software does.
+
+### TDD
+
+**No honest red is available** — this is a behaviour-preserving test refactor, the same situation as [R2](#r2--delete-the-registrys-two-dead-fields), and manufacturing a failing test for it would be theatre. The invariance check takes its place, and is stronger than a red would be:
+
+1. Add `expect_table_snapshots()` alongside the existing four files, unused. Suite green, nothing moved.
+2. Convert **one** file, `test-entry-table.R`, and run the suite: its 7 tests must pass with the **same labels** and **zero `.new` files**. That single conversion is where a mistake shows; the other three are then mechanical.
+3. Convert the remaining three, then the docs.
+
+### Verification
+
+- **Not one file under `tests/testthat/_snaps/` changes, and none moves** — `git status --porcelain tests/testthat/_snaps/` empty, `find tests/testthat/_snaps -name '*.new'` empty. R4 is the first increment in this sequence to touch no artifact at all, not even by rename.
+- `Rscript -e 'devtools::test()'` fully green with the **test-label list unchanged**. Capture it before and after and diff it rather than eyeballing the count — a silently renamed label is exactly what deriving the prefix from the wrong argument produces, and it would still be green.
+- Each converted file is ≤ 3 lines, and `grep -n "fixture_inputs\|fixture_stem\|--table" tests/testthat/test-*-table.R` returns hits only in `test-join-sense-entry-table.R`, proving the loop moved rather than being copied.
+
 ## Decisions to settle
 
-**Open · approval-test the directory instead of the table.** The alternative to `--table` is to snapshot a **manifest** of the filenames `--table-dir` wrote, per fixture, optionally with each file's content in one digest artifact. This was initially dismissed on two grounds that turned out to be false — see [R1's opening](#why-a-second-mode-rather-than-reading-from-a-table-directory) — so it deserves recording as a live option rather than a closed one.
+**Declined · approval-test the directory instead of the table.** The alternative to `--table` was to snapshot a **manifest** of the filenames `--table-dir` wrote, per fixture, optionally with each file's content in one digest artifact. It was recorded here as live rather than closed because the two grounds an earlier draft dismissed it on turned out to be false — see [R1's opening](#why-a-second-mode-rather-than-reading-from-a-table-directory). Re-examined once R0–R3 had landed and before Phase B starts — the last point at which it would be cheap — it is **declined**, because what R0 and R1 actually shipped took most of its substance:
 
-In its favour: absence-from-a-manifest is a cleaner assertion of the empty case than a zero-byte file; the four per-table test files collapse into one; and it would drop the per-table snapshot count from 24 artifacts to 8. Against: it re-baselines all 24 approved CSVs at once, which is where a real regression hides; it dissolves the documented per-table fixture curation; it costs about +8 s of suite time now and more per table added; and it removes single-table-to-stdout unless `--table` is kept anyway.
+- **Its best argument is spent.** "Absence from a manifest beats a zero-byte file" mattered because a zero-byte snapshot could not distinguish a correctly empty table from a crash. [R0](#r0--assert-exit-status-in-the-cli-snapshot-helper) closed exactly that by asserting exit status, so the ambiguity the manifest was going to resolve no longer exists.
+- **The manifest already exists**, in a better form. R1 added `expect_lift2csv_table_dir_writes()` to `test-lift2csv.R`, asserting the exact set of filenames written across three fixtures chosen for the three cases (pronunciations but no examples, examples but no pronunciations, empty lexicon). The expected filenames are readable in the test file rather than needing a diff of an approved artifact to interpret.
+- **`--table` is not going away**, so "it removes single-table-to-stdout unless `--table` is kept anyway" is moot — it is implemented, tested, and cited from the registry's `help` strings and the README.
 
-Sequencing, if it is wanted: **after** R1, never instead of it. R1 with `--table` reaches the same end state (one script, registry-driven, four boilerplate files gone) while keeping every artifact byte-identical — so it can be verified. Restructuring the artifacts afterwards is then a change whose diff is *only* the restructuring, reviewed on its own. Doing both at once means neither is checkable. This also naturally pairs with [R3](#decisions-to-settle) above, since both are about how the test suite is organised rather than what the software does.
+What remained in favour was only artifact-count reduction — four test files to one, 24 approved CSVs to 8 — bought at a price that grows with Phase B: the curated fixture directories (7 / 7 / 6 / 4 files, deliberately not at parity) dissolve; a unified run puts every fixture through every table's extractor, so the measured +8 s at four tables is roughly ×2.5 at ten; and diff locality goes, since a change to the entry extractor would surface in all 8 fixture digests instead of `_snaps/entry-table/`'s 7 alone. Re-baselining 24 artifacts at once — 60 after Phase B — to buy that is the wrong trade, and the timing argument cuts the same way: because the cost only ever rises, "not now" is "not ever" rather than "later".
+
+The duplication that motivated it is real, though. [R4](#r4--collapse-the-per-table-test-files-onto-a-shared-helper) removes that instead, and pays none of the above: the four files shrink to two lines each behind a shared helper, and not one artifact moves.
 
 **Not proposed: de-duplicating the script bootstrap.** The 5-line `script_path`/`project_dir`/`devtools::load_all()` preamble is identical in every script in `scripts/`. Sharing it needs the same path logic to locate the shared file, trading duplication for indirection at no gain — and R1 removes four of the copies anyway.
 
 ## What this buys Phase B
 
-Per new table, before: `R/<name>_table.R`, `R/<name>_helpers.R`, `R/csv2lift_<name>.R`, **`scripts/lift2csv_<name>-table.R`**, `tests/testthat/test-<name>-table_end-to-end.R`, a curated fixture directory, a registry row, a SPEC.md section.
+Per new table, before: `R/<name>_table.R`, `R/<name>_helpers.R`, `R/csv2lift_<name>.R`, **`scripts/lift2csv_<name>-table.R`**, a hand-copied 10-line **`tests/testthat/test-<name>-table_end-to-end.R`**, a curated fixture directory, a registry row, a SPEC.md section.
 
-After R1 the bolded item is gone — the registry row supplies it, the same way Phase T made the row supply the CLI flag, the attach call, the `requires` guard and the test-loop glob. Six queued tables, so six fewer boilerplate files, and one fewer place for a new table to be half-wired.
+After R1 the first bolded item is gone — the registry row supplies it, the same way Phase T made the row supply the CLI flag, the attach call, the `requires` guard and the test-loop glob. Six queued tables, so six fewer boilerplate files, and one fewer place for a new table to be half-wired. After R4 the second shrinks from ten hand-copied lines to two, which is the same saving applied to the one per-table file that has to keep existing (see [why one thin file per table](#why-one-thin-file-per-table-and-not-one-file-for-all-four)). What is left per table is genuinely per-table: the extractors, the fixtures, the row, the spec section.
