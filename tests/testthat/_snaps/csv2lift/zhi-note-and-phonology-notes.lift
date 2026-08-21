@@ -112,6 +112,11 @@
           <text>SILCAWL0111-</text>
         </form>
       </note>
+      <reversal type="en">
+        <form lang="en">
+          <text>spit, to</text>
+        </form>
+      </reversal>
     </sense>
   </entry>
   <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-05-05T11:11:25Z" id="kom_4663978f-8e76-464a-b569-38b8c17960d9" guid="4663978f-8e76-464a-b569-38b8c17960d9" order="3">
@@ -170,6 +175,11 @@
           <text>SILCAWL0251-</text>
         </form>
       </note>
+      <reversal type="en">
+        <form lang="en">
+          <text>corpse</text>
+        </form>
+      </reversal>
     </sense>
   </entry>
 </lift>

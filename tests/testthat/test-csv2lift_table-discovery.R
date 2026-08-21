@@ -59,17 +59,26 @@ test_that("csv2lift_table-discovery_unrecognised-csv_errors", {
 })
 
 test_that("csv2lift_table-discovery_explicit-flag-overrides-discovery", {
-  # zhi-note-and-phonology-notes has entries + pronunciations + senses and no
-  # examples, so truncating its senses.csv carries no risk of leaving an
-  # example pointing at a sense_guid that no longer exists.
+  # zhi-note-and-phonology-notes has entries + pronunciations + senses + no
+  # examples, but does now have a reversals.csv (added by B1), and both of
+  # its rows reference a sense_guid -- so a truncated senses.csv must still
+  # carry every sense_guid reversals.csv depends on, or the override run
+  # fails fast on an unmatched parent instead of demonstrating the override.
   tables_dir <- testthat::test_path("fixtures", "csv2lift", "zhi-note-and-phonology-notes")
 
   # A truncated copy of that fixture's own senses.csv: same entry_id values
-  # (so the FK still resolves), fewer rows (so the output visibly differs),
-  # proving the --senses flag's file was used instead of the discovered one.
+  # (so the FK still resolves), fewer rows (so the output visibly differs,
+  # proving the --senses flag's file was used instead of the discovered
+  # one), but keeping every sense_guid another discovered CSV in this
+  # directory (reversals.csv) references, rather than an arbitrary prefix.
   override_dir <- withr::local_tempdir()
   full_senses <- readLines(file.path(tables_dir, "senses.csv"))
-  writeLines(full_senses[1:2], file.path(override_dir, "override_senses.csv"))
+  reversal_sense_guids <- read.csv(file.path(tables_dir, "reversals.csv"))$sense_guid
+  header <- full_senses[1]
+  kept_rows <- full_senses[-1][sapply(full_senses[-1], function(line) {
+    any(startsWith(line, reversal_sense_guids))
+  })]
+  writeLines(c(header, kept_rows), file.path(override_dir, "override_senses.csv"))
 
   with_override <- run_csv2lift(c(
     "--table-dir", tables_dir,

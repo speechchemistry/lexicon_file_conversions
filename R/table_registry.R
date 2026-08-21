@@ -8,8 +8,11 @@
 #
 # Row order is attach order: entries always comes first (its attach_fn
 # creates the document rather than attaching to one, so the incoming `doc`
-# argument is ignored), then pronunciations, senses, examples — matching the
-# canonical child order documented in SPEC.md's Entry Table.
+# argument is ignored), then pronunciations, senses, examples, reversals —
+# matching the canonical child order documented in SPEC.md's Entry Table.
+# examples comes ahead of reversals to match lift.rng's own declared order
+# for sense-content's children; both attach to senses independently, so
+# nothing about *correctness* requires that relative order, only readability.
 table_registry <- function() {
   library(tibble)
 
@@ -18,17 +21,19 @@ table_registry <- function() {
     "entries",        "--entries",         "CSV of the entries table (see SPEC.md's Entry Table; also `lift2csv.R --table entries`)",
     "pronunciations", "--pronunciations",  "CSV of the pronunciations table (see SPEC.md's Pronunciation Table; also `lift2csv.R --table pronunciations`)",
     "senses",         "--senses",          "CSV of the senses table (see SPEC.md's Sense Table; also `lift2csv.R --table senses`)",
-    "examples",       "--examples",        "CSV of the examples table (see SPEC.md's Example Table; also `lift2csv.R --table examples`)"
+    "examples",       "--examples",        "CSV of the examples table (see SPEC.md's Example Table; also `lift2csv.R --table examples`)",
+    "reversals",      "--reversals",       "CSV of the reversals table (see SPEC.md's Reversal Table; also `lift2csv.R --table reversals`)"
   )
 
-  registry$read_fn <- list(entry_table, pronunciation_table, sense_table, example_table)
+  registry$read_fn <- list(entry_table, pronunciation_table, sense_table, example_table, reversal_table)
   registry$attach_fn <- list(
     function(doc, table) entry_table_to_lift(table),
     attach_pronunciations_to_lift,
     attach_senses_to_lift,
-    attach_examples_to_lift
+    attach_examples_to_lift,
+    attach_reversals_to_lift
   )
-  registry$requires <- list(character(0), character(0), character(0), "senses")
+  registry$requires <- list(character(0), character(0), character(0), "senses", "senses")
 
   registry
 }

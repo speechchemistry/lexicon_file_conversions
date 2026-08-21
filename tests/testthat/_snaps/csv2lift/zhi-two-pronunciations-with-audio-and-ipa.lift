@@ -55,6 +55,16 @@
           <text>SILCAWL0384-</text>
         </form>
       </note>
+      <reversal type="en">
+        <form lang="en">
+          <text>guest</text>
+        </form>
+      </reversal>
+      <reversal type="en">
+        <form lang="en">
+          <text>visitor</text>
+        </form>
+      </reversal>
     </sense>
     <sense id="5d08c796-0759-4a20-b42a-9359e307ec8e" order="1">
       <grammatical-info value="Noun"/>
@@ -79,6 +89,11 @@
           <text>transcription was <span lang="zhi-fonipa-x-etic">tsʼɛ̄n </span>but changed for now to match participatory data which may be correct vowel</text>
         </form>
       </note>
+      <reversal type="en">
+        <form lang="en">
+          <text>stranger</text>
+        </form>
+      </reversal>
     </sense>
   </entry>
 </lift>

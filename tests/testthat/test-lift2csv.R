@@ -19,10 +19,10 @@ expect_lift2csv_table_dir_writes <- function(lift_file, expected_tables) {
   expect_identical(written, sort(expected_tables))
 }
 
-test_that("lift2csv_with-pronunciations writes entries, senses, pronunciations (no examples)", {
+test_that("lift2csv_with-pronunciations writes entries, senses, pronunciations, reversals (no examples)", {
   expect_lift2csv_table_dir_writes(
     file.path(entry_fixture_dir, "zhi-two-pronunciations-with-audio-and-ipa.lift"),
-    c("entries", "senses", "pronunciations")
+    c("entries", "senses", "pronunciations", "reversals")
   )
 })
 
