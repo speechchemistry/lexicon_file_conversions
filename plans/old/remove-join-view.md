@@ -2,9 +2,11 @@
 
 ## Status
 
-Planned, not started. Prerequisite for [plans/prune-empty-columns.md](prune-empty-columns.md)
-(see its Sequencing section): landing this first drops that change from 13 snapshot approvals
-to 9 and removes one of its two duplicated `nrow(table) == 0` special cases.
+Done (commit `1b9e757`). Executed as J1–J4 below, before [plans/prune-empty-columns.md](prune-empty-columns.md)
+as planned — that change then landed at 9 snapshot approvals, not 13, confirming the sequencing
+call. The `note_restrictions_en` carry-over was relocated into SPEC.md's Column Classification
+section rather than left with the deleted Join View section; the skill's cross-level naming
+guidance was reworded rather than deleted, per J4.
 
 ## Decision
 
