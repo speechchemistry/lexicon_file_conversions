@@ -129,6 +129,16 @@
         </note>
       </example>
     </sense>
+    <etymology type="borrowed" source="">
+      <form lang="pt">
+        <text>banco</text>
+      </form>
+      <field type="languagenotes">
+        <form lang="pt">
+          <text>Portuguese</text>
+        </form>
+      </field>
+    </etymology>
   </entry>
   <entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-09-06T16:13:13Z" id="bárigi_c2d5080f-e67a-45ce-8a2a-cbddc75a3657" guid="c2d5080f-e67a-45ce-8a2a-cbddc75a3657">
     <lexical-unit>
@@ -163,6 +173,16 @@
         </note>
       </example>
     </sense>
+    <etymology type="borrowed" source="">
+      <form lang="en">
+        <text>barge</text>
+      </form>
+      <field type="languagenotes">
+        <form lang="pt">
+          <text>English</text>
+        </form>
+      </field>
+    </etymology>
   </entry>
   <entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-09-06T16:14:02Z" id="bemberuwa_41989bc6-8c43-426f-8465-6e78018dc115" guid="41989bc6-8c43-426f-8465-6e78018dc115">
     <lexical-unit>
@@ -243,6 +263,16 @@
         </note>
       </example>
     </sense>
+    <etymology type="borrowed" source="">
+      <form lang="pt">
+        <text>bom dia</text>
+      </form>
+      <field type="languagenotes">
+        <form lang="pt">
+          <text>Portuguese</text>
+        </form>
+      </field>
+    </etymology>
   </entry>
   <entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-09-06T16:18:38Z" id="bongwe_4b5afaed-1da7-4062-8992-e2f6076d2886" guid="4b5afaed-1da7-4062-8992-e2f6076d2886">
     <lexical-unit>
@@ -310,6 +340,16 @@
         </note>
       </example>
     </sense>
+    <etymology type="borrowed" source="">
+      <form lang="pt">
+        <text>boa tarde</text>
+      </form>
+      <field type="languagenotes">
+        <form lang="pt">
+          <text>Portuguese</text>
+        </form>
+      </field>
+    </etymology>
   </entry>
   <entry dateCreated="2005-06-23T16:30:30Z" dateModified="2006-09-06T16:19:08Z" id="bote_97fc469d-9916-454d-8ff0-277f973f8674" guid="97fc469d-9916-454d-8ff0-277f973f8674">
     <lexical-unit>
@@ -333,6 +373,19 @@
       </gloss>
       <example/>
     </sense>
+    <etymology type="borrowed" source="">
+      <form lang="en">
+        <text>boat</text>
+      </form>
+      <gloss lang="en">
+        <text>boat</text>
+      </gloss>
+      <field type="languagenotes">
+        <form lang="pt">
+          <text>English</text>
+        </form>
+      </field>
+    </etymology>
   </entry>
   <entry dateCreated="2007-01-11T20:46:03Z" dateModified="2007-01-11T21:17:04Z" id="cen_72a67175-6d5f-4966-b5b2-f7163e776984" guid="72a67175-6d5f-4966-b5b2-f7163e776984">
     <lexical-unit>

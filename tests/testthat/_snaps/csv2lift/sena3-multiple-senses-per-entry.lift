@@ -36,5 +36,17 @@
         <text>third</text>
       </gloss>
     </sense>
+    <etymology type="borrowed" source="">
+      <field type="comment">
+        <form lang="en">
+          <text>tatu</text>
+        </form>
+      </field>
+      <field type="languagenotes">
+        <form lang="pt">
+          <text>Sena</text>
+        </form>
+      </field>
+    </etymology>
   </entry>
 </lift>

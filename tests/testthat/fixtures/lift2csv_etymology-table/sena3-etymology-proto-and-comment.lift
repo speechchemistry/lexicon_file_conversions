@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- See https://github.com/sillsdev/lift-standard for more information on the format used here. -->
+<lift producer="SIL.FLEx 9.2.11.1154" version="0.13">
+<header>
+<ranges>
+<range id="dialect" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="etymology" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="grammatical-info" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="lexical-relation" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="note-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="paradigm" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="reversal-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="semantic-domain-ddp4" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="status" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="users" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="location" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<!-- The following ranges are produced by FieldWorks Language Explorer, and are not part of the LIFT standard. -->
+<range id="anthro-code" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="translation-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<!-- The parts of speech are duplicated in another range because derivational affixes require a "From" PartOfSpeech as well as a "To" PartOfSpeech. -->
+<range id="from-part-of-speech" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="morph-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="exception-feature" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="inflection-feature" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="inflection-feature-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="genro-feature-value" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Num-feature-value" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Nome-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Preposição-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Possessivo-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Determiner-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Verbo-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="do-not-publish-in" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="usage-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+</ranges>
+<fields>
+<field tag="cv-pattern">
+<form lang="en"><text>This records the syllable pattern for a LexPronunciation in FieldWorks.</text></form>
+</field>
+<field tag="tone">
+<form lang="en"><text>This records the tone information for a LexPronunciation in FieldWorks.</text></form>
+</field>
+<field tag="comment">
+<form lang="en"><text>This records a comment (note) in a LexEtymology in FieldWorks.</text></form>
+</field>
+<field tag="import-residue">
+<form lang="en"><text>This records residue left over from importing a standard format file into FieldWorks (or LinguaLinks).</text></form>
+</field>
+<field tag="literal-meaning">
+<form lang="en"><text>This field is used to store a literal meaning of the entry.  Typically, this field is necessary only for a compound or an idiom where the meaning of the whole is different from the sum of its parts.</text></form>
+</field>
+<field tag="summary-definition">
+<form lang="en"><text>A summary definition (located at the entry level in the Entry pane) is a general definition summarizing all the senses of a primary entry. It has no theoretical value; its use is solely pragmatic.</text></form>
+</field>
+<field tag="exemplar">
+<form lang="en"><text>This field stores the exemplar form for the current sense.</text></form>
+</field>
+<field tag="scientific-name">
+<form lang="en"><text>This field stores the scientific name pertinent to the current sense.</text></form>
+</field>
+<field tag="Plural">
+<form lang="en"><text></text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=String; WsSelector=kwsVern</text></form>
+</field>
+<field tag="Singular">
+<form lang="en"><text>There are a number of words which have no singular or the singular is rare.</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=String; WsSelector=kwsAnal</text></form>
+</field>
+<field tag="Parsing Note">
+<form lang="en"><text></text></form>
+<form lang="qaa-x-spec"><text>Class=LexSense; Type=String; WsSelector=kwsAnal</text></form>
+</field>
+</fields>
+</header>
+
+<entry dateCreated="2005-06-23T16:30:31Z" dateModified="2026-08-22T07:02:27Z" id="kambalame_1f2f5115-5cb0-4112-9c58-dd4b5861b3e5" guid="1f2f5115-5cb0-4112-9c58-dd4b5861b3e5">
+<lexical-unit>
+<form lang="seh"><text>kambalame</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<etymology type="proto" source="">
+<form lang="seh"><text>ka- mbalame</text></form>
+<gloss lang="en"><text>diminuative- bird</text></gloss>
+<field type="languagenotes">
+<form lang="pt"><text>Sena</text></form>
+</field>
+</etymology>
+<field type="Plural">
+<form lang="seh"><text>pimbalame</text></form>
+</field>
+<sense id="ab06a13e-8c8a-4c08-ace1-1dbe151d6a1f">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:12/8]]"/>
+</grammatical-info>
+<gloss lang="en"><text>small bird</text></gloss>
+<gloss lang="pt"><text>passarinho</text></gloss>
+<example source="Moreira:22; Nyazeze">
+<note type="reference">
+<form lang="en"><text>Moreira:22; Nyazeze</text></form>
+</note>
+</example>
+<trait name ="semantic-domain-ddp4" value="1.6.1.2 Bird"/>
+<relation type="Synonyms" ref="f2111a87-c2b3-4aba-85c5-6f988e989c56"/>
+</sense>
+</entry>
+
+<entry dateCreated="2005-06-23T16:30:31Z" dateModified="2026-08-22T07:02:27Z" id="citatu_011185bb-e8c8-4ab9-80fb-2e19b670e3d0" guid="011185bb-e8c8-4ab9-80fb-2e19b670e3d0">
+<lexical-unit>
+<form lang="seh"><text>tatu</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>citatu</text></form>
+</citation>
+<etymology type="borrowed" source="">
+<field type="comment">
+<form lang="en"><text>tatu</text></form>
+</field>
+<field type="languagenotes">
+<form lang="pt"><text>Sena</text></form>
+</field>
+</etymology>
+<field type="Plural">
+<form lang="seh"><text>pitatu</text></form>
+</field>
+<sense id="50485a90-b701-4c13-8986-3b6a94d1e82f" order="0">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:7/8]]"/>
+</grammatical-info>
+<gloss lang="en"><text>Wednesday</text></gloss>
+<gloss lang="pt"><text>quarta-feira</text></gloss>
+<example source="Moreira p33">
+<note type="reference">
+<form lang="en"><text>Moreira p33</text></form>
+</note>
+</example>
+</sense>
+<sense id="f5e72635-c18f-4558-bff8-af539d7f41c7" order="1">
+<grammatical-info value="Nome">
+<trait name="inflection-feature" value="{Infl}[NounAgr:[genro:7/8]]"/>
+</grammatical-info>
+<gloss lang="en"><text>third</text></gloss>
+<gloss lang="pt"><text>terceira</text></gloss>
+</sense>
+</entry>
+
+</lift>
