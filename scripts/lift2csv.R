@@ -29,6 +29,9 @@ if (!is.na(argv$table) && !is.na(argv$table_dir)) {
 if (is.na(argv$table) && is.na(argv$table_dir)) {
   stop("Supply either --table <name> or --table-dir <dir>.", call. = FALSE)
 }
+if (!is.na(argv$table_dir) && file.exists(argv$table_dir) && !dir.exists(argv$table_dir)) {
+  stop(sprintf("--table-dir %s already exists as a file, not a directory. Remove or rename it and try again.", argv$table_dir), call. = FALSE)
+}
 
 # format_table_csv() (R/table_csv.R) is shared by both modes so the
 # empty-column/empty-table convention is enforced identically regardless of
