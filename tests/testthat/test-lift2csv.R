@@ -64,5 +64,5 @@ test_that("lift2csv_neither-flag_errors", {
 test_that("lift2csv_unrecognised-table-name_errors_and_lists_valid_names", {
   lift_file <- file.path(entry_fixture_dir, "lela-teli-empty-lexicon.lift")
   expect_usage_error(c(lift_file, "--table", "bogus"), "Unrecognised --table bogus")
-  expect_usage_error(c(lift_file, "--table", "bogus"), "entries, pronunciations, variants, senses, examples, reversals, etymologies, traits")
+  expect_usage_error(c(lift_file, "--table", "bogus"), "entries, pronunciations, variants, senses, sense-relations, examples, reversals, entry-relations, etymologies, traits")
 })

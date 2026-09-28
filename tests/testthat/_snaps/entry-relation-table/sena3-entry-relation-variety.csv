@@ -1,0 +1,7 @@
+entry_id,relation_type,relation_ref,relation_order
+7725611a-fd3d-4009-89b9-caf81ab31e85,_component-lexeme,2bde7e2c-9ddc-4de0-b416-c24c0710c2fa,0
+7725611a-fd3d-4009-89b9-caf81ab31e85,_component-lexeme,a9e28647-c541-4278-a2b1-6f924c2c5aa7,1
+7725611a-fd3d-4009-89b9-caf81ab31e85,Etymological,2bde7e2c-9ddc-4de0-b416-c24c0710c2fa,
+2bde7e2c-9ddc-4de0-b416-c24c0710c2fa,Etymological,7725611a-fd3d-4009-89b9-caf81ab31e85,
+708ff551-9116-458a-b6a9-ea8eab0beff0,Compare,a082d087-1955-4ecd-b823-c0639cbd1b2e,
+a082d087-1955-4ecd-b823-c0639cbd1b2e,Compare,708ff551-9116-458a-b6a9-ea8eab0beff0,

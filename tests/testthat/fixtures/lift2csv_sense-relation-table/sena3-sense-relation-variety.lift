@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- See https://github.com/sillsdev/lift-standard for more information on the format used here. -->
+<lift producer="SIL.FLEx 9.2.11.1154" version="0.13">
+<header>
+<ranges>
+<range id="dialect" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="etymology" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="grammatical-info" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="lexical-relation" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="note-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="paradigm" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="reversal-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="semantic-domain-ddp4" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="status" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="users" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="location" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<!-- The following ranges are produced by FieldWorks Language Explorer, and are not part of the LIFT standard. -->
+<range id="anthro-code" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="translation-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<!-- The parts of speech are duplicated in another range because derivational affixes require a "From" PartOfSpeech as well as a "To" PartOfSpeech. -->
+<range id="from-part-of-speech" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="morph-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="exception-feature" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="inflection-feature" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="inflection-feature-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="genro-feature-value" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Num-feature-value" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Nome-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Preposição-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Possessivo-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Determiner-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Verbo-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="do-not-publish-in" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="usage-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+</ranges>
+<fields>
+<field tag="cv-pattern">
+<form lang="en"><text>This records the syllable pattern for a LexPronunciation in FieldWorks.</text></form>
+</field>
+<field tag="tone">
+<form lang="en"><text>This records the tone information for a LexPronunciation in FieldWorks.</text></form>
+</field>
+<field tag="comment">
+<form lang="en"><text>This records a comment (note) in a LexEtymology in FieldWorks.</text></form>
+</field>
+<field tag="import-residue">
+<form lang="en"><text>This records residue left over from importing a standard format file into FieldWorks (or LinguaLinks).</text></form>
+</field>
+<field tag="literal-meaning">
+<form lang="en"><text>This field is used to store a literal meaning of the entry.  Typically, this field is necessary only for a compound or an idiom where the meaning of the whole is different from the sum of its parts.</text></form>
+</field>
+<field tag="summary-definition">
+<form lang="en"><text>A summary definition (located at the entry level in the Entry pane) is a general definition summarizing all the senses of a primary entry. It has no theoretical value; its use is solely pragmatic.</text></form>
+</field>
+<field tag="exemplar">
+<form lang="en"><text>This field stores the exemplar form for the current sense.</text></form>
+</field>
+<field tag="scientific-name">
+<form lang="en"><text>This field stores the scientific name pertinent to the current sense.</text></form>
+</field>
+<field tag="Plural">
+<form lang="en"><text></text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=String; WsSelector=kwsVern</text></form>
+</field>
+<field tag="Singular">
+<form lang="en"><text>There are a number of words which have no singular or the singular is rare.</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=String; WsSelector=kwsAnal</text></form>
+</field>
+<field tag="Parsing Note">
+<form lang="en"><text></text></form>
+<form lang="qaa-x-spec"><text>Class=LexSense; Type=String; WsSelector=kwsAnal</text></form>
+</field>
+</fields>
+</header>
+
+<entry dateCreated="2005-06-23T16:30:31Z" dateModified="2026-09-28T21:05:16Z" id="komerwa_1e94538a-c6db-4836-853d-31d8f25b76f1" guid="1e94538a-c6db-4836-853d-31d8f25b76f1">
+<lexical-unit>
+<form lang="seh"><text>komerw</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>komerwa</text></form>
+</citation>
+<sense id="e233ed05-a5c5-4db6-a8a7-549a611a0ae5" order="0">
+<grammatical-info value="Verbo">
+</grammatical-info>
+<gloss lang="en"><text>happy</text></gloss>
+<gloss lang="pt"><text>contente</text></gloss>
+<definition>
+<form lang="en"><text>happy, content</text></form>
+</definition>
+<example source="Jac">
+<note type="reference">
+<form lang="en"><text>Jac</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>See: khomerwa = nail (to a cross)</text></form>
+</note>
+<relation type="Antonym" ref="3e72de5a-4584-4551-b5e1-b6d8fe9be15e"/>
+<relation type="Synonyms" ref="ce9787bb-6789-49f9-9981-27b1724cef66"/>
+</sense>
+<sense id="78f9be23-f46e-40f8-b9ae-feeb0fe345e1" order="1">
+<grammatical-info value="Verbo">
+</grammatical-info>
+<gloss lang="en"><text>well fed</text></gloss>
+<gloss lang="pt"><text>bem comida</text></gloss>
+</sense>
+</entry>
+
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2026-09-28T21:05:16Z" id="tsanzaya_2614a9d9-5279-4b6e-9f33-1db67d2d0100" guid="2614a9d9-5279-4b6e-9f33-1db67d2d0100">
+<lexical-unit>
+<form lang="seh"><text>tsanzay</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>tsanzaya</text></form>
+</citation>
+<sense id="ce9787bb-6789-49f9-9981-27b1724cef66" order="0">
+<grammatical-info value="Verbo">
+</grammatical-info>
+<gloss lang="en"><text>happy</text></gloss>
+<gloss lang="pt"><text>feliz</text></gloss>
+<example source="komerwa = gostar, amar">
+<form lang="seh"><text>Mwana wa kusanzaya</text></form>
+<translation type="Free translation">
+<form lang="pt"><text>Crianca feliz</text></form>
+</translation>
+<note type="reference">
+<form lang="en"><text>komerwa = gostar, amar</text></form>
+</note>
+</example>
+<example>
+<form lang="seh"><text>Mwana aenda kunyumba na kusanzaya.</text></form>
+<translation type="Free translation">
+<form lang="pt"><text>A crianca feliz foi a casa.</text></form>
+</translation>
+</example>
+<note>
+<form lang="en"><text>See: tsanzaisa = cause to be happy; See: tsanzayisa = causar alguem ser content, alegrar alguem; we know that it is a y in the root not i because of the penultimate accent, and it must be maintained when an extension is added; Second example is as a noun (infinitive).</text></form>
+</note>
+<note type="phonology">
+<form lang="en"><text>sanzaya</text></form>
+</note>
+<note type="sociolinguistics">
+<form lang="en"><text>A</text></form>
+</note>
+<relation type="Antonym" ref="b3d7c131-2e6c-4715-a476-9cd2f74be96e"/>
+<relation type="Synonyms" ref="e233ed05-a5c5-4db6-a8a7-549a611a0ae5"/>
+</sense>
+<sense id="d8c5c5b8-9b61-4fea-95b3-7ec530fd4644" order="1">
+<grammatical-info value="Verbo">
+</grammatical-info>
+<gloss lang="en"><text>satisfaction</text></gloss>
+<gloss lang="pt"><text>satisfação</text></gloss>
+</sense>
+</entry>
+
+<entry dateCreated="2006-09-06T14:51:59Z" dateModified="2026-09-28T21:05:16Z" id="ipirwa_e1b1ed03-96b2-4c1e-bc35-1e325461d139" guid="e1b1ed03-96b2-4c1e-bc35-1e325461d139">
+<lexical-unit>
+<form lang="seh"><text>ipirw</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>ipirwa</text></form>
+</citation>
+<sense id="3e72de5a-4584-4551-b5e1-b6d8fe9be15e">
+<grammatical-info value="Verbo">
+</grammatical-info>
+<gloss lang="en"><text>unhappy</text></gloss>
+<gloss lang="pt"><text>infeliz</text></gloss>
+<relation type="Antonym" ref="e233ed05-a5c5-4db6-a8a7-549a611a0ae5"/>
+<relation type="Synonyms" ref="eca32c60-3044-4c43-9ba3-7192e3155034"/>
+</sense>
+</entry>
+
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2026-09-28T21:05:16Z" id="tsukwala_4d9edf5a-78cc-457c-8a36-abe3cb88d037" guid="4d9edf5a-78cc-457c-8a36-abe3cb88d037">
+<lexical-unit>
+<form lang="seh"><text>tsukwal</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>tsukwala</text></form>
+</citation>
+<sense id="b3d7c131-2e6c-4715-a476-9cd2f74be96e">
+<grammatical-info value="Verbo">
+</grammatical-info>
+<gloss lang="en"><text>become sad</text></gloss>
+<gloss lang="pt"><text>entrestecer</text></gloss>
+<example source="Nyazeze">
+<note type="reference">
+<form lang="en"><text>Nyazeze</text></form>
+</note>
+</example>
+<note type="phonology">
+<form lang="en"><text>*sukwala(A)</text></form>
+</note>
+<note type="sociolinguistics">
+<form lang="en"><text>AP</text></form>
+</note>
+<relation type="Antonym" ref="ce9787bb-6789-49f9-9981-27b1724cef66"/>
+</sense>
+</entry>
+
+<entry dateCreated="2005-06-23T16:30:32Z" dateModified="2026-09-28T21:05:16Z" id="sirizwa_bcbe35eb-8f26-41fe-84e6-e88c179248ff" guid="bcbe35eb-8f26-41fe-84e6-e88c179248ff">
+<lexical-unit>
+<form lang="seh"><text>sirizw</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="root"/>
+<citation>
+<form lang="seh"><text>sirizwa</text></form>
+</citation>
+<sense id="eca32c60-3044-4c43-9ba3-7192e3155034">
+<grammatical-info value="Verbo">
+</grammatical-info>
+<gloss lang="en"><text>be upset</text></gloss>
+<gloss lang="pt"><text>ficar chateado</text></gloss>
+<example source="Sulo2:41">
+<note type="reference">
+<form lang="en"><text>Sulo2:41</text></form>
+</note>
+</example>
+<note>
+<form lang="en"><text>check this, see Sulo2 when the rabbit lost the race; See: kusiriziswa = passive form of sirizwa</text></form>
+</note>
+<note type="phonology">
+<form lang="en"><text>siribza</text></form>
+</note>
+<relation type="Synonyms" ref="3e72de5a-4584-4551-b5e1-b6d8fe9be15e"/>
+</sense>
+</entry>
+
+</lift>
