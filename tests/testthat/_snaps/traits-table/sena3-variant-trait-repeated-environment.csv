@@ -1,0 +1,7 @@
+entry_id,sense_guid,owner,owner_index,trait_name,trait_value
+89b79930-93cb-4af5-be86-bea62f1de26a,,variant,1,environment,/ _ a
+89b79930-93cb-4af5-be86-bea62f1de26a,,variant,1,environment,/ _ i
+89b79930-93cb-4af5-be86-bea62f1de26a,,variant,1,environment,/ _ u
+89b79930-93cb-4af5-be86-bea62f1de26a,,variant,1,morph-type,prefix
+89b79930-93cb-4af5-be86-bea62f1de26a,5adef85a-9ff2-477b-a967-a5d519664767,grammatical-info,,type,inflAffix
+89b79930-93cb-4af5-be86-bea62f1de26a,5adef85a-9ff2-477b-a967-a5d519664767,grammatical-info,,Verbo-slot,mba

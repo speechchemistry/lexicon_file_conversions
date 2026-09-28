@@ -1,21 +1,23 @@
-entry_id,sense_guid,owner,trait_name,trait_value
-052cdbd0-ee5c-4750-8bda-ba86be19659b,5b80af28-d70b-41fa-b3e4-5a0e1431a220,grammatical-info,inflection-feature,{Infl}[NounAgr:[genro:12/8]]
-052cdbd0-ee5c-4750-8bda-ba86be19659b,5b80af28-d70b-41fa-b3e4-5a0e1431a220,sense,usage-type,perjorativo
-0c7b40af-941f-402f-8b66-4721c0044c2b,43a4b50c-b681-4e03-ad5c-1649e7daf633,grammatical-info,type,inflAffix
-0c7b40af-941f-402f-8b66-4721c0044c2b,43a4b50c-b681-4e03-ad5c-1649e7daf633,grammatical-info,Nome-slot,ncl
-0c7b40af-941f-402f-8b66-4721c0044c2b,43a4b50c-b681-4e03-ad5c-1649e7daf633,grammatical-info,inflection-feature,{Infl}[NounAgr:[genro:7/8]]
-0c7b40af-941f-402f-8b66-4721c0044c2b,a3846ed9-9b20-4c5f-8abb-873f9ff99a17,grammatical-info,type,inflAffix
-0c7b40af-941f-402f-8b66-4721c0044c2b,a3846ed9-9b20-4c5f-8abb-873f9ff99a17,grammatical-info,Verbo-slot,obj
-0c7b40af-941f-402f-8b66-4721c0044c2b,a3846ed9-9b20-4c5f-8abb-873f9ff99a17,grammatical-info,Verbo-slot,sbj
-0c7b40af-941f-402f-8b66-4721c0044c2b,fdff4835-a887-4305-952a-4089525f3e62,grammatical-info,type,inflAffix
-0c7b40af-941f-402f-8b66-4721c0044c2b,fdff4835-a887-4305-952a-4089525f3e62,grammatical-info,Possessivo-slot,possncl
-0c7b40af-941f-402f-8b66-4721c0044c2b,182f783d-7703-4dc6-8aaa-d4c995ec11e0,grammatical-info,type,inflAffix
-0c7b40af-941f-402f-8b66-4721c0044c2b,182f783d-7703-4dc6-8aaa-d4c995ec11e0,grammatical-info,Preposição-slot,assocncl
-0c7b40af-941f-402f-8b66-4721c0044c2b,d7932d5f-f27f-4cbb-b264-52061d0b3253,grammatical-info,type,inflAffix
-0c7b40af-941f-402f-8b66-4721c0044c2b,d7932d5f-f27f-4cbb-b264-52061d0b3253,grammatical-info,Determiner-slot,adjncl
-06e398d6-a16f-42c5-855d-790622cb6ec1,388e6630-6231-4ea8-86a6-1a98d2d01126,grammatical-info,inflection-feature,{Infl}[NounAgr:[genro:3/4]]
-06e398d6-a16f-42c5-855d-790622cb6ec1,388e6630-6231-4ea8-86a6-1a98d2d01126,sense,semantic-domain-ddp4,1.5.1 Tree
-06e398d6-a16f-42c5-855d-790622cb6ec1,388e6630-6231-4ea8-86a6-1a98d2d01126,sense,semantic-domain-ddp4,"1.5.2 Bush, shrub"
-06e398d6-a16f-42c5-855d-790622cb6ec1,c4d3b653-3207-4b86-942e-080107bd75c3,grammatical-info,inflection-feature,{Infl}[NounAgr:[genro:3/4]]
-15dddc00-6015-4412-aa3b-644db854c89e,62af26f3-cd22-4b25-82dc-3dc7cb6ba886,grammatical-info,type,derivAffix
-15dddc00-6015-4412-aa3b-644db854c89e,62af26f3-cd22-4b25-82dc-3dc7cb6ba886,grammatical-info,from-part-of-speech,Verbo
+entry_id,sense_guid,owner,owner_index,trait_name,trait_value
+052cdbd0-ee5c-4750-8bda-ba86be19659b,5b80af28-d70b-41fa-b3e4-5a0e1431a220,grammatical-info,,inflection-feature,{Infl}[NounAgr:[genro:12/8]]
+052cdbd0-ee5c-4750-8bda-ba86be19659b,5b80af28-d70b-41fa-b3e4-5a0e1431a220,sense,,usage-type,perjorativo
+0c7b40af-941f-402f-8b66-4721c0044c2b,,variant,1,environment,/ _ [V]
+0c7b40af-941f-402f-8b66-4721c0044c2b,,variant,1,morph-type,prefix
+0c7b40af-941f-402f-8b66-4721c0044c2b,43a4b50c-b681-4e03-ad5c-1649e7daf633,grammatical-info,,type,inflAffix
+0c7b40af-941f-402f-8b66-4721c0044c2b,43a4b50c-b681-4e03-ad5c-1649e7daf633,grammatical-info,,Nome-slot,ncl
+0c7b40af-941f-402f-8b66-4721c0044c2b,43a4b50c-b681-4e03-ad5c-1649e7daf633,grammatical-info,,inflection-feature,{Infl}[NounAgr:[genro:7/8]]
+0c7b40af-941f-402f-8b66-4721c0044c2b,a3846ed9-9b20-4c5f-8abb-873f9ff99a17,grammatical-info,,type,inflAffix
+0c7b40af-941f-402f-8b66-4721c0044c2b,a3846ed9-9b20-4c5f-8abb-873f9ff99a17,grammatical-info,,Verbo-slot,obj
+0c7b40af-941f-402f-8b66-4721c0044c2b,a3846ed9-9b20-4c5f-8abb-873f9ff99a17,grammatical-info,,Verbo-slot,sbj
+0c7b40af-941f-402f-8b66-4721c0044c2b,fdff4835-a887-4305-952a-4089525f3e62,grammatical-info,,type,inflAffix
+0c7b40af-941f-402f-8b66-4721c0044c2b,fdff4835-a887-4305-952a-4089525f3e62,grammatical-info,,Possessivo-slot,possncl
+0c7b40af-941f-402f-8b66-4721c0044c2b,182f783d-7703-4dc6-8aaa-d4c995ec11e0,grammatical-info,,type,inflAffix
+0c7b40af-941f-402f-8b66-4721c0044c2b,182f783d-7703-4dc6-8aaa-d4c995ec11e0,grammatical-info,,Preposição-slot,assocncl
+0c7b40af-941f-402f-8b66-4721c0044c2b,d7932d5f-f27f-4cbb-b264-52061d0b3253,grammatical-info,,type,inflAffix
+0c7b40af-941f-402f-8b66-4721c0044c2b,d7932d5f-f27f-4cbb-b264-52061d0b3253,grammatical-info,,Determiner-slot,adjncl
+06e398d6-a16f-42c5-855d-790622cb6ec1,388e6630-6231-4ea8-86a6-1a98d2d01126,grammatical-info,,inflection-feature,{Infl}[NounAgr:[genro:3/4]]
+06e398d6-a16f-42c5-855d-790622cb6ec1,388e6630-6231-4ea8-86a6-1a98d2d01126,sense,,semantic-domain-ddp4,1.5.1 Tree
+06e398d6-a16f-42c5-855d-790622cb6ec1,388e6630-6231-4ea8-86a6-1a98d2d01126,sense,,semantic-domain-ddp4,"1.5.2 Bush, shrub"
+06e398d6-a16f-42c5-855d-790622cb6ec1,c4d3b653-3207-4b86-942e-080107bd75c3,grammatical-info,,inflection-feature,{Infl}[NounAgr:[genro:3/4]]
+15dddc00-6015-4412-aa3b-644db854c89e,62af26f3-cd22-4b25-82dc-3dc7cb6ba886,grammatical-info,,type,derivAffix
+15dddc00-6015-4412-aa3b-644db854c89e,62af26f3-cd22-4b25-82dc-3dc7cb6ba886,grammatical-info,,from-part-of-speech,Verbo

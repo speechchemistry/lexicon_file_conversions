@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- See https://github.com/sillsdev/lift-standard for more information on the format used here. -->
+<lift producer="SIL.FLEx 9.2.11.1154" version="0.13">
+<header>
+<ranges>
+<range id="dialect" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="etymology" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="grammatical-info" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="lexical-relation" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="note-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="paradigm" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="reversal-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="semantic-domain-ddp4" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="status" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="users" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="location" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<!-- The following ranges are produced by FieldWorks Language Explorer, and are not part of the LIFT standard. -->
+<range id="anthro-code" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="translation-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<!-- The parts of speech are duplicated in another range because derivational affixes require a "From" PartOfSpeech as well as a "To" PartOfSpeech. -->
+<range id="from-part-of-speech" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="morph-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="exception-feature" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="inflection-feature" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="inflection-feature-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="genro-feature-value" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Num-feature-value" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Nome-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Preposição-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Possessivo-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Determiner-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="Verbo-slot" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="do-not-publish-in" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+<range id="usage-type" href="file://C:/Users/timke/Downloads/Sena3/Sena3.lift-ranges"/>
+</ranges>
+<fields>
+<field tag="cv-pattern">
+<form lang="en"><text>This records the syllable pattern for a LexPronunciation in FieldWorks.</text></form>
+</field>
+<field tag="tone">
+<form lang="en"><text>This records the tone information for a LexPronunciation in FieldWorks.</text></form>
+</field>
+<field tag="comment">
+<form lang="en"><text>This records a comment (note) in a LexEtymology in FieldWorks.</text></form>
+</field>
+<field tag="import-residue">
+<form lang="en"><text>This records residue left over from importing a standard format file into FieldWorks (or LinguaLinks).</text></form>
+</field>
+<field tag="literal-meaning">
+<form lang="en"><text>This field is used to store a literal meaning of the entry.  Typically, this field is necessary only for a compound or an idiom where the meaning of the whole is different from the sum of its parts.</text></form>
+</field>
+<field tag="summary-definition">
+<form lang="en"><text>A summary definition (located at the entry level in the Entry pane) is a general definition summarizing all the senses of a primary entry. It has no theoretical value; its use is solely pragmatic.</text></form>
+</field>
+<field tag="exemplar">
+<form lang="en"><text>This field stores the exemplar form for the current sense.</text></form>
+</field>
+<field tag="scientific-name">
+<form lang="en"><text>This field stores the scientific name pertinent to the current sense.</text></form>
+</field>
+<field tag="Plural">
+<form lang="en"><text></text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=String; WsSelector=kwsVern</text></form>
+</field>
+<field tag="Singular">
+<form lang="en"><text>There are a number of words which have no singular or the singular is rare.</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=String; WsSelector=kwsAnal</text></form>
+</field>
+<field tag="Parsing Note">
+<form lang="en"><text></text></form>
+<form lang="qaa-x-spec"><text>Class=LexSense; Type=String; WsSelector=kwsAnal</text></form>
+</field>
+</fields>
+</header>
+
+<entry dateCreated="2005-06-23T16:08:17Z" dateModified="2026-09-28T20:31:37Z" id="mba-_89b79930-93cb-4af5-be86-bea62f1de26a" guid="89b79930-93cb-4af5-be86-bea62f1de26a">
+<lexical-unit>
+<form lang="seh"><text>mba-</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="prefix"/>
+<variant>
+<form lang="seh"><text>mb-</text></form>
+<trait name ="environment" value="/ _ a"/>
+<trait name ="environment" value="/ _ i"/>
+<trait name ="environment" value="/ _ u"/>
+<trait  name="morph-type" value="prefix"/>
+</variant>
+<sense id="5adef85a-9ff2-477b-a967-a5d519664767">
+<grammatical-info value="Verbo">
+<trait name="type" value="inflAffix"/>
+<trait name="Verbo-slot" value="mba"/></grammatical-info>
+<gloss lang="en"><text>COHES</text></gloss>
+<gloss lang="pt"><text>COHES</text></gloss>
+<definition>
+<form lang="en"><text>thematic continuity, -ing</text></form>
+<form lang="pt"><text>continuidade de tema, -ando</text></form>
+</definition>
+<example>
+<form lang="seh"><text>mbauponyera throwing stone, mbumala they ended friendship mbamphata grabing the rabbit,</text></form>
+</example>
+<note>
+<form lang="en"><text>^ this is not working - changed _ ~[ to ~_...[, now it works; It has a number of functions: Participle, Discourse connector (like a conjuction), as an Exortative (ex mbatidyeni "let's eat"); It seldom occurs with t/a marker: (and always has Subj w/ it) mb-a-khakhosomola "and he was coughing" mba-mu-dafuna "having wanted" (past participle idiomatically = if you wanted to); mbadzati kudya "having not yet eaten, before he ate" mbadzati dealt with as a unit (see senrt.db) ADV because it is an exception; +PART +Subject ±Tense ±Tense2 ±Object +RootE +VF; (MCC subj requires tense rule not true here); ??cf q above mbakhakhosomola has subj! also mbamudafuna "if you wanted" - yes, mba can take subject; mbakhatimpasa the participle can take 2 tenses (kha- da-) and can take subject and object marker; mbo |no example for this; Question: What is mbo really? I think it is a dialectal form of mba-</text></form>
+</note>
+<note type="phonology">
+<form lang="en"><text>alt: <span lang="seh">mb / _ i / _ u / _ a |eg mb-u-mala mbundikwewa mba-a-panga; mba</span></text></form>
+</note>
+</sense>
+</entry>
+
+</lift>
