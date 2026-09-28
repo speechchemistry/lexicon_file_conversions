@@ -1,0 +1,11 @@
+sense_guid,entry_id,sense_order,grammatical_info,gloss_en,gloss_pt,definition_en,definition_pt,general_note_en,Parsing Note_en,note_phonology_en,note_semantics_en,note_semantics_pt
+99c14abc-9fbf-48a4-931a-f30d37463fd8,7725611a-fd3d-4009-89b9-caf81ab31e85,,Advérbio,forever,para sempre,,,,,,,
+6f4a4cae-b335-4cf3-80e7-efad20ea0688,2bde7e2c-9ddc-4de0-b416-c24c0710c2fa,,Verbo,go,ir,,,,,varient: yenda; ku -> kw +/ _enda | This rule is controverial eg kwenda,,
+84e5150e-3043-4652-9f64-849cf192fee4,a9e28647-c541-4278-a2b1-6f924c2c5aa7,0,Preposição,with,com,and,e,Question: need example for all these uses; vocrev; fuses with pronouns,needs phone fusion rules,"alt: <span lang=""seh"">na / # _ | e.g. na naye nawo</span>",,
+68e58260-9383-41f8-bb1a-7aa551e89fac,a9e28647-c541-4278-a2b1-6f924c2c5aa7,1,Conjunção,and,e,"""and"" as a connector between verb pharses or clauses and cancels out sequentiality between events",e,,,,,
+91120e17-4e49-43c0-b416-00176448fdd2,a9e28647-c541-4278-a2b1-6f924c2c5aa7,2,Preposição,of,de,,,,,,,
+fee1a6ff-3d64-44fa-9515-b51e7068b1d6,a9e28647-c541-4278-a2b1-6f924c2c5aa7,3,Preposição,in,em,in,em,,,,,
+d1e7a1fe-5475-4eae-99eb-d56f7248f6c4,a9e28647-c541-4278-a2b1-6f924c2c5aa7,4,Preposição,by,por,"""by"" only with passive verbs",por,,,,,
+cbad219c-e1bc-479c-877c-c0017a425ac1,a9e28647-c541-4278-a2b1-6f924c2c5aa7,5,Preposição,to,a,to,a,,,,,
+d5eaedae-e470-4785-9b74-f67507701cd0,708ff551-9116-458a-b6a9-ea8eab0beff0,,Verbo,crawl,gatinhar,"crawl, for a person","gatinhar, pessoa",,,,agent= person,"N1(kambaza)=tem que ser pessoa, não animal"
+4a8349d7-374b-4a3f-a008-2a8d036a6c72,a082d087-1955-4ecd-b823-c0639cbd1b2e,,Nome,tortoise,cágado,,,,,,,

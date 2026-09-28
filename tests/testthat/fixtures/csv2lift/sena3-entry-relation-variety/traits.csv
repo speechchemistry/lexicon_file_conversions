@@ -1,0 +1,4 @@
+entry_id,sense_guid,owner,trait_name,trait_value
+a9e28647-c541-4278-a2b1-6f924c2c5aa7,84e5150e-3043-4652-9f64-849cf192fee4,sense,semantic-domain-ddp4,"7.4 Have, be with"
+708ff551-9116-458a-b6a9-ea8eab0beff0,d5eaedae-e470-4785-9b74-f67507701cd0,sense,semantic-domain-ddp4,7.2.1.1.2 Crawl
+a082d087-1955-4ecd-b823-c0639cbd1b2e,4a8349d7-374b-4a3f-a008-2a8d036a6c72,grammatical-info,inflection-feature,{Infl}[NounAgr:[genro:5/6]]

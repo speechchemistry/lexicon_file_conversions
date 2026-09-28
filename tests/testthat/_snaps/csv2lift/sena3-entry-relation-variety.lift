@@ -1,0 +1,273 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lift version="0.13" producer="lexicon_file_conversions csv2lift">
+  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2026-09-28T21:04:51Z" id="kuenda-na-kuenda_7725611a-fd3d-4009-89b9-caf81ab31e85" guid="7725611a-fd3d-4009-89b9-caf81ab31e85">
+    <lexical-unit>
+      <form lang="seh">
+        <text>kuenda-na-kuenda</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="stem"/>
+    <sense id="99c14abc-9fbf-48a4-931a-f30d37463fd8">
+      <grammatical-info value="Advérbio"/>
+      <gloss lang="en">
+        <text>forever</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>para sempre</text>
+      </gloss>
+      <example/>
+    </sense>
+    <relation type="_component-lexeme" ref="enda_2bde7e2c-9ddc-4de0-b416-c24c0710c2fa" order="0"/>
+    <relation type="_component-lexeme" ref="na1_a9e28647-c541-4278-a2b1-6f924c2c5aa7" order="1"/>
+    <relation type="Etymological" ref="enda_2bde7e2c-9ddc-4de0-b416-c24c0710c2fa"/>
+  </entry>
+  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2026-09-28T21:04:51Z" id="enda_2bde7e2c-9ddc-4de0-b416-c24c0710c2fa" guid="2bde7e2c-9ddc-4de0-b416-c24c0710c2fa">
+    <lexical-unit>
+      <form lang="seh">
+        <text>end</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="stem"/>
+    <citation>
+      <form lang="seh">
+        <text>enda</text>
+      </form>
+    </citation>
+    <sense id="6f4a4cae-b335-4cf3-80e7-efad20ea0688">
+      <grammatical-info value="Verbo"/>
+      <gloss lang="en">
+        <text>go</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>ir</text>
+      </gloss>
+      <note type="phonology">
+        <form lang="en">
+          <text>varient: yenda; ku -&gt; kw +/ _enda | This rule is controverial eg kwenda</text>
+        </form>
+      </note>
+    </sense>
+    <relation type="Etymological" ref="kuenda-na-kuenda_7725611a-fd3d-4009-89b9-caf81ab31e85"/>
+  </entry>
+  <entry dateCreated="2005-06-23T16:30:32Z" dateModified="2026-09-28T21:04:51Z" id="na1_a9e28647-c541-4278-a2b1-6f924c2c5aa7" guid="a9e28647-c541-4278-a2b1-6f924c2c5aa7" order="1">
+    <lexical-unit>
+      <form lang="seh">
+        <text>na</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="root"/>
+    <sense id="84e5150e-3043-4652-9f64-849cf192fee4" order="0">
+      <grammatical-info value="Preposição"/>
+      <gloss lang="en">
+        <text>with</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>com</text>
+      </gloss>
+      <definition>
+        <form lang="en">
+          <text>and</text>
+        </form>
+        <form lang="pt">
+          <text>e</text>
+        </form>
+      </definition>
+      <note>
+        <form lang="en">
+          <text>Question: need example for all these uses; vocrev; fuses with pronouns</text>
+        </form>
+      </note>
+      <note type="phonology">
+        <form lang="en">
+          <text>alt: <span lang="seh">na / # _ | e.g. na naye nawo</span></text>
+        </form>
+      </note>
+      <field type="Parsing Note">
+        <form lang="en">
+          <text>needs phone fusion rules</text>
+        </form>
+      </field>
+      <example source="sulo2 007">
+        <form lang="seh">
+          <text>cifupi na phiri</text>
+        </form>
+        <translation type="Free translation">
+          <form lang="en">
+            <text>close to the mountain</text>
+          </form>
+          <form lang="pt">
+            <text>perto de montanha</text>
+          </form>
+        </translation>
+        <note type="reference">
+          <form lang="en">
+            <text>sulo2 007</text>
+          </form>
+        </note>
+      </example>
+      <example>
+        <form lang="seh">
+          <text>Nyakatendewa na kubva cipwazo.</text>
+        </form>
+        <translation type="Free translation">
+          <form lang="en">
+            <text>The cameleon, at hearing the insult...</text>
+          </form>
+          <form lang="pt">
+            <text>Camaleão ao ouvir desprezo...</text>
+          </form>
+        </translation>
+      </example>
+      <trait name="semantic-domain-ddp4" value="7.4 Have, be with"/>
+    </sense>
+    <sense id="68e58260-9383-41f8-bb1a-7aa551e89fac" order="1">
+      <grammatical-info value="Conjunção"/>
+      <gloss lang="en">
+        <text>and</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>e</text>
+      </gloss>
+      <definition>
+        <form lang="en">
+          <text>"and" as a connector between verb pharses or clauses and cancels out sequentiality between events</text>
+        </form>
+        <form lang="pt">
+          <text>e</text>
+        </form>
+      </definition>
+    </sense>
+    <sense id="91120e17-4e49-43c0-b416-00176448fdd2" order="2">
+      <grammatical-info value="Preposição"/>
+      <gloss lang="en">
+        <text>of</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>de</text>
+      </gloss>
+    </sense>
+    <sense id="fee1a6ff-3d64-44fa-9515-b51e7068b1d6" order="3">
+      <grammatical-info value="Preposição"/>
+      <gloss lang="en">
+        <text>in</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>em</text>
+      </gloss>
+      <definition>
+        <form lang="en">
+          <text>in</text>
+        </form>
+        <form lang="pt">
+          <text>em</text>
+        </form>
+      </definition>
+    </sense>
+    <sense id="d1e7a1fe-5475-4eae-99eb-d56f7248f6c4" order="4">
+      <grammatical-info value="Preposição"/>
+      <gloss lang="en">
+        <text>by</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>por</text>
+      </gloss>
+      <definition>
+        <form lang="en">
+          <text>"by" only with passive verbs</text>
+        </form>
+        <form lang="pt">
+          <text>por</text>
+        </form>
+      </definition>
+    </sense>
+    <sense id="cbad219c-e1bc-479c-877c-c0017a425ac1" order="5">
+      <grammatical-info value="Preposição"/>
+      <gloss lang="en">
+        <text>to</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>a</text>
+      </gloss>
+      <definition>
+        <form lang="en">
+          <text>to</text>
+        </form>
+        <form lang="pt">
+          <text>a</text>
+        </form>
+      </definition>
+    </sense>
+  </entry>
+  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2026-09-28T21:04:51Z" id="kambaza_708ff551-9116-458a-b6a9-ea8eab0beff0" guid="708ff551-9116-458a-b6a9-ea8eab0beff0">
+    <lexical-unit>
+      <form lang="seh">
+        <text>kambaz</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="root"/>
+    <citation>
+      <form lang="seh">
+        <text>kambaza</text>
+      </form>
+    </citation>
+    <sense id="d5eaedae-e470-4785-9b74-f67507701cd0">
+      <grammatical-info value="Verbo"/>
+      <gloss lang="en">
+        <text>crawl</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>gatinhar</text>
+      </gloss>
+      <definition>
+        <form lang="en">
+          <text>crawl, for a person</text>
+        </form>
+        <form lang="pt">
+          <text>gatinhar, pessoa</text>
+        </form>
+      </definition>
+      <note type="semantics">
+        <form lang="en">
+          <text>agent= person</text>
+        </form>
+        <form lang="pt">
+          <text>N1(kambaza)=tem que ser pessoa, não animal</text>
+        </form>
+      </note>
+      <trait name="semantic-domain-ddp4" value="7.2.1.1.2 Crawl"/>
+    </sense>
+    <relation type="Compare" ref="kamba_a082d087-1955-4ecd-b823-c0639cbd1b2e"/>
+  </entry>
+  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2026-09-28T21:04:51Z" id="kamba_a082d087-1955-4ecd-b823-c0639cbd1b2e" guid="a082d087-1955-4ecd-b823-c0639cbd1b2e">
+    <lexical-unit>
+      <form lang="seh">
+        <text>kamba</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="root"/>
+    <field type="Plural">
+      <form lang="seh">
+        <text>makamba</text>
+      </form>
+    </field>
+    <sense id="4a8349d7-374b-4a3f-a008-2a8d036a6c72">
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+      </grammatical-info>
+      <gloss lang="en">
+        <text>tortoise</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>cágado</text>
+      </gloss>
+      <example source="Wordlist; George; Nyazeze">
+        <note type="reference">
+          <form lang="en">
+            <text>Wordlist; George; Nyazeze</text>
+          </form>
+        </note>
+      </example>
+    </sense>
+    <relation type="Compare" ref="kambaza_708ff551-9116-458a-b6a9-ea8eab0beff0"/>
+  </entry>
+</lift>

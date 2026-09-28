@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lift version="0.13" producer="lexicon_file_conversions csv2lift">
+  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2026-09-28T21:05:16Z" id="komerwa_1e94538a-c6db-4836-853d-31d8f25b76f1" guid="1e94538a-c6db-4836-853d-31d8f25b76f1">
+    <lexical-unit>
+      <form lang="seh">
+        <text>komerw</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="root"/>
+    <citation>
+      <form lang="seh">
+        <text>komerwa</text>
+      </form>
+    </citation>
+    <sense id="e233ed05-a5c5-4db6-a8a7-549a611a0ae5" order="0">
+      <grammatical-info value="Verbo"/>
+      <gloss lang="en">
+        <text>happy</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>contente</text>
+      </gloss>
+      <definition>
+        <form lang="en">
+          <text>happy, content</text>
+        </form>
+      </definition>
+      <note>
+        <form lang="en">
+          <text>See: khomerwa = nail (to a cross)</text>
+        </form>
+      </note>
+      <relation type="Antonym" ref="3e72de5a-4584-4551-b5e1-b6d8fe9be15e"/>
+      <relation type="Synonyms" ref="ce9787bb-6789-49f9-9981-27b1724cef66"/>
+      <example source="Jac">
+        <note type="reference">
+          <form lang="en">
+            <text>Jac</text>
+          </form>
+        </note>
+      </example>
+    </sense>
+    <sense id="78f9be23-f46e-40f8-b9ae-feeb0fe345e1" order="1">
+      <grammatical-info value="Verbo"/>
+      <gloss lang="en">
+        <text>well fed</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>bem comida</text>
+      </gloss>
+    </sense>
+  </entry>
+  <entry dateCreated="2005-06-23T16:30:32Z" dateModified="2026-09-28T21:05:16Z" id="tsanzaya_2614a9d9-5279-4b6e-9f33-1db67d2d0100" guid="2614a9d9-5279-4b6e-9f33-1db67d2d0100">
+    <lexical-unit>
+      <form lang="seh">
+        <text>tsanzay</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="root"/>
+    <citation>
+      <form lang="seh">
+        <text>tsanzaya</text>
+      </form>
+    </citation>
+    <sense id="ce9787bb-6789-49f9-9981-27b1724cef66" order="0">
+      <grammatical-info value="Verbo"/>
+      <gloss lang="en">
+        <text>happy</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>feliz</text>
+      </gloss>
+      <note>
+        <form lang="en">
+          <text>See: tsanzaisa = cause to be happy; See: tsanzayisa = causar alguem ser content, alegrar alguem; we know that it is a y in the root not i because of the penultimate accent, and it must be maintained when an extension is added; Second example is as a noun (infinitive).</text>
+        </form>
+      </note>
+      <note type="phonology">
+        <form lang="en">
+          <text>sanzaya</text>
+        </form>
+      </note>
+      <note type="sociolinguistics">
+        <form lang="en">
+          <text>A</text>
+        </form>
+      </note>
+      <relation type="Antonym" ref="b3d7c131-2e6c-4715-a476-9cd2f74be96e"/>
+      <relation type="Synonyms" ref="e233ed05-a5c5-4db6-a8a7-549a611a0ae5"/>
+      <example source="komerwa = gostar, amar">
+        <form lang="seh">
+          <text>Mwana wa kusanzaya</text>
+        </form>
+        <translation type="Free translation">
+          <form lang="pt">
+            <text>Crianca feliz</text>
+          </form>
+        </translation>
+        <note type="reference">
+          <form lang="en">
+            <text>komerwa = gostar, amar</text>
+          </form>
+        </note>
+      </example>
+      <example>
+        <form lang="seh">
+          <text>Mwana aenda kunyumba na kusanzaya.</text>
+        </form>
+        <translation type="Free translation">
+          <form lang="pt">
+            <text>A crianca feliz foi a casa.</text>
+          </form>
+        </translation>
+      </example>
+    </sense>
+    <sense id="d8c5c5b8-9b61-4fea-95b3-7ec530fd4644" order="1">
+      <grammatical-info value="Verbo"/>
+      <gloss lang="en">
+        <text>satisfaction</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>satisfação</text>
+      </gloss>
+    </sense>
+  </entry>
+  <entry dateCreated="2006-09-06T14:51:59Z" dateModified="2026-09-28T21:05:16Z" id="ipirwa_e1b1ed03-96b2-4c1e-bc35-1e325461d139" guid="e1b1ed03-96b2-4c1e-bc35-1e325461d139">
+    <lexical-unit>
+      <form lang="seh">
+        <text>ipirw</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="root"/>
+    <citation>
+      <form lang="seh">
+        <text>ipirwa</text>
+      </form>
+    </citation>
+    <sense id="3e72de5a-4584-4551-b5e1-b6d8fe9be15e">
+      <grammatical-info value="Verbo"/>
+      <gloss lang="en">
+        <text>unhappy</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>infeliz</text>
+      </gloss>
+      <relation type="Antonym" ref="e233ed05-a5c5-4db6-a8a7-549a611a0ae5"/>
+      <relation type="Synonyms" ref="eca32c60-3044-4c43-9ba3-7192e3155034"/>
+    </sense>
+  </entry>
+  <entry dateCreated="2005-06-23T16:30:32Z" dateModified="2026-09-28T21:05:16Z" id="tsukwala_4d9edf5a-78cc-457c-8a36-abe3cb88d037" guid="4d9edf5a-78cc-457c-8a36-abe3cb88d037">
+    <lexical-unit>
+      <form lang="seh">
+        <text>tsukwal</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="root"/>
+    <citation>
+      <form lang="seh">
+        <text>tsukwala</text>
+      </form>
+    </citation>
+    <sense id="b3d7c131-2e6c-4715-a476-9cd2f74be96e">
+      <grammatical-info value="Verbo"/>
+      <gloss lang="en">
+        <text>become sad</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>entrestecer</text>
+      </gloss>
+      <note type="phonology">
+        <form lang="en">
+          <text>*sukwala(A)</text>
+        </form>
+      </note>
+      <note type="sociolinguistics">
+        <form lang="en">
+          <text>AP</text>
+        </form>
+      </note>
+      <relation type="Antonym" ref="ce9787bb-6789-49f9-9981-27b1724cef66"/>
+      <example source="Nyazeze">
+        <note type="reference">
+          <form lang="en">
+            <text>Nyazeze</text>
+          </form>
+        </note>
+      </example>
+    </sense>
+  </entry>
+  <entry dateCreated="2005-06-23T16:30:32Z" dateModified="2026-09-28T21:05:16Z" id="sirizwa_bcbe35eb-8f26-41fe-84e6-e88c179248ff" guid="bcbe35eb-8f26-41fe-84e6-e88c179248ff">
+    <lexical-unit>
+      <form lang="seh">
+        <text>sirizw</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="root"/>
+    <citation>
+      <form lang="seh">
+        <text>sirizwa</text>
+      </form>
+    </citation>
+    <sense id="eca32c60-3044-4c43-9ba3-7192e3155034">
+      <grammatical-info value="Verbo"/>
+      <gloss lang="en">
+        <text>be upset</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>ficar chateado</text>
+      </gloss>
+      <note>
+        <form lang="en">
+          <text>check this, see Sulo2 when the rabbit lost the race; See: kusiriziswa = passive form of sirizwa</text>
+        </form>
+      </note>
+      <note type="phonology">
+        <form lang="en">
+          <text>siribza</text>
+        </form>
+      </note>
+      <relation type="Synonyms" ref="3e72de5a-4584-4551-b5e1-b6d8fe9be15e"/>
+      <example source="Sulo2:41">
+        <note type="reference">
+          <form lang="en">
+            <text>Sulo2:41</text>
+          </form>
+        </note>
+      </example>
+    </sense>
+  </entry>
+</lift>

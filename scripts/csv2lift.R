@@ -34,7 +34,12 @@ argv <- parse_args(p, argv = raw_argv)
 discovered <- if (!is.na(argv$table_dir)) discover_tables(argv$table_dir, registry) else list()
 
 resolve_path <- function(name) {
-  explicit <- argv[[name]]
+  # argparser stores a multi-word flag's value under its name with hyphens
+  # turned into underscores (--sense-relations -> argv$sense_relations),
+  # unlike every other name here (registry$name, discovered's names, and
+  # this function's own `resolved` list all keep the hyphen) -- so this is
+  # the one lookup that needs the translated name, not a general rule.
+  explicit <- argv[[gsub("-", "_", name, fixed = TRUE)]]
   if (!is.na(explicit)) return(explicit)
   if (name == "entries" && !is.na(positional_entries_csv)) return(positional_entries_csv)
   discovered[[name]]
