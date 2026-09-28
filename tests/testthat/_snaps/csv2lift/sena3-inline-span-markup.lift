@@ -84,6 +84,11 @@
       </form>
     </lexical-unit>
     <trait name="morph-type" value="suffix"/>
+    <variant>
+      <form lang="seh">
+        <text>-is</text>
+      </form>
+    </variant>
     <sense id="e2c0d4bd-f0f9-43a8-8f4e-778deabb7a34" order="0">
       <gloss lang="en">
         <text>CAU</text>

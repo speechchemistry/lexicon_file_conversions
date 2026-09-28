@@ -157,6 +157,11 @@
         <text>mabárigi</text>
       </form>
     </field>
+    <variant>
+      <form lang="seh">
+        <text>barigi</text>
+      </form>
+    </variant>
     <sense id="ef626122-aeda-4bd1-951b-63ba29d6e74a">
       <grammatical-info value="Nome">
         <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
@@ -834,6 +839,11 @@
         <text>mifigu</text>
       </form>
     </field>
+    <variant>
+      <form lang="seh">
+        <text>figu</text>
+      </form>
+    </variant>
     <sense id="21b1db45-dee8-44d8-a566-eee8e8705670">
       <grammatical-info value="Nome">
         <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
@@ -1539,6 +1549,11 @@
         <text>mafigu</text>
       </form>
     </field>
+    <variant>
+      <form lang="seh">
+        <text>figu</text>
+      </form>
+    </variant>
     <sense id="ca4a133b-e0f9-4a56-b60f-16718a39ddae">
       <grammatical-info value="Nome">
         <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
@@ -1762,6 +1777,11 @@
         <text>matikiti</text>
       </form>
     </field>
+    <variant>
+      <form lang="seh">
+        <text>thikiti</text>
+      </form>
+    </variant>
     <sense id="94749a03-836e-4bd5-a4f1-9da4b3f5b05b">
       <grammatical-info value="Nome">
         <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>

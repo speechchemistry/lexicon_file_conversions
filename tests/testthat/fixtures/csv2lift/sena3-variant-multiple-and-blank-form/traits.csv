@@ -1,0 +1,6 @@
+entry_id,sense_guid,owner,trait_name,trait_value
+6283da64-0a0e-4aad-adca-cb7aff6a4e13,b452249d-5017-4d97-9f0d-447aed630bf3,grammatical-info,type,inflAffix
+6283da64-0a0e-4aad-adca-cb7aff6a4e13,b452249d-5017-4d97-9f0d-447aed630bf3,grammatical-info,Verbo-slot,obj
+6283da64-0a0e-4aad-adca-cb7aff6a4e13,b452249d-5017-4d97-9f0d-447aed630bf3,grammatical-info,Verbo-slot,sbj
+d7a3eba8-7cd3-43c2-8f77-2dd39d41643c,b2c77883-9555-4f6f-9b63-2d5e3e0921e7,grammatical-info,type,inflAffix
+d7a3eba8-7cd3-43c2-8f77-2dd39d41643c,b2c77883-9555-4f6f-9b63-2d5e3e0921e7,grammatical-info,Verbo-slot,vf
