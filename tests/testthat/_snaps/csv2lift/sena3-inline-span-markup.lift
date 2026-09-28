@@ -88,6 +88,8 @@
       <form lang="seh">
         <text>-is</text>
       </form>
+      <trait name="environment" value="/[V+mid] ([preNas]) [C-nas] ([Mod]) _"/>
+      <trait name="morph-type" value="suffix"/>
     </variant>
     <sense id="e2c0d4bd-f0f9-43a8-8f4e-778deabb7a34" order="0">
       <gloss lang="en">

@@ -1,3 +1,5 @@
-entry_id,sense_guid,owner,trait_name,trait_value
-8d3435f5-a7c2-4628-86de-1b02fe3623f6,e2c0d4bd-f0f9-43a8-8f4e-778deabb7a34,grammatical-info,type,derivAffix
-8d3435f5-a7c2-4628-86de-1b02fe3623f6,e2c0d4bd-f0f9-43a8-8f4e-778deabb7a34,grammatical-info,from-part-of-speech,Verbo
+entry_id,sense_guid,owner,owner_index,trait_name,trait_value
+8d3435f5-a7c2-4628-86de-1b02fe3623f6,,variant,1,environment,/[V+mid] ([preNas]) [C-nas] ([Mod]) _
+8d3435f5-a7c2-4628-86de-1b02fe3623f6,,variant,1,morph-type,suffix
+8d3435f5-a7c2-4628-86de-1b02fe3623f6,e2c0d4bd-f0f9-43a8-8f4e-778deabb7a34,grammatical-info,,type,derivAffix
+8d3435f5-a7c2-4628-86de-1b02fe3623f6,e2c0d4bd-f0f9-43a8-8f4e-778deabb7a34,grammatical-info,,from-part-of-speech,Verbo

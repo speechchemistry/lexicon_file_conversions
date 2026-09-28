@@ -11,41 +11,57 @@
       <form lang="seh">
         <text>mw-</text>
       </form>
+      <trait name="environment" value="/ _ [AEI]"/>
+      <trait name="morph-type" value="prefix"/>
     </variant>
     <variant>
       <form lang="seh">
         <text>m'-</text>
       </form>
+      <trait name="environment" value="/_[LabAsp]"/>
+      <trait name="morph-type" value="prefix"/>
     </variant>
     <variant>
       <form lang="seh">
         <text>m-</text>
       </form>
+      <trait name="environment" value="/ _ [Lab]"/>
+      <trait name="morph-type" value="prefix"/>
     </variant>
     <variant>
       <form lang="seh">
         <text>n'-</text>
       </form>
+      <trait name="environment" value="/ _ [nonlabialaspirated]"/>
+      <trait name="morph-type" value="prefix"/>
     </variant>
     <variant>
       <form lang="seh">
         <text>n-</text>
       </form>
+      <trait name="environment" value="/ _ [C]"/>
+      <trait name="morph-type" value="prefix"/>
     </variant>
     <variant>
       <form lang="seh">
         <text>m'-</text>
       </form>
+      <trait name="environment" value="/_[LabAsp]"/>
+      <trait name="morph-type" value="prefix"/>
     </variant>
     <variant>
       <form lang="seh">
         <text>m-</text>
       </form>
+      <trait name="environment" value="/ _ [Lab]"/>
+      <trait name="morph-type" value="prefix"/>
     </variant>
     <variant>
       <form lang="seh">
         <text>n-</text>
       </form>
+      <trait name="environment" value="/ _ [C]"/>
+      <trait name="morph-type" value="prefix"/>
     </variant>
     <sense id="b452249d-5017-4d97-9f0d-447aed630bf3">
       <grammatical-info value="Verbo">
@@ -96,7 +112,9 @@
       </form>
     </lexical-unit>
     <trait name="morph-type" value="suffix"/>
-    <variant/>
+    <variant>
+      <trait name="morph-type" value="suffix"/>
+    </variant>
     <sense id="b2c77883-9555-4f6f-9b63-2d5e3e0921e7">
       <grammatical-info value="Verbo">
         <trait name="type" value="inflAffix"/>
