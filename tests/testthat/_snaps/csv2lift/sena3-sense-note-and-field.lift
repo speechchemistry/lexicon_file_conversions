@@ -18,7 +18,9 @@
       </form>
     </field>
     <sense id="4b00452e-9f58-40ee-b5bc-144ca16cfa99">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>mouth</text>
       </gloss>

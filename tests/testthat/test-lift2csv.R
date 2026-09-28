@@ -19,17 +19,17 @@ expect_lift2csv_table_dir_writes <- function(lift_file, expected_tables) {
   expect_identical(written, sort(expected_tables))
 }
 
-test_that("lift2csv_with-pronunciations writes entries, senses, pronunciations, reversals (no examples)", {
+test_that("lift2csv_with-pronunciations writes entries, senses, pronunciations, reversals, traits (no examples)", {
   expect_lift2csv_table_dir_writes(
     file.path(entry_fixture_dir, "zhi-two-pronunciations-with-audio-and-ipa.lift"),
-    c("entries", "senses", "pronunciations", "reversals")
+    c("entries", "senses", "pronunciations", "reversals", "traits")
   )
 })
 
-test_that("lift2csv_without-pronunciations writes entries, senses, examples, etymologies (no pronunciations)", {
+test_that("lift2csv_without-pronunciations writes entries, senses, examples, etymologies, traits (no pronunciations)", {
   expect_lift2csv_table_dir_writes(
     file.path(entry_fixture_dir, "sena3-gloss-initial-b.lift"),
-    c("entries", "senses", "examples", "etymologies")
+    c("entries", "senses", "examples", "etymologies", "traits")
   )
 })
 
@@ -64,5 +64,5 @@ test_that("lift2csv_neither-flag_errors", {
 test_that("lift2csv_unrecognised-table-name_errors_and_lists_valid_names", {
   lift_file <- file.path(entry_fixture_dir, "lela-teli-empty-lexicon.lift")
   expect_usage_error(c(lift_file, "--table", "bogus"), "Unrecognised --table bogus")
-  expect_usage_error(c(lift_file, "--table", "bogus"), "entries, pronunciations, senses, examples, reversals, etymologies")
+  expect_usage_error(c(lift_file, "--table", "bogus"), "entries, pronunciations, senses, examples, reversals, etymologies, traits")
 })

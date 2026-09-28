@@ -109,6 +109,10 @@
           <text>Question: but adyesa as per #(C)..._ rule but it is picking up the a- subject marker so it fails - add monosyllabic rule - monosyllabic is not working;<span lang="seh">es +/ {monosyllabic} _ |eg adyesa; is / [AIU] [C] ... _ |eg kufambisa kuonisa; es / [OE] [C] ... _ |eg kutemesa; es / [C] ... _ |eg bvesera - this is an attempted work around for monosyllabic, when it gets fixed delete this</span></text>
         </form>
       </field>
+      <grammatical-info value="">
+        <trait name="type" value="derivAffix"/>
+        <trait name="from-part-of-speech" value="Verbo"/>
+      </grammatical-info>
     </sense>
   </entry>
 </lift>

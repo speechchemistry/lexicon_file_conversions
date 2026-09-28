@@ -97,7 +97,10 @@
     </lexical-unit>
     <trait name="morph-type" value="prefix"/>
     <sense id="439845c9-6baf-47fd-9103-4765365279bc">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="type" value="inflAffix"/>
+        <trait name="Nome-slot" value="ncl"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>12</text>
       </gloss>

@@ -65,6 +65,7 @@
           <text>visitor</text>
         </form>
       </reversal>
+      <trait name="semantic-domain-ddp4" value="4.2.1.4 Visit"/>
     </sense>
     <sense id="5d08c796-0759-4a20-b42a-9359e307ec8e" order="1">
       <grammatical-info value="Noun"/>
@@ -94,6 +95,7 @@
           <text>stranger</text>
         </form>
       </reversal>
+      <trait name="semantic-domain-ddp4" value="4.6.2.1 Foreigner"/>
     </sense>
   </entry>
 </lift>

@@ -59,7 +59,9 @@
       </form>
     </field>
     <sense id="d59756d9-3fe2-4cd6-9e2e-372ae603152a">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:14/6]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>sweet potato</text>
       </gloss>
@@ -101,7 +103,9 @@
       </form>
     </field>
     <sense id="6f5ba1c7-2628-4669-899e-7615d7862b3d">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>stool</text>
       </gloss>
@@ -128,6 +132,7 @@
           </form>
         </note>
       </example>
+      <trait name="semantic-domain-ddp4" value="5.1.1.2 Chair"/>
     </sense>
     <etymology type="borrowed" source="">
       <form lang="pt">
@@ -153,7 +158,9 @@
       </form>
     </field>
     <sense id="ef626122-aeda-4bd1-951b-63ba29d6e74a">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>barge</text>
       </gloss>
@@ -197,7 +204,9 @@
       </form>
     </field>
     <sense id="58d47fd5-21e6-4a19-8ca9-768b77eb0c8e">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>butterfly</text>
       </gloss>
@@ -226,7 +235,9 @@
       </form>
     </field>
     <sense id="cc7b9218-27a9-4ba7-9b69-79a469019855">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>hole</text>
       </gloss>
@@ -287,7 +298,9 @@
       </form>
     </field>
     <sense id="eea4e67f-9514-4bfb-9bfc-af148446d34f">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>baboon</text>
       </gloss>
@@ -364,7 +377,9 @@
       </form>
     </field>
     <sense id="1dc5dfb2-e140-4fa2-85b4-ebf9c7cce900">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>boat</text>
       </gloss>
@@ -410,6 +425,7 @@
           <text>blanco, puro, santo</text>
         </form>
       </definition>
+      <trait name="semantic-domain-ddp4" value="8.3.3.3.1 White"/>
     </sense>
     <sense id="7d9e442d-044c-4766-8dad-435c6610a449" order="1">
       <grammatical-info value="Verbo"/>
@@ -427,6 +443,7 @@
           <text>puro, santo</text>
         </form>
       </definition>
+      <trait name="semantic-domain-ddp4" value="8.3.7 Good"/>
     </sense>
   </entry>
   <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2006-08-23T19:41:31Z" id="cikalango_7ab16ccc-f41e-4a3c-8d45-82dc2d71c1cb" guid="7ab16ccc-f41e-4a3c-8d45-82dc2d71c1cb">
@@ -447,7 +464,9 @@
       </form>
     </field>
     <sense id="f9b5a296-5d59-437e-a2ee-29c9a8b0680e">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:7/8]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>pot</text>
       </gloss>
@@ -489,7 +508,9 @@
       </form>
     </field>
     <sense id="667eb258-45b0-413e-b101-f9ccc7cbb64c">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:7/8]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>bugs</text>
       </gloss>
@@ -517,7 +538,9 @@
       </form>
     </field>
     <sense id="946efc4c-dce4-49b1-a7ff-09ea2de426ce">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>clay</text>
       </gloss>
@@ -551,7 +574,9 @@
       </form>
     </field>
     <sense id="9134f0c8-c69f-49d4-af7d-86d170ffff68">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:12/8]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>small cow</text>
       </gloss>
@@ -585,7 +610,9 @@
       </form>
     </field>
     <sense id="17a07bfd-3e70-4daf-ad3f-47d7c57d70ee">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>mouth inside</text>
       </gloss>
@@ -696,7 +723,9 @@
       </form>
     </citation>
     <sense id="66347a27-02b1-4634-9e15-6e558eea1975">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:9/10]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>belly</text>
       </gloss>
@@ -735,7 +764,9 @@
       </form>
     </field>
     <sense id="0aed8037-a007-49e4-9953-3aab76aa6f21" order="0">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>stool</text>
       </gloss>
@@ -767,9 +798,12 @@
           </form>
         </note>
       </example>
+      <trait name="semantic-domain-ddp4" value="5.1.1.2 Chair"/>
     </sense>
     <sense id="fe140ec7-3093-4e13-99b5-9d34e707c2c8" order="1">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>chair</text>
       </gloss>
@@ -801,7 +835,9 @@
       </form>
     </field>
     <sense id="21b1db45-dee8-44d8-a566-eee8e8705670">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>banana tree</text>
       </gloss>
@@ -843,7 +879,9 @@
       </form>
     </note>
     <sense id="1c7f7bef-ff98-4eae-a377-d1249ab9a97f">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:9/10]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>steer</text>
       </gloss>
@@ -882,7 +920,9 @@
       </form>
     </field>
     <sense id="5303273f-e59f-4559-a7b9-3ed8c67e51b9">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>rubber</text>
       </gloss>
@@ -916,7 +956,9 @@
       </form>
     </citation>
     <sense id="12ce5655-1077-43f3-a428-865c2382c5e5">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:9/10]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>walking stick</text>
       </gloss>
@@ -955,7 +997,9 @@
       </form>
     </field>
     <sense id="0ec79a63-c04d-4cad-89a8-8202b248e9d6" order="0">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>jar</text>
       </gloss>
@@ -981,7 +1025,9 @@
       </example>
     </sense>
     <sense id="2335ea36-7ae3-4407-96c0-6c56ab0ab85f" order="1">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>stem</text>
       </gloss>
@@ -1016,7 +1062,9 @@
       </form>
     </field>
     <sense id="4b00452e-9f58-40ee-b5bc-144ca16cfa99">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>mouth</text>
       </gloss>
@@ -1087,6 +1135,7 @@
           </form>
         </note>
       </example>
+      <trait name="semantic-domain-ddp4" value="5.2.2.7 Drink"/>
     </sense>
   </entry>
   <entry dateCreated="2005-06-23T16:30:32Z" dateModified="2009-05-15T19:19:36Z" id="ng'oma_1c3896d4-90c0-4382-a316-beefea925c25" guid="1c3896d4-90c0-4382-a316-beefea925c25">
@@ -1107,7 +1156,9 @@
       </form>
     </field>
     <sense id="8abb551d-571b-4612-a4cd-85d065bca104">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:9/10]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>drum</text>
       </gloss>
@@ -1136,7 +1187,9 @@
       </form>
     </citation>
     <sense id="df313b4b-f760-4864-a5f8-9854dff3af73" order="0">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:9/10]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>ox</text>
       </gloss>
@@ -1157,7 +1210,9 @@
       </example>
     </sense>
     <sense id="33493618-0bdb-4baa-aa80-235f7009c5a0" order="1">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:9/10]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>cow</text>
       </gloss>
@@ -1179,7 +1234,9 @@
       </form>
     </citation>
     <sense id="e82993d5-549f-41b6-8844-105962d58f45">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:18]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>mouth inside</text>
       </gloss>
@@ -1223,7 +1280,9 @@
       </form>
     </field>
     <sense id="8125329e-2b09-4073-b9d2-566190f5f940" order="0">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>arm</text>
       </gloss>
@@ -1249,7 +1308,9 @@
       </example>
     </sense>
     <sense id="af077c3d-81fb-440f-9bc9-28fa60edf42b" order="1">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>bull</text>
       </gloss>
@@ -1276,7 +1337,9 @@
       </form>
     </field>
     <sense id="368b3592-de73-4b0b-a65d-654e61cec4ad">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>bamboo</text>
       </gloss>
@@ -1310,7 +1373,9 @@
       </form>
     </citation>
     <sense id="688c63ab-91b6-43f2-821f-71d3ec409900">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:9/10]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>noise</text>
       </gloss>
@@ -1344,7 +1409,9 @@
       </form>
     </field>
     <sense id="358c3a82-6cb9-4f98-9279-411ed528fb86">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:3/4]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>bagage</text>
       </gloss>
@@ -1401,7 +1468,9 @@
       </form>
     </field>
     <sense id="a899604f-eb0f-49aa-bcee-ff35bfb31929">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:1/2]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>barber</text>
       </gloss>
@@ -1430,7 +1499,9 @@
       </form>
     </citation>
     <sense id="e7864414-f020-4453-a46a-a2e783a319bb">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:9/10]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>Cape buffalo</text>
       </gloss>
@@ -1469,7 +1540,9 @@
       </form>
     </field>
     <sense id="ca4a133b-e0f9-4a56-b60f-16718a39ddae">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>banana</text>
       </gloss>
@@ -1513,7 +1586,9 @@
       </form>
     </field>
     <sense id="55e6af15-103c-4b41-9e10-da36ee20f5da">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>bandit</text>
       </gloss>
@@ -1547,7 +1622,9 @@
       </form>
     </field>
     <sense id="2581c234-84f5-4ef9-ae06-3be67d528c6a">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>cheek</text>
       </gloss>
@@ -1686,7 +1763,9 @@
       </form>
     </field>
     <sense id="94749a03-836e-4bd5-a4f1-9da4b3f5b05b">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>ticket</text>
       </gloss>
@@ -1719,7 +1798,9 @@
       </form>
     </field>
     <sense id="6dc56367-27f8-4f4f-bd7f-9a04bc470966">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>bag</text>
       </gloss>
@@ -1746,7 +1827,9 @@
       </form>
     </citation>
     <sense id="78c00a11-2e56-4697-b5bf-80904626cdf3">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:14]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>goodness</text>
       </gloss>
@@ -1769,7 +1852,9 @@
       </form>
     </field>
     <sense id="c658fc3b-450b-4488-a2b7-fcefd7d38652">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:14/6]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>gnat</text>
       </gloss>
@@ -1816,7 +1901,9 @@
       </form>
     </note>
     <sense id="ae62dd24-2425-4d9c-bf98-12f9af6e7573" order="0">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:14]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>brilliancy</text>
       </gloss>
@@ -1837,7 +1924,9 @@
       </example>
     </sense>
     <sense id="56914d82-0650-4b31-bb28-a77197eca5ac" order="1">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:14]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>splendour</text>
       </gloss>

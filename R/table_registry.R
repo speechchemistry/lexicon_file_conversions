@@ -4,20 +4,23 @@
 # table(s) must accompany it. See plans/remaining-lift-fields.md's Phase T
 # for why this exists. Each table's actual foreign key(s) are documented in
 # SPEC.md rather than here -- a registry column can only hold one value per
-# table, and C1's traits table needs two (entry_id and sense_guid).
+# table, and the traits table needs two (entry_id and sense_guid).
 #
 # Row order is attach order: entries always comes first (its attach_fn
 # creates the document rather than attaching to one, so the incoming `doc`
 # argument is ignored), then pronunciations, senses, examples, reversals,
-# etymologies — matching the canonical child order documented in SPEC.md's
-# Entry Table. examples comes ahead of reversals to match lift.rng's own
-# declared order for sense-content's children; both attach to senses
-# independently, so nothing about *correctness* requires that relative
-# order, only readability. etymologies comes last for the same reason:
-# lift.rng's entry-content declares <etymology> as the last child in its own
-# interleave, after <relation> (unimplemented) -- nothing depends on
-# entry-content's element order either, since attach_etymologies_to_lift()
-# only ever looks entries up by guid.
+# etymologies, traits — matching the canonical child order documented in
+# SPEC.md's Entry Table. examples comes ahead of reversals to match
+# lift.rng's own declared order for sense-content's children; both attach to
+# senses independently, so nothing about *correctness* requires that
+# relative order, only readability. etymologies comes after reversals for
+# the same reason: lift.rng's entry-content declares <etymology> as the last
+# child in its own interleave, after <relation> (unimplemented) -- nothing
+# depends on entry-content's element order either, since
+# attach_etymologies_to_lift() only ever looks entries up by guid. traits
+# comes last, and unlike the others this *is* load-bearing: a trait row can
+# target a sense's <grammatical-info> element, which attach_senses_to_lift()
+# creates, so traits cannot attach before senses exist.
 table_registry <- function() {
   library(tibble)
 
@@ -28,19 +31,21 @@ table_registry <- function() {
     "senses",         "--senses",          "CSV of the senses table (see SPEC.md's Sense Table; also `lift2csv.R --table senses`)",
     "examples",       "--examples",        "CSV of the examples table (see SPEC.md's Example Table; also `lift2csv.R --table examples`)",
     "reversals",      "--reversals",       "CSV of the reversals table (see SPEC.md's Reversal Table; also `lift2csv.R --table reversals`)",
-    "etymologies",    "--etymologies",     "CSV of the etymologies table (see SPEC.md's Etymology Table; also `lift2csv.R --table etymologies`)"
+    "etymologies",    "--etymologies",     "CSV of the etymologies table (see SPEC.md's Etymology Table; also `lift2csv.R --table etymologies`)",
+    "traits",         "--traits",          "CSV of the traits table (see SPEC.md's Traits Table; also `lift2csv.R --table traits`)"
   )
 
-  registry$read_fn <- list(entry_table, pronunciation_table, sense_table, example_table, reversal_table, etymology_table)
+  registry$read_fn <- list(entry_table, pronunciation_table, sense_table, example_table, reversal_table, etymology_table, trait_table)
   registry$attach_fn <- list(
     function(doc, table) entry_table_to_lift(table),
     attach_pronunciations_to_lift,
     attach_senses_to_lift,
     attach_examples_to_lift,
     attach_reversals_to_lift,
-    attach_etymologies_to_lift
+    attach_etymologies_to_lift,
+    attach_traits_to_lift
   )
-  registry$requires <- list(character(0), character(0), character(0), "senses", "senses", character(0))
+  registry$requires <- list(character(0), character(0), character(0), "senses", "senses", character(0), "senses")
 
   registry
 }

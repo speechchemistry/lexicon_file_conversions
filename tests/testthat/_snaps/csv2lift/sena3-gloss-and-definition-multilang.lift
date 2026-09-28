@@ -8,7 +8,9 @@
     </lexical-unit>
     <trait name="morph-type" value="root"/>
     <sense id="036e4c4f-31f1-4824-8ebe-51fa5a9fbe43">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:5/6]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>goat</text>
       </gloss>

@@ -36,6 +36,7 @@
           <text>N1(kambaza)=tem que ser pessoa, não animal</text>
         </form>
       </note>
+      <trait name="semantic-domain-ddp4" value="7.2.1.1.2 Crawl"/>
     </sense>
   </entry>
   <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2006-09-29T21:58:00Z" id="infa_7ecbb299-bf35-4795-a5cc-8d38ce8b891c" guid="7ecbb299-bf35-4795-a5cc-8d38ce8b891c">
@@ -51,7 +52,9 @@
       </form>
     </note>
     <sense id="6895e856-d373-4190-b7ac-8d185a18e4ce">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:9]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>death</text>
       </gloss>

@@ -18,7 +18,9 @@
       </form>
     </field>
     <sense id="50485a90-b701-4c13-8986-3b6a94d1e82f" order="0">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:7/8]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>Wednesday</text>
       </gloss>
@@ -31,7 +33,9 @@
       </example>
     </sense>
     <sense id="f5e72635-c18f-4558-bff8-af539d7f41c7" order="1">
-      <grammatical-info value="Nome"/>
+      <grammatical-info value="Nome">
+        <trait name="inflection-feature" value="{Infl}[NounAgr:[genro:7/8]]"/>
+      </grammatical-info>
       <gloss lang="en">
         <text>third</text>
       </gloss>

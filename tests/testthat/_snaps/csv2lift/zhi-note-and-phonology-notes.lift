@@ -117,6 +117,7 @@
           <text>spit, to</text>
         </form>
       </reversal>
+      <trait name="semantic-domain-ddp4" value="2.2.3 Spit, saliva"/>
     </sense>
   </entry>
   <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-05-05T11:11:25Z" id="kom_4663978f-8e76-464a-b569-38b8c17960d9" guid="4663978f-8e76-464a-b569-38b8c17960d9" order="3">
@@ -180,6 +181,7 @@
           <text>corpse</text>
         </form>
       </reversal>
+      <trait name="semantic-domain-ddp4" value="2.6.6 Die"/>
     </sense>
   </entry>
 </lift>
