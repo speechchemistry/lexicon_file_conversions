@@ -98,11 +98,24 @@ extract_example_translation <- function(examples) {
     if (length(translations) == 0) next
 
     if (length(translations) > 1) {
+      # Name what's actually discarded, not just that something was: "using
+      # the first" on its own reads as "handled" rather than "the rest of
+      # this text is now gone" -- real data has already lost a translation
+      # this way (sena3.lift's khoboka entry, two same-typed "Literal
+      # translation"s with unrelated content), so the warning states the
+      # dropped translation's own type and form text rather than leaving it
+      # to be inferred from the count.
+      dropped_summary <- map_chr(translations[-1], function(dropped) {
+        forms <- xml_find_all(dropped, "./form")
+        form_strs <- map_chr(forms, ~sprintf("%s=%s", xml_attr(.x, "lang"), encodeString(multitext_value(.x), quote = "\"")))
+        sprintf("type=%s [%s]", xml_attr(dropped, "type"), paste(form_strs, collapse = ", "))
+      })
       warning(sprintf(
-        "Sense %s has an example with %d translations; using the first (type=%s).",
+        "Sense %s has an example with %d translations; keeping the first (type=%s) and discarding: %s",
         xml_attr(xml_parent(examples[[index]]), "id"),
         length(translations),
-        xml_attr(translations[[1]], "type")
+        xml_attr(translations[[1]], "type"),
+        paste(dropped_summary, collapse = "; ")
       ), call. = FALSE)
     }
 
