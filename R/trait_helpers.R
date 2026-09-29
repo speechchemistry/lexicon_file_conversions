@@ -93,3 +93,40 @@ extract_variant_traits <- function(variants) {
     )
   })
 }
+
+# Entry-relation-owned trait rows -- entry-parented, like
+# extract_variant_traits() above and for the identical reason: <relation>
+# has no id/guid of its own (SPEC.md's Entry-Relation Table), so
+# owner_index -- the relation's 1-based position among the entry's own
+# <relation> siblings -- is the only way a trait row can point back at a
+# specific one when an entry has more than one (up to 3 in sena3.lift).
+# sense_guid is always NA here: entry/relation hangs directly off <entry>,
+# with no sense involved at all. sense/relation/trait does not occur in any
+# fixture and stays unread (SPEC.md's Not Yet Specified).
+extract_entry_relation_traits <- function(relations) {
+  empty_result <- tibble(
+    entry_id = character(),
+    sense_guid = character(),
+    owner = character(),
+    owner_index = character(),
+    trait_name = character(),
+    trait_value = character()
+  )
+
+  if (length(relations) == 0) return(empty_result)
+
+  map_df(seq_along(relations), function(index) {
+    relation <- relations[[index]]
+    traits <- xml_find_all(relation, "./trait")
+    if (length(traits) == 0) return(empty_result)
+
+    tibble(
+      entry_id = xml_attr(xml_parent(relation), "guid"),
+      sense_guid = NA_character_,
+      owner = "entry-relation",
+      owner_index = as.character(index),
+      trait_name = xml_attr(traits, "name"),
+      trait_value = xml_attr(traits, "value")
+    )
+  })
+}

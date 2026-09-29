@@ -68,9 +68,33 @@ attach_traits_to_lift <- function(doc, trait_table) {
         ), call. = FALSE)
       }
       variant_nodes[[owner_index]]
+    } else if (identical(row$owner, "entry-relation")) {
+      entry_node <- xml_find_first(root, sprintf(".//entry[@guid='%s']", row$entry_id))
+      if (inherits(entry_node, "xml_missing")) {
+        stop(sprintf(
+          "Trait row %d references entry_id '%s', which was not found in the entry table",
+          .x, row$entry_id
+        ), call. = FALSE)
+      }
+
+      # <relation> has no id/guid of its own (SPEC.md's Entry-Relation
+      # Table), so owner_index -- the relation's 1-based position among this
+      # entry's own <relation> siblings -- is the only way to point back at
+      # a specific one, mirroring extract_entry_relation_traits()
+      # (R/trait_helpers.R), which produced it on the way in.
+      relation_nodes <- xml_find_all(entry_node, "./relation")
+      has_owner_index <- "owner_index" %in% names(row) && has_nonblank(row$owner_index)
+      owner_index <- if (has_owner_index) suppressWarnings(as.integer(row$owner_index)) else NA_integer_
+      if (is.na(owner_index) || owner_index < 1 || owner_index > length(relation_nodes)) {
+        stop(sprintf(
+          "Trait row %d has owner = 'entry-relation' and owner_index '%s', which does not match any <relation> on entry '%s'",
+          .x, if (has_owner_index) row$owner_index else NA, row$entry_id
+        ), call. = FALSE)
+      }
+      relation_nodes[[owner_index]]
     } else {
       stop(sprintf(
-        "Trait row %d has unrecognised owner '%s' (expected 'sense', 'grammatical-info', or 'variant')",
+        "Trait row %d has unrecognised owner '%s' (expected 'sense', 'grammatical-info', 'variant', or 'entry-relation')",
         .x, row$owner
       ), call. = FALSE)
     }

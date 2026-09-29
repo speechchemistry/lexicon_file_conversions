@@ -17,8 +17,13 @@
       </gloss>
       <example/>
     </sense>
-    <relation type="_component-lexeme" ref="enda_2bde7e2c-9ddc-4de0-b416-c24c0710c2fa" order="0"/>
-    <relation type="_component-lexeme" ref="na1_a9e28647-c541-4278-a2b1-6f924c2c5aa7" order="1"/>
+    <relation type="_component-lexeme" ref="enda_2bde7e2c-9ddc-4de0-b416-c24c0710c2fa" order="0">
+      <trait name="is-primary" value="true"/>
+      <trait name="complex-form-type" value="Composto"/>
+    </relation>
+    <relation type="_component-lexeme" ref="na1_a9e28647-c541-4278-a2b1-6f924c2c5aa7" order="1">
+      <trait name="complex-form-type" value="Composto"/>
+    </relation>
     <relation type="Etymological" ref="enda_2bde7e2c-9ddc-4de0-b416-c24c0710c2fa"/>
   </entry>
   <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2026-09-28T21:04:51Z" id="enda_2bde7e2c-9ddc-4de0-b416-c24c0710c2fa" guid="2bde7e2c-9ddc-4de0-b416-c24c0710c2fa">
