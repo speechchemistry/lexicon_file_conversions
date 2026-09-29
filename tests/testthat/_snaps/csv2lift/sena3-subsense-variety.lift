@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lift version="0.13" producer="lexicon_file_conversions csv2lift">
+  <entry dateCreated="2005-06-23T16:30:32Z" dateModified="2026-09-29T06:16:13Z" id="phata_e91f0b87-b826-4817-8252-ee6bd116a6bc" guid="e91f0b87-b826-4817-8252-ee6bd116a6bc">
+    <lexical-unit>
+      <form lang="seh">
+        <text>phat</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="root"/>
+    <citation>
+      <form lang="seh">
+        <text>phata</text>
+      </form>
+    </citation>
+    <sense id="98c38a96-d34b-4581-aca1-17ff2dc2c62e" order="0">
+      <grammatical-info value="Verbo"/>
+      <gloss lang="en">
+        <text>take ahold</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>pegar</text>
+      </gloss>
+      <note>
+        <form lang="en">
+          <text>kuphata basa "to do work", kupata na ntenda "to get sick"; vocrev</text>
+        </form>
+      </note>
+      <example source="Orth">
+        <note type="reference">
+          <form lang="en">
+            <text>Orth</text>
+          </form>
+        </note>
+      </example>
+      <subsense id="4fe54fea-afdf-4ce3-8789-da578722a5f6">
+        <grammatical-info value="Verbo"/>
+        <gloss lang="en">
+          <text>grab</text>
+        </gloss>
+        <gloss lang="pt">
+          <text>agarrar</text>
+        </gloss>
+      </subsense>
+    </sense>
+    <sense id="c300c23f-9269-4a24-8be8-b91847605697" order="1">
+      <grammatical-info value="Verbo"/>
+      <gloss lang="en">
+        <text>do</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>fazer</text>
+      </gloss>
+    </sense>
+  </entry>
+  <entry dateCreated="2005-06-23T16:30:32Z" dateModified="2026-09-29T06:16:13Z" id="nyerezera_e0aa351f-d56e-40bb-9dbd-91c3327b7585" guid="e0aa351f-d56e-40bb-9dbd-91c3327b7585">
+    <lexical-unit>
+      <form lang="seh">
+        <text>nyerezer</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="root"/>
+    <citation>
+      <form lang="seh">
+        <text>nyerezera</text>
+      </form>
+    </citation>
+    <sense id="2d50f802-27d2-438a-8761-fa5c754d237a">
+      <grammatical-info value="Verbo"/>
+      <gloss lang="en">
+        <text>think</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>pensar</text>
+      </gloss>
+      <definition>
+        <form lang="en">
+          <text>think, reflect</text>
+        </form>
+      </definition>
+      <note>
+        <form lang="en">
+          <text>See: kukumbuka ="recordar" ; manyerezero = "pensamento"</text>
+        </form>
+      </note>
+      <note type="sociolinguistics">
+        <form lang="en">
+          <text>ACT</text>
+        </form>
+      </note>
+      <example source="Orth; Jac; Meque; Nyazeze">
+        <translation type="Free translation"/>
+        <note type="reference">
+          <form lang="en">
+            <text>Orth; Jac; Meque; Nyazeze</text>
+          </form>
+        </note>
+      </example>
+      <subsense id="abc99545-0202-43ed-be8f-7264687ca3e9">
+        <grammatical-info value="Verbo"/>
+        <gloss lang="en">
+          <text>remember</text>
+        </gloss>
+        <gloss lang="pt">
+          <text>recordar</text>
+        </gloss>
+        <example>
+          <form lang="seh">
+            <text>Usanyerezera pida cita iwe?</text>
+          </form>
+          <translation type="Free translation">
+            <form lang="en">
+              <text>Do you remember what you did?</text>
+            </form>
+            <form lang="pt">
+              <text>Recorda aquele que voces fez?</text>
+            </form>
+          </translation>
+        </example>
+      </subsense>
+    </sense>
+  </entry>
+  <entry dateCreated="2005-06-23T16:30:31Z" dateModified="2026-09-29T06:16:13Z" id="gumana_33f6b0d5-78e9-4301-ad05-f691b0801faf" guid="33f6b0d5-78e9-4301-ad05-f691b0801faf">
+    <lexical-unit>
+      <form lang="seh">
+        <text>guman</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="root"/>
+    <citation>
+      <form lang="seh">
+        <text>gumana</text>
+      </form>
+    </citation>
+    <sense id="25b238b4-a5d7-4131-a98d-62f2238a4555">
+      <grammatical-info value="Verbo"/>
+      <gloss lang="en">
+        <text>find</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>encontrar</text>
+      </gloss>
+      <example/>
+      <subsense id="0d63ae85-adf8-4fb0-a52a-58a5c41bfb86">
+        <gloss lang="en">
+          <text>consult</text>
+        </gloss>
+        <gloss lang="pt">
+          <text>consultar</text>
+        </gloss>
+        <definition>
+          <form lang="en">
+            <text>to consult a traditional doctor to find the cause of some calamity</text>
+          </form>
+        </definition>
+      </subsense>
+    </sense>
+  </entry>
+  <entry dateCreated="2005-06-23T16:30:32Z" dateModified="2026-09-29T06:16:13Z" id="phola_cafc5c7d-dc47-418f-bd2a-d0b02c05fc47" guid="cafc5c7d-dc47-418f-bd2a-d0b02c05fc47">
+    <lexical-unit>
+      <form lang="seh">
+        <text>phol</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="root"/>
+    <citation>
+      <form lang="seh">
+        <text>phola</text>
+      </form>
+    </citation>
+    <sense id="a29d6ebc-5c8a-4267-93f5-7acbb56f0a82">
+      <grammatical-info value="Verbo"/>
+      <gloss lang="en">
+        <text>stab</text>
+      </gloss>
+      <gloss lang="pt">
+        <text>espetar</text>
+      </gloss>
+      <example source="Orth; Nyazeze">
+        <note type="reference">
+          <form lang="en">
+            <text>Orth; Nyazeze</text>
+          </form>
+        </note>
+      </example>
+      <subsense id="0f025d44-7074-4e04-868e-cc0a74db6931">
+        <gloss lang="en">
+          <text>drill</text>
+        </gloss>
+        <gloss lang="pt">
+          <text>furar</text>
+        </gloss>
+        <note type="semantics">
+          <form lang="en">
+            <text>object= wall, paper, person</text>
+          </form>
+        </note>
+      </subsense>
+    </sense>
+  </entry>
+</lift>

@@ -1,0 +1,5 @@
+entry_id,entry_lift_id,dateCreated,dateModified,morph_type,seh,citation_seh
+e91f0b87-b826-4817-8252-ee6bd116a6bc,phata_e91f0b87-b826-4817-8252-ee6bd116a6bc,2005-06-23T16:30:32Z,2026-09-29T06:16:13Z,root,phat,phata
+e0aa351f-d56e-40bb-9dbd-91c3327b7585,nyerezera_e0aa351f-d56e-40bb-9dbd-91c3327b7585,2005-06-23T16:30:32Z,2026-09-29T06:16:13Z,root,nyerezer,nyerezera
+33f6b0d5-78e9-4301-ad05-f691b0801faf,gumana_33f6b0d5-78e9-4301-ad05-f691b0801faf,2005-06-23T16:30:31Z,2026-09-29T06:16:13Z,root,guman,gumana
+cafc5c7d-dc47-418f-bd2a-d0b02c05fc47,phola_cafc5c7d-dc47-418f-bd2a-d0b02c05fc47,2005-06-23T16:30:32Z,2026-09-29T06:16:13Z,root,phol,phola

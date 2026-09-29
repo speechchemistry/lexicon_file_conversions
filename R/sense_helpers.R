@@ -1,3 +1,30 @@
+# Recursive sense/subsense metadata: sense_guid, entry_id, sense_order,
+# grammatical_info, and parent_sense_guid (NA for a top-level sense, the
+# immediate parent's own id for a subsense). <subsense> reuses sense-content
+# verbatim (lift.rng), so a subsense's own row has the identical shape --
+# only parent_sense_guid distinguishes it. Depth-first: a sense/subsense's
+# own row is followed immediately by its own <subsense> children's rows (in
+# turn followed by theirs), matching document order and generalising to any
+# nesting depth for free, though sena3.lift's 8 subsenses are all exactly
+# one level deep (no subsense has its own nested subsense).
+extract_sense_metadata <- function(node, entry_id, parent_sense_guid = NA_character_) {
+  own_row <- tibble(
+    sense_guid = xml_attr(node, "id"),
+    entry_id = entry_id,
+    sense_order = xml_attr(node, "order"),
+    grammatical_info = xml_attr(xml_find_first(node, "./grammatical-info"), "value"),
+    parent_sense_guid = parent_sense_guid
+  )
+
+  subsenses <- xml_find_all(node, "./subsense")
+  if (length(subsenses) == 0) return(own_row)
+
+  bind_rows(
+    own_row,
+    map_df(subsenses, ~extract_sense_metadata(.x, entry_id, xml_attr(node, "id")))
+  )
+}
+
 # Sense-level analogue of extract_multitext_element() in entry_helpers.R.
 # Keyed by sense/@id (not entry/@guid) since senses, not entries, are the
 # node being iterated.
@@ -60,7 +87,7 @@ extract_sense_multitext_with_attribute <- function(senses, parent_xpath, attr_na
 # sense CSV's column names into the shapes sense_table() produces, so
 # csv2lift can rebuild the right LIFT element for each column.
 classify_sense_columns <- function(col_names) {
-  meta_columns <- c("sense_guid", "entry_id", "sense_order", "grammatical_info")
+  meta_columns <- c("sense_guid", "entry_id", "sense_order", "grammatical_info", "parent_sense_guid")
 
   map_df(col_names, function(col) {
     if (col %in% meta_columns) {

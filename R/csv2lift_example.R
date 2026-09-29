@@ -17,7 +17,9 @@ attach_examples_to_lift <- function(doc, example_table) {
   walk(seq_len(nrow(example_table)), ~{
     row <- example_table[.x, ]
 
-    sense_node <- xml_find_first(root, sprintf(".//sense[@id='%s']", row$sense_guid))
+    # Matches <subsense> too (SPEC.md's Sense Table): an example can hang
+    # directly off one, since subsense reuses sense-content verbatim.
+    sense_node <- xml_find_first(root, sprintf(".//*[self::sense or self::subsense][@id='%s']", row$sense_guid))
     if (inherits(sense_node, "xml_missing")) {
       stop(sprintf(
         "Example row %d references sense_guid '%s', which was not found in the sense table",
@@ -32,11 +34,31 @@ attach_examples_to_lift <- function(doc, example_table) {
     # Structural Rules), so dropping a blank row would shift the index of its surviving
     # siblings — six senses in Sena3.lift interleave blank and non-blank
     # examples.
-    example_args <- list(sense_node, "example")
+    #
+    # Inserted before any existing <subsense> child, rather than appended,
+    # when the sense has one: <subsense> is lift.rng's declared last child
+    # of sense-content, and real FLEx output agrees (unlike <note>, which
+    # separately, already, lands after <example> regardless of source
+    # order — SPEC.md's Sense Table). attach_senses_to_lift() attaches a
+    # subsense as part of its own registry pass, entirely before this table's
+    # own pass starts, so appending here would always land a sense's own
+    # example after its subsense (and after everything the subsense itself
+    # contains, including a nested example of its own) even when the source
+    # had it the other way around — sena3.lift entry e0aa351f-… does, and
+    # inserting-before is what keeps that entry's own example, and its
+    # subsense's separate nested example, in their original relative order.
+    existing_subsense <- xml_find_first(sense_node, "./subsense")
+    has_subsense <- !inherits(existing_subsense, "xml_missing")
+
+    example_attrs <- list()
     if ("example_source" %in% names(row) && has_nonblank(row$example_source)) {
-      example_args$source <- row$example_source
+      example_attrs$source <- row$example_source
     }
-    example_node <- do.call(xml_add_child, example_args)
+    example_node <- if (has_subsense) {
+      do.call(xml_add_sibling, c(list(existing_subsense, "example", .where = "before"), example_attrs))
+    } else {
+      do.call(xml_add_child, c(list(sense_node, "example"), example_attrs))
+    }
 
     if (nrow(form_cols) > 0) {
       form_values <- set_names(as.character(row[form_cols$column]), form_cols$lang)

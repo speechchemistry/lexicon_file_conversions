@@ -13,11 +13,20 @@ sense_table <- function(LIFT_file) {
     sense_guid = character(),
     entry_id = character(),
     sense_order = character(),
-    grammatical_info = character()
+    grammatical_info = character(),
+    parent_sense_guid = character()
   )
 
   # first stage: sense-level metadata only (sense_guid, entry_id, sense_order,
-  # grammatical_info)
+  # grammatical_info, parent_sense_guid). extract_sense_metadata()
+  # (R/sense_helpers.R) recurses into each top-level sense's own <subsense>
+  # children, so a sense's row is immediately followed by its subsenses' own
+  # rows, matching document order.
+  #
+  # FLEx emits @order only on the senses of multi-sense entries (446 of 446
+  # such senses in Sena3.lift, and on none of the 1271 single-sense ones,
+  # nor on any of its 8 subsenses). Copied verbatim, never regenerated from
+  # row position — same rule as the entry dates (§2).
   sense_meta <- if (length(entries) == 0) {
     empty_sense_meta
   } else {
@@ -26,22 +35,18 @@ sense_table <- function(LIFT_file) {
         entry_id <- xml_attr(.x, "guid")
         senses <- xml_find_all(.x, "./sense")
         if(length(senses) == 0) return(empty_sense_meta)
-        map_df(senses, ~{
-          tibble(
-            sense_guid = xml_attr(.x, "id"),
-            entry_id = entry_id,
-            # FLEx emits order only on the senses of multi-sense entries
-            # (446 of 446 such senses in Sena3.lift, and on none of the 1271
-            # single-sense ones). Copied verbatim, never regenerated from row
-            # position — same rule as the entry dates (§2).
-            sense_order = xml_attr(.x, "order"),
-            grammatical_info = xml_attr(xml_find_first(.x, "./grammatical-info"), "value")
-          )
-        })
+        map_df(senses, ~extract_sense_metadata(.x, entry_id))
       })
   }
 
-  senses <- xml_find_all(doc, ".//entry/sense")
+  # Widened to include subsenses (any depth, via .//subsense) alongside
+  # top-level senses, so every multitext stage below -- gloss, definition,
+  # general note, custom field, typed note -- covers subsense-owned data too:
+  # sena3.lift's 8 subsenses carry gloss (8), definition (1), and one typed
+  # note (`note type="semantics"`), all through the identical sense-content
+  # shape subsense reuses. These helpers key purely by the node's own @id, so
+  # widening the node list is the only change needed here.
+  senses <- xml_find_all(doc, ".//entry/sense | .//subsense")
 
   # second stage: multi-lang gloss; <gloss lang><text> mirrors <form lang><text>
   gloss_long <- extract_sense_multitext_element(senses, "./gloss")

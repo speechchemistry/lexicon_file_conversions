@@ -16,6 +16,17 @@ attach_senses_to_lift <- function(doc, sense_table) {
   typed_note_cols <- filter(col_classes, kind == "typed_note")
   field_cols <- filter(col_classes, kind == "field")
 
+  # A row is a subsense's when parent_sense_guid is non-blank -- a column a
+  # sense CSV written before D1 existed omits entirely, same column-absence
+  # guard as sense_order below. Computed once, vectorised over the whole
+  # column, rather than per row.
+  parent_sense_guid_col <- if ("parent_sense_guid" %in% names(sense_table)) {
+    sense_table$parent_sense_guid
+  } else {
+    rep(NA_character_, nrow(sense_table))
+  }
+  is_subsense_row <- !is.na(parent_sense_guid_col) & nzchar(parent_sense_guid_col)
+
   walk(seq_len(nrow(sense_table)), ~{
     row <- sense_table[.x, ]
 
@@ -27,7 +38,29 @@ attach_senses_to_lift <- function(doc, sense_table) {
       ), call. = FALSE)
     }
 
-    sense_args <- list(entry_node, "sense")
+    # <subsense> reuses sense-content verbatim (SPEC.md's Sense Table), so
+    # its own child emission below is identical either way -- only the
+    # attach point and tag name differ. Attached to whichever sense/subsense
+    # node has this row's parent_sense_guid as its own @id, rather than to
+    # entry_node directly. This relies on the table's own row order putting
+    # a parent's row before its subsense's (extract_sense_metadata()'s
+    # depth-first read order guarantees it for reader output; a
+    # hand-reordered CSV that violates it fails fast below, same as any
+    # other unmatched FK).
+    parent_node <- if (is_subsense_row[.x]) {
+      node <- xml_find_first(root, sprintf(".//*[self::sense or self::subsense][@id='%s']", row$parent_sense_guid))
+      if (inherits(node, "xml_missing")) {
+        stop(sprintf(
+          "Sense %s references parent_sense_guid '%s', which was not found in the sense table",
+          row$sense_guid, row$parent_sense_guid
+        ), call. = FALSE)
+      }
+      node
+    } else {
+      entry_node
+    }
+
+    sense_args <- list(parent_node, if (is_subsense_row[.x]) "subsense" else "sense")
     if (!is.na(row$sense_guid) && nzchar(row$sense_guid)) {
       sense_args$id <- row$sense_guid
     }

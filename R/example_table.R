@@ -6,11 +6,11 @@ example_table <- function(LIFT_file) {
 
   doc <- read_xml(LIFT_file)
 
-  # Direct-child axis, so this deliberately excludes sense/subsense/example
-  # (1 occurrence in Sena3.lift): <subsense> is unsupported (SPEC.md's Not Yet Specified), its
-  # senses have no row in the sense table, and an example keyed to one would
-  # have a dangling sense_guid FK on write.
-  examples <- xml_find_all(doc, ".//entry/sense/example")
+  # Direct-child axis at both attachment points -- entry/sense/example and
+  # subsense/example (subsense reuses sense-content verbatim, so an example
+  # can hang directly off one too; 1 occurrence in sena3.lift). `.//subsense`
+  # matches any nesting depth on its own, so no deeper union is needed.
+  examples <- xml_find_all(doc, ".//entry/sense/example | .//subsense/example")
 
   empty_example_meta <- tibble(
     example_index = integer(),

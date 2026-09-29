@@ -1,0 +1,10 @@
+sense_guid,entry_id,sense_order,grammatical_info,parent_sense_guid,gloss_en,gloss_pt,definition_en,general_note_en,note_sociolinguistics_en,note_semantics_en
+98c38a96-d34b-4581-aca1-17ff2dc2c62e,e91f0b87-b826-4817-8252-ee6bd116a6bc,0,Verbo,,take ahold,pegar,,"kuphata basa ""to do work"", kupata na ntenda ""to get sick""; vocrev",,
+4fe54fea-afdf-4ce3-8789-da578722a5f6,e91f0b87-b826-4817-8252-ee6bd116a6bc,,Verbo,98c38a96-d34b-4581-aca1-17ff2dc2c62e,grab,agarrar,,,,
+c300c23f-9269-4a24-8be8-b91847605697,e91f0b87-b826-4817-8252-ee6bd116a6bc,1,Verbo,,do,fazer,,,,
+2d50f802-27d2-438a-8761-fa5c754d237a,e0aa351f-d56e-40bb-9dbd-91c3327b7585,,Verbo,,think,pensar,"think, reflect","See: kukumbuka =""recordar"" ; manyerezero = ""pensamento""",ACT,
+abc99545-0202-43ed-be8f-7264687ca3e9,e0aa351f-d56e-40bb-9dbd-91c3327b7585,,Verbo,2d50f802-27d2-438a-8761-fa5c754d237a,remember,recordar,,,,
+25b238b4-a5d7-4131-a98d-62f2238a4555,33f6b0d5-78e9-4301-ad05-f691b0801faf,,Verbo,,find,encontrar,,,,
+0d63ae85-adf8-4fb0-a52a-58a5c41bfb86,33f6b0d5-78e9-4301-ad05-f691b0801faf,,,25b238b4-a5d7-4131-a98d-62f2238a4555,consult,consultar,to consult a traditional doctor to find the cause of some calamity,,,
+a29d6ebc-5c8a-4267-93f5-7acbb56f0a82,cafc5c7d-dc47-418f-bd2a-d0b02c05fc47,,Verbo,,stab,espetar,,,,
+0f025d44-7074-4e04-868e-cc0a74db6931,cafc5c7d-dc47-418f-bd2a-d0b02c05fc47,,,a29d6ebc-5c8a-4267-93f5-7acbb56f0a82,drill,furar,,,,"object= wall, paper, person"
