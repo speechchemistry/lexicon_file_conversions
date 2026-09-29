@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lift version="0.13" producer="lexicon_file_conversions csv2lift">
+  <header>
+    <fields>
+      <field tag="cv-pattern">
+        <form lang="en">
+          <text>This records the syllable pattern for a LexPronunciation in FieldWorks.</text>
+        </form>
+      </field>
+      <field tag="tone">
+        <form lang="en">
+          <text>This records the tone information for a LexPronunciation in FieldWorks.</text>
+        </form>
+      </field>
+      <field tag="comment">
+        <form lang="en">
+          <text>This records a comment (note) in a LexEtymology in FieldWorks.</text>
+        </form>
+      </field>
+      <field tag="import-residue">
+        <form lang="en">
+          <text>This records residue left over from importing a standard format file into FieldWorks (or LinguaLinks).</text>
+        </form>
+      </field>
+      <field tag="literal-meaning">
+        <form lang="en">
+          <text>This field is used to store a literal meaning of the entry.  Typically, this field is necessary only for a compound or an idiom where the meaning of the whole is different from the sum of its parts.</text>
+        </form>
+      </field>
+      <field tag="summary-definition">
+        <form lang="en">
+          <text>A summary definition (located at the entry level in the Entry pane) is a general definition summarizing all the senses of a primary entry. It has no theoretical value; its use is solely pragmatic.</text>
+        </form>
+      </field>
+      <field tag="exemplar">
+        <form lang="en">
+          <text>This field stores the exemplar form for the current sense.</text>
+        </form>
+      </field>
+      <field tag="scientific-name">
+        <form lang="en">
+          <text>This field stores the scientific name pertinent to the current sense.</text>
+        </form>
+      </field>
+      <field tag="Plural">
+        <form lang="en">
+          <text/>
+        </form>
+        <form lang="qaa-x-spec">
+          <text>Class=LexEntry; Type=String; WsSelector=kwsVern</text>
+        </form>
+      </field>
+      <field tag="Singular">
+        <form lang="en">
+          <text>There are a number of words which have no singular or the singular is rare.</text>
+        </form>
+        <form lang="qaa-x-spec">
+          <text>Class=LexEntry; Type=String; WsSelector=kwsAnal</text>
+        </form>
+      </field>
+      <field tag="Parsing Note">
+        <form lang="en">
+          <text/>
+        </form>
+        <form lang="qaa-x-spec">
+          <text>Class=LexSense; Type=String; WsSelector=kwsAnal</text>
+        </form>
+      </field>
+    </fields>
+  </header>
+  <entry dateCreated="2006-08-23T21:07:21Z" dateModified="2006-09-22T20:14:24Z" id="bzwala_f67e332a-b296-4967-ace3-5583ce66e95b" guid="f67e332a-b296-4967-ace3-5583ce66e95b">
+    <lexical-unit>
+      <form lang="seh">
+        <text>bzwal</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="stem"/>
+    <citation>
+      <form lang="seh">
+        <text>bzwala</text>
+      </form>
+    </citation>
+    <sense id="b84dc935-feaf-4489-9434-1da83cfb5e7c">
+      <grammatical-info value="Verbo"/>
+      <gloss lang="en">
+        <text>plant</text>
+      </gloss>
+    </sense>
+  </entry>
+</lift>

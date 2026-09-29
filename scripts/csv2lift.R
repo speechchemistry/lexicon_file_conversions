@@ -26,6 +26,9 @@ p <- arg_parser("This script takes CSVs of entry-level (and optionally other) LI
 p <- add_argument(p, "--table-dir",
                   help = "Directory to discover a CSV per table in (entries.csv, senses.csv, ...). Explicit flags below override a discovered file of the same table.",
                   default = NA)
+p <- add_argument(p, "--header-from",
+                  help = "LIFT file to copy <header>/<fields> custom-field declarations from verbatim (not <ranges> -- FLEx recreates those on import).",
+                  default = NA)
 for (i in seq_len(nrow(registry))) {
   p <- add_argument(p, registry$cli_flag[i], help = registry$help[i], default = NA)
 }
@@ -79,6 +82,10 @@ for (i in seq_len(nrow(registry))) {
   if (is.null(path) || is.na(path)) next
   table <- read_csv(path, na = "", col_types = cols(.default = "c"), trim_ws = FALSE, show_col_types = FALSE)
   doc <- registry$attach_fn[[i]](doc, table)
+}
+
+if (!is.na(argv$header_from)) {
+  doc <- insert_header_fields_from_lift(doc, argv$header_from)
 }
 
 cat(as.character(doc))

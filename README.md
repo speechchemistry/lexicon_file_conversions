@@ -43,6 +43,14 @@ Rscript scripts/csv2lift.R tests/testthat/fixtures/csv2lift/sena3-example-duplic
 
 `--examples` requires `--senses` (or a discovered senses table), since examples attach to `<sense>` elements; the entry table is the only mandatory one. See [`SPEC.md`'s CLI shape section](SPEC.md#csv2lift-cli-shape) for the full CLI shape.
 
+`--header-from <lift-file>` copies that file's `<header>/<fields>` custom-field declarations verbatim into the output — useful when importing into a fresh FLEx project, since without them a custom field arrives typed as a generic MultiUnicode field instead of its real type:
+
+``` bash
+Rscript scripts/csv2lift.R --table-dir tests/testthat/fixtures/csv2lift/sena3-single-entry-plant \
+  --header-from tests/testthat/fixtures/lift2csv_entry-table/sena3.lift \
+  > sena3-single-entry-plant.lift
+```
+
 ## Supported Fields
 
 See [`SPEC.md`](SPEC.md) for the full table/column/LIFT-source reference and the current known limitations — it's the source of truth for the CSV↔LIFT data model, kept in sync with the code as design decisions are made.
