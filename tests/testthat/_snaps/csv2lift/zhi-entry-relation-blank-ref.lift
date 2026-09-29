@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lift version="0.13" producer="lexicon_file_conversions csv2lift">
+  <entry dateCreated="2024-02-27T10:44:37Z" dateModified="2026-09-29T13:49:19Z" id="tanya ngein_17d3aeac-d166-40f0-96e8-dd3cdf80ce75" guid="17d3aeac-d166-40f0-96e8-dd3cdf80ce75">
+    <lexical-unit>
+      <form lang="zhi">
+        <text>tanya ngein</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="phrase"/>
+    <note>
+      <form lang="en">
+        <text>Rev Sani thinks this should be deleted.</text>
+      </form>
+    </note>
+    <sense id="b00ad6f3-481f-4200-82cf-24e8463e4e55">
+      <grammatical-info value="Noun"/>
+      <gloss lang="en">
+        <text>grumble</text>
+      </gloss>
+      <gloss lang="ha">
+        <text>gunaguni</text>
+      </gloss>
+    </sense>
+    <relation type="_component-lexeme" ref="">
+      <trait name="complex-form-type" value="Unspecified Complex Form"/>
+    </relation>
+  </entry>
+  <entry dateCreated="2012-10-19T00:02:11Z" dateModified="2026-09-29T13:49:19Z" id="duk khyu_23ab5b1e-0468-46cb-8c68-2019effc8bae" guid="23ab5b1e-0468-46cb-8c68-2019effc8bae">
+    <lexical-unit>
+      <form lang="zhi">
+        <text>duk khyu</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="stem"/>
+    <sense id="dc6fc00b-9f54-4260-be3e-28896665a25f">
+      <grammatical-info value="Noun"/>
+      <gloss lang="en">
+        <text>hole</text>
+      </gloss>
+      <gloss lang="ha">
+        <text>rami</text>
+      </gloss>
+      <note type="source">
+        <form lang="en">
+          <text>SILCAWL1268-</text>
+        </form>
+      </note>
+      <trait name="semantic-domain-ddp4" value="1.2.1.5 Underground"/>
+    </sense>
+    <relation type="_component-lexeme" ref="">
+      <trait name="complex-form-type" value="Unspecified Complex Form"/>
+    </relation>
+  </entry>
+</lift>

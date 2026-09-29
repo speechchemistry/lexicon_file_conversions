@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- See https://github.com/sillsdev/lift-standard for more information on the format used here. -->
+<lift producer="SIL.FLEx 9.3.10.1452" version="0.13">
+<header>
+<ranges>
+<range id="dialect" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-09-29/zhi-flex_lift_2026-09-29.lift-ranges"/>
+<range id="etymology" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-09-29/zhi-flex_lift_2026-09-29.lift-ranges"/>
+<range id="grammatical-info" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-09-29/zhi-flex_lift_2026-09-29.lift-ranges"/>
+<range id="lexical-relation" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-09-29/zhi-flex_lift_2026-09-29.lift-ranges"/>
+<range id="note-type" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-09-29/zhi-flex_lift_2026-09-29.lift-ranges"/>
+<range id="paradigm" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-09-29/zhi-flex_lift_2026-09-29.lift-ranges"/>
+<range id="reversal-type" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-09-29/zhi-flex_lift_2026-09-29.lift-ranges"/>
+<range id="semantic-domain-ddp4" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-09-29/zhi-flex_lift_2026-09-29.lift-ranges"/>
+<range id="status" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-09-29/zhi-flex_lift_2026-09-29.lift-ranges"/>
+<range id="users" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-09-29/zhi-flex_lift_2026-09-29.lift-ranges"/>
+<range id="location" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-09-29/zhi-flex_lift_2026-09-29.lift-ranges"/>
+<!-- The following ranges are produced by FieldWorks Language Explorer, and are not part of the LIFT standard. -->
+<range id="anthro-code" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-09-29/zhi-flex_lift_2026-09-29.lift-ranges"/>
+<range id="translation-type" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-09-29/zhi-flex_lift_2026-09-29.lift-ranges"/>
+<!-- The parts of speech are duplicated in another range because derivational affixes require a "From" PartOfSpeech as well as a "To" PartOfSpeech. -->
+<range id="from-part-of-speech" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-09-29/zhi-flex_lift_2026-09-29.lift-ranges"/>
+<range id="morph-type" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-09-29/zhi-flex_lift_2026-09-29.lift-ranges"/>
+<range id="exception-feature" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-09-29/zhi-flex_lift_2026-09-29.lift-ranges"/>
+<range id="inflection-feature" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-09-29/zhi-flex_lift_2026-09-29.lift-ranges"/>
+<range id="inflection-feature-type" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-09-29/zhi-flex_lift_2026-09-29.lift-ranges"/>
+<range id="do-not-publish-in" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-09-29/zhi-flex_lift_2026-09-29.lift-ranges"/>
+</ranges>
+<fields>
+<field tag="cv-pattern">
+<form lang="en"><text>This records the syllable pattern for a LexPronunciation in FieldWorks.</text></form>
+</field>
+<field tag="tone">
+<form lang="en"><text>This records the tone information for a LexPronunciation in FieldWorks.</text></form>
+</field>
+<field tag="comment">
+<form lang="en"><text>This records a comment (note) in a LexEtymology in FieldWorks.</text></form>
+</field>
+<field tag="import-residue">
+<form lang="en"><text>This records residue left over from importing a standard format file into FieldWorks (or LinguaLinks).</text></form>
+</field>
+<field tag="literal-meaning">
+<form lang="en"><text>This field is used to store a literal meaning of the entry.  Typically, this field is necessary only for a compound or an idiom where the meaning of the whole is different from the sum of its parts.</text></form>
+</field>
+<field tag="summary-definition">
+<form lang="en"><text>A summary definition (located at the entry level in the Entry pane) is a general definition summarizing all the senses of a primary entry. It has no theoretical value; its use is solely pragmatic.</text></form>
+</field>
+<field tag="exemplar">
+<form lang="en"><text>This field stores the exemplar form for the current sense.</text></form>
+</field>
+<field tag="scientific-name">
+<form lang="en"><text>This field stores the scientific name pertinent to the current sense.</text></form>
+</field>
+<field tag="3SG PFV Form">
+<form lang="en"><text>Form elicited using English past-tense prompts (e.g., ‘he took’, ‘he saw’). Uses all vernacular WS.</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=MultiUnicode; WsSelector=kwsVerns</text></form>
+</field>
+<field tag="FTFlags">
+<form lang="en"><text>For use by FlexTools</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=String; WsSelector=kwsAnal</text></form>
+</field>
+<field tag="Pluractional Verb">
+<form lang="en"><text>Pluractional verb form (includes all vernacular writing systems)</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=MultiUnicode; WsSelector=kwsVerns</text></form>
+</field>
+<field tag="Plural Noun">
+<form lang="en"><text>Plural noun (includes all vernacular writing systems)</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=MultiUnicode; WsSelector=kwsVerns</text></form>
+</field>
+<field tag="Stem Type">
+<form lang="en"><text>s=simple, ns=not simple</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=String; WsSelector=kwsAnal</text></form>
+</field>
+</fields>
+</header>
+
+<entry dateCreated="2024-02-27T10:44:37Z" dateModified="2026-09-29T13:49:19Z" id="tanya ngein_17d3aeac-d166-40f0-96e8-dd3cdf80ce75" guid="17d3aeac-d166-40f0-96e8-dd3cdf80ce75">
+<lexical-unit>
+<form lang="zhi"><text>tanya ngein</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="phrase"/>
+<note>
+<form lang="en"><text>Rev Sani thinks this should be deleted.</text></form>
+</note>
+<relation type="_component-lexeme" ref="">
+<trait  name="complex-form-type" value="Unspecified Complex Form"/>
+</relation>
+<sense id="b00ad6f3-481f-4200-82cf-24e8463e4e55">
+<grammatical-info value="Noun">
+</grammatical-info>
+<gloss lang="en"><text>grumble</text></gloss>
+<gloss lang="ha"><text>gunaguni</text></gloss>
+</sense>
+</entry>
+
+<entry dateCreated="2012-10-19T00:02:11Z" dateModified="2026-09-29T13:49:19Z" id="duk khyu_23ab5b1e-0468-46cb-8c68-2019effc8bae" guid="23ab5b1e-0468-46cb-8c68-2019effc8bae">
+<lexical-unit>
+<form lang="zhi"><text>duk khyu</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="stem"/>
+<relation type="_component-lexeme" ref="">
+<trait  name="complex-form-type" value="Unspecified Complex Form"/>
+</relation>
+<sense id="dc6fc00b-9f54-4260-be3e-28896665a25f">
+<grammatical-info value="Noun">
+</grammatical-info>
+<gloss lang="en"><text>hole</text></gloss>
+<gloss lang="ha"><text>rami</text></gloss>
+<trait name ="semantic-domain-ddp4" value="1.2.1.5 Underground"/>
+<note type="source">
+<form lang="en"><text>SILCAWL1268-</text></form>
+</note>
+</sense>
+</entry>
+
+</lift>
