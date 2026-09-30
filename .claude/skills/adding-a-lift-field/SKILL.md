@@ -48,6 +48,14 @@ Every field this skill covered before `<pronunciation>` — `citation`, `note`, 
 
 Indexed column names (`pronunciation_1_<lang>`, `pronunciation_2_<lang>`) are the tempting way to dodge a new table. Reject them: the column set becomes data-dependent, and both classifiers then have to parse an index back out of every name.
 
+A **column for the first value plus an overflow table for the rest** is the other tempting dodge, when a `zeroOrMore` element is "almost always one". Reject it too:
+
+- **Every reader has to look in two places.** A filter on the column alone silently misses the overflow rows — 5.5% of pronounced entries in `zhi-flex_lift_2026-09-29.lift`, which is not "almost always one" either.
+- **The overflow table duplicates the existing table's full column set.** It has to carry every channel the element has (for `<pronunciation>`: forms, `media_href`, `media_label_<lang>`, custom fields, `location`), so it adds split/merge code on top of a table that still exists, rather than replacing it.
+- **Edits become ambiguous.** A positionally-keyed element's identity is its order ([SPEC.md's Data Handling](../../../SPEC.md#data-handling)), so deleting the column value raises whether the first overflow row gets promoted, and adding a second value means knowing it belongs in the other file.
+
+Tally before assuming "almost always one" holds (see below): when real data shows the element genuinely never repeats — FLEx models it as single-valued, as with `morph-type` and pronunciation `location` — a plain column with keep-first-and-warn is right, and no overflow is needed at all.
+
 Do not settle it from the schema alone — **tally the real fixtures (see [Understand the field](#understand-the-field-in-the-real-lift-model)) and check the worst case actually present.** The schema being permissive is an argument; an entry in the repo already holding two is proof, and it is what makes the case to the user.
 
 **Ask the user before committing to a new table.** It is roughly three times the work of a column and adds a row to `R/table_registry.R` (which is what supplies its CLI flag and its `--table-dir` discovery (and its `--table <name>` reach), both automatically), so it is their call. Bring them the fixture tally, not just the schema quote. [SPEC.md's CLI shape section](../../../SPEC.md#csv2lift-cli-shape) already anticipates the answer being yes — "further tables are added as optional parameters as their round-trip support is implemented".
