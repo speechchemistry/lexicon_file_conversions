@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lift version="0.13" producer="lexicon_file_conversions csv2lift">
+  <entry dateCreated="2025-05-26T13:49:35Z" dateModified="2026-10-13T16:31:19Z" id="ratɔ_2aa040df-945c-4786-b180-38753dc99274" guid="2aa040df-945c-4786-b180-38753dc99274">
+    <lexical-unit>
+      <form lang="zhi">
+        <text>ratɔ</text>
+      </form>
+      <form lang="zhi-fonipa-x-emic">
+        <text>ràtɔ̄</text>
+      </form>
+      <form lang="zhi-fonipa-x-etic">
+        <text>ɾàtɔ̄</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="stem"/>
+    <field type="Plural Noun">
+      <form lang="zhi-fonipa-x-etic">
+        <text>rjatɔ</text>
+      </form>
+    </field>
+    <pronunciation/>
+  </entry>
+  <entry dateCreated="2025-05-26T13:49:35Z" dateModified="2026-10-13T16:31:19Z" id="jə_b9f88f01-5fcb-4247-9200-8149f0ae0bc3" guid="b9f88f01-5fcb-4247-9200-8149f0ae0bc3">
+    <lexical-unit>
+      <form lang="zhi">
+        <text>jə</text>
+      </form>
+      <form lang="zhi-fonipa-x-emic">
+        <text>dʒə̀</text>
+      </form>
+      <form lang="zhi-fonipa-x-etic">
+        <text>dʒə̀</text>
+      </form>
+      <form lang="zhi-Zxxx-x-audio">
+        <text>Blench133a_something_sg_RMTS_diff-transcript.webm</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="stem"/>
+    <pronunciation/>
+  </entry>
+</lift>

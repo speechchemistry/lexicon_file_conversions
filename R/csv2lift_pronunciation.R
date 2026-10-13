@@ -35,14 +35,9 @@ attach_pronunciations_to_lift <- function(doc, pronunciation_table) {
     field_values <- if (nrow(field_cols) > 0) as.character(row[field_cols$column]) else character()
     location_value <- if ("location" %in% names(row)) row$location else NA_character_
 
-    # same "omit empty optional elements" rule as citation/note: a row with
-    # no transcription, audio file, custom field, or trait produces no
-    # <pronunciation> at all
-    if (!has_nonblank(form_values) && !has_media && !has_nonblank(field_values) &&
-        !has_nonblank(location_value)) {
-      return(invisible(NULL))
-    }
-
+    # <pronunciation> is emitted even for an all-blank row: row order is its
+    # only identity, so dropping a blank one would lose a real (empty)
+    # element, the same rule as example/reversal/etymology/variant.
     # Child order -- <form>, then <media> (with its own optional <label>),
     # then <field>, then <trait> -- matches every real occurrence seen
     # (lift.rng itself interleaves all of these, so this is a readability
