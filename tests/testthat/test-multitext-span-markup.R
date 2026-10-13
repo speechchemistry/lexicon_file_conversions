@@ -66,3 +66,44 @@ test_that("brackets present but no span pass through untouched", {
   expect_equal(r$cell, expected)
   expect_equal(r$cell_again, expected)
 })
+
+# Issue #6: FLEx exports spans with no lang -- a character style and a
+# hyperlink to an interlinear text (both real Zhire shapes). The cell keeps
+# whatever attributes the span had, in source order, rather than inventing
+# lang="NA".
+test_that("a span with only a class attribute round-trips", {
+  expected <- "SILCAWL0283- SILCAWL0<span class=\"Default Paragraph Characters\">283</span>-"
+  r <- round_trip_cell(expected)
+  expect_equal(r$cell, expected)
+  expect_equal(r$cell_again, expected)
+})
+
+test_that("a hyperlink span keeps href and class in source order", {
+  expected <- paste0(
+    "<span href=\"silfw://localhost/link?tool%3dinterlinearEdit%26guid%3d38f9c211-15aa-46cc-b380-84684d29e27a%26tag%3d\"",
+    " class=\"Hyperlink\">pronouns 1.1</span>"
+  )
+  r <- round_trip_cell(expected)
+  expect_equal(r$cell, expected)
+  expect_equal(r$cell_again, expected)
+})
+
+test_that("& in a span attribute value round-trips", {
+  r <- round_trip_cell("<span href=\"a?x=1&amp;y=2\">link</span>")
+  expect_equal(r$cell, "<span href=\"a?x=1&y=2\">link</span>")
+  expect_equal(r$cell_again, r$cell)
+})
+
+# libxml2's pretty-printer indents the children of an element with no
+# text-node child, and FLEx imports that indentation as data -- so a <text>
+# holding only a span must still serialise on one line.
+test_that("a span-only <text> is written without added whitespace", {
+  root <- read_xml("<root/>")
+  form <- xml_add_child(root, "form", lang = "en")
+  set_multitext_text(form, "<span lang=\"zhi\">the surface is cold</span>")
+  expect_match(
+    as.character(root),
+    "<text><span lang=\"zhi\">the surface is cold</span></text>",
+    fixed = TRUE
+  )
+})

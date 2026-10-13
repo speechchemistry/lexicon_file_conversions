@@ -36,18 +36,14 @@
       <example/>
       <example>
         <form lang="seh">
-          <text>
-            <span lang="en">wa kukhoboka ntima</span>
-          </text>
+          <text><span lang="en">wa kukhoboka ntima</span></text>
         </form>
         <translation type="Literal translation">
           <form lang="en">
             <text>tolerant</text>
           </form>
           <form lang="pt">
-            <text>
-              <span lang="en">tolerante</span>
-            </text>
+            <text><span lang="en">tolerante</span></text>
           </form>
         </translation>
       </example>

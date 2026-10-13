@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<lift version="0.13" producer="lexicon_file_conversions csv2lift">
+  <entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-10-13T17:08:13Z" id="kpiob_a709e70c-4b48-4543-80e3-fce5c9382d97" guid="a709e70c-4b48-4543-80e3-fce5c9382d97">
+    <lexical-unit>
+      <form lang="zhi">
+        <text>kpiob</text>
+      </form>
+      <form lang="zhi-fonipa-x-emic">
+        <text>kpjo᷅p</text>
+      </form>
+      <form lang="zhi-fonipa-x-etic">
+        <text>kpjo᷅p</text>
+      </form>
+      <form lang="zhi-Zxxx-x-audio">
+        <text>SILCAWL0283-_honor_RMKS.webm</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="stem"/>
+    <field type="literal-meaning">
+      <form lang="ha">
+        <text>the appropriate hausa word should be daukaka </text>
+      </form>
+    </field>
+    <sense id="d082cf60-ffe3-42fb-985d-1676e876bf1e">
+      <grammatical-info value="Verbal noun"/>
+      <gloss lang="en">
+        <text>honouring; praising</text>
+      </gloss>
+      <gloss lang="ha">
+        <text>sarauta, daukaka</text>
+      </gloss>
+      <note type="grammar">
+        <form lang="en">
+          <text>can be used as noun and verb?</text>
+        </form>
+      </note>
+      <note type="source">
+        <form lang="en">
+          <text>SILCAWL0283- SILCAWL0<span class="Default Paragraph Characters">283</span>-</text>
+        </form>
+      </note>
+    </sense>
+  </entry>
+  <entry dateCreated="2025-05-26T13:49:35Z" dateModified="2026-10-13T17:08:13Z" id="???_aca217fe-2522-4fe2-b930-b7cd3f14742c" guid="aca217fe-2522-4fe2-b930-b7cd3f14742c">
+    <lexical-unit>
+      <form lang="zhi">
+        <text>gbɛr</text>
+      </form>
+      <form lang="zhi-fonipa-x-emic">
+        <text>ɡbɛ᷅r</text>
+      </form>
+      <form lang="zhi-fonipa-x-etic">
+        <text>ɡbɛ᷅r</text>
+      </form>
+      <form lang="zhi-Zxxx-x-audio">
+        <text>Blench428-_bite_RMKS.webm</text>
+      </form>
+      <form lang="zhi-fonipa-x-pitch">
+        <text>˨˧</text>
+      </form>
+    </lexical-unit>
+    <trait name="morph-type" value="stem"/>
+    <field type="3SG PFV Form">
+      <form lang="zhi-fonipa-x-etic">
+        <text>ŋā ɡbɛ̀ɾ</text>
+      </form>
+      <form lang="zhi-Zxxx-x-audio">
+        <text>Blench428-_bite-3PST_RMKS.webm</text>
+      </form>
+    </field>
+    <sense id="110c035f-0d32-4c07-a575-191f86045150">
+      <grammatical-info value="Verb"/>
+      <gloss lang="en">
+        <text>to bite</text>
+      </gloss>
+      <gloss lang="ha">
+        <text>yi cī̀zā</text>
+      </gloss>
+      <gloss lang="jab">
+        <text>gbɛt</text>
+      </gloss>
+      <note>
+        <form lang="en">
+          <text>Blench428-</text>
+        </form>
+      </note>
+      <note type="source">
+        <form lang="en">
+          <text>SILCAWL0141-, SILCAWL1114-</text>
+        </form>
+      </note>
+      <example source="paws pag 1.1">
+        <form lang="zhi">
+          <text>wəgbi gbɛr tir ma</text>
+        </form>
+        <form lang="zhi-fonipa-x-etic">
+          <text>wəɡbi ɡbɛɾ tir ma</text>
+        </form>
+        <form lang="zhi-fonipa-x-pitch">
+          <text>˨ ˦   ˧   ˧   ˨</text>
+        </form>
+        <form lang="zhi-Zxxx-x-audio">
+          <text>a_dog_bit_the_girl_JSD.webm</text>
+        </form>
+        <translation type="Free translation">
+          <form lang="en">
+            <text>a dog bit the girl</text>
+          </form>
+        </translation>
+        <note type="reference">
+          <form lang="en">
+            <text><span href="silfw://localhost/link?tool%3dinterlinearEdit%26guid%3d3068a6e4-0681-42de-8f51-9bdaef2eaa2a%26tag%3d" class="Hyperlink">paws pag 1.1</span></text>
+          </form>
+        </note>
+      </example>
+    </sense>
+  </entry>
+</lift>

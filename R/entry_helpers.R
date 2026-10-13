@@ -4,6 +4,10 @@
 # serialised with the <span> tag kept literally and the surrounding text left as-is:
 # 'variant: <span lang="seh">nkucauno</span>'. set_multitext_text() is the inverse.
 #
+# A span keeps whatever attributes it had, in source order: FLEx also exports spans with no
+# lang at all (a hyperlink's href/class, a character style's class), and writing those as
+# lang="NA" made FLEx add a "Nauru (na)" writing system on import (issue #6).
+#
 # The tag is rebuilt with sprintf() rather than as.character(child) on purpose: as.character()
 # would XML-escape the span's content ("a & b" -> "a &amp; b") while the literal text around it
 # stays raw, so the cell would be inconsistently escaped and no longer plain text.
@@ -12,7 +16,12 @@ multitext_value <- function(node) {
   paste0(
     map_chr(xml_contents(text_node), function(child) {
       if (xml_type(child) == "text") return(xml_text(child))
-      sprintf("<span lang=\"%s\">%s</span>", xml_attr(child, "lang"), xml_text(child))
+      attrs <- xml_attrs(child)
+      sprintf(
+        "<span%s>%s</span>",
+        paste0(sprintf(" %s=\"%s\"", names(attrs), attrs), collapse = ""),
+        xml_text(child)
+      )
     }),
     collapse = ""
   )
@@ -153,7 +162,10 @@ has_nonblank <- function(values) any(!is.na(values) & nzchar(values))
 # produce mixed content (see the plan). The value is walked as alternating literal / span pieces
 # rather than substituted in one pass, because only the literal pieces may be XML-escaped — the
 # span tags we emit must stay as markup, and escaping them would turn them back into text.
-SPAN_MARKUP_PATTERN <- "<span lang=\"([^\"]*)\">(.*?)</span>"
+#
+# The attribute list is captured whole (any number of name="value" pairs, possibly none) and
+# re-emitted with only & and < escaped in the values.
+SPAN_MARKUP_PATTERN <- "<span((?: [A-Za-z_:][-A-Za-z0-9_:.]*=\"[^\"]*\")*)>(.*?)</span>"
 
 set_multitext_text <- function(parent_node, value) {
   spans <- stringr::str_match_all(value, SPAN_MARKUP_PATTERN)[[1]]
@@ -163,12 +175,34 @@ set_multitext_text <- function(parent_node, value) {
   for (i in seq_len(nrow(spans))) {
     inner <- paste0(
       inner,
-      sprintf("<span lang=\"%s\">%s</span>", spans[i, 2], escape_xml_text(spans[i, 3])),
+      sprintf("<span%s>%s</span>", escape_xml_attrs(spans[i, 2]), escape_xml_text(spans[i, 3])),
       escape_xml_text(literals[i + 1])
     )
   }
 
-  xml_add_child(parent_node, read_xml(paste0("<text>", inner, "</text>")))
+  text_node <- xml_add_child(parent_node, read_xml(paste0("<text>", inner, "</text>")))
+  if (nrow(spans) > 0) keep_text_unindented(text_node)
+  invisible(text_node)
+}
+
+# libxml2's pretty-printer indents the children of any element that has no text-node child,
+# so a <text> holding only spans was written across several lines -- and FLEx imports that
+# indentation as part of the value. An empty text-node child switches the indenting off for
+# this element and serialises to nothing. xml2 has no constructor for a bare text node, so one
+# is borrowed from a throwaway element.
+keep_text_unindented <- function(text_node) {
+  donor <- read_xml("<x>.</x>")
+  empty_text <- xml_contents(donor)[[1]]
+  xml_text(empty_text) <- ""
+  xml_add_child(text_node, empty_text, .where = 0)
+}
+
+# Escapes the values inside a captured ' name="value"' attribute list. & and < are the only
+# characters that can't appear raw in a double-quoted attribute value (" can't be in a CSV
+# span at all, since the pattern stops at it).
+escape_xml_attrs <- function(attrs) {
+  attrs <- gsub("&", "&amp;", attrs, fixed = TRUE)
+  gsub("<", "&lt;", attrs, fixed = TRUE)
 }
 
 escape_xml_text <- function(x) {

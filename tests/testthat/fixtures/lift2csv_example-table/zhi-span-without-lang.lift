@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- See https://github.com/sillsdev/lift-standard for more information on the format used here. -->
+<lift producer="SIL.FLEx 9.3.10.1452" version="0.13">
+<header>
+<ranges>
+<range id="dialect" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-10-13/zhi-flex_lift_2026-10-13.lift-ranges"/>
+<range id="etymology" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-10-13/zhi-flex_lift_2026-10-13.lift-ranges"/>
+<range id="grammatical-info" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-10-13/zhi-flex_lift_2026-10-13.lift-ranges"/>
+<range id="lexical-relation" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-10-13/zhi-flex_lift_2026-10-13.lift-ranges"/>
+<range id="note-type" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-10-13/zhi-flex_lift_2026-10-13.lift-ranges"/>
+<range id="paradigm" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-10-13/zhi-flex_lift_2026-10-13.lift-ranges"/>
+<range id="reversal-type" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-10-13/zhi-flex_lift_2026-10-13.lift-ranges"/>
+<range id="semantic-domain-ddp4" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-10-13/zhi-flex_lift_2026-10-13.lift-ranges"/>
+<range id="status" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-10-13/zhi-flex_lift_2026-10-13.lift-ranges"/>
+<range id="users" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-10-13/zhi-flex_lift_2026-10-13.lift-ranges"/>
+<range id="location" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-10-13/zhi-flex_lift_2026-10-13.lift-ranges"/>
+<!-- The following ranges are produced by FieldWorks Language Explorer, and are not part of the LIFT standard. -->
+<range id="anthro-code" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-10-13/zhi-flex_lift_2026-10-13.lift-ranges"/>
+<range id="translation-type" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-10-13/zhi-flex_lift_2026-10-13.lift-ranges"/>
+<!-- The parts of speech are duplicated in another range because derivational affixes require a "From" PartOfSpeech as well as a "To" PartOfSpeech. -->
+<range id="from-part-of-speech" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-10-13/zhi-flex_lift_2026-10-13.lift-ranges"/>
+<range id="morph-type" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-10-13/zhi-flex_lift_2026-10-13.lift-ranges"/>
+<range id="exception-feature" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-10-13/zhi-flex_lift_2026-10-13.lift-ranges"/>
+<range id="inflection-feature" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-10-13/zhi-flex_lift_2026-10-13.lift-ranges"/>
+<range id="inflection-feature-type" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-10-13/zhi-flex_lift_2026-10-13.lift-ranges"/>
+<range id="do-not-publish-in" href="file://C:/Users/timke/Downloads/zhi-flex_lift_2026-10-13/zhi-flex_lift_2026-10-13.lift-ranges"/>
+</ranges>
+<fields>
+<field tag="cv-pattern">
+<form lang="en"><text>This records the syllable pattern for a LexPronunciation in FieldWorks.</text></form>
+</field>
+<field tag="tone">
+<form lang="en"><text>This records the tone information for a LexPronunciation in FieldWorks.</text></form>
+</field>
+<field tag="comment">
+<form lang="en"><text>This records a comment (note) in a LexEtymology in FieldWorks.</text></form>
+</field>
+<field tag="import-residue">
+<form lang="en"><text>This records residue left over from importing a standard format file into FieldWorks (or LinguaLinks).</text></form>
+</field>
+<field tag="literal-meaning">
+<form lang="en"><text>This field is used to store a literal meaning of the entry.  Typically, this field is necessary only for a compound or an idiom where the meaning of the whole is different from the sum of its parts.</text></form>
+</field>
+<field tag="summary-definition">
+<form lang="en"><text>A summary definition (located at the entry level in the Entry pane) is a general definition summarizing all the senses of a primary entry. It has no theoretical value; its use is solely pragmatic.</text></form>
+</field>
+<field tag="exemplar">
+<form lang="en"><text>This field stores the exemplar form for the current sense.</text></form>
+</field>
+<field tag="scientific-name">
+<form lang="en"><text>This field stores the scientific name pertinent to the current sense.</text></form>
+</field>
+<field tag="3SG PFV Form">
+<form lang="en"><text>Form elicited using English past-tense prompts (e.g., ‘he took’, ‘he saw’). Uses all vernacular WS.</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=MultiUnicode; WsSelector=kwsVerns</text></form>
+</field>
+<field tag="FTFlags">
+<form lang="en"><text>For use by FlexTools</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=String; WsSelector=kwsAnal</text></form>
+</field>
+<field tag="Pluractional Verb">
+<form lang="en"><text>Pluractional verb form (includes all vernacular writing systems)</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=MultiUnicode; WsSelector=kwsVerns</text></form>
+</field>
+<field tag="Plural Noun">
+<form lang="en"><text>Plural noun (includes all vernacular writing systems)</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=MultiUnicode; WsSelector=kwsVerns</text></form>
+</field>
+<field tag="Stem Type">
+<form lang="en"><text>s=simple, ns=not simple</text></form>
+<form lang="qaa-x-spec"><text>Class=LexEntry; Type=String; WsSelector=kwsAnal</text></form>
+</field>
+</fields>
+</header>
+
+<entry dateCreated="2025-05-26T13:49:36Z" dateModified="2026-10-13T17:08:13Z" id="kpiob_a709e70c-4b48-4543-80e3-fce5c9382d97" guid="a709e70c-4b48-4543-80e3-fce5c9382d97">
+<lexical-unit>
+<form lang="zhi"><text>kpiob</text></form>
+<form lang="zhi-fonipa-x-emic"><text>kpjo᷅p</text></form>
+<form lang="zhi-fonipa-x-etic"><text>kpjo᷅p</text></form>
+<form lang="zhi-Zxxx-x-audio"><text>SILCAWL0283-_honor_RMKS.webm</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="stem"/>
+<field type="literal-meaning">
+<form lang="ha"><text>the appropriate hausa word should be daukaka </text></form>
+</field>
+<pronunciation>
+<media href="SILCAWL0283-_honor_RMKS.webm">
+</media></pronunciation>
+<sense id="d082cf60-ffe3-42fb-985d-1676e876bf1e">
+<grammatical-info value="Verbal noun">
+</grammatical-info>
+<gloss lang="en"><text>honouring; praising</text></gloss>
+<gloss lang="ha"><text>sarauta, daukaka</text></gloss>
+<trait name ="semantic-domain-ddp4" value="4.5.5 Honor"/>
+<note type="grammar">
+<form lang="en"><text>can be used as noun and verb?</text></form>
+</note>
+<note type="source">
+<form lang="en"><text>SILCAWL0283- SILCAWL0<span class="Default Paragraph Characters">283</span>-</text></form>
+</note>
+<reversal type="en"><form lang="en"><text>honouring</text></form>
+</reversal>
+<reversal type="en"><form lang="en"><text>praising</text></form>
+</reversal>
+</sense>
+</entry>
+
+<entry dateCreated="2025-05-26T13:49:35Z" dateModified="2026-10-13T17:08:13Z" id="???_aca217fe-2522-4fe2-b930-b7cd3f14742c" guid="aca217fe-2522-4fe2-b930-b7cd3f14742c">
+<lexical-unit>
+<form lang="zhi"><text>gbɛr</text></form>
+<form lang="zhi-fonipa-x-emic"><text>ɡbɛ᷅r</text></form>
+<form lang="zhi-fonipa-x-etic"><text>ɡbɛ᷅r</text></form>
+<form lang="zhi-fonipa-x-pitch"><text>˨˧</text></form>
+<form lang="zhi-Zxxx-x-audio"><text>Blench428-_bite_RMKS.webm</text></form>
+</lexical-unit>
+<trait  name="morph-type" value="stem"/>
+<pronunciation>
+<media href="Blench428-_bite_RMKS.webm">
+</media></pronunciation>
+<field type="3SG PFV Form">
+<form lang="zhi-fonipa-x-etic"><text>ŋā ɡbɛ̀ɾ</text></form>
+<form lang="zhi-Zxxx-x-audio"><text>Blench428-_bite-3PST_RMKS.webm</text></form>
+</field>
+<sense id="110c035f-0d32-4c07-a575-191f86045150">
+<grammatical-info value="Verb">
+</grammatical-info>
+<gloss lang="en"><text>to bite</text></gloss>
+<gloss lang="ha"><text>yi cī̀zā</text></gloss>
+<gloss lang="jab"><text>gbɛt</text></gloss>
+<example source="paws pag 1.1">
+<form lang="zhi"><text>wəgbi gbɛr tir ma</text></form>
+<form lang="zhi-fonipa-x-etic"><text>wəɡbi ɡbɛɾ tir ma</text></form>
+<form lang="zhi-fonipa-x-pitch"><text>˨ ˦   ˧   ˧   ˨</text></form>
+<form lang="zhi-Zxxx-x-audio"><text>a_dog_bit_the_girl_JSD.webm</text></form>
+<translation type="Free translation">
+<form lang="en"><text>a dog bit the girl</text></form>
+</translation>
+<note type="reference">
+<form lang="en"><text><span href="silfw://localhost/link?tool%3dinterlinearEdit%26guid%3d3068a6e4-0681-42de-8f51-9bdaef2eaa2a%26tag%3d" class="Hyperlink">paws pag 1.1</span></text></form>
+</note>
+</example>
+<trait name ="semantic-domain-ddp4" value="5.2.2.1 Bite, chew"/>
+<note>
+<form lang="en"><text>Blench428-</text></form>
+</note>
+<note type="source">
+<form lang="en"><text>SILCAWL0141-, SILCAWL1114-</text></form>
+</note>
+</sense>
+</entry>
+
+</lift>
