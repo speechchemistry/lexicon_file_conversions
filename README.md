@@ -51,6 +51,19 @@ Rscript scripts/csv2lift.R --table-dir tests/testthat/fixtures/csv2lift/sena3-si
   > sena3-single-entry-plant.lift
 ```
 
+### Importing csv2lift output into FLEx: ranges files
+
+`csv2lift.R` writes no `<header>/<ranges>` block and no `.lift-ranges` file, and `--header-from` copies only `<fields>`. Without ranges, FLEx has no list definitions to match the LIFT's list values against, and an import with the "overwrite" merge option can add duplicate list references. In one Zhire import, 37 of the 38 senses it modified ended up with each semantic domain listed twice; that project's semantic-domain names were tagged `lang="ha"` rather than `en`, which is likely why FLEx couldn't match them. Other lists (e.g. `grammatical-info`) could be affected the same way.
+
+Re-importing as below cut the duplicates from 37 senses to 1:
+
+1. **Back up the FLEx project first.** An import can't be undone.
+2. Put the project's own `.lift-ranges` file (from a recent FLEx export) next to the LIFT, with the same base name: `foo.lift` + `foo.lift-ranges`. Copy the export's `WritingSystems/` folder alongside too.
+3. Add the export's `<ranges>` block to the `<header>` of the csv2lift output, with each `<range href="…">` pointing at that `.lift-ranges` file.
+4. Import from a normal writable folder. FLEx reported a "no write access" error when the LIFT was in a WSL folder.
+
+Steps 2 and 3 were done together, so it isn't known yet whether the `.lift-ranges` file alone (without the `<ranges>` block) is enough.
+
 ## Supported Fields
 
 See [`SPEC.md`](SPEC.md) for the full table/column/LIFT-source reference and the current known limitations — it's the source of truth for the CSV↔LIFT data model, kept in sync with the code as design decisions are made.
