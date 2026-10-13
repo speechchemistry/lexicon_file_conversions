@@ -11,7 +11,7 @@ Two bugs, both from issue #6, both seen in a real Zhire round trip into FLEx:
 
 - **CSV cell:** a span keeps exactly the attributes it had in the LIFT, in source order: `<span class="Default Paragraph Characters">283</span>`, `<span href="…" class="Hyperlink">paws pag 1.1</span>`. No `lang` is added when there wasn't one. Spans that have a `lang` are unchanged, so existing CSVs don't change.
 - **Output layout:** everything stays indented as now except a `<text>` element's content, which is always written on one line: `<text><span …>…</span></text>`.
-- Attribute values containing `"` are not supported (none in real data); this is recorded in SPEC.md's [Not Yet Specified](../SPEC.md#not-yet-specified) list rather than designed for.
+- Attribute values containing `"` are not supported (none in real data); this is recorded in SPEC.md's [Not Yet Specified](../../SPEC.md#not-yet-specified) list rather than designed for.
 
 ## Fixture
 
