@@ -38,7 +38,7 @@ attach_examples_to_lift <- function(doc, example_table) {
     # had it the other way around — sena3.lift entry e0aa351f-… does, and
     # inserting-before is what keeps that entry's own example, and its
     # subsense's separate nested example, in their original relative order.
-    existing_subsense <- xml_find_first(sense_node, "./subsense")
+    existing_subsense <- xml_find_first(sense_node, "./subsense", ns = NO_NAMESPACES)
     has_subsense <- !inherits(existing_subsense, "xml_missing")
 
     example_attrs <- list()

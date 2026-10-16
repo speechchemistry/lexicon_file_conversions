@@ -35,7 +35,7 @@ attach_senses_to_lift <- function(doc, sense_table) {
     # attach point and tag name differ. Attached to whichever sense/subsense
     # node has this row's parent_sense_guid as its own @id, rather than to
     # entry_node directly. This relies on the table's own row order putting
-    # a parent's row before its subsense's (extract_sense_metadata()'s
+    # a parent's row before its subsense's (sense_table()'s
     # depth-first read order guarantees it for reader output; a
     # hand-reordered CSV that violates it fails fast below, same as any
     # other unmatched FK).

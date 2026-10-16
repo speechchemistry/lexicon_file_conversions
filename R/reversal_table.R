@@ -1,10 +1,8 @@
 reversal_table <- function(LIFT_file) {
   doc <- read_xml(LIFT_file)
 
-  # Direct-child axis, so this deliberately excludes sense/subsense/reversal
-  # (0 occurrences in any fixture, but <subsense> is unsupported regardless --
-  # SPEC.md's Not Yet Specified -- and its senses have no row in the sense
-  # table, mirroring example_table()'s identical exclusion).
+  # Direct-child axis, so this deliberately excludes sense/subsense/reversal:
+  # no fixture has one (SPEC.md's Reversal Table and Not Yet Specified).
   reversals <- xml_find_all(doc, ".//entry/sense/reversal")
 
   empty_reversal_meta <- tibble(
@@ -27,7 +25,7 @@ reversal_table <- function(LIFT_file) {
   }
 
   # second stage: the reversal form, one column per writing system found
-  forms_long <- extract_reversal_multitext(reversals, "./form")
+  forms_long <- extract_multitext(reversals, seq_along(reversals), "reversal_index", "./form")
   forms_wide <- forms_long |>
     pivot_wider(
       id_cols = reversal_index,

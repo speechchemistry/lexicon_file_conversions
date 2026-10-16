@@ -31,7 +31,7 @@ pronunciation_table <- function(LIFT_file) {
   }
 
   # second stage: the phonetic transcription, one column per writing system
-  forms_long <- extract_pronunciation_multitext(pronunciations, "./form")
+  forms_long <- extract_multitext(pronunciations, seq_along(pronunciations), "pronunciation_index", "./form")
   forms_wide <- forms_long |>
     pivot_wider(
       id_cols = pronunciation_index,
@@ -41,7 +41,11 @@ pronunciation_table <- function(LIFT_file) {
     )
 
   # third stage: the media's own <label>, one column per writing system found
-  media_label_long <- extract_media_label_multitext(media_nodes)
+  # keyed by each media node's own pronunciation's position, skipping the
+  # pronunciations that have no media, so a label can't shift onto a
+  # neighbouring row
+  has_media <- !map_lgl(media_nodes, is.null)
+  media_label_long <- extract_multitext(media_nodes[has_media], which(has_media), "pronunciation_index", "./label/form")
   media_label_wide <- media_label_long |>
     pivot_wider(
       id_cols = pronunciation_index,
@@ -52,7 +56,7 @@ pronunciation_table <- function(LIFT_file) {
 
   # fourth stage: custom <field type> children (cv-pattern, tone, ...),
   # type-keyed exactly like entry-level custom fields
-  fields_long <- extract_pronunciation_multitext_with_attribute(pronunciations, "./field", "type", "field_text")
+  fields_long <- extract_multitext_with_attribute(pronunciations, seq_along(pronunciations), "pronunciation_index", "./field", "type", "field_text")
   fields_wide <- fields_long |>
     pivot_wider(
       id_cols = pronunciation_index,
@@ -63,10 +67,12 @@ pronunciation_table <- function(LIFT_file) {
 
   # fifth stage: the "location" trait -- always at most one per
   # pronunciation in real data, so a plain column rather than a row in the
-  # long `traits` table (see extract_single_pronunciation_trait()'s comment)
+  # long `traits` table (see SPEC.md's Pronunciation Table)
   location_tbl <- tibble(
     pronunciation_index = seq_along(pronunciations),
-    location = extract_single_pronunciation_trait(pronunciations, "location")
+    location = extract_single_trait(pronunciations, "location", function(pronunciation) {
+      sprintf("Entry %s has a pronunciation with", xml_attr(xml_parent(pronunciation), "guid"))
+    })
   )
 
   pronunciation_meta |>

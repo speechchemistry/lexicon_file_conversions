@@ -93,6 +93,14 @@ Replaces the 14 `xml_find_first(root, sprintf(".//entry[@guid='%s']", ...))`-per
 
 ### Phase: generic reader extractors
 
+**Status: done.** Golden master byte-identical (all 380 reader outputs, warnings included), suite green, no `.new` snapshots. Reading all of `sena3.lift` went from ~54s to ~3.3s, and writing from ~7.7s to ~5.4s. Measured profiling changed the plan in three ways:
+
+- **The main cost was xml2's namespace scan, not tibble building.** Every `xml_find_all()`/`xml_find_first()` call on a single node defaults to `ns = xml_ns(x)`, which re-scans the whole document; that was over 90% of read time once the extractors were generic. Every per-node call in the readers and writers now passes `ns = NO_NAMESPACES` (`R/multitext_helpers.R`), which is safe because LIFT declares no namespaces and no XPath here uses a prefix. The skill now says so for future readers.
+- **`extract_sense_metadata()` is gone.** `sense_table()` builds its metadata stage from vectorised `xml_attr()` calls over `.//entry/sense | .//subsense`, whose document order is the same depth-first order the recursion produced. Note that `xml_parent()` on a nodeset de-duplicates, so the parent lookup uses `xml_find_first(senses, "parent::*")`.
+- **`multitext_value()` has a fast path** for a `<text>` with no element children (no `<span>`), keeping `""` for a missing `<text>`.
+
+`traits` is the slowest reader left (~2.5s; one small tibble per entry). It isn't worth restructuring now, since its row order is defined per entry.
+
 Replaces the ~12 copied extractors (`extract_multitext_element`, `extract_sense_multitext_element`, `extract_example_multitext`, `extract_pronunciation_multitext`, `extract_etymology_multitext`, `extract_reversal_multitext`, `extract_variant_multitext`, `extract_media_label_multitext`, and the `_with_attribute` variants) with two generic ones.
 
 - New `R/multitext_helpers.R`, which also takes over the already-cross-cutting helpers now sitting in `R/entry_helpers.R` (`multitext_value`, `set_multitext_text`, `keep_text_unindented`, `escape_xml_*`, `SPAN_MARKUP_PATTERN`, `has_nonblank`, `add_multitext_children`, `emit_typed_children`):

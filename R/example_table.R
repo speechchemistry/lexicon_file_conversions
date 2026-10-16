@@ -27,7 +27,7 @@ example_table <- function(LIFT_file) {
   }
 
   # second stage: the example sentence, one column per writing system found
-  forms_long <- extract_example_multitext(examples, "./form")
+  forms_long <- extract_multitext(examples, seq_along(examples), "example_index", "./form")
   forms_wide <- forms_long |>
     pivot_wider(
       id_cols = example_index,
@@ -50,7 +50,7 @@ example_table <- function(LIFT_file) {
 
   # fourth stage: the reference note; reuses the typed-note scheme (SPEC.md's
   # Column Classification), which is deliberately shared across every level.
-  note_long <- extract_example_multitext_with_attribute(examples, "./note[@type]", "type", "note_text")
+  note_long <- extract_multitext_with_attribute(examples, seq_along(examples), "example_index", "./note[@type]", "type", "note_text")
   note_wide <- note_long |>
     pivot_wider(
       id_cols = example_index,

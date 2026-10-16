@@ -11,30 +11,16 @@ trait_table <- function(LIFT_file) {
   # Direct-child axis throughout (./variant, ./relation, ./sense), so this
   # deliberately excludes sense/subsense/trait,
   # sense/subsense/grammatical-info/trait, variant/relation/trait, and
-  # sense/relation/trait (<subsense> is unsupported and sense/relation/trait
-  # does not occur in any fixture -- SPEC.md's Not Yet Specified -- and none
-  # has a row in any table this tool builds), mirroring example_table()'s
-  # identical exclusion.
+  # sense/relation/trait: none occurs in any fixture (SPEC.md's Traits Table
+  # and Not Yet Specified).
   entries <- xml_find_all(doc, ".//entry")
 
-  empty_result <- tibble(
-    entry_id = character(),
-    sense_guid = character(),
-    owner = character(),
-    owner_index = character(),
-    trait_name = character(),
-    trait_value = character()
+  bind_rows(
+    empty_trait_rows(),
+    map_df(entries, ~bind_rows(
+      extract_positional_owner_traits(xml_find_all(.x, "./variant", ns = NO_NAMESPACES), "variant"),
+      extract_positional_owner_traits(xml_find_all(.x, "./relation", ns = NO_NAMESPACES), "entry-relation"),
+      extract_sense_traits(xml_find_all(.x, "./sense", ns = NO_NAMESPACES))
+    ))
   )
-
-  if (length(entries) == 0) return(empty_result)
-
-  map_df(entries, ~{
-    variant_rows <- extract_variant_traits(xml_find_all(.x, "./variant"))
-    entry_relation_rows <- extract_entry_relation_traits(xml_find_all(.x, "./relation"))
-    sense_rows <- extract_sense_traits(xml_find_all(.x, "./sense"))
-
-    rows <- bind_rows(variant_rows, entry_relation_rows, sense_rows)
-    if (nrow(rows) == 0) return(empty_result)
-    rows
-  })
 }

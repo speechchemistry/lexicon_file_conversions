@@ -1,18 +1,6 @@
-# One row per <trait>, whichever of the two sense-level attachment points it
-# comes from. Unlike every other table, <trait name value> is already a flat
-# name/value pair (lift.rng's trait-content has no <optional> around either
-# attribute, the same required-attribute shape as <etymology>'s @type/@source
-# -- see R/etymology_helpers.R) -- there is no multitext/pivot_wider stage,
-# since the node's own two attributes are the row.
-#
-# owner_index is always NA here (blank in the CSV): a sense has at most one
-# <grammatical-info>, and sense_guid already identifies it uniquely, so no
-# positional pointer is needed for either owner this covers. It earns its
-# keep for the variant-owned rows extract_variant_traits() (below) produces:
-# <variant> has no stable id of its own and can repeat per entry (up to 8 in
-# sena3.lift), so a trait row naming one needs a position to point at.
-extract_sense_traits <- function(senses) {
-  empty_result <- tibble(
+# The traits table's columns, as a typed zero-row tibble.
+empty_trait_rows <- function() {
+  tibble(
     entry_id = character(),
     sense_guid = character(),
     owner = character(),
@@ -20,9 +8,39 @@ extract_sense_traits <- function(senses) {
     trait_name = character(),
     trait_value = character()
   )
+}
 
-  if (length(senses) == 0) return(empty_result)
+# One value per node for a trait name LIFT allows at most once per owner
+# (an entry's morph-type, a pronunciation's location), which is why each is a
+# plain column rather than rows in the traits table. If the data has more
+# than one anyway, warn (to stderr) naming the owner and every value, and keep
+# the first rather than silently dropping data. `describe_owner(node)` starts
+# the warning, e.g. "Entry <guid> has".
+extract_single_trait <- function(nodes, trait_name, describe_owner) {
+  map_chr(nodes, ~{
+    values <- xml_attr(xml_find_all(.x, sprintf("./trait[@name='%s']", trait_name), ns = NO_NAMESPACES), "value")
+    if (length(values) == 0) return(NA_character_)
+    if (length(values) > 1) {
+      warning(sprintf(
+        "%s %d '%s' traits (%s); using first value.",
+        describe_owner(.x), length(values), trait_name, paste(values, collapse = ", ")
+      ))
+    }
+    values[1]
+  })
+}
 
+# One row per <trait>, whichever of the two sense-level attachment points it
+# comes from. Unlike every other table, <trait name value> is already a flat
+# name/value pair (lift.rng's trait-content has no <optional> around either
+# attribute) -- there is no multitext/pivot_wider stage, since the node's own
+# two attributes are the row.
+#
+# owner_index is always NA here (blank in the CSV): a sense has at most one
+# <grammatical-info>, and sense_guid already identifies it uniquely, so no
+# positional pointer is needed for either owner this covers. It's needed
+# only for the owners extract_positional_owner_traits() (below) covers.
+extract_sense_traits <- function(senses) {
   map_df(senses, ~{
     sense_guid <- xml_attr(.x, "id")
     entry_id <- xml_attr(xml_parent(.x), "guid")
@@ -31,11 +49,12 @@ extract_sense_traits <- function(senses) {
     # nesting order real FLEx output uses (<grammatical-info> is one of a
     # sense's first children, <trait> one of its last -- confirmed against
     # every fixture with both).
-    gram_info_traits <- xml_find_all(.x, "./grammatical-info/trait")
-    sense_traits <- xml_find_all(.x, "./trait")
+    gram_info_traits <- xml_find_all(.x, "./grammatical-info/trait", ns = NO_NAMESPACES)
+    sense_traits <- xml_find_all(.x, "./trait", ns = NO_NAMESPACES)
 
-    rows <- bind_rows(
-      if (length(gram_info_traits) == 0) empty_result else tibble(
+    bind_rows(
+      empty_trait_rows(),
+      if (length(gram_info_traits) > 0) tibble(
         entry_id = entry_id,
         sense_guid = sense_guid,
         owner = "grammatical-info",
@@ -43,7 +62,7 @@ extract_sense_traits <- function(senses) {
         trait_name = xml_attr(gram_info_traits, "name"),
         trait_value = xml_attr(gram_info_traits, "value")
       ),
-      if (length(sense_traits) == 0) empty_result else tibble(
+      if (length(sense_traits) > 0) tibble(
         entry_id = entry_id,
         sense_guid = sense_guid,
         owner = "sense",
@@ -52,78 +71,26 @@ extract_sense_traits <- function(senses) {
         trait_value = xml_attr(sense_traits, "value")
       )
     )
-
-    if (nrow(rows) == 0) return(empty_result)
-    rows
   })
 }
 
-# Variant-owned trait rows -- entry-parented, unlike extract_sense_traits()
-# above. sense_guid is always NA here: a <variant> hangs directly off
-# <entry>, with no sense involved at all. owner_index is the variant's
-# 1-based position among the entry's own <variant> siblings (the caller
-# already scopes `variants` to one entry's children, so seq_along() is that
-# position directly) -- <variant> has no id/guid of its own (SPEC.md's
-# Variant Table), so position is the only way a trait row can point back at
-# a specific one when an entry has more than one.
-extract_variant_traits <- function(variants) {
-  empty_result <- tibble(
-    entry_id = character(),
-    sense_guid = character(),
-    owner = character(),
-    owner_index = character(),
-    trait_name = character(),
-    trait_value = character()
-  )
-
-  if (length(variants) == 0) return(empty_result)
-
-  map_df(seq_along(variants), function(index) {
-    variant <- variants[[index]]
-    traits <- xml_find_all(variant, "./trait")
-    if (length(traits) == 0) return(empty_result)
+# Trait rows for one entry's own children of a kind that has no id/guid --
+# <variant> (owner "variant") or entry-level <relation> (owner
+# "entry-relation"), both of which can repeat per entry (up to 8 variants and
+# 3 relations in sena3.lift). owner_index is the child's 1-based position
+# among `nodes`, which the caller scopes to that one entry's children, so
+# position is how a trait row points back at a specific one (SPEC.md's
+# Traits Table). sense_guid is always NA: both hang directly off <entry>.
+extract_positional_owner_traits <- function(nodes, owner) {
+  map_df(seq_along(nodes), function(index) {
+    node <- nodes[[index]]
+    traits <- xml_find_all(node, "./trait", ns = NO_NAMESPACES)
+    if (length(traits) == 0) return(empty_trait_rows())
 
     tibble(
-      entry_id = xml_attr(xml_parent(variant), "guid"),
+      entry_id = xml_attr(xml_parent(node), "guid"),
       sense_guid = NA_character_,
-      owner = "variant",
-      owner_index = as.character(index),
-      trait_name = xml_attr(traits, "name"),
-      trait_value = xml_attr(traits, "value")
-    )
-  })
-}
-
-# Entry-relation-owned trait rows -- entry-parented, like
-# extract_variant_traits() above and for the identical reason: <relation>
-# has no id/guid of its own (SPEC.md's Entry-Relation Table), so
-# owner_index -- the relation's 1-based position among the entry's own
-# <relation> siblings -- is the only way a trait row can point back at a
-# specific one when an entry has more than one (up to 3 in sena3.lift).
-# sense_guid is always NA here: entry/relation hangs directly off <entry>,
-# with no sense involved at all. sense/relation/trait does not occur in any
-# fixture and stays unread (SPEC.md's Not Yet Specified).
-extract_entry_relation_traits <- function(relations) {
-  empty_result <- tibble(
-    entry_id = character(),
-    sense_guid = character(),
-    owner = character(),
-    owner_index = character(),
-    trait_name = character(),
-    trait_value = character()
-  )
-
-  if (length(relations) == 0) return(empty_result)
-
-  map_df(seq_along(relations), function(index) {
-    relation <- relations[[index]]
-    traits <- xml_find_all(relation, "./trait")
-    if (length(traits) == 0) return(empty_result)
-
-    tibble(
-      entry_id = xml_attr(xml_parent(relation), "guid"),
-      sense_guid = NA_character_,
-      owner = "entry-relation",
+      owner = owner,
       owner_index = as.character(index),
       trait_name = xml_attr(traits, "name"),
       trait_value = xml_attr(traits, "value")

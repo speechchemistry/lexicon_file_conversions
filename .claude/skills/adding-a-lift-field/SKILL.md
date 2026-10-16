@@ -104,30 +104,15 @@ Rscript -e 'devtools::test(filter = "entry-table")'
 
 A brand-new fixture produces a WARN and an auto-created snapshot, *not* a FAIL. That file is simply whatever today's code emits — read it and confirm the new field is absent. That absence is your red.
 
-**Green.** Add the extraction to [R/entry_table.R](../../../R/entry_table.R), following the `citation` block as the template: `extract_multitext_element()` (from [R/entry_helpers.R](../../../R/entry_helpers.R)) then `pivot_wider(names_glue = "<field>_{lang}")`, then a `left_join` into `combined`.
+**Green.** Add the extraction to [R/entry_table.R](../../../R/entry_table.R), following the `citation` block as the template: `extract_multitext(entries, entry_ids, "entry_id", <xpath>)` (from [R/multitext_helpers.R](../../../R/multitext_helpers.R)) then `pivot_wider(names_glue = "<field>_{lang}")`, then a `left_join` into `combined`. A type-keyed element (`<field type>`, `<note type>`) uses `extract_multitext_with_attribute()` instead. Don't write a new extractor for a new level: both functions take the nodes, a key vector aligned with them, and the key column's name, so they serve every table.
 
 Use an xpath predicate to exclude variants that are semantically different fields — e.g. `./note[not(@type)]/form`. Without it, two variants sharing a language collide in `pivot_wider`.
 
 **Keep write-direction machinery out of the read step.** `classify_*_columns()` exists only for csv2lift, so editing it while making the reader green costs you the sharpest write red. Adding the sense custom-field fallback during the read step turned [TDD the write direction](#tdd-the-write-direction-csv2lift)'s red from "hard error naming the unrecognized column" into "column classified fine, then silently dropped from the emitted XML" — still a real red, but one you have to go hunting for in the snapshot instead of one the test hands you. Touch only the extractor and its `pivot_wider`/`left_join` here.
 
-**Always return a *typed* empty tibble from every early-return path.** `map_df` over a zero-length list — or a bare `tibble()` returned when a node has no children — produces a tibble with **no columns**, and the downstream `left_join(by = "sense_guid")` then fails with `Join columns in 'x' must be present in the data`. Define the empty shape once and reuse it, *and* guard the outer call when the node list itself is empty (the empty-lexicon fixture has zero entries, which the inner guard never sees):
+**Always return a *typed* empty tibble, even when there are no nodes.** `map_df` over a zero-length list — or a bare `tibble()` returned when a node has no children — produces a tibble with **no columns**, and the downstream `left_join(by = "sense_guid")` then fails with `Join columns in 'x' must be present in the data`. The empty-lexicon fixture (zero entries) catches this. `extract_multitext()`/`extract_multitext_with_attribute()` always return typed columns, and so does a metadata stage built from vectorised `xml_attr()` calls over the node set (as `sense_table()` does), so prefer those over `map_df`.
 
-```r
-empty_sense_meta <- tibble(sense_guid = character(), entry_id = character(),
-                           grammatical_info = character())
-
-sense_meta <- if (length(entries) == 0) {
-  empty_sense_meta                                    # outer guard: no entries at all
-} else {
-  map_df(entries, ~{
-    senses <- xml_find_all(.x, "./sense")
-    if (length(senses) == 0) return(empty_sense_meta)  # inner guard: entry has no senses
-    ...
-  })
-}
-```
-
-`extract_multitext_element()` already does this via its `empty_result`, which is why the entry-level path never trips over it — but any new extractor you write must.
+**Pass `ns = NO_NAMESPACES` to any `xml_find_all()`/`xml_find_first()` call made on a single node inside a loop.** xml2's default re-scans the whole document for namespace declarations on every call, which once made reading `sena3.lift` take ~50s instead of ~3s (see `NO_NAMESPACES` in [R/multitext_helpers.R](../../../R/multitext_helpers.R)). A call on the whole document or a whole nodeset only pays this once, so it doesn't need it. Also note that `xml_parent()` on a nodeset de-duplicates shared parents, so its result isn't aligned with the input; use `xml_find_first(nodes, "parent::*")` for a one-per-node parent.
 
 **The codebase is a grid: one column per *level* (the parent element a table hangs off), one row per role that level needs filled.** Adding a field to a level that already exists touches only the cells that field needs:
 
@@ -135,14 +120,14 @@ sense_meta <- if (length(entries) == 0) {
 |---|---|---|---|
 | [R/entry_table.R](../../../R/entry_table.R) | [R/sense_table.R](../../../R/sense_table.R) | [R/pronunciation_table.R](../../../R/pronunciation_table.R) | [R/example_table.R](../../../R/example_table.R) |
 | [R/entry_helpers.R](../../../R/entry_helpers.R) | [R/sense_helpers.R](../../../R/sense_helpers.R) | [R/pronunciation_helpers.R](../../../R/pronunciation_helpers.R) | [R/example_helpers.R](../../../R/example_helpers.R) |
-| `extract_multitext_element()` (keys `entry_id`) | `extract_sense_multitext_element()` (keys `sense_guid`, iterates senses) | `extract_pronunciation_multitext()` (keys document position) | `extract_example_multitext()` (keys document position, iterates senses' examples) |
+| `extract_multitext()` keyed by `entry_id` | `extract_multitext()` keyed by `sense_guid`, over senses and subsenses | `extract_multitext()` keyed by document position | `extract_multitext()` keyed by document position, over senses' examples |
 | `classify_entry_columns()` | `classify_sense_columns()` | `classify_pronunciation_columns()` | `classify_example_columns()` |
 | [R/csv2lift_entry.R](../../../R/csv2lift_entry.R) / `entry_table_to_lift()` | [R/csv2lift_sense.R](../../../R/csv2lift_sense.R) / `attach_senses_to_lift()` | [R/csv2lift_pronunciation.R](../../../R/csv2lift_pronunciation.R) / `attach_pronunciations_to_lift()` | [R/csv2lift_example.R](../../../R/csv2lift_example.R) / `attach_examples_to_lift()` |
 | snapshots `entry-table/` | snapshots `sense-table/` | snapshots `pronunciation-table/` | snapshots `example-table/` |
 
 The grid keeps growing sideways, not down — a fifth level adds a fifth column of these same six rows, not a new kind of row. `example-level` is also the first column keyed by *two* things at once (`sense_guid` as the surviving FK, document position as the row identity), because it is a table hanging off another table (`sense`) rather than off `<entry>` directly — see "If it needs a table of its own" below for what that combination costs.
 
-`add_multitext_children()` and `has_nonblank()` live in `entry_helpers.R` and are shared by all three (pass `tag =` for the gloss-shaped case).
+`extract_multitext()`, `add_multitext_children()` and `has_nonblank()` live in `multitext_helpers.R` and are shared by every level (pass `tag =` to `add_multitext_children()` for the gloss-shaped case).
 
 **Review before accepting.** Expect *existing* fixtures to change if they already contained the element. Verify the new column's contents explicitly rather than eyeballing a huge diff:
 
@@ -209,7 +194,7 @@ The bottom two prove absence rather than announcing it, so read the snapshot rat
 
 - [R/entry_helpers.R](../../../R/entry_helpers.R) — add a branch to `classify_entry_columns()` mirroring the `citation` one (`^<field>_.+$` → `kind = "<field>"`). **Place it before every existing branch whose regex overlaps yours, not merely before the custom-field fallback.** The fallback is the usual collision but not the only one: `^note_.+$` (untyped notes) also matches `note_restrictions_en`, and would hand back `lang = "restrictions_en"`. Prefer a pattern that cannot overlap by construction — `^note_.+_[^_]+$` requires a second underscore, so it can never swallow an untyped `note_<lang>` — *and* order it defensively anyway. Update the "known limitation" comment to name the new reserved prefix.
 - [R/csv2lift_entry.R](../../../R/csv2lift_entry.R) — add a `<field>_cols <- filter(col_classes, kind == "<field>")` alongside the others, and an emit block mirroring citation's, positioned to match SPEC.md's canonical child order.
-- **A type-keyed column reuses the custom-field machinery instead of growing the classifier's schema.** For `note_<type>_<lang>`, return `kind = "typed_note"` and put the type in the *existing* `field_type` column — do not add a fifth `note_type` column, which costs an explicit `NA_character_` in a dozen other branches for a name four lines read. Do **not** instead reuse `kind = "note"` with `field_type = NA` for the untyped case: `cols$field_type == .x` yields `NA` for that row, and `cols[c(TRUE, NA), ]` returns an all-`NA` slice rather than nothing, so the emit loop writes a garbage element instead of skipping. The emit block is then the custom-field loop with the tag swapped (`"field"` → `"note"`); once two such loops exist at a level, extract them (`emit_typed_children()` in `entry_helpers.R`).
+- **A type-keyed column reuses the custom-field machinery instead of growing the classifier's schema.** For `note_<type>_<lang>`, return `kind = "typed_note"` and put the type in the *existing* `field_type` column — do not add a fifth `note_type` column, which costs an explicit `NA_character_` in a dozen other branches for a name four lines read. Do **not** instead reuse `kind = "note"` with `field_type = NA` for the untyped case: `cols$field_type == .x` yields `NA` for that row, and `cols[c(TRUE, NA), ]` returns an all-`NA` slice rather than nothing, so the emit loop writes a garbage element instead of skipping. The emit block is then the custom-field loop with the tag swapped (`"field"` → `"note"`); once two such loops exist at a level, extract them (`emit_typed_children()` in `multitext_helpers.R`).
 - **Then check for a cross-table name clash** if the new column's name could also occur at the other level (entry vs. sense). Nothing in this repo joins the two tables to surface it — that happens in downstream tooling — so a clash ships silently as two individually-correct per-table CSVs, and only becomes visible as `.x`/`.y` columns wherever they're eventually joined. [Decide where it lives](#decide-where-it-lives-a-column-or-a-table-of-its-own) has the rule for whether that's acceptable.
 
 Review the diff, then `snapshot_accept("csv2lift/")`.
@@ -247,7 +232,7 @@ Only if [Decide where it lives](#decide-where-it-lives-a-column-or-a-table-of-it
 **Read direction ([TDD the read direction](#tdd-the-read-direction-lift2csv)).** Fill a whole new column of the grid, copied from the closest existing one (usually sense-level). Three things the column path never faces:
 
 - **The grid's "sense-level" column is the existing sense table — columns on a sense row — not a new table hanging off individual senses.** The example table (`R/example_table.R`) is the worked case of this fourth, deeper shape: structurally identical to pronunciation-under-entry, but its extractor iterates `.//entry/sense/example` (not `.//entry/pronunciation`) and keys on `sense_guid`, not `entry_id`.
-- **A table whose element has no id/guid is keyed by position.** `<entry>` has `guid` and `<sense>` has `id`, but `<pronunciation>` has neither, so `extract_pronunciation_multitext()` keys forms on the element's index and that index is dropped before output. Row order then *is* the identity — say so explicitly in SPEC.md, because re-sorting the CSV silently re-orders the emitted elements. `<example>` has no id either, one level further down, and faces the identical problem: `extract_example_multitext()` (`R/example_helpers.R`) keys the same way, over `.//entry/sense/example`, with `sense_guid` carried through separately as the surviving foreign key — the position provides row identity, the attribute provides the parent link, and neither can do the other's job.
+- **A table whose element has no id/guid is keyed by position.** `<entry>` has `guid` and `<sense>` has `id`, but `<pronunciation>` has neither, so `pronunciation_table()` passes `seq_along(pronunciations)` as `extract_multitext()`'s keys and drops that index before output. Row order then *is* the identity — say so explicitly in SPEC.md, because re-sorting the CSV silently re-orders the emitted elements. `<example>` has no id either, one level further down, and faces the identical problem: `example_table()` keys the same way, over `.//entry/sense/example`, with `sense_guid` carried through separately as the surviving foreign key — the position provides row identity, the attribute provides the parent link, and neither can do the other's job.
 - **A classifier ends in the last-underscore custom-field split only where custom `<field>` is actually supported at that level; otherwise it ends in a hard error.** `classify_entry_columns()` and `classify_sense_columns()` both have the fallback, because entry- and sense-level `<field>` round-trip. `classify_pronunciation_columns()` still errors on an unrecognized column, because pronunciation-level `<field>`/`<trait>` aren't read or written at all — silently misclassifying one as a form would be worse than failing. So a new level's classifier **starts strict**, and gains the fallback in the same change that implements custom fields for it, never before.
 
 Also route the new table through the shared `format_table_csv()`/`drop_empty_columns()` (`R/table_csv.R`): a column blank in every row is never emitted, so a lexicon with none of the new element's instances snapshots as an empty file automatically, rather than needing its own `nrow(table) == 0` special case — both via `--table <name>` to stdout and, for the write-fixture step below, via `--table-dir`.

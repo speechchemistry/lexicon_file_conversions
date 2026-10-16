@@ -1,74 +1,12 @@
-# Example-level analogue of extract_multitext_element()/extract_sense_multitext_element().
-# <example> has no id/guid (unlike <entry>'s guid and <sense>'s id), so its
-# forms cannot be keyed on either — they are keyed by the example's position
-# among all <entry>/<sense>/<example> elements instead, mirroring
-# extract_pronunciation_multitext() (R/pronunciation_helpers.R). Row order is
-# what carries identity for this table (SPEC.md's Data Handling), so the index must survive
-# unchanged from extraction through to the final join.
-extract_example_multitext <- function(examples, xpath, value_col = "text") {
-  empty_result <- tibble(
-    example_index = integer(),
-    lang = character(),
-    !!value_col := character()
-  )
-
-  if (length(examples) == 0) return(empty_result)
-
-  map_df(seq_along(examples), function(index) {
-    forms <- xml_find_all(examples[[index]], xpath)
-    if (length(forms) == 0) return(empty_result)
-    map_df(forms, ~tibble(
-      example_index = index,
-      lang = xml_attr(.x, "lang"),
-      !!value_col := multitext_value(.x)
-    ))
-  })
-}
-
-# Example-level analogue of extract_sense_multitext_with_attribute(), keyed by
-# example_index rather than sense_guid for the same reason as above. Used for
-# the reference note (note[@type]/form), which — like typed notes elsewhere —
-# is capped at one per type per parent by every fixture, so unlike
-# <translation> (extract_example_translation() below) no dedup is needed here.
-extract_example_multitext_with_attribute <- function(examples, parent_xpath, attr_name,
-                                                      value_col = "text") {
-  empty_result <- tibble(
-    example_index = integer(),
-    !!attr_name := character(),
-    lang = character(),
-    !!value_col := character()
-  )
-
-  if (length(examples) == 0) return(empty_result)
-
-  map_df(seq_along(examples), function(index) {
-    parents <- xml_find_all(examples[[index]], parent_xpath)
-    if (length(parents) == 0) return(empty_result)
-    map_df(parents, ~{
-      attr_value <- xml_attr(.x, attr_name)
-      forms <- xml_find_all(.x, "./form")
-      if (length(forms) == 0) return(empty_result)
-      map_df(forms, ~tibble(
-        example_index = index,
-        !!attr_name := attr_value,
-        lang = xml_attr(.x, "lang"),
-        !!value_col := multitext_value(.x)
-      ))
-    })
-  })
-}
-
 # <translation>'s @type is a plain value column (translation_type), not part
 # of a column name like typed notes/fields — the FLEx Examples pane shows one
 # Translation with one Type per Example (confirmed against a user screenshot),
 # and the data agrees: 191 of 192 examples with a translation have exactly
 # one. This also has to preserve a translation whose @type is set but which
 # carries no <form> children (18 of 193 in Sena3.lift) — a case
-# extract_example_multitext_with_attribute() cannot represent, since its
-# per-parent branch drops the attribute value entirely when there are no
-# forms to pair it with (see R/sense_helpers.R's identical branch for typed
-# notes/fields, which never faces this because every fixture's typed note has
-# a form).
+# extract_multitext_with_attribute() cannot represent, since a parent with
+# no <form> produces no rows there and so loses its attribute (typed
+# notes/fields never face this: every fixture's typed note has a form).
 #
 # lift.rng's own schematron forbids two <translation>s on one <example> that
 # share a @type ("Translations should be of different types") — not two
@@ -94,7 +32,7 @@ extract_example_translation <- function(examples) {
   forms_list <- list()
 
   for (index in seq_along(examples)) {
-    translations <- xml_find_all(examples[[index]], "./translation")
+    translations <- xml_find_all(examples[[index]], "./translation", ns = NO_NAMESPACES)
     if (length(translations) == 0) next
 
     if (length(translations) > 1) {
@@ -106,7 +44,7 @@ extract_example_translation <- function(examples) {
       # dropped translation's own type and form text rather than leaving it
       # to be inferred from the count.
       dropped_summary <- map_chr(translations[-1], function(dropped) {
-        forms <- xml_find_all(dropped, "./form")
+        forms <- xml_find_all(dropped, "./form", ns = NO_NAMESPACES)
         form_strs <- map_chr(forms, ~sprintf("%s=%s", xml_attr(.x, "lang"), encodeString(multitext_value(.x), quote = "\"")))
         sprintf("type=%s [%s]", xml_attr(dropped, "type"), paste(form_strs, collapse = ", "))
       })
@@ -125,7 +63,7 @@ extract_example_translation <- function(examples) {
       translation_type = xml_attr(translation, "type")
     )
 
-    forms <- xml_find_all(translation, "./form")
+    forms <- xml_find_all(translation, "./form", ns = NO_NAMESPACES)
     if (length(forms) > 0) {
       forms_list[[length(forms_list) + 1]] <- map_df(forms, ~tibble(
         example_index = index,

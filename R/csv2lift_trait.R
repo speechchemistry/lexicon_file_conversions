@@ -16,7 +16,7 @@ attach_traits_to_lift <- function(doc, trait_table) {
       if (identical(row$owner, "sense")) {
         sense_node
       } else {
-        gram_info_node <- xml_find_first(sense_node, "./grammatical-info")
+        gram_info_node <- xml_find_first(sense_node, "./grammatical-info", ns = NO_NAMESPACES)
         # attach_senses_to_lift() only creates <grammatical-info> when
         # grammatical_info is non-blank (SPEC.md's "empty optional elements
         # are never emitted" rule) -- but real data has a sense whose
@@ -42,18 +42,18 @@ attach_traits_to_lift <- function(doc, trait_table) {
       # <variant> has no id/guid of its own (SPEC.md's Variant Table), so
       # owner_index -- the variant's 1-based position among this entry's own
       # <variant> siblings -- is the only way to point back at a specific
-      # one, mirroring extract_variant_traits() (R/trait_helpers.R), which
+      # one, mirroring extract_positional_owner_traits() (R/trait_helpers.R), which
       # produced it on the way in.
-      require_owner_index(xml_find_all(entry_node, "./variant"), row, .x, "variant", "variant")
+      require_owner_index(xml_find_all(entry_node, "./variant", ns = NO_NAMESPACES), row, .x, "variant", "variant")
     } else if (identical(row$owner, "entry-relation")) {
       entry_node <- require_node(entries, row$entry_id, sprintf("Trait row %d", .x), "entry_id", "entry table")
 
       # <relation> has no id/guid of its own (SPEC.md's Entry-Relation
       # Table), so owner_index -- the relation's 1-based position among this
       # entry's own <relation> siblings -- is the only way to point back at
-      # a specific one, mirroring extract_entry_relation_traits()
+      # a specific one, mirroring extract_positional_owner_traits()
       # (R/trait_helpers.R), which produced it on the way in.
-      require_owner_index(xml_find_all(entry_node, "./relation"), row, .x, "entry-relation", "relation")
+      require_owner_index(xml_find_all(entry_node, "./relation", ns = NO_NAMESPACES), row, .x, "entry-relation", "relation")
     } else {
       stop(sprintf(
         "Trait row %d has unrecognised owner '%s' (expected 'sense', 'grammatical-info', 'variant', or 'entry-relation')",

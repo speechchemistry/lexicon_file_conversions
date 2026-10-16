@@ -29,7 +29,7 @@ etymology_table <- function(LIFT_file) {
   }
 
   # second stage: the etymon form, one column per writing system found
-  forms_long <- extract_etymology_multitext(etymologies, "./form")
+  forms_long <- extract_multitext(etymologies, seq_along(etymologies), "etymology_index", "./form")
   forms_wide <- forms_long |>
     pivot_wider(
       id_cols = etymology_index,
@@ -40,7 +40,7 @@ etymology_table <- function(LIFT_file) {
 
   # third stage: the gloss; <gloss lang><text> carries lang directly on
   # itself, mirroring sense-level gloss rather than the <form>-wrapped shapes
-  gloss_long <- extract_etymology_multitext(etymologies, "./gloss")
+  gloss_long <- extract_multitext(etymologies, seq_along(etymologies), "etymology_index", "./gloss")
   gloss_wide <- gloss_long |>
     pivot_wider(
       id_cols = etymology_index,
@@ -51,7 +51,7 @@ etymology_table <- function(LIFT_file) {
 
   # fourth stage: custom <field type> children (comment, languagenotes),
   # type-keyed exactly like entry-level custom fields
-  fields_long <- extract_etymology_multitext_with_attribute(etymologies, "./field", "type", "field_text")
+  fields_long <- extract_multitext_with_attribute(etymologies, seq_along(etymologies), "etymology_index", "./field", "type", "field_text")
   fields_wide <- fields_long |>
     pivot_wider(
       id_cols = etymology_index,

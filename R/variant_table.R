@@ -23,7 +23,7 @@ variant_table <- function(LIFT_file) {
   }
 
   # second stage: the variant form, one column per writing system found
-  forms_long <- extract_variant_multitext(variants, "./form")
+  forms_long <- extract_multitext(variants, seq_along(variants), "variant_index", "./form")
   forms_wide <- forms_long |>
     pivot_wider(
       id_cols = variant_index,
