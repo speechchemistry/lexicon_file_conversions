@@ -34,6 +34,8 @@ The order puts the safety net first, then the mechanical, low-risk change, then 
 
 ### Phase: characterisation tests
 
+**Status: done.** Implemented as `test-csv2lift_errors.R`, `test-csv2lift_column-classification.R` and `test-lift2csv_rare-shapes.R` (78 expectations, all passing against the pre-refactor code). A mutation check confirmed the media-label alignment test fails if media-less pronunciations are dropped before label rows are numbered.
+
 These pin existing, specified behaviour that the refactor rewrites but no current test exercises. They're characterisation tests, so there's no red step: each must pass against the current code before any refactoring starts. Found by running every reader over every fixture and listing the error and warning paths no fixture reaches.
 
 **How they're written**, so they protect the refactor rather than restrict it:
@@ -42,7 +44,7 @@ These pin existing, specified behaviour that the refactor rewrites but no curren
 - **Match message content, not exact wording:** use a regex over the stable parts (the bad key value, the column name, "not found in the … table"). Today's foreign-key messages come in two shapes ("Pronunciation row 3 references …" vs "Sense <guid> references …"), and these tests shouldn't freeze that inconsistency. The refactor still keeps the wording unchanged; this only leaves room to tidy it later.
 - **Warnings:** check message content with `expect_warning(regexp = …)`, not how many fire, in what order, or the call shown. Vectorising may change those without changing what's reported.
 - **Pin only specified behaviour.** Duplicate keys are deliberately not pinned; see [Decisions to settle](#decisions-to-settle).
-- Inputs are small in-memory tibbles or inline LIFT strings written to a `withr::local_tempfile()`, not new snapshot fixtures. The one exception is the media-label case below, which may be clearer as a small `.lift` fixture in the pronunciation table's fixture folder.
+- Inputs are small in-memory tibbles or inline LIFT strings written to a `withr::local_tempfile()`, not new snapshot fixtures.
 
 **What they cover:**
 
@@ -52,7 +54,7 @@ These pin existing, specified behaviour that the refactor rewrites but no curren
   - the trait writer's `owner_index` checks for `variant` and `entry-relation` owners: blank, non-integer, out of range
   - an unrecognised trait `owner`
   - a duplicate `entry_lift_id`
-  - a table supplied without the table it requires (e.g. `--examples` without `--senses`), through the CLI
+  - (A table supplied without the table it requires, e.g. `--examples` without `--senses`, was already covered by `test-csv2lift_table-discovery.R`.)
 - **Unknown-column handling** (rewritten in [the classifier phase](#phase-table-driven-column-classifiers)), through each table's `attach_fn`:
   - In tables that support custom fields (entry, sense, etymology, pronunciation), an unknown column becomes `<field type="X"><form lang="Y">`.
   - In tables that don't (example, variant, reversal), an unknown column stops with "Unrecognized <table> column".
