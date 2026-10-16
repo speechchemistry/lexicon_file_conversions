@@ -15,6 +15,8 @@ Baseline, measured on `tests/testthat/fixtures/lift2csv_entry-table/sena3.lift` 
 | everything else| < 1 each | < 1 each   |
 | **total**      | **~54**  | **~30**    |
 
+**Status: all phases done.** Reading all of `sena3.lift` now takes ~3.3s (was ~54s) and writing it ~5.4s (was ~30s), with byte-identical output.
+
 Outcome: the same CSV and LIFT output, byte for byte, from noticeably less code and in noticeably less time; adding a new table afterwards means declaring things rather than copying functions.
 
 **This is a pure refactor.** No phase may change any CSV or LIFT output, any error/warning text, or any CLI behaviour. Anything that would is listed under [Decisions to settle](#decisions-to-settle) and is out of scope unless approved separately.
@@ -131,6 +133,8 @@ Replaces the seven `classify_*_columns()` functions (each a hand-written `grepl`
 - `SPEC.md`'s Column Classification section and the skill's classifier step name these functions. Update both to describe declaring rules instead of writing a ladder.
 
 ### Phase: comment and doc sweep
+
+**Status: done.** Stale comments fixed as each phase touched its files, plus a final pass: the 40-line attach-order header in `R/table_registry.R` is now 8 lines naming the three load-bearing orderings; `scripts/csv2lift.R`'s attach-order comment no longer lists three tables; and the "subsense is unsupported" / "variant traits not yet read" remarks in `R/sense_relation_table.R`, `R/reversal_table.R`, `R/trait_table.R` and `R/csv2lift_variant.R` now match what's built. `SPEC.md` and the skill were updated in the phase that renamed each function. Other long comments were left alone where they explain a code-local subtlety rather than restate `SPEC.md`.
 
 Done inside each phase for the files it touches, then a final pass over anything left:
 

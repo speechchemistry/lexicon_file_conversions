@@ -6,38 +6,14 @@
 # SPEC.md rather than here -- a registry column can only hold one value per
 # table, and the traits table needs two (entry_id and sense_guid).
 #
-# Row order is attach order: entries always comes first (its attach_fn
-# creates the document rather than attaching to one, so the incoming `doc`
-# argument is ignored), then pronunciations, variants, senses,
-# sense-relations, examples, reversals, entry-relations, etymologies, traits —
-# matching the canonical child order documented in SPEC.md's Entry Table.
-# variants comes right after pronunciations for the same reason etymologies
-# comes after reversals below: lift.rng's entry-content declares <variant>
-# between <pronunciation> and <sense> in its own interleave -- nothing
-# depends on entry-content's element order for correctness, since
-# attach_variants_to_lift() only ever looks entries up by guid, same as
-# pronunciations. sense-relations comes right after senses and *is*
-# load-bearing there: attach_sense_relations_to_lift() looks sense nodes up
-# by id, which don't exist until attach_senses_to_lift() creates them --
-# positioned ahead of examples/reversals to match lift.rng's own declared
-# order for sense-content's children too (grammatical-info, gloss,
-# definition, relation, note, example, reversal, ...), though that relative
-# order isn't itself load-bearing, since all three attach to senses
-# independently. examples comes ahead of reversals to match lift.rng's own
-# declared order for sense-content's children; both attach to senses
-# independently, so nothing about *correctness* requires that relative
-# order, only readability. entry-relations comes after reversals, matching
-# lift.rng's entry-content order (<relation> follows <sense> and precedes
-# <etymology>) -- attach_entry_relations_to_lift() only ever looks entries
-# up by guid, so like variants/etymologies this is a readability choice, not
-# a correctness one. etymologies comes after entry-relations for the same
-# reason: lift.rng's entry-content declares <etymology> as the last child in
-# its own interleave, after <relation> -- nothing depends on entry-content's
-# element order either, since attach_etymologies_to_lift() only ever looks
-# entries up by guid. traits comes last, and unlike the others this *is*
-# load-bearing: a trait row can target a sense's <grammatical-info> element,
-# which attach_senses_to_lift() creates, so traits cannot attach before
-# senses exist.
+# Row order is attach order. Three orderings are load-bearing: entries comes
+# first (its attach_fn creates the document, so the incoming `doc` argument
+# is ignored); every table that attaches to a sense comes after senses (the
+# `requires` column enforces that the senses table is supplied); and traits
+# comes last, because its rows attach into <variant>, <relation> and
+# <grammatical-info> elements other passes create. Every other position just
+# follows lift.rng's declared child order, for readability (SPEC.md's Entry
+# Table and Sense Table).
 table_registry <- function() {
   registry <- tribble(
     ~name,              ~cli_flag,             ~help,

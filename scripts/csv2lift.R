@@ -72,9 +72,8 @@ for (i in seq_len(nrow(registry))) {
   }
 }
 
-# Registry row order is attach order (matches SPEC.md's Entry Table canonical
-# child order): entries first (its attach_fn creates the document rather
-# than attaching to one), then pronunciations, senses, examples.
+# Registry row order is attach order (see R/table_registry.R): entries first,
+# since its attach_fn creates the document rather than attaching to one.
 doc <- NULL
 for (i in seq_len(nrow(registry))) {
   name <- registry$name[i]

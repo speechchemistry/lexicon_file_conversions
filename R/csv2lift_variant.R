@@ -19,7 +19,7 @@ attach_variants_to_lift <- function(doc, variant_table) {
     # row -- dropping one would shift the index of its surviving siblings.
     # This is the ordinary case here, not a hypothetical: sena3.lift has a
     # real variant with no <form> at all (its only content is a morph-type
-    # trait, not yet read -- SPEC.md's Not Yet Specified), so an all-blank
+    # trait, which the traits table carries), so an all-blank
     # row still has to round-trip to an (empty) <variant> element rather than
     # vanish.
     variant_node <- xml_add_child(entry_node, "variant")

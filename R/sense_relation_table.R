@@ -1,10 +1,9 @@
 sense_relation_table <- function(LIFT_file) {
   doc <- read_xml(LIFT_file)
 
-  # Direct-child axis, so this deliberately excludes sense/subsense/relation
-  # (<subsense> is unsupported -- SPEC.md's Not Yet Specified -- and its
-  # senses have no row in the sense table), mirroring example_table()'s
-  # identical exclusion. zeroOrMore under <sense> (up to 2 per sense in
+  # Direct-child axis, so this deliberately excludes sense/subsense/relation:
+  # no fixture has one (SPEC.md's Sense-Relation Table and Not Yet
+  # Specified). zeroOrMore under <sense> (up to 2 per sense in
   # sena3.lift), and relation-content has no id/guid of its own -- the only
   # thing identifying a relation is its position among a sense's own
   # <relation> children.
