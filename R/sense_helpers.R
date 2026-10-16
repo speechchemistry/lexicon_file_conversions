@@ -1,51 +1,19 @@
-# Sense-level analogue of classify_entry_columns(): classifies a csv2lift
-# sense CSV's column names into the shapes sense_table() produces, so
-# csv2lift can rebuild the right LIFT element for each column.
+# Classifies a csv2lift senses CSV's column names into the shapes
+# sense_table() produces (see classify_columns()). The untyped sense note
+# ("General Note" in FLEx) has its own general_note_ prefix, distinct from
+# the typed note_<type>_<lang> columns. Sense-level <field> is read and
+# written, so an unrecognised column becomes a custom field.
 classify_sense_columns <- function(col_names) {
-  meta_columns <- c("sense_guid", "entry_id", "sense_order", "grammatical_info", "parent_sense_guid")
-
-  map_df(col_names, function(col) {
-    if (col %in% meta_columns) {
-      cat(sprintf("Classifying column '%s' as metadata\n", col), file = stderr())
-      return(tibble(column = col, kind = "meta", field_type = NA_character_, lang = NA_character_))
-    }
-
-    if (grepl("^gloss_.+$", col)) {
-      lang <- sub("^gloss_", "", col)
-      cat(sprintf("Classifying column '%s' as gloss, lang=%s\n", col, lang), file = stderr())
-      return(tibble(column = col, kind = "gloss", field_type = NA_character_, lang = lang))
-    }
-
-    if (grepl("^definition_.+$", col)) {
-      lang <- sub("^definition_", "", col)
-      cat(sprintf("Classifying column '%s' as definition, lang=%s\n", col, lang), file = stderr())
-      return(tibble(column = col, kind = "definition", field_type = NA_character_, lang = lang))
-    }
-
-    if (grepl("^general_note_.+$", col)) {
-      lang <- sub("^general_note_", "", col)
-      cat(sprintf("Classifying column '%s' as note, lang=%s\n", col, lang), file = stderr())
-      return(tibble(column = col, kind = "note", field_type = NA_character_, lang = lang))
-    }
-
-    # Typed notes are type-keyed exactly like custom <field>s: note_<type>_<lang>, split on the LAST
-    # underscore. Must precede the custom-field fallback below, or note_phonology_en becomes
-    # <field type="note_phonology">.
-    if (grepl("^note_.+_[^_]+$", col)) {
-      note_type <- sub("^note_(.+)_[^_]+$", "\\1", col)
-      lang <- sub("^note_.+_([^_]+)$", "\\1", col)
-      cat(sprintf("Classifying column '%s' as typed note type='%s', lang=%s\n",
-                  col, note_type, lang), file = stderr())
-      return(tibble(column = col, kind = "typed_note", field_type = note_type, lang = lang))
-    }
-
-    # Custom field: split on the LAST underscore into field type and lang,
-    # same known limitation as classify_entry_columns() (a writing system
-    # code containing an underscore, or a custom field literally named
-    # "gloss"/"definition"/"general_note", will misclassify here).
-    field_type <- sub("_[^_]+$", "", col)
-    lang <- sub("^.*_([^_]+)$", "\\1", col)
-    cat(sprintf("Classifying column '%s' as field type='%s', lang=%s\n", col, field_type, lang), file = stderr())
-    tibble(column = col, kind = "field", field_type = field_type, lang = lang)
-  })
+  classify_columns(
+    col_names,
+    meta = c("sense_guid", "entry_id", "sense_order", "grammatical_info", "parent_sense_guid"),
+    rules = list(
+      prefix_rule("gloss_", "gloss"),
+      prefix_rule("definition_", "definition"),
+      prefix_rule("general_note_", "note"),
+      TYPED_NOTE_RULE
+    ),
+    fallback = "field",
+    table_label = "sense"
+  )
 }

@@ -117,6 +117,8 @@ Replaces the ~12 copied extractors (`extract_multitext_element`, `extract_sense_
 
 ### Phase: table-driven column classifiers
 
+**Status: done.** `classify_columns()`, `prefix_rule()`, `TYPED_NOTE_RULE` and `LEXICAL_UNIT_RULE` live in `R/column_classification.R`; each `classify_<table>_columns()` is now a short declaration in its table's helper file. Checked three ways: csv2lift's stdout, stderr and exit status are byte-identical for all 21 csv2lift fixtures; the old and new classifiers agree (classification, error text and stderr line) on 273 combinations of table and awkward column name (no underscore, trailing underscore, bare prefix, non-ASCII); and the suite is green. The custom-field fallback keeps the original two `sub()` calls rather than a regex rule, because they define what a name with no underscore or a trailing underscore classifies as, and a regex wouldn't match those at all.
+
 Replaces the seven `classify_*_columns()` functions (each a hand-written `grepl` → `sub` → `cat` → `tibble` ladder).
 
 - One `classify_columns(col_names, meta, rules, fallback, table_label)` in a new `R/column_classification.R`:
