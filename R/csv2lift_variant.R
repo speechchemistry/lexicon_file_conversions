@@ -4,6 +4,7 @@ attach_variants_to_lift <- function(doc, variant_table) {
   }
 
   root <- xml_root(doc)
+  entries <- index_nodes(root, ".//entry", "guid")
 
   col_classes <- classify_variant_columns(names(variant_table))
   form_cols <- filter(col_classes, kind == "form")
@@ -11,13 +12,7 @@ attach_variants_to_lift <- function(doc, variant_table) {
   walk(seq_len(nrow(variant_table)), ~{
     row <- variant_table[.x, ]
 
-    entry_node <- xml_find_first(root, sprintf(".//entry[@guid='%s']", row$entry_id))
-    if (inherits(entry_node, "xml_missing")) {
-      stop(sprintf(
-        "Variant row %d references entry_id '%s', which was not found in the entry table",
-        .x, row$entry_id
-      ), call. = FALSE)
-    }
+    entry_node <- require_node(entries, row$entry_id, sprintf("Variant row %d", .x), "entry_id", "entry table")
 
     # Positionally keyed like <example>/<reversal> (SPEC.md's Structural
     # Rules), so <variant> is emitted unconditionally, even for an all-blank

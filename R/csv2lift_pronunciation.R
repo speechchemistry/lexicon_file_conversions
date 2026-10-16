@@ -4,6 +4,7 @@ attach_pronunciations_to_lift <- function(doc, pronunciation_table) {
   }
 
   root <- xml_root(doc)
+  entries <- index_nodes(root, ".//entry", "guid")
 
   col_classes <- classify_pronunciation_columns(names(pronunciation_table))
   form_cols <- filter(col_classes, kind == "form")
@@ -13,13 +14,7 @@ attach_pronunciations_to_lift <- function(doc, pronunciation_table) {
   walk(seq_len(nrow(pronunciation_table)), ~{
     row <- pronunciation_table[.x, ]
 
-    entry_node <- xml_find_first(root, sprintf(".//entry[@guid='%s']", row$entry_id))
-    if (inherits(entry_node, "xml_missing")) {
-      stop(sprintf(
-        "Pronunciation row %d references entry_id '%s', which was not found in the entry table",
-        .x, row$entry_id
-      ), call. = FALSE)
-    }
+    entry_node <- require_node(entries, row$entry_id, sprintf("Pronunciation row %d", .x), "entry_id", "entry table")
 
     form_values <- if (nrow(form_cols) > 0) {
       set_names(as.character(row[form_cols$column]), form_cols$lang)

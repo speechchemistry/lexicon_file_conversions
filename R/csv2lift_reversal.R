@@ -4,6 +4,7 @@ attach_reversals_to_lift <- function(doc, reversal_table) {
   }
 
   root <- xml_root(doc)
+  senses <- index_nodes(root, ".//sense", "id")
 
   col_classes <- classify_reversal_columns(names(reversal_table))
   form_cols <- filter(col_classes, kind == "form")
@@ -11,13 +12,7 @@ attach_reversals_to_lift <- function(doc, reversal_table) {
   walk(seq_len(nrow(reversal_table)), ~{
     row <- reversal_table[.x, ]
 
-    sense_node <- xml_find_first(root, sprintf(".//sense[@id='%s']", row$sense_guid))
-    if (inherits(sense_node, "xml_missing")) {
-      stop(sprintf(
-        "Reversal row %d references sense_guid '%s', which was not found in the sense table",
-        .x, row$sense_guid
-      ), call. = FALSE)
-    }
+    sense_node <- require_node(senses, row$sense_guid, sprintf("Reversal row %d", .x), "sense_guid", "sense table")
 
     # Positionally keyed like <example> (SPEC.md's Structural Rules), so
     # <reversal> is emitted unconditionally, even for an all-blank row --

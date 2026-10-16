@@ -4,6 +4,8 @@ attach_senses_to_lift <- function(doc, sense_table) {
   }
 
   root <- xml_root(doc)
+  entries <- index_nodes(root, ".//entry", "guid")
+  senses_and_subsenses <- index_nodes(root, ".//*[self::sense or self::subsense]", "id")
 
   col_classes <- classify_sense_columns(names(sense_table))
   gloss_cols <- filter(col_classes, kind == "gloss")
@@ -26,13 +28,7 @@ attach_senses_to_lift <- function(doc, sense_table) {
   walk(seq_len(nrow(sense_table)), ~{
     row <- sense_table[.x, ]
 
-    entry_node <- xml_find_first(root, sprintf(".//entry[@guid='%s']", row$entry_id))
-    if (inherits(entry_node, "xml_missing")) {
-      stop(sprintf(
-        "Sense %s references entry_id '%s', which was not found in the entry table",
-        row$sense_guid, row$entry_id
-      ), call. = FALSE)
-    }
+    entry_node <- require_node(entries, row$entry_id, sprintf("Sense %s", row$sense_guid), "entry_id", "entry table")
 
     # <subsense> reuses sense-content verbatim (SPEC.md's Sense Table), so
     # its own child emission below is identical either way -- only the
@@ -44,14 +40,7 @@ attach_senses_to_lift <- function(doc, sense_table) {
     # hand-reordered CSV that violates it fails fast below, same as any
     # other unmatched FK).
     parent_node <- if (is_subsense_row[.x]) {
-      node <- xml_find_first(root, sprintf(".//*[self::sense or self::subsense][@id='%s']", row$parent_sense_guid))
-      if (inherits(node, "xml_missing")) {
-        stop(sprintf(
-          "Sense %s references parent_sense_guid '%s', which was not found in the sense table",
-          row$sense_guid, row$parent_sense_guid
-        ), call. = FALSE)
-      }
-      node
+      require_node(senses_and_subsenses, row$parent_sense_guid, sprintf("Sense %s", row$sense_guid), "parent_sense_guid", "sense table")
     } else {
       entry_node
     }
@@ -67,6 +56,8 @@ attach_senses_to_lift <- function(doc, sense_table) {
       sense_args$order <- row$sense_order
     }
     sense_node <- do.call(xml_add_child, sense_args)
+    # Registered as soon as it exists, so a later row's subsense can attach to it.
+    add_indexed_node(senses_and_subsenses, row$sense_guid, sense_node)
 
     if (!is.na(row$grammatical_info) && nzchar(row$grammatical_info)) {
       xml_add_child(sense_node, "grammatical-info", value = row$grammatical_info)

@@ -4,6 +4,7 @@ attach_examples_to_lift <- function(doc, example_table) {
   }
 
   root <- xml_root(doc)
+  senses_and_subsenses <- index_nodes(root, ".//*[self::sense or self::subsense]", "id")
 
   col_classes <- classify_example_columns(names(example_table))
   form_cols <- filter(col_classes, kind == "form")
@@ -15,13 +16,7 @@ attach_examples_to_lift <- function(doc, example_table) {
 
     # Matches <subsense> too (SPEC.md's Sense Table): an example can hang
     # directly off one, since subsense reuses sense-content verbatim.
-    sense_node <- xml_find_first(root, sprintf(".//*[self::sense or self::subsense][@id='%s']", row$sense_guid))
-    if (inherits(sense_node, "xml_missing")) {
-      stop(sprintf(
-        "Example row %d references sense_guid '%s', which was not found in the sense table",
-        .x, row$sense_guid
-      ), call. = FALSE)
-    }
+    sense_node <- require_node(senses_and_subsenses, row$sense_guid, sprintf("Example row %d", .x), "sense_guid", "sense table")
 
     warn_on_reference_disagreement(row, note_cols, .x)
 

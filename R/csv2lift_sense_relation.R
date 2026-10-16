@@ -4,17 +4,12 @@ attach_sense_relations_to_lift <- function(doc, sense_relation_table) {
   }
 
   root <- xml_root(doc)
+  senses <- index_nodes(root, ".//sense", "id")
 
   walk(seq_len(nrow(sense_relation_table)), ~{
     row <- sense_relation_table[.x, ]
 
-    sense_node <- xml_find_first(root, sprintf(".//sense[@id='%s']", row$sense_guid))
-    if (inherits(sense_node, "xml_missing")) {
-      stop(sprintf(
-        "Sense-relation row %d references sense_guid '%s', which was not found in the sense table",
-        .x, row$sense_guid
-      ), call. = FALSE)
-    }
+    sense_node <- require_node(senses, row$sense_guid, sprintf("Sense-relation row %d", .x), "sense_guid", "sense table")
 
     # sense/relation/@ref already targets the other sense's own @id, which
     # is always guid-shaped (SPEC.md's Sense Table), so relation_ref is
@@ -22,13 +17,7 @@ attach_sense_relations_to_lift <- function(doc, sense_relation_table) {
     # entry-relations (R/csv2lift_entry_relation.R). Still resolved against
     # the sense table before writing, so a bad ref fails fast rather than
     # producing a LIFT file whose <relation ref> points at nothing.
-    target_node <- xml_find_first(root, sprintf(".//sense[@id='%s']", row$relation_ref))
-    if (inherits(target_node, "xml_missing")) {
-      stop(sprintf(
-        "Sense-relation row %d references relation_ref '%s', which was not found in the sense table",
-        .x, row$relation_ref
-      ), call. = FALSE)
-    }
+    target_node <- require_node(senses, row$relation_ref, sprintf("Sense-relation row %d", .x), "relation_ref", "sense table")
 
     # relation-content requires both @type and @ref (no <optional> wrapper),
     # the same required-attribute shape as <etymology>'s @type/@source

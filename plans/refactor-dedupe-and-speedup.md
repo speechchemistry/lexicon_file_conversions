@@ -77,6 +77,10 @@ These pin existing, specified behaviour that the refactor rewrites but no curren
 
 ### Phase: writer node lookup
 
+**Status: done.** All 14 lookup sites go through `R/csv2lift_lookup.R` (`index_nodes()`, `add_indexed_node()`, `require_node()`, `require_owner_index()`); error wording is unchanged. Suite green, no `.new` snapshots, and the full-corpus round trip passes. Writing all of `sena3.lift` went from ~30s to ~7.7s (senses 7.2 → 2.7s, examples 12.4 → 1.8s, traits 7.1 → 1.4s). The index is an environment (a hash table) rather than a named list, so each lookup is constant-time.
+
+One difference, within the unpinned duplicate-key behaviour: in the senses pass, nodes created mid-pass are indexed in creation (CSV row) order, so with a duplicate `sense_guid` a later subsense attaches to the first *row's* sense rather than the first in document order. The two orders only differ when duplicates span entries out of document order, and duplicates are slated to become an error anyway.
+
 Replaces the 14 `xml_find_first(root, sprintf(".//entry[@guid='%s']", ...))`-per-row lookups and their copy-pasted `stop()` calls.
 
 - New `R/csv2lift_lookup.R`:

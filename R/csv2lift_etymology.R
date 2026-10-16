@@ -4,6 +4,7 @@ attach_etymologies_to_lift <- function(doc, etymology_table) {
   }
 
   root <- xml_root(doc)
+  entries <- index_nodes(root, ".//entry", "guid")
 
   col_classes <- classify_etymology_columns(names(etymology_table))
   form_cols <- filter(col_classes, kind == "form")
@@ -13,13 +14,7 @@ attach_etymologies_to_lift <- function(doc, etymology_table) {
   walk(seq_len(nrow(etymology_table)), ~{
     row <- etymology_table[.x, ]
 
-    entry_node <- xml_find_first(root, sprintf(".//entry[@guid='%s']", row$entry_id))
-    if (inherits(entry_node, "xml_missing")) {
-      stop(sprintf(
-        "Etymology row %d references entry_id '%s', which was not found in the entry table",
-        .x, row$entry_id
-      ), call. = FALSE)
-    }
+    entry_node <- require_node(entries, row$entry_id, sprintf("Etymology row %d", .x), "entry_id", "entry table")
 
     # @type and @source are both required by etymology-content (lift.rng has
     # no <optional> around either attribute), unlike every other attribute

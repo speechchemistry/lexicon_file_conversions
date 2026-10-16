@@ -4,17 +4,12 @@ attach_entry_relations_to_lift <- function(doc, entry_relation_table) {
   }
 
   root <- xml_root(doc)
+  entries <- index_nodes(root, ".//entry", "guid")
 
   walk(seq_len(nrow(entry_relation_table)), ~{
     row <- entry_relation_table[.x, ]
 
-    entry_node <- xml_find_first(root, sprintf(".//entry[@guid='%s']", row$entry_id))
-    if (inherits(entry_node, "xml_missing")) {
-      stop(sprintf(
-        "Entry-relation row %d references entry_id '%s', which was not found in the entry table",
-        .x, row$entry_id
-      ), call. = FALSE)
-    }
+    entry_node <- require_node(entries, row$entry_id, sprintf("Entry-relation row %d", .x), "entry_id", "entry table")
 
     # relation/@ref targets the other entry's @id (SPEC.md's Entry Table),
     # not its @guid, so relation_ref -- a guid, like every other FK in this
@@ -38,13 +33,7 @@ attach_entry_relations_to_lift <- function(doc, entry_relation_table) {
       ), call. = FALSE)
       target_id <- ""
     } else {
-      target_node <- xml_find_first(root, sprintf(".//entry[@guid='%s']", row$relation_ref))
-      if (inherits(target_node, "xml_missing")) {
-        stop(sprintf(
-          "Entry-relation row %d references relation_ref '%s', which was not found in the entry table",
-          .x, row$relation_ref
-        ), call. = FALSE)
-      }
+      target_node <- require_node(entries, row$relation_ref, sprintf("Entry-relation row %d", .x), "relation_ref", "entry table")
       target_id <- xml_attr(target_node, "id")
       if (is.na(target_id) || !nzchar(target_id)) {
         stop(sprintf(
