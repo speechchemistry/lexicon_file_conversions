@@ -27,7 +27,7 @@ p <- add_argument(p, "--table-dir",
                   help = "Directory to discover a CSV per table in (entries.csv, senses.csv, ...). Explicit flags below override a discovered file of the same table.",
                   default = NA)
 p <- add_argument(p, "--header-from",
-                  help = "LIFT file to copy <header>/<fields> custom-field declarations from verbatim (not <ranges> -- FLEx recreates those on import).",
+                  help = "LIFT file to copy <header>/<fields> custom-field declarations from verbatim. Doesn't copy <ranges>; see the README on importing into FLEx.",
                   default = NA)
 for (i in seq_len(nrow(registry))) {
   p <- add_argument(p, registry$cli_flag[i], help = registry$help[i], default = NA)

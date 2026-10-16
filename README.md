@@ -31,7 +31,7 @@ Rscript scripts/lift2csv.R tests/testthat/fixtures/lift2csv_entry-table/sena3.li
 ```
 ## Example: CSV → LIFT (csv2lift)
 
-`csv2lift.R` does the reverse: it takes an entry-level CSV (required) and, optionally, sense-level, pronunciation-level, and example-level CSVs, and builds a LIFT file. `--table-dir <dir>` discovers all of them at once from a directory laid out the same way `lift2csv.R` writes one above:
+`csv2lift.R` does the reverse: it takes the entries CSV (required) and any of the other tables `lift2csv.R` writes (pronunciations, variants, senses, sense-relations, examples, reversals, entry-relations, etymologies, traits), and builds a LIFT file. `--table-dir <dir>` discovers all of them at once from a directory laid out the same way `lift2csv.R` writes one above. A CSV there whose name doesn't match a known table is an error rather than being silently skipped:
 
 ``` bash
 Rscript scripts/csv2lift.R --table-dir tests/testthat/fixtures/csv2lift/zhi-two-pronunciations-with-audio-and-ipa \
@@ -47,7 +47,7 @@ Rscript scripts/csv2lift.R tests/testthat/fixtures/csv2lift/sena3-example-duplic
   > sena3-example-duplicate-translation.lift
 ```
 
-`--examples` requires `--senses` (or a discovered senses table), since examples attach to `<sense>` elements; the entry table is the only mandatory one. See [`SPEC.md`'s CLI shape section](SPEC.md#csv2lift-cli-shape) for the full CLI shape.
+The entries table is the only mandatory one. Sense-relations, examples, reversals and traits each require the senses table too (as a flag or a discovered file), since they attach to `<sense>` elements. A row whose `entry_id` or `sense_guid` doesn't match any entry or sense is an error rather than being silently dropped. See [`SPEC.md`'s CLI shape section](SPEC.md#csv2lift-cli-shape) for the full CLI shape, or run `Rscript scripts/csv2lift.R --help` for every flag.
 
 `--header-from <lift-file>` copies that file's `<header>/<fields>` custom-field declarations verbatim into the output — useful when importing into a fresh FLEx project, since without them a custom field arrives typed as a generic MultiUnicode field instead of its real type:
 

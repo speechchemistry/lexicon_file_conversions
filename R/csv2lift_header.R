@@ -1,9 +1,11 @@
 # --header-from copies only <header>/<fields> verbatim from a source LIFT
-# file -- not <ranges>: FLEx recreates any missing range items on import
-# (adding them to the target project's own lists), but a custom <field>
-# declaration is the only thing that tells FLEx a custom field's real type
-# (e.g. MultiUnicode vs. a plain string) instead of defaulting one in on
-# import. See plans/remaining-lift-fields.md's D2.
+# file: a custom <field> declaration is the only thing that tells FLEx a
+# custom field's real type (e.g. MultiUnicode vs. a plain string) instead of
+# defaulting one in on import (plans/remaining-lift-fields.md's D2). It
+# doesn't copy <ranges>. Without them FLEx adds any list value it can't match
+# to the target project's lists as a new item, which can duplicate items the
+# project already has -- see SPEC.md's csv2lift CLI Shape and the README's
+# section on importing into FLEx, which leaves supplying ranges to the user.
 insert_header_fields_from_lift <- function(doc, source_lift) {
   if (!file.exists(source_lift)) {
     stop(sprintf("--header-from file not found: %s", source_lift), call. = FALSE)
