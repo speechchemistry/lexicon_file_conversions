@@ -1,6 +1,6 @@
-# Covers scripts/lift2csv.R, the read-side registry umbrella (plans/
+# Covers scripts/lift2csv.R, the read-side registry umbrella (plans/old/
 # remaining-lift-fields.md's Phase T; --table and the --table-dir rename are
-# plans/per-table-script-consolidation.md's R1).
+# plans/old/per-table-script-consolidation.md's R1).
 # It has no per-table content snapshot of its own — each table's content is
 # already pinned by its own <name>-table.R snapshot test, now run
 # through --table <name> on this same script — so this pins what is

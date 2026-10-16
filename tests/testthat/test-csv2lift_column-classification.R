@@ -2,7 +2,7 @@ library(xml2)
 library(tibble)
 
 # Unit-level (no subprocess, no snapshot) characterisation tests for how
-# csv2lift reads CSV column names, ahead of plans/refactor-dedupe-and-speedup.md's
+# csv2lift reads CSV column names, ahead of plans/old/refactor-dedupe-and-speedup.md's
 # table-driven classifier phase. Fixtures only ever contain correctly named
 # columns, so nothing else pins:
 #   * the unknown-column rule: a table that supports <field> treats an unknown

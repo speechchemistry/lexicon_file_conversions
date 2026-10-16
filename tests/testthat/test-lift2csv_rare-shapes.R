@@ -1,7 +1,7 @@
 library(tibble)
 
 # Unit-level (no subprocess, no snapshot) characterisation tests for reader
-# shapes that no fixture contains, ahead of plans/refactor-dedupe-and-speedup.md's
+# shapes that no fixture contains, ahead of plans/old/refactor-dedupe-and-speedup.md's
 # generic reader extractors phase:
 #   * the "more than one, keep the first" warnings for an entry's morph-type
 #     trait and a pronunciation's <media> and location trait -- no fixture

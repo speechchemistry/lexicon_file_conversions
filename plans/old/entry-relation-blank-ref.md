@@ -59,7 +59,7 @@ plus the same file copied into `lift2csv_entry-table/`, `lift2csv_sense-table/`,
 and `lift2csv_traits-table/` (both entries also carry sense-level data and
 entry-relation-owned `complex-form-type` traits, so this closes the same gap
 in those tables' own coverage rather than leaving it latent — the [D3
-pattern](../remaining-lift-fields.md#phase-d--structural-and-blocked-items)).
+pattern](remaining-lift-fields.md#phase-d--structural-and-blocked-items)).
 The read direction's own output becomes the write-direction fixture:
 `lift2csv.R --table-dir` on this file, copied into
 `tests/testthat/fixtures/csv2lift/zhi-entry-relation-blank-ref/`.

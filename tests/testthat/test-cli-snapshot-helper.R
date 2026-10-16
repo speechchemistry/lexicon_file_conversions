@@ -3,7 +3,7 @@
 # legitimately empty table's approved snapshot (six of those exist, e.g.
 # _snaps/sense-table/lela-teli-empty-lexicon.csv). The exit status is the
 # only thing that separates "correctly produced nothing" from "crashed", so
-# the helper has to assert it — see plans/per-table-script-consolidation.md's
+# the helper has to assert it — see plans/old/per-table-script-consolidation.md's
 # R0.
 
 test_that("expect_cli_stdout_file_snapshot fails when the script exits nonzero", {

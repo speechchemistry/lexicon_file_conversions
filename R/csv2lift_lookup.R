@@ -7,7 +7,7 @@
 # over every match of `xpath` under `root`. On a duplicate value the first
 # node in document order wins, matching what xml_find_first() returned before
 # -- duplicate keys are slated to become an error instead
-# (plans/refactor-dedupe-and-speedup.md's Decisions to settle). Blank values
+# (plans/old/refactor-dedupe-and-speedup.md's Decisions to settle). Blank values
 # are skipped: csv2lift never writes a blank guid/id, and a blank key can
 # never be looked up successfully anyway.
 index_nodes <- function(root, xpath, attr) {

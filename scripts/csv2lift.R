@@ -9,7 +9,7 @@ devtools::load_all(project_dir, quiet = TRUE)
 # entries_csv used to be a required positional argument. It's now optional
 # (an --entries flag or a --tables discovery can supply it instead), and
 # argparser's positional arguments cannot be made optional regardless of
-# `default` (see plans/remaining-lift-fields.md's Phase T) — so a bare
+# `default` (see plans/old/remaining-lift-fields.md's Phase T) — so a bare
 # leading positional is intercepted here, before argparser ever sees it,
 # rather than declared through add_argument(). This is what keeps every
 # existing `Rscript csv2lift.R entries.csv --senses ...` invocation working.

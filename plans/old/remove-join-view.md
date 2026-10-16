@@ -37,7 +37,7 @@ consumer, so this is a clean excision rather than an untangling.
 
 ### 1. `entry_order` / `sense_order` keep their names, but the reason needs rewording
 
-[SPEC.md's Entry Table](../SPEC.md#entry-table) and [Sense Table](../SPEC.md#sense-table) each
+[SPEC.md's Entry Table](../../SPEC.md#entry-table) and [Sense Table](../../SPEC.md#sense-table) each
 justify the column name by the join view: "Named `entry_order` rather than `order` … to stay
 distinct from the sense-level `@order` attribute in the Join View".
 
@@ -49,7 +49,7 @@ and someone would later "tidy" them to `order`.
 
 ### 2. The cross-table collision must be relocated, not deleted
 
-[SPEC.md's Join view](../SPEC.md#join-view) is the only place recording that entry and sense
+[SPEC.md's Join view](../../SPEC.md#join-view) is the only place recording that entry and sense
 columns can share a name, and `join_sense_entry()`'s `suffix = c("_sense", "_entry")` is the
 only thing that resolves it. **The collision is real on current data**: `note_restrictions_en`
 appears in both `_snaps/entry-table/sena3.csv` and `_snaps/sense-table/sena3.csv` (61
@@ -62,8 +62,8 @@ Removing the join view does not remove the collision. It **exports** it: a downs
 `note_restrictions_en.x`/`.y`, and pandas' `merge` yields `_x`/`_y`.
 
 So the Join view section's content must be relocated as a consumer-facing rule, not deleted with
-it — a new bullet under [Data handling](../SPEC.md#data-handling) or
-[Column classification](../SPEC.md#column-classification) saying: column names are unique within
+it — a new bullet under [Data handling](../../SPEC.md#data-handling) or
+[Column classification](../../SPEC.md#column-classification) saying: column names are unique within
 a table, not across tables; `entry_id` is shared deliberately as the foreign key; typed notes
 (`note_<type>_<lang>`) are deliberately shared across levels because one FLEx field at two
 levels keeps one name; today's live instance is `note_restrictions_en`; a downstream join must
@@ -98,21 +98,21 @@ Then delete the remaining four paths from the table above, and confirm:
 - Delete the `## Join view` section.
 - Relocate its collision content per part 2 above.
 - Reword the `entry_order` and `sense_order` naming rationales per part 1 above.
-- Fix [line 42](../SPEC.md#L42) in Column classification ("one typed-note column name can occur
+- Fix [line 42](../../SPEC.md#L42) in Column classification ("one typed-note column name can occur
   on both tables; see Join View for how it's resolved") — repoint at the relocated rule; the
   clause about *how it's resolved* is now false and must change, not just relink.
-- The Join view section's closing note that the [Example Table](../SPEC.md#example-table) never
+- The Join view section's closing note that the [Example Table](../../SPEC.md#example-table) never
   reaches the view goes with the section — it only existed to bound the view's scope.
 - Grep for the dead anchor afterwards: `grep -rn '#join-view' .` should return nothing outside
   `plans/`.
 
 ### J3 — AGENTS.md and README.md
 
-- [AGENTS.md:65](../AGENTS.md#L65): drop the trailing exception "`test-join-sense-entry-table.R`
+- [AGENTS.md:65](../../AGENTS.md#L65): drop the trailing exception "`test-join-sense-entry-table.R`
   keeps its own loop: it drives a different script and takes no `--table` flag." With it gone,
   `expect_table_snapshots()` covers every per-table test with no exceptions — a simplification
   of the stated rule, so say it plainly rather than just deleting the clause.
-- [README.md:25](../README.md#L25): remove the `lift2csv_join-sense-entry-table.R` usage example.
+- [README.md:25](../../README.md#L25): remove the `lift2csv_join-sense-entry-table.R` usage example.
 
 ### J4 — the `adding-a-lift-field` skill
 
@@ -141,7 +141,7 @@ the reason `note_` and `general_note_` differ, and that reasoning is still live.
 ## Not touched
 
 - `plans/old/*.md` and `plans/remaining-lift-fields.md`: historic records. Per
-  [AGENTS.md's Markdown Conventions](../AGENTS.md#markdown-conventions), a plan describes a past
+  [AGENTS.md's Markdown Conventions](../../AGENTS.md#markdown-conventions), a plan describes a past
   decision and is not retroactively edited — several record *why* the join view was deliberately
   kept out of the registry, which stays true of the time it was written.
 - `scripts/copy-lift-entries.R` and its spec/tests/fixtures. Also a candidate for removal, but

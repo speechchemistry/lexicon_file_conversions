@@ -66,7 +66,7 @@ expect_cli_stdout_file_snapshot <- function(script_path, args, name, transform =
 }
 
 # One approval test per curated fixture in `fixture_dir`, each pinning the
-# stdout of `lift2csv.R --table <table>` (plans/per-table-script-consolidation.md's
+# stdout of `lift2csv.R --table <table>` (plans/old/per-table-script-consolidation.md's
 # R4). The label prefix is derived from the fixture directory rather than from
 # `table`, so it stays what it has always been: entry-table_<stem>, not
 # entries_<stem>.

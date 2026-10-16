@@ -1,4 +1,4 @@
-# Covers the --table-dir discovery rule itself (plans/remaining-lift-fields.md's
+# Covers the --table-dir discovery rule itself (plans/old/remaining-lift-fields.md's
 # Phase T): a trailing slash on the directory being tolerated, the error
 # paths a snapshot can't capture (the snapshot helper only records stdout),
 # and that an explicit flag overrides a discovered file of the same table.

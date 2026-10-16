@@ -86,7 +86,7 @@ all. These become the unit test in stage F.
 
 ## Read direction
 
-New shared helper in [R/entry_helpers.R](../R/entry_helpers.R) (beside `has_nonblank()` /
+New shared helper in [R/entry_helpers.R](../../R/entry_helpers.R) (beside `has_nonblank()` /
 `add_multitext_children()`, which all three levels already share):
 
 ```r
@@ -112,8 +112,8 @@ multitext_value <- function(node) {
 ```
 
 Then replace `xml_text(.x)` with `multitext_value(.x)` at the five extraction sites — the two in
-[R/entry_helpers.R](../R/entry_helpers.R), the two in [R/sense_helpers.R](../R/sense_helpers.R), and
-the one in [R/pronunciation_helpers.R](../R/pronunciation_helpers.R). Applying it uniformly (no fixture
+[R/entry_helpers.R](../../R/entry_helpers.R), the two in [R/sense_helpers.R](../../R/sense_helpers.R), and
+the one in [R/pronunciation_helpers.R](../../R/pronunciation_helpers.R). Applying it uniformly (no fixture
 has a span in a pronunciation form) keeps one rule for all multitext rather than a per-level exception.
 
 Two incidental improvements, both correct: the value now comes from `./text` specifically rather than

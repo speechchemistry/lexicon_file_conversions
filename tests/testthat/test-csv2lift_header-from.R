@@ -1,5 +1,5 @@
 # --header-from is a plain per-document flag, not a table-registry row (see
-# plans/remaining-lift-fields.md's D2) -- so it gets its own small test file
+# plans/old/remaining-lift-fields.md's D2) -- so it gets its own small test file
 # rather than a row in test-csv2lift.R's table-dir loop.
 test_that("csv2lift_header-from", {
   expect_cli_stdout_file_snapshot(

@@ -1,7 +1,7 @@
 library(tibble)
 
 # Non-snapshot unit tests for drop_empty_columns()/format_table_csv()
-# (R/table_csv.R) -- see plans/prune-empty-columns.md's E1. No subprocess,
+# (R/table_csv.R) -- see plans/old/prune-empty-columns.md's E1. No subprocess,
 # no snapshot: these are plain function calls against in-memory tibbles.
 
 test_that("an all-NA column is dropped", {

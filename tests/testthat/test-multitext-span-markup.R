@@ -3,7 +3,7 @@ library(purrr)
 
 # Non-snapshot unit tests for shapes real Sena3 data has (spans-in-one-text,
 # trailing text after a span) that no currently-readable fixture cell reaches
-# on its own -- see plans/inline-span-markup.md stage F. Case 5 pins the
+# on its own -- see plans/old/inline-span-markup.md stage F. Case 5 pins the
 # escaping asymmetry: literal text is XML-escaped on write, span tags are
 # not, so a "simplification" either direction would fail here.
 round_trip_cell <- function(text_inner_xml) {

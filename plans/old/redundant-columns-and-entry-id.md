@@ -5,7 +5,7 @@
 Two places in the repo argue for carrying redundant data in the CSVs:
 
 - [SPEC.md's Example table](../../SPEC.md#example-table) keeps `example_source` **and** `note_reference_<lang>` as separate columns, even though FLEx's exporter writes the same "Reference" field twice, and cites [Data handling](../../SPEC.md#data-handling)'s `Plural_seh`/`Plural_en` case as precedent.
-- [remaining-lift-fields.md](../remaining-lift-fields.md)'s A2 recommends storing `entry/@id` verbatim even though it is fully derivable, citing the `@source` case as precedent.
+- [remaining-lift-fields.md](remaining-lift-fields.md)'s A2 recommends storing `entry/@id` verbatim even though it is fully derivable, citing the `@source` case as precedent.
 
 That stance was questioned: is carrying redundant columns actually a good idea? Re-examining it found that the word covers three unrelated situations, and that the `@id` question turned on whether FLEx treats `@id` as authoritative on import — which **the [Technical Notes on LIFT used in FLEx](https://downloads.languagetechnology.org/fieldworks/Documentation/Technical%20Notes%20on%20LIFT%20used%20in%20FLEx.pdf) answers directly** (already cited under [SPEC.md's LIFT model references](../../SPEC.md#lift-model-references)). This plan records the sharpened reasoning and the changes that follow.
 
@@ -45,7 +45,7 @@ Other measurements, re-derived against `tests/testthat/fixtures/lift2csv_entry-t
 
 ## The same doc also settles D2 (`<header>` passthrough)
 
-[remaining-lift-fields.md](../remaining-lift-fields.md)'s D2 proposed a `--header-from` flag copying `<header>` verbatim, with decision 4 asking "does FLEx need `<header>` to import?" Answered, and the answer splits the element in two:
+[remaining-lift-fields.md](remaining-lift-fields.md)'s D2 proposed a `--header-from` flag copying `<header>` verbatim, with decision 4 asking "does FLEx need `<header>` to import?" Answered, and the answer splits the element in two:
 
 > §2 Header: **The header element is optional in a LIFT file.** It provides a place to define fields that are not built into the basic LIFT structure.
 
@@ -68,7 +68,7 @@ A2 weighs store-vs-synthesize *assuming* C3 copies `relation_ref` verbatim as th
 
 **2. Warn when redundant columns disagree** (`R/csv2lift_example.R`, using the classifier in `R/example_helpers.R`): on write, if `example_source` and any `note_reference_<lang>` are both non-blank and unequal, warn on stderr naming the sense — same shape as `extract_example_translation()`'s existing duplicate-translation warning (`R/example_helpers.R`). Both values still emit unchanged. TDD per [AGENTS.md's Testing Approach](../../AGENTS.md#testing-approach): red first via a hand-edited `_examples.csv` fixture with the two cells disagreeing.
 
-**3. Amend [remaining-lift-fields.md](../remaining-lift-fields.md)** — done in the same change as this plan file:
+**3. Amend [remaining-lift-fields.md](remaining-lift-fields.md)** — done in the same change as this plan file:
 - A2: replace the cost table's reasoning with the doc findings — recommendation stays "store verbatim", now settled rather than argued. Drop the proposed guid-suffix consistency check (the suffix is a convention the doc calls "normal", not a rule) and replace it with a **uniqueness check** across `entry_lift_id`, which *is* a documented requirement and is what a ref needs to resolve unambiguously. Remove the "is `@id` authoritative?" open question — answered.
 - A2/C3: record that the doc makes A2 a hard prerequisite for C3 — a ref is the target's `@id` string at both levels, so an entry needs an `@id` to point at.
 - C3: change `relation_ref` to hold the target guid, note the write-time translation via `entry_lift_id`, record the 31/31 lossless measurement, and add the doc's warning that "the import process will try to unify the relation sets" for Collection-type relations.

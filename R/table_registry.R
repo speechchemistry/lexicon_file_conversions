@@ -1,7 +1,7 @@
 # The single source of truth for which CSV tables csv2lift.R and lift2csv.R
 # know about: what each is called, what CLI flag supplies it, how to read it
 # from a LIFT file, how to attach it onto a <lift> document, and what
-# table(s) must accompany it. See plans/remaining-lift-fields.md's Phase T
+# table(s) must accompany it. See plans/old/remaining-lift-fields.md's Phase T
 # for why this exists. Each table's actual foreign key(s) are documented in
 # SPEC.md rather than here -- a registry column can only hold one value per
 # table, and the traits table needs two (entry_id and sense_guid).

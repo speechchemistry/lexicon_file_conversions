@@ -1,5 +1,5 @@
 # Formalises the full-sena3.lift round-trip spot check every table-adding
-# increment has done by hand (plans/full-corpus-roundtrip-check.md): run the
+# increment has done by hand (plans/old/full-corpus-roundtrip-check.md): run the
 # whole 1462-entry corpus through lift2csv.R --table-dir then
 # csv2lift.R --table-dir, and confirm each registered table's own reader
 # extracts identical data from the original and the round-tripped file. No

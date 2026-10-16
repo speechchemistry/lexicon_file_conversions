@@ -2,7 +2,7 @@ fixture_dir <- testthat::test_path("fixtures", "csv2lift")
 script_path <- "../../scripts/csv2lift.R"
 
 # One export per directory, one CSV per table inside it (entries.csv,
-# senses.csv, ...) — see plans/remaining-lift-fields.md's Phase T. --table-dir
+# senses.csv, ...) — see plans/old/remaining-lift-fields.md's Phase T. --table-dir
 # discovers all of them in one flag.
 for (export_dir in sort(list.dirs(fixture_dir, full.names = TRUE, recursive = FALSE))) {
   stem <- basename(export_dir)

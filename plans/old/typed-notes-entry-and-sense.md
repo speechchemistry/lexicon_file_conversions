@@ -51,11 +51,11 @@ it is for.
 ## Read direction
 
 Both extractors already exist and need **no change** — `extract_multitext_with_attribute()`
-([R/entry_helpers.R](../R/entry_helpers.R)) and `extract_sense_multitext_with_attribute()`
-([R/sense_helpers.R](../R/sense_helpers.R)) hardcode `./form` children, which is `<note>`'s exact shape,
+([R/entry_helpers.R](../../R/entry_helpers.R)) and `extract_sense_multitext_with_attribute()`
+([R/sense_helpers.R](../../R/sense_helpers.R)) hardcode `./form` children, which is `<note>`'s exact shape,
 and their `empty_result` is already the typed empty tibble the skill's step-3 rule demands.
 
-[R/entry_table.R](../R/entry_table.R), after the `notes_wide` block, mirroring `fields_wide`:
+[R/entry_table.R](../../R/entry_table.R), after the `notes_wide` block, mirroring `fields_wide`:
 
 ```r
 # typed entry-level notes: <note type="restrictions"> etc. are separate FLEx fields that reuse the
@@ -69,7 +69,7 @@ typed_notes_wide <- typed_notes_long |>
 ```
 
 then append `left_join(typed_notes_wide, by = "entry_id")` to the `combined` chain.
-[R/sense_table.R](../R/sense_table.R) gets the same with
+[R/sense_table.R](../../R/sense_table.R) gets the same with
 `extract_sense_multitext_with_attribute(senses, "./note[@type]", "type", "note_text")`,
 `id_cols = sense_guid`, and `left_join(typed_notes_wide, by = "sense_guid")` appended.
 
@@ -99,7 +99,7 @@ adjacent** in Sena3's header (the first `pt` semantics form appears after the fi
 
 ## Write direction
 
-**Classifiers.** [R/entry_helpers.R](../R/entry_helpers.R) — insert **immediately before** the existing
+**Classifiers.** [R/entry_helpers.R](../../R/entry_helpers.R) — insert **immediately before** the existing
 `^note_.+$` branch. Placement is load-bearing: that branch matches `note_restrictions_en` too and would
 hand back `lang = "restrictions_en"`.
 
@@ -117,7 +117,7 @@ if (grepl("^note_.+_[^_]+$", col)) {
 }
 ```
 
-[R/sense_helpers.R](../R/sense_helpers.R) — same body, placed after the `^general_note_.+$` branch and
+[R/sense_helpers.R](../../R/sense_helpers.R) — same body, placed after the `^general_note_.+$` branch and
 before the custom-field fallback. Order vs `general_note_` is free (both regexes are `^`-anchored and
 the prefixes are disjoint); order vs the fallback is load-bearing, or `note_phonology_en` becomes
 `<field type="note_phonology">`.
@@ -133,8 +133,8 @@ no match); `general_note_en`, `Parsing Note_en`, `scientific-name_en`,
 `Plural Noun_zhi-Zxxx-x-audio`, `citation_seh`, `seh`, `gloss_pt`, `definition_en` → all unchanged;
 `note_restrictions_en` / `note_semantics_pt` → typed note.
 
-**Emit blocks.** [R/csv2lift_entry.R](../R/csv2lift_entry.R) and
-[R/csv2lift_sense.R](../R/csv2lift_sense.R): add
+**Emit blocks.** [R/csv2lift_entry.R](../../R/csv2lift_entry.R) and
+[R/csv2lift_sense.R](../../R/csv2lift_sense.R): add
 `typed_note_cols <- filter(col_classes, kind == "typed_note")`, then the existing `field_cols` loop with
 `"field"` → `"note"`, positioned **between** the untyped `<note>` block and the `<field>` block:
 

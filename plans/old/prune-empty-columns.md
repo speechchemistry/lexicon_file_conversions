@@ -7,8 +7,8 @@ Done. E1–E5 executed as written: 9 snapshot changes (join view was already rem
 ## Decision
 
 An emitted CSV carries no column that is blank in every row. This extends to columns
-the rule that `--table-dir` already applies to whole tables ([SPEC.md's CLI shape](../SPEC.md#csv2lift-cli-shape) omits a table with no rows) and that csv2lift
-already applies to elements ([Structural Rules](../SPEC.md#structural-rules-csv2lift-direction):
+the rule that `--table-dir` already applies to whole tables ([SPEC.md's CLI shape](../../SPEC.md#csv2lift-cli-shape) omits a table with no rows) and that csv2lift
+already applies to elements ([Structural Rules](../../SPEC.md#structural-rules-csv2lift-direction):
 "empty optional elements are never emitted").
 
 ### Why (the arguments that survived review)
@@ -20,12 +20,12 @@ already applies to elements ([Structural Rules](../SPEC.md#structural-rules-csv2
   `format_csv()` on a zero-column tibble returns `""` (measured, see Verified facts).
   Both special cases become derivable and are deleted.
 - **The schema is already data-dependent.** Every `<lang>`- and `<type>`-keyed column
-  exists only when the document carries a value for it ([Data Handling](../SPEC.md#data-handling)).
+  exists only when the document carries a value for it ([Data Handling](../../SPEC.md#data-handling)).
   Pruning the handful of remaining structural columns removes an exception to a property
   the tool already has, rather than introducing a new one.
 - **The columns affected are exactly the ones SPEC already calls information-free.**
   `entry_order` and `sense_order` are documented as "a blank here is normal, not missing
-  data" ([Entry Table](../SPEC.md#entry-table), [Sense Table](../SPEC.md#sense-table)).
+  data" ([Entry Table](../../SPEC.md#entry-table), [Sense Table](../../SPEC.md#sense-table)).
 
 ### Arguments considered and rejected
 
@@ -57,7 +57,7 @@ present on *both* `entries.csv` and `senses.csv` (`sena3`: 61 entry-level notes 
 sense-level), and `join_sense_entry()`'s `suffix = c("_sense", "_entry")` is the only thing in
 the repo that resolves it. Removing the join view does not remove the collision — it exports
 it. A downstream `left_join(senses, entries, by = "entry_id")` silently produces
-`note_restrictions_en.x`/`.y`. [SPEC.md's Join view](../SPEC.md#join-view) documents a
+`note_restrictions_en.x`/`.y`. [SPEC.md's Join view](../../SPEC.md#join-view) documents a
 resolution that will cease to exist, so the removal should replace it with a consumer-facing
 note (entries and senses can share a column name; today's instance is `note_restrictions_en`;
 a downstream join must supply its own suffixes) rather than renaming anything — renaming would
@@ -74,7 +74,7 @@ Consequence worth naming: this is the only case where the rule can touch a *data
 column. `<form lang="x"><text/></form>` — a real `lang` with empty text — yields `""`, so
 its whole `lang` column prunes and the empty `<form>` does not round-trip. No fixture has
 one (zero empty `<text/>` elements repo-wide), so per the no-defensive-code convention this
-is recorded in [Not Yet Specified](../SPEC.md#not-yet-specified), not handled.
+is recorded in [Not Yet Specified](../../SPEC.md#not-yet-specified), not handled.
 
 ## Where it goes: format time, not the table builders
 
@@ -162,7 +162,7 @@ that the change is output-preserving; a single changed csv2lift snapshot means a
 ## Steps
 
 Each step is one commit, red → green → refactor, in the `E1:`/`E2:` style of the `R1`–`R4`
-series. Run tests with `devtools::test()` (per [AGENTS.md's Testing Approach](../AGENTS.md#testing-approach));
+series. Run tests with `devtools::test()` (per [AGENTS.md's Testing Approach](../../AGENTS.md#testing-approach));
 never auto-accept snapshots.
 
 ### E1 — unit-test the helper (red), then implement it (green)
@@ -218,30 +218,30 @@ csv2lift snapshots must still be byte-identical after this step.
 
 ### E4 — SPEC.md
 
-- **[Data Handling](../SPEC.md#data-handling)**: new bullet stating the two-part column set —
+- **[Data Handling](../../SPEC.md#data-handling)**: new bullet stating the two-part column set —
   structural columns (keys, attributes, `@type`/`@source` value columns) versus data-driven
   `<lang>`/`<type>`-keyed ones — and the rule that neither kind is emitted when blank in
   every row, with `NA` and `""` treated alike. Cross-reference the element-level rule in
-  [Structural Rules](../SPEC.md#structural-rules-csv2lift-direction) and the table-level rule
-  in [CLI shape](../SPEC.md#csv2lift-cli-shape) as the same rule at three
+  [Structural Rules](../../SPEC.md#structural-rules-csv2lift-direction) and the table-level rule
+  in [CLI shape](../../SPEC.md#csv2lift-cli-shape) as the same rule at three
   granularities.
-- **[CLI shape](../SPEC.md#csv2lift-cli-shape)**: record that the empty-table zero-byte
+- **[CLI shape](../../SPEC.md#csv2lift-cli-shape)**: record that the empty-table zero-byte
   output is now a *consequence* of the column rule, not a special case, and that the
   `--table-dir` skip remains a row rule.
-- **[Entry Table](../SPEC.md#entry-table) / [Sense Table](../SPEC.md#sense-table)**: the
+- **[Entry Table](../../SPEC.md#entry-table) / [Sense Table](../../SPEC.md#sense-table)**: the
   `entry_order` and `sense_order` rows say "a blank here is normal, not missing data" — extend
   to note the column is absent entirely when no row fills it.
-- **[Example Table](../SPEC.md#example-table)**: same for `example_source` and `translation_type`.
+- **[Example Table](../../SPEC.md#example-table)**: same for `example_source` and `translation_type`.
   The type-only-translation guarantee ("a type-only translation round-trips rather than being
   silently dropped") is unaffected — `translation_type` is only pruned when *no* row fills it —
   but say so, since the two rules read as if they conflict.
-- **The three absent-column notes** ([entry_lift_id](../SPEC.md#entry-table),
-  `dateCreated`/`dateModified`/`order`, [sense_order](../SPEC.md#sense-table)): reword off the
+- **The three absent-column notes** ([entry_lift_id](../../SPEC.md#entry-table),
+  `dateCreated`/`dateModified`/`order`, [sense_order](../../SPEC.md#sense-table)): reword off the
   backward-compatibility framing ("a CSV produced before X existed still converts") onto its
   two live justifications — a hand-authored partial CSV, and now lift2csv's own output, which
   omits the column whenever it would be blank. The `%in% names(row)` guards become
   load-bearing on the tool's own round trip rather than on history.
-- **[Not Yet Specified](../SPEC.md#not-yet-specified)**: the empty-`<text/>` fidelity loss above.
+- **[Not Yet Specified](../../SPEC.md#not-yet-specified)**: the empty-`<text/>` fidelity loss above.
 
 ### E5 — the skill
 

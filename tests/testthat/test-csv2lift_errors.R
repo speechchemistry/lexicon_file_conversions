@@ -5,7 +5,7 @@ library(tibble)
 # csv2lift error paths no fixture reaches: every foreign-key lookup, the
 # subsense-before-parent ordering rule, the traits table's owner/owner_index
 # checks, and duplicate entry_lift_id. Added ahead of
-# plans/refactor-dedupe-and-speedup.md's writer node lookup phase, which
+# plans/old/refactor-dedupe-and-speedup.md's writer node lookup phase, which
 # rewrites every one of these lookups.
 #
 # Each test calls a registry attach_fn and matches only the stable parts of

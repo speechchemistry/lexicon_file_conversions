@@ -4,7 +4,7 @@
 
 **This is the largest remaining sense-level gap, and the right next task.**
 
-`sense/example` is named in [SPEC.md](../SPEC.md) §9 twice, and it is the canonical worked example the `adding-a-lift-field` skill uses for its §6 "table of its own" path (five mentions — the skill was written in anticipation of this case). Today the round trip **silently drops every example sentence**: no `_snaps/csv2lift_end-to-end/*.lift` contains an `<example>`.
+`sense/example` is named in [SPEC.md](../../SPEC.md) §9 twice, and it is the canonical worked example the `adding-a-lift-field` skill uses for its §6 "table of its own" path (five mentions — the skill was written in anticipation of this case). Today the round trip **silently drops every example sentence**: no `_snaps/csv2lift_end-to-end/*.lift` contains an `<example>`.
 
 Implementing it also closes the §9 item it gates: the 744 `sense/example/note[@type="reference"]` occurrences in `Sena3.lift`.
 

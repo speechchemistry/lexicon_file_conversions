@@ -1,7 +1,7 @@
 # --header-from copies only <header>/<fields> verbatim from a source LIFT
 # file: a custom <field> declaration is the only thing that tells FLEx a
 # custom field's real type (e.g. MultiUnicode vs. a plain string) instead of
-# defaulting one in on import (plans/remaining-lift-fields.md's D2). It
+# defaulting one in on import (plans/old/remaining-lift-fields.md's D2). It
 # doesn't copy <ranges>. Without them FLEx adds any list value it can't match
 # to the target project's lists as a new item, which can duplicate items the
 # project already has -- see SPEC.md's csv2lift CLI Shape and the README's
