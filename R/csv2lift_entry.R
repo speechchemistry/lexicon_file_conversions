@@ -1,9 +1,4 @@
 entry_table_to_lift <- function(entry_table) {
-  library(xml2)
-  library(purrr)
-  suppressMessages(library(dplyr))
-  library(tibble)
-
   doc <- xml_new_document()
   root <- xml_add_child(doc, "lift", version = "0.13", producer = "lexicon_file_conversions csv2lift")
 

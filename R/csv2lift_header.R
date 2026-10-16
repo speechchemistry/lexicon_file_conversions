@@ -5,9 +5,6 @@
 # (e.g. MultiUnicode vs. a plain string) instead of defaulting one in on
 # import. See plans/remaining-lift-fields.md's D2.
 insert_header_fields_from_lift <- function(doc, source_lift) {
-  library(xml2)
-  library(stringr)
-
   if (!file.exists(source_lift)) {
     stop(sprintf("--header-from file not found: %s", source_lift), call. = FALSE)
   }

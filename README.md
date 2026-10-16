@@ -10,6 +10,12 @@ The goal of lift2csv is to convert a SIL Flex LIFT file into tidy CSV files. The
 
 You can download the package by clicking on the green code button and selecting "Download ZIP".
 
+Then install the R packages it depends on (listed in `DESCRIPTION`) from the project folder:
+
+``` r
+devtools::install_deps()
+```
+
 ## Example: LIFT → CSV (lift2csv)
 
 `scripts/lift2csv.R` writes every table it knows how to read (see `R/table_registry.R`) from a LIFT file into `--table-dir <dir>` in one pass, one plainly-named CSV per table (`entries.csv`, `senses.csv`, ...). `sena3.lift` is a real Sena FLEx project export, checked in as a test fixture.

@@ -1,9 +1,4 @@
 reversal_table <- function(LIFT_file) {
-  library(xml2)
-  library(purrr)
-  suppressMessages(library(dplyr))
-  library(tidyr)
-
   doc <- read_xml(LIFT_file)
 
   # Direct-child axis, so this deliberately excludes sense/subsense/reversal

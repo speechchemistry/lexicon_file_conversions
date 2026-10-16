@@ -1,8 +1,4 @@
 attach_etymologies_to_lift <- function(doc, etymology_table) {
-  library(xml2)
-  library(purrr)
-  suppressMessages(library(dplyr))
-
   if (nrow(etymology_table) == 0) {
     return(doc)
   }

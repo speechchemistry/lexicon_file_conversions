@@ -1,8 +1,4 @@
 attach_reversals_to_lift <- function(doc, reversal_table) {
-  library(xml2)
-  library(purrr)
-  suppressMessages(library(dplyr))
-
   if (nrow(reversal_table) == 0) {
     return(doc)
   }

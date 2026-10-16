@@ -1,8 +1,4 @@
 trait_table <- function(LIFT_file) {
-  library(xml2)
-  library(purrr)
-  suppressMessages(library(dplyr))
-
   doc <- read_xml(LIFT_file)
 
   # Iterated per entry, not with one absolute xpath per owner, so that each

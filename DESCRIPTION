@@ -1,13 +1,27 @@
 Package: lexicon_file_conversions
-Title: What the Package Does (One Line, Title Case)
+Title: Convert FLEx LIFT Lexicons to and from CSV Tables
 Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"))
-Description: What the package does (one paragraph).
+Authors@R:
+    person("Timothy", "Kempton", , "tim_kempton@sil.org", role = c("aut", "cre"))
+Description: Converts a SIL FieldWorks Language Explorer (FLEx) LIFT lexicon
+    export into a set of tidy CSV tables (lift2csv), and builds a LIFT file
+    back from those tables (csv2lift). The CSV data model is specified in
+    SPEC.md.
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.0.0
-Suggests: 
-    testthat (>= 3.0.0)
+Imports:
+    argparser,
+    devtools,
+    dplyr,
+    purrr,
+    readr,
+    stringr,
+    tibble,
+    tidyr,
+    xml2
+Suggests:
+    testthat (>= 3.0.0),
+    withr
 Config/testthat/edition: 3
+Config/roxygen2/version: 8.1.0

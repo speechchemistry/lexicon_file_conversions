@@ -1,7 +1,4 @@
 attach_sense_relations_to_lift <- function(doc, sense_relation_table) {
-  library(xml2)
-  library(purrr)
-
   if (nrow(sense_relation_table) == 0) {
     return(doc)
   }

@@ -1,8 +1,4 @@
 attach_variants_to_lift <- function(doc, variant_table) {
-  library(xml2)
-  library(purrr)
-  suppressMessages(library(dplyr))
-
   if (nrow(variant_table) == 0) {
     return(doc)
   }

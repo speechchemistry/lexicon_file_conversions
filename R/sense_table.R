@@ -1,9 +1,4 @@
 sense_table <- function(LIFT_file) {
-  library(xml2)
-  library(purrr)
-  suppressMessages(library(dplyr))
-  library(tidyr)
-
   doc <- read_xml(LIFT_file)
 
   # find entry nodes

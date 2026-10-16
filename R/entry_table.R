@@ -1,9 +1,4 @@
 entry_table <- function(LIFT_file) {
-  library(xml2)
-  library(purrr)
-  suppressMessages(library(dplyr))
-  library(tidyr)
-
   doc = read_xml(LIFT_file)
 
   # iterate entries once and extract lexical-unit forms + Plural Noun forms

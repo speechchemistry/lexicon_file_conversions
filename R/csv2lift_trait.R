@@ -1,8 +1,4 @@
 attach_traits_to_lift <- function(doc, trait_table) {
-  library(xml2)
-  library(purrr)
-  suppressMessages(library(dplyr))
-
   if (nrow(trait_table) == 0) {
     return(doc)
   }

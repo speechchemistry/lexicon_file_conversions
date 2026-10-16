@@ -1,8 +1,4 @@
 entry_relation_table <- function(LIFT_file) {
-  library(xml2)
-  library(purrr)
-  suppressMessages(library(dplyr))
-
   doc <- read_xml(LIFT_file)
 
   # zeroOrMore under <entry> (up to 3 per entry in sena3.lift), and

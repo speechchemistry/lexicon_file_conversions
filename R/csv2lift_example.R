@@ -1,8 +1,4 @@
 attach_examples_to_lift <- function(doc, example_table) {
-  library(xml2)
-  library(purrr)
-  suppressMessages(library(dplyr))
-
   if (nrow(example_table) == 0) {
     return(doc)
   }

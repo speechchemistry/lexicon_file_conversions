@@ -1,8 +1,4 @@
 attach_senses_to_lift <- function(doc, sense_table) {
-  library(xml2)
-  library(purrr)
-  suppressMessages(library(dplyr))
-
   if (nrow(sense_table) == 0) {
     return(doc)
   }

@@ -39,8 +39,6 @@
 # which attach_senses_to_lift() creates, so traits cannot attach before
 # senses exist.
 table_registry <- function() {
-  library(tibble)
-
   registry <- tribble(
     ~name,              ~cli_flag,             ~help,
     "entries",          "--entries",           "CSV of the entries table (see SPEC.md's Entry Table; also `lift2csv.R --table entries`)",

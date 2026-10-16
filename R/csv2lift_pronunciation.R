@@ -1,8 +1,4 @@
 attach_pronunciations_to_lift <- function(doc, pronunciation_table) {
-  library(xml2)
-  library(purrr)
-  suppressMessages(library(dplyr))
-
   if (nrow(pronunciation_table) == 0) {
     return(doc)
   }

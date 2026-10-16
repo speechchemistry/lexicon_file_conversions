@@ -1,7 +1,4 @@
 attach_entry_relations_to_lift <- function(doc, entry_relation_table) {
-  library(xml2)
-  library(purrr)
-
   if (nrow(entry_relation_table) == 0) {
     return(doc)
   }
