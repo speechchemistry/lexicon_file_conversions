@@ -3,6 +3,10 @@ attach_senses_to_lift <- function(doc, sense_table) {
     return(doc)
   }
 
+  # Senses and subsenses share one id space: examples, reversals, relations,
+  # traits and subsense rows all point at a sense_guid.
+  stop_on_duplicate_values(sense_table, "sense_guid")
+
   root <- xml_root(doc)
   entries <- index_nodes(root, ".//entry", "guid")
   senses_and_subsenses <- index_nodes(root, ".//*[self::sense or self::subsense]", "id")

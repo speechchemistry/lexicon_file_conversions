@@ -225,3 +225,46 @@ test_that("a duplicate entry_lift_id errors, naming the duplicate", {
     "Duplicate entry_lift_id.*same_1"
   )
 })
+
+# SPEC.md's Structural Rules: every foreign key resolves to exactly one
+# element, so a duplicate entry_id or sense_guid is an error rather than
+# letting later rows silently attach to whichever copy is found first.
+test_that("a duplicate entry_id errors, naming the duplicate", {
+  expect_error(
+    quietly(entry_table_to_lift(tibble(entry_id = c(ENTRY_A, ENTRY_A), seh = c("a", "b")))),
+    paste0("Duplicate entry_id.*", ENTRY_A)
+  )
+})
+
+test_that("a duplicate sense_guid errors, naming the duplicate, whether sense or subsense", {
+  doc <- quietly(entry_table_to_lift(tibble(entry_id = c(ENTRY_A, ENTRY_B), seh = c("a", "b"))))
+  expect_error(
+    quietly(attach_senses_to_lift(doc, tibble(
+      sense_guid = c(SENSE_A, SENSE_A),
+      entry_id = c(ENTRY_A, ENTRY_B),
+      grammatical_info = NA_character_
+    ))),
+    paste0("Duplicate sense_guid.*", SENSE_A)
+  )
+
+  doc <- quietly(entry_table_to_lift(tibble(entry_id = ENTRY_A, seh = "a")))
+  expect_error(
+    quietly(attach_senses_to_lift(doc, tibble(
+      sense_guid = c(SENSE_A, SENSE_A),
+      entry_id = c(ENTRY_A, ENTRY_A),
+      grammatical_info = NA_character_,
+      parent_sense_guid = c(NA, SENSE_A)
+    ))),
+    paste0("Duplicate sense_guid.*", SENSE_A)
+  )
+})
+
+test_that("blank entry_id and sense_guid values are not duplicates of each other", {
+  doc <- quietly(entry_table_to_lift(tibble(entry_id = c(ENTRY_A, NA, NA), seh = c("a", "b", "c"))))
+  expect_length(xml_find_all(xml_root(doc), ".//entry"), 3)
+
+  quietly(attach_senses_to_lift(doc, tibble(
+    sense_guid = c(NA, NA), entry_id = c(ENTRY_A, ENTRY_A), grammatical_info = NA_character_
+  )))
+  expect_length(xml_find_all(xml_root(doc), ".//sense"), 2)
+})

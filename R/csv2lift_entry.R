@@ -6,17 +6,13 @@ entry_table_to_lift <- function(entry_table) {
     return(doc)
   }
 
-  # entry_lift_id's only documented requirement is uniqueness within the file
-  # (not that it still matches the headword or carries the guid as a suffix,
-  # both of which the FLEx documentation treats as convention rather than
-  # rule) - so that is the one thing checked here, once, rather than per row.
-  if ("entry_lift_id" %in% names(entry_table)) {
-    ids <- entry_table$entry_lift_id[!is.na(entry_table$entry_lift_id) & nzchar(entry_table$entry_lift_id)]
-    dupes <- unique(ids[duplicated(ids)])
-    if (length(dupes) > 0) {
-      stop(sprintf("Duplicate entry_lift_id value(s), must be unique: %s", paste(dupes, collapse = ", ")), call. = FALSE)
-    }
-  }
+  # entry_id is what every other table's rows point at, so it must identify
+  # one entry. entry_lift_id's only documented requirement is uniqueness
+  # within the file (not that it still matches the headword or carries the
+  # guid as a suffix, both of which the FLEx documentation treats as
+  # convention rather than rule) - so that is the one thing checked for it.
+  stop_on_duplicate_values(entry_table, "entry_id")
+  stop_on_duplicate_values(entry_table, "entry_lift_id")
 
   col_classes <- classify_entry_columns(names(entry_table))
 

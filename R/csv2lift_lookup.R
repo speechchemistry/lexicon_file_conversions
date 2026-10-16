@@ -3,13 +3,30 @@
 # running a whole-document `.//entry[@guid='...']` search for every row, which
 # made writing grow roughly with the square of the lexicon's size.
 
+# Stops with an error naming every value of `column` that occurs more than
+# once in `table`, before anything is written (SPEC.md's Structural Rules).
+# Blank values are ignored: a row with no key writes no guid/id, and nothing
+# can point at it anyway. Does nothing when the column is absent.
+stop_on_duplicate_values <- function(table, column) {
+  if (!column %in% names(table)) return(invisible(NULL))
+  values <- table[[column]]
+  values <- values[!is.na(values) & nzchar(values)]
+  duplicates <- unique(values[duplicated(values)])
+  if (length(duplicates) > 0) {
+    stop(sprintf(
+      "Duplicate %s value(s), must be unique: %s",
+      column, paste(duplicates, collapse = ", ")
+    ), call. = FALSE)
+  }
+  invisible(NULL)
+}
+
 # An environment (a hash table) mapping each node's `attr` value to the node,
-# over every match of `xpath` under `root`. On a duplicate value the first
-# node in document order wins, matching what xml_find_first() returned before
-# -- duplicate keys are slated to become an error instead
-# (plans/old/refactor-dedupe-and-speedup.md's Decisions to settle). Blank values
-# are skipped: csv2lift never writes a blank guid/id, and a blank key can
-# never be looked up successfully anyway.
+# over every match of `xpath` under `root`. stop_on_duplicate_values() rules
+# out duplicate entry_id/sense_guid values before any index is built; on a
+# duplicate anyway the first node in document order wins. Blank values are
+# skipped: csv2lift never writes a blank guid/id, and a blank key can never
+# be looked up successfully anyway.
 index_nodes <- function(root, xpath, attr) {
   index <- new.env(hash = TRUE, parent = emptyenv())
   walk(xml_find_all(root, xpath), ~add_indexed_node(index, xml_attr(.x, attr), .x))
